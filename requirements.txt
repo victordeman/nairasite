@@ -3,3 +3,4 @@ uvicorn
 aiosqlite
 jinja2
 pydantic[email]
+python-multipart
