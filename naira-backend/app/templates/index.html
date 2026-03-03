@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAIRA - African AI & XR Excellence Hub</title>
+    <meta name="description" content="NAIRA transforms education and innovation through AI and XR technologies, embedding African knowledge systems into global tech solutions.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        naira: {
+                            primary: '#4f46e5',
+                            secondary: '#f59e0b',
+                            dark: '#0f172a',
+                            darker: '#020617',
+                            accent: '#10b981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white overflow-x-hidden">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="font-display text-2xl font-bold bg-gradient-to-r from-indigo-400 to-amber-400 bg-clip-text text-transparent">
+                    NAIRA
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#hero" class="text-sm text-slate-300 hover:text-white transition-colors">Home</a>
+                    <a href="#vision" class="text-sm text-slate-300 hover:text-white transition-colors">Vision</a>
+                    <a href="#pillars" class="text-sm text-slate-300 hover:text-white transition-colors">Pillars</a>
+                    <a href="#architecture" class="text-sm text-slate-300 hover:text-white transition-colors">Architecture</a>
+                    <a href="#revenue" class="text-sm text-slate-300 hover:text-white transition-colors">Revenue</a>
+                    <a href="#content" class="text-sm text-slate-300 hover:text-white transition-colors">Content</a>
+                    <a href="#contact" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-sm font-medium transition-all">Contact Us</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-6">
+                <div class="flex flex-col gap-4">
+                    <a href="#hero" class="text-slate-300 hover:text-white transition-colors">Home</a>
+                    <a href="#vision" class="text-slate-300 hover:text-white transition-colors">Vision</a>
+                    <a href="#pillars" class="text-slate-300 hover:text-white transition-colors">Pillars</a>
+                    <a href="#architecture" class="text-slate-300 hover:text-white transition-colors">Architecture</a>
+                    <a href="#revenue" class="text-slate-300 hover:text-white transition-colors">Revenue</a>
+                    <a href="#content" class="text-slate-300 hover:text-white transition-colors">Content</a>
+                    <a href="#contact" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-sm font-medium transition-all text-center">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-slate-900 to-slate-900"></div>
+                <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-600/30 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse"></div>
+            </div>
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8 animate-fade-in-up">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-sm font-medium text-slate-300">Pioneering Africa's AI Renaissance</span>
+                    </div>
+                    <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight animate-fade-in-up">
+                        <span class="bg-gradient-to-r from-white via-indigo-200 to-amber-200 bg-clip-text text-transparent">NAIRA</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-slate-400 mb-4 font-display animate-fade-in-up">
+                        NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE
+                    </p>
+                    <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in-up">
+                        Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African languages, culture, and indigenous knowledge into global technology solutions.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up">
+                        <a href="#vision" class="group px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-medium transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/25">
+                            Explore Our Vision
+                            <i data-feather="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+                        </a>
+                        <a href="#pillars" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-full font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105">
+                            Strategic Pillars
+                        </a>
+                    </div>
+                </div>
+                <!-- Stats Bar -->
+                <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto animate-fade-in-up">
+                    <div class="glass-card p-6 rounded-2xl text-center">
+                        <div class="text-3xl font-display font-bold text-indigo-400 mb-1">{{ stats.pillars_count }}</div>
+                        <div class="text-sm text-slate-400">Strategic Pillars</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center">
+                        <div class="text-3xl font-display font-bold text-amber-400 mb-1">{{ stats.architecture_layers_count }}</div>
+                        <div class="text-sm text-slate-400">Architecture Layers</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center">
+                        <div class="text-3xl font-display font-bold text-emerald-400 mb-1">{{ stats.xr_label }}</div>
+                        <div class="text-sm text-slate-400">Immersive Tech</div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center">
+                        <div class="text-3xl font-display font-bold text-purple-400 mb-1">{{ stats.ai_label }}</div>
+                        <div class="text-sm text-slate-400">Agentic Systems</div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                <i data-feather="chevron-down" class="w-6 h-6 text-slate-500"></i>
+            </div>
+        </section>
+        <!-- Vision & Mission Section -->
+        <section id="vision" class="py-24 relative">
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="font-display text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-amber-400 bg-clip-text text-transparent">
+                                Vision & Mission
+                            </h2>
+                            <p class="text-lg text-slate-300 leading-relaxed">
+                                NAIRA aims to become Africa's foremost center for AI innovation and excellence, driving transformative research aligned with Africa's cultural contexts and development goals.
+                            </p>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex gap-4 items-start group">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center shrink-0 group-hover:bg-indigo-600/30 transition-colors">
+                                    <i data-feather="target" class="w-6 h-6 text-indigo-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-display font-semibold text-white mb-2">AI Excellence Hub</h3>
+                                    <p class="text-slate-400">Positioning NBU as a premier AI center in Nigeria and across Africa, setting global standards for African-centered technological innovation.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-start group">
+                                <div class="w-12 h-12 rounded-xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center shrink-0 group-hover:bg-amber-600/30 transition-colors">
+                                    <i data-feather="globe" class="w-6 h-6 text-amber-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-display font-semibold text-white mb-2">Regional Leadership</h3>
+                                    <p class="text-slate-400">Leading Africa's AI-driven innovation and global competitiveness through cutting-edge research and applications.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-amber-600 rounded-3xl blur-2xl opacity-20"></div>
+                        <div class="relative glass-card rounded-3xl p-8 border border-white/10">
+                            <div class="w-full h-64 rounded-2xl mb-6 bg-gradient-to-br from-indigo-600/30 to-amber-600/30 flex items-center justify-center">
+                                <i data-feather="cpu" class="w-24 h-24 text-indigo-300 opacity-50"></i>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 text-emerald-400">
+                                    <i data-feather="check-circle" class="w-5 h-5"></i>
+                                    <span class="font-medium">Immersive Experiential Learning</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-emerald-400">
+                                    <i data-feather="check-circle" class="w-5 h-5"></i>
+                                    <span class="font-medium">African-centered AI Research</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-emerald-400">
+                                    <i data-feather="check-circle" class="w-5 h-5"></i>
+                                    <span class="font-medium">Empowering Content Creation</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-emerald-400">
+                                    <i data-feather="check-circle" class="w-5 h-5"></i>
+                                    <span class="font-medium">Commercialization & Sustainability</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Strategic Pillars Section -->
+        <section id="pillars" class="py-24 bg-slate-950/50 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-indigo-400 font-medium tracking-wider uppercase text-sm">Our Foundation</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Six Strategic Pillars</h2>
+                    <p class="text-slate-400 text-lg">Our comprehensive approach to transforming Africa's technological landscape through education, innovation, and sustainable growth.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for pillar in pillars %}
+                    <div class="glass-card rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group border border-white/5 hover:border-{{ pillar.color }}-500/30">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-{{ pillar.color }}-400 font-display font-bold text-sm opacity-50">{{ pillar.number }}</span>
+                            <div class="w-10 h-10 rounded-xl bg-{{ pillar.color }}-600/20 border border-{{ pillar.color }}-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i data-feather="{{ pillar.icon }}" class="w-5 h-5 text-{{ pillar.color }}-400"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">{{ pillar.title }}</h3>
+                        <p class="text-slate-400 leading-relaxed">{{ pillar.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- Architecture Section -->
+        <section id="architecture" class="py-24 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-amber-400 font-medium tracking-wider uppercase text-sm">System Design</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Three-Layer Architecture</h2>
+                    <p class="text-slate-400 text-lg">Our robust technological infrastructure designed for scalability, security, and immersive experiences.</p>
+                </div>
+                <div class="max-w-5xl mx-auto space-y-8">
+                    {% for layer in architecture_layers %}
+                    <div class="glass-card rounded-2xl p-8 border-l-4 border-{{ layer.color }}-500 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-{{ layer.color }}-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                        <div class="relative z-10 flex flex-col md:flex-row gap-6 items-start">
+                            <div class="w-16 h-16 rounded-2xl bg-{{ layer.color }}-600/20 border border-{{ layer.color }}-500/30 flex items-center justify-center shrink-0">
+                                <i data-feather="{{ layer.icon }}" class="w-8 h-8 text-{{ layer.color }}-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="px-3 py-1 rounded-full bg-{{ layer.color }}-600/20 text-{{ layer.color }}-300 text-xs font-bold">LAYER {{ layer.layer_number }}</span>
+                                    <h3 class="text-2xl font-display font-bold text-white">{{ layer.title }}</h3>
+                                </div>
+                                <p class="text-slate-300 mb-4">{{ layer.description }}</p>
+                                <div class="flex flex-wrap gap-2">
+                                    {% for tag in layer.tags %}
+                                    <span class="px-3 py-1 rounded-full bg-white/5 text-slate-300 text-sm border border-white/10">{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Architecture Diagram Visualization -->
+                <div class="mt-16 glass-card rounded-3xl p-8 border border-white/10">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center">
+                        <div class="flex-1 p-6 rounded-2xl bg-indigo-600/10 border border-indigo-500/20">
+                            <i data-feather="headphones" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
+                            <div class="font-display font-bold text-white">Experience</div>
+                            <div class="text-xs text-slate-400 mt-1">XR & Interfaces</div>
+                        </div>
+                        <i data-feather="arrow-right" class="hidden md:block w-6 h-6 text-slate-600"></i>
+                        <i data-feather="arrow-down" class="md:hidden w-6 h-6 text-slate-600"></i>
+                        <div class="flex-1 p-6 rounded-2xl bg-amber-600/10 border border-amber-500/20">
+                            <i data-feather="activity" class="w-8 h-8 text-amber-400 mx-auto mb-2"></i>
+                            <div class="font-display font-bold text-white">Intelligence</div>
+                            <div class="text-xs text-slate-400 mt-1">AI & Agents</div>
+                        </div>
+                        <i data-feather="arrow-right" class="hidden md:block w-6 h-6 text-slate-600"></i>
+                        <i data-feather="arrow-down" class="md:hidden w-6 h-6 text-slate-600"></i>
+                        <div class="flex-1 p-6 rounded-2xl bg-emerald-600/10 border border-emerald-500/20">
+                            <i data-feather="server" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
+                            <div class="font-display font-bold text-white">Data & Integration</div>
+                            <div class="text-xs text-slate-400 mt-1">APIs & Security</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Revenue Streams Section -->
+        <section id="revenue" class="py-24 bg-slate-950/50">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-emerald-400 font-medium tracking-wider uppercase text-sm">Sustainability</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Revenue Streams</h2>
+                    <p class="text-slate-400 text-lg">Diverse monetization strategies ensuring long-term viability and growth of African AI/XR innovations.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    {% for stream in revenue_streams %}
+                    <div class="glass-card rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-xl bg-{{ stream.color }}-600/20 border border-{{ stream.color }}-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i data-feather="{{ stream.icon }}" class="w-7 h-7 text-{{ stream.color }}-400"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-bold text-white mb-3">{{ stream.title }}</h3>
+                        <p class="text-slate-400 leading-relaxed">{{ stream.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- African Content Model -->
+        <section id="content" class="py-24 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-indigo-950/20 to-slate-900"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 md:p-12 border border-amber-500/20 bg-gradient-to-br from-white/5 to-white/0">
+                    <div class="text-center mb-10">
+                        <i data-feather="map" class="w-12 h-12 text-amber-400 mx-auto mb-4"></i>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">African-Centered Content Model</h2>
+                        <p class="text-slate-300 text-lg">Embedding local languages, culture, and indigenous knowledge systems into scalable, sustainable technological solutions.</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="space-y-3">
+                            <div class="w-16 h-16 rounded-full bg-amber-600/20 border border-amber-500/30 flex items-center justify-center mx-auto">
+                                <i data-feather="book-open" class="w-8 h-8 text-amber-400"></i>
+                            </div>
+                            <h3 class="font-display font-bold text-white text-lg">Cultural Relevance</h3>
+                            <p class="text-slate-400 text-sm">Content reflects local languages, culture, and knowledge systems unique to Africa.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="w-16 h-16 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mx-auto">
+                                <i data-feather="layers" class="w-8 h-8 text-indigo-400"></i>
+                            </div>
+                            <h3 class="font-display font-bold text-white text-lg">Scalable Design</h3>
+                            <p class="text-slate-400 text-sm">Modular design allows expansion and supports sustainable revenue generation over time.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="w-16 h-16 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center mx-auto">
+                                <i data-feather="anchor" class="w-8 h-8 text-emerald-400"></i>
+                            </div>
+                            <h3 class="font-display font-bold text-white text-lg">Reference Model Hub</h3>
+                            <p class="text-slate-400 text-sm">NBU aims to be a flagship African AI and XR hub attracting students, faculty, and partnerships.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-slate-950/50">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-16">
+                        <span class="text-indigo-400 font-medium tracking-wider uppercase text-sm">Get In Touch</span>
+                        <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Join the African AI Renaissance</h2>
+                        <p class="text-slate-400 text-lg max-w-2xl mx-auto">Be part of the transformation. Whether you're a student, educator, researcher, or industry partner, NAIRA offers pathways to innovate and grow.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- Contact Form -->
+                        <div class="glass-card rounded-2xl p-8 border border-white/10">
+                            <h3 class="font-display text-2xl font-bold text-white mb-6">Send Us a Message</h3>
+                            <form id="contact-form" class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
+                                    <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" placeholder="Your name">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+                                    <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" placeholder="you@example.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Role</label>
+                                    <select name="role" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                                        <option value="" class="bg-slate-800">Select your role</option>
+                                        <option value="student" class="bg-slate-800">Student</option>
+                                        <option value="educator" class="bg-slate-800">Educator</option>
+                                        <option value="researcher" class="bg-slate-800">Researcher</option>
+                                        <option value="industry" class="bg-slate-800">Industry Partner</option>
+                                        <option value="government" class="bg-slate-800">Government</option>
+                                        <option value="other" class="bg-slate-800">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Message</label>
+                                    <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors resize-none" placeholder="Tell us how you'd like to collaborate..."></textarea>
+                                </div>
+                                <button type="submit" class="w-full px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-indigo-500/25 flex items-center justify-center gap-2">
+                                    <span>Send Message</span>
+                                    <i data-feather="send" class="w-4 h-4"></i>
+                                </button>
+                                <div id="contact-status" class="hidden text-center py-3 px-4 rounded-xl"></div>
+                            </form>
+                        </div>
+                        <!-- Newsletter & Quick Links -->
+                        <div class="space-y-8">
+                            <div class="glass-card rounded-2xl p-8 border border-white/10">
+                                <h3 class="font-display text-2xl font-bold text-white mb-4">Stay Updated</h3>
+                                <p class="text-slate-400 mb-6">Subscribe to our newsletter for the latest updates on AI and XR innovations from NAIRA.</p>
+                                <form id="newsletter-form" class="flex gap-3">
+                                    <input type="email" name="email" required class="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" placeholder="your@email.com">
+                                    <button type="submit" class="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-medium transition-all duration-300 hover:scale-105 shrink-0">
+                                        Subscribe
+                                    </button>
+                                </form>
+                                <div id="newsletter-status" class="hidden text-center py-2 px-4 rounded-xl mt-3"></div>
+                            </div>
+                            <div class="glass-card rounded-2xl p-8 border border-white/10">
+                                <h3 class="font-display text-xl font-bold text-white mb-4">Quick Links</h3>
+                                <div class="space-y-3">
+                                    <a href="#vision" class="flex items-center gap-3 text-slate-300 hover:text-indigo-400 transition-colors">
+                                        <i data-feather="arrow-right" class="w-4 h-4"></i>
+                                        <span>Our Vision & Mission</span>
+                                    </a>
+                                    <a href="#pillars" class="flex items-center gap-3 text-slate-300 hover:text-indigo-400 transition-colors">
+                                        <i data-feather="arrow-right" class="w-4 h-4"></i>
+                                        <span>Strategic Pillars</span>
+                                    </a>
+                                    <a href="#architecture" class="flex items-center gap-3 text-slate-300 hover:text-indigo-400 transition-colors">
+                                        <i data-feather="arrow-right" class="w-4 h-4"></i>
+                                        <span>System Architecture</span>
+                                    </a>
+                                    <a href="#revenue" class="flex items-center gap-3 text-slate-300 hover:text-indigo-400 transition-colors">
+                                        <i data-feather="arrow-right" class="w-4 h-4"></i>
+                                        <span>Revenue Streams</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="glass-card rounded-2xl p-8 border border-white/10 bg-gradient-to-br from-indigo-600/10 to-amber-600/10">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i data-feather="zap" class="w-6 h-6 text-amber-400"></i>
+                                    <h3 class="font-display text-xl font-bold text-white">Partner With Us</h3>
+                                </div>
+                                <p class="text-slate-300 text-sm">Interested in partnering with NAIRA? We welcome collaborations from universities, tech companies, and government organizations across Africa and globally.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-white/5 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <div>
+                    <a href="#" class="font-display text-2xl font-bold bg-gradient-to-r from-indigo-400 to-amber-400 bg-clip-text text-transparent">NAIRA</a>
+                    <p class="text-slate-500 text-sm mt-2">NBU AI Research & Advancement Institute</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-slate-500 text-sm">&copy; 2025 NAIRA. All rights reserved.</p>
+                </div>
+                <div class="flex gap-4 justify-end">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <i data-feather="twitter" class="w-4 h-4 text-slate-400"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <i data-feather="linkedin" class="w-4 h-4 text-slate-400"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
+                        <i data-feather="github" class="w-4 h-4 text-slate-400"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
