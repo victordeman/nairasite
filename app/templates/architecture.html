@@ -4,27 +4,26 @@
 <section class="py-32 relative">
     <div class="container mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="text-amber-400 font-medium tracking-wider uppercase text-sm">System Design</span>
-            <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Three-Layer Architecture</h2>
-            <p class="text-slate-400 text-lg">Our robust technological infrastructure designed for scalability, security, and immersive experiences.</p>
+            <span class="text-amber-600 font-medium tracking-wider uppercase text-sm">System Design</span>
+            <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-black">Three-Layer Architecture</h2>
+            <p class="text-black text-lg">Our robust technological infrastructure designed for scalability, security, and immersive experiences.</p>
         </div>
         <div class="max-w-5xl mx-auto space-y-8">
             {% for layer in architecture_layers %}
-            <div class="glass-card rounded-2xl p-8 border-l-4 border-{{ layer.color }}-500 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-{{ layer.color }}-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div class="glass-card rounded-2xl p-8 border-l-4 border-{{ layer.color }}-500 relative overflow-hidden group">
                 <div class="relative z-10 flex flex-col md:flex-row gap-6 items-start">
                     <div class="w-16 h-16 rounded-2xl bg-{{ layer.color }}-600/20 border border-{{ layer.color }}-500/30 flex items-center justify-center shrink-0">
-                        <i data-feather="{{ layer.icon }}" class="w-8 h-8 text-{{ layer.color }}-400"></i>
+                        <i data-feather="{{ layer.icon }}" class="w-8 h-8 text-{{ layer.color }}-600"></i>
                     </div>
                     <div class="flex-1">
                         <div class="flex items-center gap-3 mb-3">
-                            <span class="px-3 py-1 rounded-full bg-{{ layer.color }}-600/20 text-{{ layer.color }}-300 text-xs font-bold">LAYER {{ layer.layer_number }}</span>
-                            <h3 class="text-2xl font-display font-bold text-white">{{ layer.title }}</h3>
+                            <span class="px-3 py-1 rounded-full bg-{{ layer.color }}-600/20 text-{{ layer.color }}-600 text-xs font-bold">LAYER {{ layer.layer_number }}</span>
+                            <h3 class="text-2xl font-display font-bold text-black">{{ layer.title }}</h3>
                         </div>
-                        <p class="text-slate-300 mb-4">{{ layer.description }}</p>
+                        <p class="text-black mb-4">{{ layer.description }}</p>
                         <div class="flex flex-wrap gap-2">
                             {% for tag in layer.tags %}
-                            <span class="px-3 py-1 rounded-full bg-white/5 text-slate-300 text-sm border border-white/10">{{ tag }}</span>
+                            <span class="px-3 py-1 rounded-full bg-black/5 text-black text-sm border border-black/10">{{ tag }}</span>
                             {% endfor %}
                         </div>
                     </div>
@@ -33,24 +32,24 @@
             {% endfor %}
         </div>
         <!-- Architecture Diagram Visualization -->
-        <div class="mt-16 glass-card rounded-3xl p-8 border border-white/10 max-w-5xl mx-auto">
+        <div class="mt-16 glass-card rounded-3xl p-8 border border-black/10 max-w-5xl mx-auto">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center">
                 <div class="flex-1 p-6 rounded-2xl bg-indigo-600/10 border border-indigo-500/20">
-                    <i data-feather="headphones" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
-                    <div class="font-display font-bold text-white">Experience</div>
-                    <div class="text-xs text-slate-400 mt-1">XR & Interfaces</div>
+                    <i data-feather="headphones" class="w-8 h-8 text-indigo-600 mx-auto mb-2"></i>
+                    <div class="font-display font-bold text-black">Experience</div>
+                    <div class="text-xs text-black mt-1">XR & Interfaces</div>
                 </div>
                 <i data-feather="arrow-right" class="hidden md:block w-6 h-6 text-slate-600"></i>
                 <div class="flex-1 p-6 rounded-2xl bg-amber-600/10 border border-amber-500/20">
-                    <i data-feather="activity" class="w-8 h-8 text-amber-400 mx-auto mb-2"></i>
-                    <div class="font-display font-bold text-white">Intelligence</div>
-                    <div class="text-xs text-slate-400 mt-1">AI & Agents</div>
+                    <i data-feather="activity" class="w-8 h-8 text-amber-600 mx-auto mb-2"></i>
+                    <div class="font-display font-bold text-black">Intelligence</div>
+                    <div class="text-xs text-black mt-1">AI & Agents</div>
                 </div>
                 <i data-feather="arrow-right" class="hidden md:block w-6 h-6 text-slate-600"></i>
                 <div class="flex-1 p-6 rounded-2xl bg-emerald-600/10 border border-emerald-500/20">
-                    <i data-feather="server" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
-                    <div class="font-display font-bold text-white">Data & Integration</div>
-                    <div class="text-xs text-slate-400 mt-1">APIs & Security</div>
+                    <i data-feather="server" class="w-8 h-8 text-emerald-600 mx-auto mb-2"></i>
+                    <div class="font-display font-bold text-black">Data & Integration</div>
+                    <div class="text-xs text-black mt-1">APIs & Security</div>
                 </div>
             </div>
         </div>
