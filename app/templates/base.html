@@ -38,7 +38,7 @@
         }
     </script>
 </head>
-<body class="font-sans antialiased selection:bg-indigo-500 selection:text-white overflow-x-hidden transition-colors duration-300">
+<body class="font-sans antialiased selection:bg-indigo-500 selection:text-white overflow-x-hidden transition-colors duration-300 {% if request.url.path == '/' %}page-home{% else %}page-sub{% endif %}">
     <!-- Navigation -->
     <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300">
         <div class="container mx-auto px-6">
