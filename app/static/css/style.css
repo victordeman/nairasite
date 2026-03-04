@@ -1,10 +1,38 @@
+/* Root Variables - Dark Mode (Default) */
+:root {
+    --bg-main: #0f172a;
+    --bg-darker: #020617;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --nav-bg: rgba(15, 23, 42, 0.95);
+}
+
+/* Light Mode Overrides */
+.light-mode {
+    --bg-main: #f8fafc;
+    --bg-darker: #f1f5f9;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --card-bg: rgba(0, 0, 0, 0.03);
+    --card-border: rgba(0, 0, 0, 0.1);
+    --nav-bg: rgba(248, 250, 252, 0.95);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+
 /* Glass Card Effect */
 .glass-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--card-border);
 }
+
 /* Animations */
 @keyframes fade-in-up {
     from {
@@ -16,22 +44,25 @@
         transform: translateY(0);
     }
 }
+
 .animate-fade-in-up {
     animation: fade-in-up 0.6s ease-out forwards;
     opacity: 0;
 }
+
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
 .delay-1000 { animation-delay: 1s; }
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: var(--bg-main);
 }
 ::-webkit-scrollbar-thumb {
     background: #334155;
@@ -40,31 +71,43 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #475569;
 }
+
 /* Selection */
 ::selection {
     background: #4f46e5;
     color: white;
 }
+
 /* Smooth Scroll */
 html {
     scroll-behavior: smooth;
 }
+
 /* Navbar scrolled state */
 .navbar-scrolled {
-    background: rgba(15, 23, 42, 0.95);
+    background: var(--nav-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--card-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
+
+.light-mode .text-slate-300 { color: #475569; }
+.light-mode .text-slate-400 { color: #64748b; }
+.light-mode .text-white { color: #0f172a; }
+.light-mode .bg-slate-950\/50 { background-color: rgba(241, 245, 249, 0.5); }
+.light-mode .bg-slate-950\/30 { background-color: rgba(241, 245, 249, 0.3); }
+.light-mode .bg-slate-950 { background-color: #f1f5f9; }
+
 /* Form focus styles */
 input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
 }
+
 /* Hover transitions */
 .glass-card {
     transition: all 0.3s ease;
 }
 .glass-card:hover {
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(79, 70, 229, 0.3);
 }
