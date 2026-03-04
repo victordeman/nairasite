@@ -1,4 +1,4 @@
-/* Root Variables - Dark Mode (Default) */
+/* Root Variables */
 :root {
     --bg-main: #0f172a;
     --bg-darker: #020617;
@@ -9,17 +9,6 @@
     --nav-bg: rgba(15, 23, 42, 0.95);
 }
 
-/* Light Mode Overrides */
-.light-mode {
-    --bg-main: #f8fafc;
-    --bg-darker: #f1f5f9;
-    --text-main: #0f172a;
-    --text-muted: #475569;
-    --card-bg: rgba(0, 0, 0, 0.03);
-    --card-border: rgba(0, 0, 0, 0.1);
-    --nav-bg: rgba(248, 250, 252, 0.95);
-}
-
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
@@ -27,64 +16,53 @@ body {
     position: relative;
 }
 
-/* Noise Texture Overlay */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 40; /* Above content but below Nav (50) and Modals (100) */
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Home Page - Dark & Grainy */
+/* Home Page - Dark Blue */
 .page-home {
-    --bg-main: #0a0a0c;
-    --bg-darker: #050505;
-    background-attachment: fixed;
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+    --bg-main: #0f172a;
+    --bg-darker: #020617;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    background-color: #0f172a;
 }
 
-.page-home::before {
-    opacity: 0.08; /* Slightly more visible grain on dark home page */
-}
-
-/* Sub-pages - Off-white & Paper */
+/* Sub-pages - Plain White */
 .page-sub {
-    --bg-main: #fdfcf8; /* Light off-white/cream */
-    --bg-darker: #f5f4ef;
-    --text-main: #1a1a1a;
-    --text-muted: #555555;
-    --card-bg: rgba(0, 0, 0, 0.02);
-    --card-border: rgba(0, 0, 0, 0.08);
-    --nav-bg: rgba(253, 252, 248, 0.95);
-}
-
-.page-sub::before {
-    opacity: 0.04; /* Very subtle texture on light pages */
-    filter: contrast(120%) brightness(110%);
+    --bg-main: #ffffff;
+    --bg-darker: #f1f5f9;
+    --text-main: #000000;
+    --text-muted: #333333;
+    --card-bg: rgba(0, 0, 0, 0.05);
+    --card-border: rgba(0, 0, 0, 0.15);
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    background-color: #ffffff;
+    color: #000000;
 }
 
 /* Page Sub Overrides for Readability */
 .page-sub .text-slate-300,
 .page-sub .text-slate-400,
-.page-sub .text-slate-500 {
-    color: #444444;
+.page-sub .text-slate-500,
+.page-sub .text-indigo-200,
+.page-sub .text-amber-200 {
+    color: #000000 !important;
+}
+
+.page-sub .text-slate-400 {
+    color: #333333 !important;
 }
 
 /* Only target text-white that is likely on the light background, excluding buttons and specific containers */
 .page-sub :not(.bg-indigo-600):not(.bg-indigo-700):not(.bg-slate-900):not(.bg-indigo-600/20).text-white,
-.page-sub h1.text-white,
-.page-sub h2.text-white,
-.page-sub h3.text-white,
-.page-sub p.text-white {
-    color: #000000;
+.page-sub h1,
+.page-sub h2,
+.page-sub h3,
+.page-sub h4,
+.page-sub p,
+.page-sub span:not(.bg-indigo-600):not(.bg-amber-600):not(.bg-emerald-600):not(.bg-purple-600):not(.bg-cyan-600):not(.bg-rose-600) {
+    color: #000000 !important;
 }
 
 .page-sub .bg-slate-950,
@@ -94,21 +72,21 @@ body::before {
 }
 
 .page-sub nav .nav-link {
-    color: #444444;
+    color: #333333;
 }
 
 .page-sub nav .nav-link:hover,
 .page-sub nav .nav-link.text-white {
-    color: #000000;
+    color: #000000 !important;
 }
 
 .page-sub footer {
-    background-color: #f5f4ef;
+    background-color: #f8fafc;
     border-top-color: rgba(0, 0, 0, 0.1);
 }
 
 .page-sub footer .text-slate-500 {
-    color: #666666;
+    color: #333333;
 }
 
 .page-sub footer .bg-white\/5 {
@@ -120,11 +98,11 @@ body::before {
 }
 
 .page-sub footer .text-slate-400 {
-    color: #555555;
+    color: #333333;
 }
 
 .page-sub #navbar .text-slate-400 {
-    color: #555555;
+    color: #333333;
 }
 
 .page-sub #navbar .text-slate-400:hover {
@@ -132,8 +110,8 @@ body::before {
 }
 
 .page-sub .glass-card {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 /* Glass Card Effect */
@@ -143,30 +121,6 @@ body::before {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--card-border);
 }
-
-/* Animations */
-@keyframes fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
-    opacity: 0;
-}
-
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-1000 { animation-delay: 1s; }
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
@@ -203,41 +157,9 @@ html {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.light-mode .text-slate-300 { color: #475569; }
-.light-mode .text-slate-400 { color: #64748b; }
-.light-mode .text-white { color: #0f172a; }
-.light-mode .bg-slate-950\/50 { background-color: rgba(241, 245, 249, 0.5); }
-.light-mode .bg-slate-950\/30 { background-color: rgba(241, 245, 249, 0.3); }
-.light-mode .bg-slate-950 { background-color: #f1f5f9; }
-
-/* Specific light mode color overrides for vibrant elements */
-.light-mode .text-indigo-400 { color: #4f46e5; }
-.light-mode .text-amber-400 { color: #d97706; }
-.light-mode .text-emerald-400 { color: #059669; }
-.light-mode .text-purple-400 { color: #7c3aed; }
-.light-mode .text-cyan-400 { color: #0891b2; }
-.light-mode .text-rose-400 { color: #e11d48; }
-
-.light-mode .bg-indigo-600\/20 { background-color: rgba(79, 70, 229, 0.1); }
-.light-mode .bg-amber-600\/20 { background-color: rgba(217, 119, 6, 0.1); }
-.light-mode .bg-emerald-600\/20 { background-color: rgba(5, 150, 105, 0.1); }
-.light-mode .bg-purple-600\/20 { background-color: rgba(124, 58, 237, 0.1); }
-.light-mode .bg-cyan-600\/20 { background-color: rgba(8, 145, 178, 0.1); }
-.light-mode .bg-rose-600\/20 { background-color: rgba(225, 29, 72, 0.1); }
-
-.light-mode .border-indigo-500\/30 { border-color: rgba(79, 70, 229, 0.2); }
-.light-mode .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.2); }
-.light-mode .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.2); }
 
 /* Form focus styles */
 input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
 }
 
-/* Hover transitions */
-.glass-card {
-    transition: all 0.3s ease;
-}
-.glass-card:hover {
-    border-color: rgba(79, 70, 229, 0.3);
-}
