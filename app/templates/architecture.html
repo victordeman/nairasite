@@ -10,15 +10,15 @@
         </div>
         <div class="max-w-5xl mx-auto space-y-8">
             {% for layer in architecture_layers %}
-            <div class="glass-card rounded-2xl p-8 border-l-4 border-amber-500 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-amber-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div class="glass-card rounded-2xl p-8 border-l-4 border-{{ layer.color }}-500 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-{{ layer.color }}-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                 <div class="relative z-10 flex flex-col md:flex-row gap-6 items-start">
-                    <div class="w-16 h-16 rounded-2xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center shrink-0">
-                        <i data-feather="{{ layer.icon }}" class="w-8 h-8 text-amber-400"></i>
+                    <div class="w-16 h-16 rounded-2xl bg-{{ layer.color }}-600/20 border border-{{ layer.color }}-500/30 flex items-center justify-center shrink-0">
+                        <i data-feather="{{ layer.icon }}" class="w-8 h-8 text-{{ layer.color }}-400"></i>
                     </div>
                     <div class="flex-1">
                         <div class="flex items-center gap-3 mb-3">
-                            <span class="px-3 py-1 rounded-full bg-amber-600/20 text-amber-300 text-xs font-bold">LAYER {{ layer.layer_number }}</span>
+                            <span class="px-3 py-1 rounded-full bg-{{ layer.color }}-600/20 text-{{ layer.color }}-300 text-xs font-bold">LAYER {{ layer.layer_number }}</span>
                             <h3 class="text-2xl font-display font-bold text-white">{{ layer.title }}</h3>
                         </div>
                         <p class="text-slate-300 mb-4">{{ layer.description }}</p>
