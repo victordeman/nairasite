@@ -75,6 +75,7 @@ async def init_db():
             )
         """)
 
+        
         # Seed pillars if empty
         cursor = await db.execute("SELECT COUNT(*) FROM pillars")
         count = await cursor.fetchone()
@@ -92,6 +93,7 @@ async def init_db():
                 pillars_data,
             )
 
+        
         # Seed architecture layers if empty
         cursor = await db.execute("SELECT COUNT(*) FROM architecture_layers")
         count = await cursor.fetchone()
@@ -106,6 +108,7 @@ async def init_db():
                 layers_data,
             )
 
+        
         # Seed revenue streams if empty
         cursor = await db.execute("SELECT COUNT(*) FROM revenue_streams")
         count = await cursor.fetchone()
