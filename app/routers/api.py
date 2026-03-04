@@ -39,7 +39,7 @@ async def update_pillar(pillar_id: int, pillar: PillarCreate, db: libsql_client.
     result = await db.execute("SELECT id FROM pillars WHERE id = ?", (pillar_id,))
     if not result.rows:
         raise HTTPException(status_code=404, detail="Pillar not found")
-
+    
     await db.execute(
         "UPDATE pillars SET number=?, title=?, description=?, icon=?, color=? WHERE id=?",
         (pillar.number, pillar.title, pillar.description, pillar.icon, pillar.color, pillar_id),
@@ -51,7 +51,7 @@ async def delete_pillar(pillar_id: int, db: libsql_client.Client = Depends(get_d
     result = await db.execute("SELECT id FROM pillars WHERE id = ?", (pillar_id,))
     if not result.rows:
         raise HTTPException(status_code=404, detail="Pillar not found")
-
+    
     await db.execute("DELETE FROM pillars WHERE id = ?", (pillar_id,))
     return {"message": "Pillar deleted", "success": True}
 
@@ -78,7 +78,7 @@ async def update_architecture_layer(layer_id: int, layer: ArchitectureLayerCreat
     result = await db.execute("SELECT id FROM architecture_layers WHERE id = ?", (layer_id,))
     if not result.rows:
         raise HTTPException(status_code=404, detail="Architecture layer not found")
-
+    
     await db.execute(
         "UPDATE architecture_layers SET layer_number=?, title=?, description=?, icon=?, color=?, tags=? WHERE id=?",
         (layer.layer_number, layer.title, layer.description, layer.icon, layer.color, json.dumps(layer.tags), layer_id),
@@ -90,7 +90,7 @@ async def delete_architecture_layer(layer_id: int, db: libsql_client.Client = De
     result = await db.execute("SELECT id FROM architecture_layers WHERE id = ?", (layer_id,))
     if not result.rows:
         raise HTTPException(status_code=404, detail="Architecture layer not found")
-
+    
     await db.execute("DELETE FROM architecture_layers WHERE id = ?", (layer_id,))
     return {"message": "Architecture layer deleted", "success": True}
 
@@ -114,7 +114,7 @@ async def delete_revenue_stream(stream_id: int, db: libsql_client.Client = Depen
     result = await db.execute("SELECT id FROM revenue_streams WHERE id = ?", (stream_id,))
     if not result.rows:
         raise HTTPException(status_code=404, detail="Revenue stream not found")
-
+    
     await db.execute("DELETE FROM revenue_streams WHERE id = ?", (stream_id,))
     return {"message": "Revenue stream deleted", "success": True}
 
@@ -154,10 +154,10 @@ async def get_subscribers(db: libsql_client.Client = Depends(get_db)):
 async def get_stats(db: libsql_client.Client = Depends(get_db)):
     pillars_res = await db.execute("SELECT COUNT(*) FROM pillars")
     pillars_count = pillars_res.rows[0][0]
-
+    
     layers_res = await db.execute("SELECT COUNT(*) FROM architecture_layers")
     layers_count = layers_res.rows[0][0]
-
+    
     return {
         "pillars_count": pillars_count,
         "architecture_layers_count": layers_count,
