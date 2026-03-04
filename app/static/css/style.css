@@ -56,12 +56,12 @@ body {
 
 /* Only target text-white that is likely on the light background, excluding buttons and specific containers */
 .page-sub :not(.bg-indigo-600):not(.bg-indigo-700):not(.bg-slate-900):not(.bg-indigo-600/20).text-white,
-.page-sub h1,
-.page-sub h2,
-.page-sub h3,
-.page-sub h4,
-.page-sub p,
-.page-sub span:not(.bg-indigo-600):not(.bg-amber-600):not(.bg-emerald-600):not(.bg-purple-600):not(.bg-cyan-600):not(.bg-rose-600) {
+.page-sub h1:not(.text-indigo-600),
+.page-sub h2:not(.text-indigo-600),
+.page-sub h3:not(.text-indigo-600),
+.page-sub h4:not(.text-indigo-600),
+.page-sub p:not(.text-indigo-600),
+.page-sub span:not(.bg-indigo-600):not(.bg-amber-600):not(.bg-emerald-600):not(.bg-purple-600):not(.bg-cyan-600):not(.bg-rose-600):not(.text-indigo-600) {
     color: #000000 !important;
 }
 
