@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-aiosqlite
+libsql-client
 jinja2
 pydantic[email]
 python-multipart
