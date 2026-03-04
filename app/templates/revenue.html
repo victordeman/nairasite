@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Revenue Streams - NAIRA{% endblock %}
+{% block content %}
+<section class="py-32 relative">
+    <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-emerald-400 font-medium tracking-wider uppercase text-sm">Sustainability</span>
+            <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Revenue Streams</h2>
+            <p class="text-slate-400 text-lg">Diverse monetization strategies ensuring long-term viability and growth of African AI/XR innovations.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {% for stream in revenue_streams %}
+            <div class="glass-card rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group">
+                <div class="w-14 h-14 rounded-xl bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-feather="{{ stream.icon }}" class="w-7 h-7 text-emerald-400"></i>
+                </div>
+                <h3 class="text-xl font-display font-bold text-white mb-3">{{ stream.title }}</h3>
+                <p class="text-slate-400 leading-relaxed">{{ stream.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

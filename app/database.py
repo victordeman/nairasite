@@ -64,6 +64,17 @@ async def init_db():
                 color TEXT NOT NULL
             )
         """)
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS projects (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                description TEXT NOT NULL,
+                icon TEXT NOT NULL,
+                category TEXT NOT NULL,
+                status TEXT NOT NULL
+            )
+        """)
+
         
         # Seed pillars if empty
         cursor = await db.execute("SELECT COUNT(*) FROM pillars")
@@ -81,6 +92,7 @@ async def init_db():
                 "INSERT INTO pillars (number, title, description, icon, color) VALUES (?, ?, ?, ?, ?)",
                 pillars_data,
             )
+
         
         # Seed architecture layers if empty
         cursor = await db.execute("SELECT COUNT(*) FROM architecture_layers")
@@ -95,6 +107,7 @@ async def init_db():
                 "INSERT INTO architecture_layers (layer_number, title, description, icon, color, tags) VALUES (?, ?, ?, ?, ?, ?)",
                 layers_data,
             )
+
         
         # Seed revenue streams if empty
         cursor = await db.execute("SELECT COUNT(*) FROM revenue_streams")
@@ -109,5 +122,20 @@ async def init_db():
             await db.executemany(
                 "INSERT INTO revenue_streams (title, description, icon, color) VALUES (?, ?, ?, ?)",
                 revenue_data,
+            )
+
+        # Seed projects if empty
+        cursor = await db.execute("SELECT COUNT(*) FROM projects")
+        count = await cursor.fetchone()
+        if count[0] == 0:
+            projects_data = [
+                ("African Language LLM", "Developing large language models specifically optimized for indigenous African languages to improve accessibility and digital inclusion.", "message-circle", "AI Research", "In Progress"),
+                ("XR Medical Simulation", "An immersive XR platform for medical students in Africa to practice surgical procedures in a safe, virtual environment.", "heart", "XR Education", "Beta"),
+                ("Agentic Academic Assistant", "AI-driven autonomous agents that help university faculty automate administrative tasks and personalize student learning paths.", "user-check", "Agentic AI", "Early Access"),
+                ("Pan-African Tech Network", "A decentralized platform connecting innovators across the continent to share resources and collaborate on high-impact tech projects.", "share-2", "Innovation", "Operational"),
+            ]
+            await db.executemany(
+                "INSERT INTO projects (title, description, icon, category, status) VALUES (?, ?, ?, ?, ?)",
+                projects_data,
             )
         await db.commit()
