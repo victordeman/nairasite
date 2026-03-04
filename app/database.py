@@ -1,6 +1,12 @@
 import aiosqlite
 import os
-DATABASE_PATH = os.getenv("DATABASE_PATH", "naira.db")
+
+# On Vercel, the only writable directory is /tmp
+if os.getenv("VERCEL"):
+    DATABASE_PATH = "/tmp/naira.db"
+else:
+    DATABASE_PATH = os.getenv("DATABASE_PATH", "naira.db")
+
 async def get_db():
     db = await aiosqlite.connect(DATABASE_PATH)
     db.row_factory = aiosqlite.Row
@@ -8,6 +14,7 @@ async def get_db():
         yield db
     finally:
         await db.close()
+
 async def init_db():
     async with aiosqlite.connect(DATABASE_PATH) as db:
         await db.execute("""
@@ -57,6 +64,7 @@ async def init_db():
                 color TEXT NOT NULL
             )
         """)
+        
         # Seed pillars if empty
         cursor = await db.execute("SELECT COUNT(*) FROM pillars")
         count = await cursor.fetchone()
@@ -73,6 +81,7 @@ async def init_db():
                 "INSERT INTO pillars (number, title, description, icon, color) VALUES (?, ?, ?, ?, ?)",
                 pillars_data,
             )
+        
         # Seed architecture layers if empty
         cursor = await db.execute("SELECT COUNT(*) FROM architecture_layers")
         count = await cursor.fetchone()
@@ -86,6 +95,7 @@ async def init_db():
                 "INSERT INTO architecture_layers (layer_number, title, description, icon, color, tags) VALUES (?, ?, ?, ?, ?, ?)",
                 layers_data,
             )
+        
         # Seed revenue streams if empty
         cursor = await db.execute("SELECT COUNT(*) FROM revenue_streams")
         count = await cursor.fetchone()
