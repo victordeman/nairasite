@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-slate-900 to-slate-900"></div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-600/30 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse"></div>
+    </div>
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8 animate-fade-in-up">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-sm font-medium text-slate-300">Pioneering Africa's AI Renaissance</span>
+            </div>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight animate-fade-in-up">
+                <span class="bg-gradient-to-r from-white via-indigo-200 to-amber-200 bg-clip-text text-transparent">NAIRA</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 mb-4 font-display animate-fade-in-up">
+                NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE
+            </p>
+            <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in-up">
+                Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African languages, culture, and indigenous knowledge into global technology solutions.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up">
+                <a href="/vision" class="group px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-medium transition-all duration-300 flex items-center gap-2 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/25">
+                    Explore Our Vision
+                    <i data-feather="arrow-right" class="w-4 h-4"></i>
+                </a>
+                <a href="/pillars" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-full font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105">
+                    Strategic Pillars
+                </a>
+            </div>
+        </div>
+        <!-- Stats Bar -->
+        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto animate-fade-in-up">
+            <div class="glass-card p-6 rounded-2xl text-center">
+                <div class="text-3xl font-display font-bold text-indigo-400 mb-1">{{ stats.pillars_count }}</div>
+                <div class="text-sm text-slate-400">Strategic Pillars</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl text-center">
+                <div class="text-3xl font-display font-bold text-amber-400 mb-1">{{ stats.architecture_layers_count }}</div>
+                <div class="text-sm text-slate-400">Architecture Layers</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl text-center">
+                <div class="text-3xl font-display font-bold text-emerald-400 mb-1">{{ stats.xr_label }}</div>
+                <div class="text-sm text-slate-400">Immersive Tech</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl text-center">
+                <div class="text-3xl font-display font-bold text-purple-400 mb-1">{{ stats.ai_label }}</div>
+                <div class="text-sm text-slate-400">Agentic Systems</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
