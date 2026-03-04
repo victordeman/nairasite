@@ -3,7 +3,13 @@ import os
 import libsql_client
 
 # Use Turso Database URL and Auth Token from environment variables
-DATABASE_URL = os.getenv("TURSO_DATABASE_URL", "file:naira.db")
+if os.getenv("TURSO_DATABASE_URL"):
+    DATABASE_URL = os.getenv("TURSO_DATABASE_URL")
+elif os.getenv("VERCEL"):
+    DATABASE_URL = "file:/tmp/naira.db"
+else:
+    DATABASE_URL = "file:naira.db"
+
 AUTH_TOKEN = os.getenv("TURSO_AUTH_TOKEN", "")
 
 async def migrate():
@@ -69,7 +75,7 @@ async def migrate():
         """)
 
         print("Checking if seeding is needed...")
-
+        
         # Seed pillars
         cursor = await client.execute("SELECT COUNT(*) FROM pillars")
         if cursor.rows[0][0] == 0:
