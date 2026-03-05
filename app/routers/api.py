@@ -15,6 +15,8 @@ from app.models.schemas import (
     NewsletterResponse,
     StatsResponse,
     MessageResponse,
+    ChatRequest,
+    ChatResponse,
 )
 
 router = APIRouter(prefix="/api", tags=["api"])
@@ -164,3 +166,82 @@ async def get_stats(db: libsql_client.Client = Depends(get_db)):
         "xr_label": "XR",
         "ai_label": "AI",
     }
+
+# --- AI Chat ---
+@router.post("/chat", response_model=ChatResponse)
+async def chat_ai(request: ChatRequest, db: libsql_client.Client = Depends(get_db)):
+    full_message = request.message.lower()
+    keywords = full_message.split()
+
+    # Tables and their searchable columns
+    search_targets = [
+        ("pillars", ["title", "description"]),
+        ("projects", ["title", "description", "category"]),
+        ("architecture_layers", ["title", "description", "tags"]),
+        ("revenue_streams", ["title", "description"])
+    ]
+
+    results = {
+        "pillars": [],
+        "projects": [],
+        "architecture": [],
+        "revenue": []
+    }
+
+    for table, columns in search_targets:
+        where_clauses = []
+        params = []
+        # First try full message if it's not too long
+        if len(full_message) > 3:
+            for col in columns:
+                where_clauses.append(f"LOWER({col}) LIKE ?")
+                params.append(f"%{full_message}%")
+
+        # Then try individual keywords
+        for kw in keywords:
+            if len(kw) < 4: continue # Skip short words
+            for col in columns:
+                where_clauses.append(f"LOWER({col}) LIKE ?")
+                params.append(f"%{kw}%")
+
+        if not where_clauses:
+            continue
+
+        sql = f"SELECT * FROM {table} WHERE " + " OR ".join(where_clauses)
+        res = await db.execute(sql, params)
+        key = "architecture" if table == "architecture_layers" else table.replace("_streams", "").replace("pillars", "pillars").replace("projects", "projects")
+        # Deduplicate results based on title
+        existing_titles = [r['title'] for r in results[key]]
+        for row in to_dict_list(res):
+            if row['title'] not in existing_titles:
+                results[key].append(row)
+
+    pillars = results["pillars"]
+    projects = results["projects"]
+    architecture = results["architecture"]
+    revenue = results["revenue"]
+
+    # Construct Response
+    if not (pillars or projects or architecture or revenue):
+        return {"response": "I couldn't find specific information about that in the NAIRA database. Could you ask about our pillars, projects, architecture, or revenue streams?"}
+
+    response_parts = []
+
+    if pillars:
+        part = "Strategic Pillars: " + "; ".join([f"{p['title']} ({p['description']})" for p in pillars])
+        response_parts.append(part)
+
+    if projects:
+        part = "Projects: " + "; ".join([f"{p['title']} - Status: {p['status']} ({p['description']})" for p in projects])
+        response_parts.append(part)
+
+    if architecture:
+        part = "Architecture: " + "; ".join([f"{a['title']} ({a['description']})" for a in architecture])
+        response_parts.append(part)
+
+    if revenue:
+        part = "Revenue Streams: " + "; ".join([f"{r['title']} ({r['description']})" for r in revenue])
+        response_parts.append(part)
+
+    final_response = "Here is what I found:\n\n" + "\n\n".join(response_parts)
+    return {"response": final_response}

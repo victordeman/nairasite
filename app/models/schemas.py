@@ -57,3 +57,17 @@ class StatsResponse(BaseModel):
 class MessageResponse(BaseModel):
     message: str
     success: bool = True
+
+class ProjectResponse(BaseModel):
+    id: int
+    title: str
+    description: str
+    icon: str
+    category: str
+    status: str
+
+class ChatRequest(BaseModel):
+    message: str
+
+class ChatResponse(BaseModel):
+    response: str
