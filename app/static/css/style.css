@@ -1,4 +1,4 @@
-/* Root Variables - Dark Mode (Default) */
+/* Root Variables */
 :root {
     --bg-main: #0f172a;
     --bg-darker: #020617;
@@ -7,17 +7,6 @@
     --card-bg: rgba(255, 255, 255, 0.05);
     --card-border: rgba(255, 255, 255, 0.08);
     --nav-bg: rgba(15, 23, 42, 0.95);
-}
-
-/* Light Mode Overrides */
-.light-mode {
-    --bg-main: #f8fafc;
-    --bg-darker: #f1f5f9;
-    --text-main: #0f172a;
-    --text-muted: #475569;
-    --card-bg: rgba(0, 0, 0, 0.03);
-    --card-border: rgba(0, 0, 0, 0.1);
-    --nav-bg: rgba(248, 250, 252, 0.95);
 }
 
 body {
@@ -69,6 +58,29 @@ body::before {
 .page-sub::before {
     opacity: 0.04; /* Very subtle texture on light pages */
     filter: contrast(120%) brightness(110%);
+/* Home Page - Dark Blue */
+.page-home {
+    --bg-main: #0f172a;
+    --bg-darker: #020617;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --nav-bg: rgba(15, 23, 42, 0.95);
+    background-color: #0f172a;
+}
+
+/* Sub-pages - Plain White */
+.page-sub {
+    --bg-main: #ffffff;
+    --bg-darker: #f1f5f9;
+    --text-main: #000000;
+    --text-muted: #333333;
+    --card-bg: rgba(0, 0, 0, 0.05);
+    --card-border: rgba(0, 0, 0, 0.15);
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    background-color: #ffffff;
+    color: #000000;
 }
 
 /* Page Sub Overrides for Readability */
@@ -76,6 +88,14 @@ body::before {
 .page-sub .text-slate-400,
 .page-sub .text-slate-500 {
     color: #444444;
+.page-sub .text-slate-500,
+.page-sub .text-indigo-200,
+.page-sub .text-amber-200 {
+    color: #000000 !important;
+}
+
+.page-sub .text-slate-400 {
+    color: #333333 !important;
 }
 
 /* Only target text-white that is likely on the light background, excluding buttons and specific containers */
@@ -85,6 +105,13 @@ body::before {
 .page-sub h3.text-white,
 .page-sub p.text-white {
     color: #000000;
+.page-sub h1:not(.text-indigo-600),
+.page-sub h2:not(.text-indigo-600),
+.page-sub h3:not(.text-indigo-600),
+.page-sub h4:not(.text-indigo-600),
+.page-sub p:not(.text-indigo-600),
+.page-sub span:not(.bg-indigo-600):not(.bg-amber-600):not(.bg-emerald-600):not(.bg-purple-600):not(.bg-cyan-600):not(.bg-rose-600):not(.text-indigo-600) {
+    color: #000000 !important;
 }
 
 .page-sub .bg-slate-950,
@@ -95,6 +122,7 @@ body::before {
 
 .page-sub nav .nav-link {
     color: #444444;
+    color: #333333;
 }
 
 .page-sub nav .nav-link:hover,
@@ -104,11 +132,17 @@ body::before {
 
 .page-sub footer {
     background-color: #f5f4ef;
+    color: #000000 !important;
+}
+
+.page-sub footer {
+    background-color: #f8fafc;
     border-top-color: rgba(0, 0, 0, 0.1);
 }
 
 .page-sub footer .text-slate-500 {
     color: #666666;
+    color: #333333;
 }
 
 .page-sub footer .bg-white\/5 {
@@ -125,6 +159,11 @@ body::before {
 
 .page-sub #navbar .text-slate-400 {
     color: #555555;
+    color: #333333;
+}
+
+.page-sub #navbar .text-slate-400 {
+    color: #333333;
 }
 
 .page-sub #navbar .text-slate-400:hover {
@@ -134,6 +173,8 @@ body::before {
 .page-sub .glass-card {
     background: rgba(255, 255, 255, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 /* Glass Card Effect */
@@ -143,30 +184,6 @@ body::before {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--card-border);
 }
-
-/* Animations */
-@keyframes fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
-    opacity: 0;
-}
-
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-1000 { animation-delay: 1s; }
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
@@ -203,41 +220,9 @@ html {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.light-mode .text-slate-300 { color: #475569; }
-.light-mode .text-slate-400 { color: #64748b; }
-.light-mode .text-white { color: #0f172a; }
-.light-mode .bg-slate-950\/50 { background-color: rgba(241, 245, 249, 0.5); }
-.light-mode .bg-slate-950\/30 { background-color: rgba(241, 245, 249, 0.3); }
-.light-mode .bg-slate-950 { background-color: #f1f5f9; }
-
-/* Specific light mode color overrides for vibrant elements */
-.light-mode .text-indigo-400 { color: #4f46e5; }
-.light-mode .text-amber-400 { color: #d97706; }
-.light-mode .text-emerald-400 { color: #059669; }
-.light-mode .text-purple-400 { color: #7c3aed; }
-.light-mode .text-cyan-400 { color: #0891b2; }
-.light-mode .text-rose-400 { color: #e11d48; }
-
-.light-mode .bg-indigo-600\/20 { background-color: rgba(79, 70, 229, 0.1); }
-.light-mode .bg-amber-600\/20 { background-color: rgba(217, 119, 6, 0.1); }
-.light-mode .bg-emerald-600\/20 { background-color: rgba(5, 150, 105, 0.1); }
-.light-mode .bg-purple-600\/20 { background-color: rgba(124, 58, 237, 0.1); }
-.light-mode .bg-cyan-600\/20 { background-color: rgba(8, 145, 178, 0.1); }
-.light-mode .bg-rose-600\/20 { background-color: rgba(225, 29, 72, 0.1); }
-
-.light-mode .border-indigo-500\/30 { border-color: rgba(79, 70, 229, 0.2); }
-.light-mode .border-amber-500\/30 { border-color: rgba(217, 119, 6, 0.2); }
-.light-mode .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.2); }
 
 /* Form focus styles */
 input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
 }
 
-/* Hover transitions */
-.glass-card {
-    transition: all 0.3s ease;
-}
-.glass-card:hover {
-    border-color: rgba(79, 70, 229, 0.3);
-}

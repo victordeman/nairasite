@@ -34,13 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Observe all glass cards for scroll animation
-    document.querySelectorAll('.glass-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
-    });
 });
 
 // AI Agent Modal Logic
@@ -67,7 +60,7 @@ if (tryAiBtn) tryAiBtn.addEventListener('click', openAiAgent);
 if (closeAiModal) closeAiModal.addEventListener('click', closeAiAgent);
 
 if (aiChatForm) {
-    aiChatForm.addEventListener('submit', (e) => {
+    aiChatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = aiInput.value.trim();
         if (!text) return;
@@ -76,18 +69,17 @@ if (aiChatForm) {
         addChatMessage(text, 'user');
         aiInput.value = '';
 
-        // Mock AI response
-        setTimeout(() => {
-            const responses = [
-                "That's an interesting question about African AI research!",
-                "NAIRA focuses on embedding local culture into technology.",
-                "Our XR classrooms are being piloted in major Nigerian universities.",
-                "How can I help you with our strategic pillars today?",
-                "We are working on LLMs specifically for Yoruba, Igbo, and Hausa."
-            ];
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            addChatMessage(randomResponse, 'ai');
-        }, 800);
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text }),
+            });
+            const result = await response.json();
+            addChatMessage(result.response || "I'm sorry, I couldn't process that.", 'ai');
+        } catch (error) {
+            addChatMessage("Sorry, I'm having trouble connecting to the NAIRA brain right now. Please try again later.", 'ai');
+        }
     });
 }
 
@@ -315,16 +307,3 @@ if (newsletterFormHome && newsletterStatusHome) {
     });
 }
 
-// Intersection Observer for scroll animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
