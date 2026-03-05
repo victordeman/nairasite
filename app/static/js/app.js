@@ -44,24 +44,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiInput = document.getElementById('ai-input');
     const aiChatBody = document.getElementById('ai-chat-body');
 
-    const openAiAgent = () => {
-        if (aiModal) {
-            aiModal.classList.remove('hidden');
-            aiModal.classList.add('flex');
+    window.openAiAgent = () => {
+        const modal = document.getElementById('ai-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
             document.body.classList.add('overflow-hidden');
         }
     };
 
-    const closeAiAgent = () => {
-        if (aiModal) {
-            aiModal.classList.add('hidden');
-            aiModal.classList.remove('flex');
+    window.closeAiAgent = () => {
+        const modal = document.getElementById('ai-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
             document.body.classList.remove('overflow-hidden');
         }
     };
 
-    if (tryAiBtn) tryAiBtn.addEventListener('click', openAiAgent);
-    if (closeAiModal) closeAiModal.addEventListener('click', closeAiAgent);
+    if (tryAiBtn) tryAiBtn.addEventListener('click', window.openAiAgent);
+    if (closeAiModal) closeAiModal.addEventListener('click', window.closeAiAgent);
+
+    // Event delegation for AI button (as a backup)
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#try-ai-btn')) {
+            window.openAiAgent();
+        }
+        if (e.target.closest('#close-ai-modal')) {
+            window.closeAiAgent();
+        }
+    });
 
     if (aiChatForm) {
         aiChatForm.addEventListener('submit', async (e) => {
