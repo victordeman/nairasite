@@ -77,3 +77,7 @@ async def projects(request: Request, db: libsql_client.Client = Depends(get_db))
 @router.get("/contact")
 async def contact(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
+
+@router.get("/agent")
+async def agent(request: Request):
+    return templates.TemplateResponse("agent.html", {"request": request})
