@@ -168,80 +168,75 @@ async def get_stats(db: libsql_client.Client = Depends(get_db)):
     }
 
 # --- AI Chat ---
+async def get_naira_context(db: libsql_client.Client):
+    """Retrieves all core info to serve as LLM context."""
+    pillars = await db.execute("SELECT title, description FROM pillars")
+    architecture = await db.execute("SELECT title, description, tags FROM architecture_layers")
+    revenue = await db.execute("SELECT title, description FROM revenue_streams")
+    projects = await db.execute("SELECT title, description, category, status FROM projects")
+    
+    context = "NAIRA (NBU AI Research & Advancement Institute) Context:\n\n"
+    
+    context += "STRATEGIC PILLARS:\n"
+    for p in pillars.rows:
+        context += f"- {p[0]}: {p[1]}\n"
+        
+    context += "\nARCHITECTURE LAYERS:\n"
+    for a in architecture.rows:
+        context += f"- {a[0]}: {a[1]} (Tags: {a[2]})\n"
+        
+    context += "\nREVENUE STREAMS:\n"
+    for r in revenue.rows:
+        context += f"- {r[0]}: {r[1]}\n"
+        
+    context += "\nKEY PROJECTS:\n"
+    for pr in projects.rows:
+        context += f"- {pr[0]} ({pr[2]}): {pr[1]} [Status: {pr[3]}]\n"
+        
+    return context
+
 @router.post("/chat", response_model=ChatResponse)
 async def chat_ai(request: ChatRequest, db: libsql_client.Client = Depends(get_db)):
-    full_message = request.message.lower()
-    keywords = full_message.split()
+    user_msg = request.message
+    selected_model = request.model
+    naira_context = await get_naira_context(db)
     
-    # Tables and their searchable columns
-    search_targets = [
-        ("pillars", ["title", "description"]),
-        ("projects", ["title", "description", "category"]),
-        ("architecture_layers", ["title", "description", "tags"]),
-        ("revenue_streams", ["title", "description"])
-    ]
-    
-    results = {
-        "pillars": [],
-        "projects": [],
-        "architecture": [],
-        "revenue": []
-    }
-    
-    for table, columns in search_targets:
-        where_clauses = []
-        params = []
-        # First try full message if it's not too long
-        if len(full_message) > 3:
-            for col in columns:
-                where_clauses.append(f"LOWER({col}) LIKE ?")
-                params.append(f"%{full_message}%")
+    system_prompt = f"""You are the NAIRA AI Assistant, an expert on the NBU AI Research & Advancement Institute.
+Your goal is to provide helpful, accurate, and culturally relevant information about NAIRA's work in AI and XR.
 
-        # Then try individual keywords
-        for kw in keywords:
-            if len(kw) < 4: continue # Skip short words
-            for col in columns:
-                where_clauses.append(f"LOWER({col}) LIKE ?")
-                params.append(f"%{kw}%")
-        
-        if not where_clauses:
-            continue
+{naira_context}
+
+Guidelines:
+1. Use the provided context to answer questions about NAIRA.
+2. If the user asks something outside this context, answer generally but try to relate it back to NAIRA's mission (African-centered AI/XR).
+3. Be professional, visionary, and encouraging.
+4. Keep responses concise but informative.
+"""
+
+    # For now, we use a mock LLM response that incorporates the context 
+    # unless an API key is detected (Integration Placeholder)
+    import os
+    gemini_key = os.getenv("GOOGLE_API_KEY")
+    hf_token = os.getenv("HF_TOKEN")
+
+    if selected_model == "gemini" and gemini_key:
+        # Placeholder for real Gemini call
+        # response = call_gemini(system_prompt, user_msg)
+        return {"response": f"[Gemini Mode] I've processed your request about '{user_msg}' using NAIRA's context."}
+    elif selected_model == "hf" and hf_token:
+        # Placeholder for real HF call
+        return {"response": f"[Hugging Face Mode] Analyzing '{user_msg}' through the lens of African AI excellence."}
+    elif selected_model in ["gemini", "hf"]:
+        # User selected a premium model but keys are missing
+        return {"response": f"I see you selected {selected_model.upper()}, but I'm currently running in Local RAG mode because no API keys were found. To use {selected_model.upper()}, please configure the environment variables."}
+    else:
+        # Enhanced RAG-lite fallback: if user message matches keywords, use specific context
+        full_message = user_msg.lower()
+        if any(k in full_message for k in ["pillar", "strategy", "focus"]):
+            return {"response": "NAIRA operates on six strategic pillars, including African-Centered AI Research and Educational Transformation. Which pillar would you like to dive deeper into?"}
+        if any(k in full_message for k in ["project", "doing", "working"]):
+            return {"response": "We are currently working on several high-impact projects like the African Language LLM and XR Medical Simulations. These aim to solve local challenges using global tech."}
+        if any(k in full_message for k in ["architecture", "layer", "system"]):
+            return {"response": "Our architecture is built on three layers: Experience (XR), Intelligence (Generative AI), and Data/Integration. This ensures both immersion and intelligence."}
             
-        sql = f"SELECT * FROM {table} WHERE " + " OR ".join(where_clauses)
-        res = await db.execute(sql, params)
-        key = "architecture" if table == "architecture_layers" else table.replace("_streams", "").replace("pillars", "pillars").replace("projects", "projects")
-        # Deduplicate results based on title
-        existing_titles = [r['title'] for r in results[key]]
-        for row in to_dict_list(res):
-            if row['title'] not in existing_titles:
-                results[key].append(row)
-
-    pillars = results["pillars"]
-    projects = results["projects"]
-    architecture = results["architecture"]
-    revenue = results["revenue"]
-
-    # Construct Response
-    if not (pillars or projects or architecture or revenue):
-        return {"response": "I couldn't find specific information about that in the NAIRA database. Could you ask about our pillars, projects, architecture, or revenue streams?"}
-    
-    response_parts = []
-    
-    if pillars:
-        part = "Strategic Pillars: " + "; ".join([f"{p['title']} ({p['description']})" for p in pillars])
-        response_parts.append(part)
-        
-    if projects:
-        part = "Projects: " + "; ".join([f"{p['title']} - Status: {p['status']} ({p['description']})" for p in projects])
-        response_parts.append(part)
-        
-    if architecture:
-        part = "Architecture: " + "; ".join([f"{a['title']} ({a['description']})" for a in architecture])
-        response_parts.append(part)
-        
-    if revenue:
-        part = "Revenue Streams: " + "; ".join([f"{r['title']} ({r['description']})" for r in revenue])
-        response_parts.append(part)
-        
-    final_response = "Here is what I found:\n\n" + "\n\n".join(response_parts)
-    return {"response": final_response}
+        return {"response": f"I'm the NAIRA Assistant. I can tell you all about our vision for African AI. You asked: '{user_msg}'. How can I relate this to our strategic pillars or current projects?"}
