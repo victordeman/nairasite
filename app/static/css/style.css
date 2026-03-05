@@ -16,6 +16,48 @@ body {
     position: relative;
 }
 
+/* Noise Texture Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 40; /* Above content but below Nav (50) and Modals (100) */
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Home Page - Dark & Grainy */
+.page-home {
+    --bg-main: #0a0a0c;
+    --bg-darker: #050505;
+    background-attachment: fixed;
+    background-image:
+        radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+}
+
+.page-home::before {
+    opacity: 0.08; /* Slightly more visible grain on dark home page */
+}
+
+/* Sub-pages - Off-white & Paper */
+.page-sub {
+    --bg-main: #fdfcf8; /* Light off-white/cream */
+    --bg-darker: #f5f4ef;
+    --text-main: #1a1a1a;
+    --text-muted: #555555;
+    --card-bg: rgba(0, 0, 0, 0.02);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --nav-bg: rgba(253, 252, 248, 0.95);
+}
+
+.page-sub::before {
+    opacity: 0.04; /* Very subtle texture on light pages */
+    filter: contrast(120%) brightness(110%);
 /* Home Page - Dark Blue */
 .page-home {
     --bg-main: #0f172a;
@@ -44,6 +86,8 @@ body {
 /* Page Sub Overrides for Readability */
 .page-sub .text-slate-300,
 .page-sub .text-slate-400,
+.page-sub .text-slate-500 {
+    color: #444444;
 .page-sub .text-slate-500,
 .page-sub .text-indigo-200,
 .page-sub .text-amber-200 {
@@ -56,6 +100,11 @@ body {
 
 /* Only target text-white that is likely on the light background, excluding buttons and specific containers */
 .page-sub :not(.bg-indigo-600):not(.bg-indigo-700):not(.bg-slate-900):not(.bg-indigo-600/20).text-white,
+.page-sub h1.text-white,
+.page-sub h2.text-white,
+.page-sub h3.text-white,
+.page-sub p.text-white {
+    color: #000000;
 .page-sub h1:not(.text-indigo-600),
 .page-sub h2:not(.text-indigo-600),
 .page-sub h3:not(.text-indigo-600),
@@ -72,11 +121,17 @@ body {
 }
 
 .page-sub nav .nav-link {
+    color: #444444;
     color: #333333;
 }
 
 .page-sub nav .nav-link:hover,
 .page-sub nav .nav-link.text-white {
+    color: #000000;
+}
+
+.page-sub footer {
+    background-color: #f5f4ef;
     color: #000000 !important;
 }
 
@@ -86,6 +141,7 @@ body {
 }
 
 .page-sub footer .text-slate-500 {
+    color: #666666;
     color: #333333;
 }
 
@@ -98,6 +154,11 @@ body {
 }
 
 .page-sub footer .text-slate-400 {
+    color: #555555;
+}
+
+.page-sub #navbar .text-slate-400 {
+    color: #555555;
     color: #333333;
 }
 
@@ -110,6 +171,8 @@ body {
 }
 
 .page-sub .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.15);
 }
