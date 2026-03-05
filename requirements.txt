@@ -4,3 +4,4 @@ libsql-client
 jinja2
 pydantic[email]
 python-multipart
+aiofiles
