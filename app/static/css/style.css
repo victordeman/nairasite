@@ -58,6 +58,8 @@ body::before {
 .page-sub::before {
     opacity: 0.04; /* Very subtle texture on light pages */
     filter: contrast(120%) brightness(110%);
+}
+
 /* Home Page - Dark Blue */
 .page-home {
     --bg-main: #0f172a;
@@ -88,6 +90,8 @@ body::before {
 .page-sub .text-slate-400,
 .page-sub .text-slate-500 {
     color: #444444;
+}
+
 .page-sub .text-slate-500,
 .page-sub .text-indigo-200,
 .page-sub .text-amber-200 {
@@ -105,6 +109,8 @@ body::before {
 .page-sub h3.text-white,
 .page-sub p.text-white {
     color: #000000;
+}
+
 .page-sub h1:not(.text-indigo-600),
 .page-sub h2:not(.text-indigo-600),
 .page-sub h3:not(.text-indigo-600),
