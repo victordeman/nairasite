@@ -68,6 +68,7 @@ class ProjectResponse(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
+    model: Optional[str] = "local"
 
 class ChatResponse(BaseModel):
     response: str
