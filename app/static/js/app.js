@@ -60,7 +60,7 @@ if (tryAiBtn) tryAiBtn.addEventListener('click', openAiAgent);
 if (closeAiModal) closeAiModal.addEventListener('click', closeAiAgent);
 
 if (aiChatForm) {
-    aiChatForm.addEventListener('submit', (e) => {
+    aiChatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = aiInput.value.trim();
         if (!text) return;
@@ -69,18 +69,17 @@ if (aiChatForm) {
         addChatMessage(text, 'user');
         aiInput.value = '';
 
-        // Mock AI response
-        setTimeout(() => {
-            const responses = [
-                "That's an interesting question about African AI research!",
-                "NAIRA focuses on embedding local culture into technology.",
-                "Our XR classrooms are being piloted in major Nigerian universities.",
-                "How can I help you with our strategic pillars today?",
-                "We are working on LLMs specifically for Yoruba, Igbo, and Hausa."
-            ];
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            addChatMessage(randomResponse, 'ai');
-        }, 800);
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text }),
+            });
+            const result = await response.json();
+            addChatMessage(result.response || "I'm sorry, I couldn't process that.", 'ai');
+        } catch (error) {
+            addChatMessage("Sorry, I'm having trouble connecting to the NAIRA brain right now. Please try again later.", 'ai');
+        }
     });
 }
 
