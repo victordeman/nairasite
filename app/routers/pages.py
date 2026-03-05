@@ -1,3 +1,4 @@
+import os
 import json
 from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
@@ -5,7 +6,10 @@ import libsql_client
 from app.database import get_db, to_dict_list
 
 router = APIRouter(tags=["pages"])
-templates = Jinja2Templates(directory="app/templates")
+
+# Define the base directory for templates
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 @router.get("/")
 async def home(request: Request, db: libsql_client.Client = Depends(get_db)):
