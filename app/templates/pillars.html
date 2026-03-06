@@ -10,16 +10,20 @@
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for pillar in pillars %}
-            <div class="glass-card rounded-2xl p-8 group border border-black/10">
+            <a href="/pillars/{{ pillar.number }}" class="glass-card rounded-2xl p-8 group border border-black/10 hover:border-indigo-600/30 transition-all hover:shadow-xl hover:shadow-indigo-500/10 block">
                 <div class="flex items-center gap-3 mb-4">
                     <span class="text-{{ pillar.color }}-600 font-display font-bold text-sm opacity-50">{{ pillar.number }}</span>
                     <div class="w-10 h-10 rounded-xl bg-{{ pillar.color }}-600/20 border border-{{ pillar.color }}-500/30 flex items-center justify-center">
                         <i data-feather="{{ pillar.icon }}" class="w-5 h-5 text-{{ pillar.color }}-600"></i>
                     </div>
                 </div>
-                <h3 class="text-xl font-display font-bold text-black mb-3">{{ pillar.title }}</h3>
-                <p class="text-black leading-relaxed">{{ pillar.description }}</p>
-            </div>
+                <h3 class="text-xl font-display font-bold text-black mb-3 group-hover:text-indigo-600 transition-colors">{{ pillar.title }}</h3>
+                <p class="text-black leading-relaxed text-sm">{{ pillar.summary }}</p>
+                <div class="mt-6 flex items-center gap-2 text-indigo-600 font-medium text-sm">
+                    <span>Read More</span>
+                    <i data-feather="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
             {% endfor %}
         </div>
     </div>
