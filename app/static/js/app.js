@@ -198,6 +198,32 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-badge': "Uanzilishi wa Renaissance ya AI ya Afrika",
             'hero-subtitle': 'TAASISI YA NBU YA UTAFITI NA MAENDELEO YA AI',
             'hero-description': 'Kubadilisha elimu na uvumbuzi kupitia uzoefu wa XR wa kuzama na usanifu wa AI, kupachika lugha za Kiafrika, utamaduni, na maarifa asilia katika suluhisho za teknolojia ya kimataifa.'
+        },
+        'ig': {
+            'nav-home': 'Ụlọ',
+            'nav-vision': 'Ọhụụ',
+            'nav-pillars': 'Ogidi',
+            'nav-architecture': 'Nhazi',
+            'nav-revenue': 'Ego nwetara',
+            'nav-content': 'Ọdịnaya',
+            'nav-projects': 'Ihe omume',
+            'hero-title': 'NAIRA',
+            'hero-badge': "Ịsụ ụzọ AI Renaissance nke Africa",
+            'hero-subtitle': 'NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE',
+            'hero-description': 'Ịgbanwe agụmakwụkwọ na ihe ọhụrụ site na ahụmịhe XR na-emikpu na usoro AI, na-etinye asụsụ Africa, omenala, na ihe ọmụma obodo n\'ime usoro teknụzụ zuru ụwa ọnụ.'
+        },
+        'ha': {
+            'nav-home': 'Gida',
+            'nav-vision': 'Hasashe',
+            'nav-pillars': 'Shika-shikai',
+            'nav-architecture': 'Tsarin Gini',
+            'nav-revenue': 'Kudaden Shiga',
+            'nav-content': 'Abun Ciki',
+            'nav-projects': 'Ayyuka',
+            'hero-title': 'NAIRA',
+            'hero-badge': "Jagorar Farfadowar AI ta Afirka",
+            'hero-subtitle': 'CIBIYAR BINCIKE DA CIGABAN AI TA NBU',
+            'hero-description': 'Canza ilimi da sabbin abubuwa ta hanyar abubuwan XR masu zurfi da tsarin AI, sanya harsunan Afirka, al\'adu, da ilimin asali cikin hanyoyin fasahar duniya.'
         }
     };
 
