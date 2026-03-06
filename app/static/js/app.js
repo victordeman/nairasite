@@ -1,7 +1,12 @@
 // Initialize features on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Navbar scroll effect
+    // Navbar Elements
     const navbar = document.getElementById('navbar');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navbarBackdrop = document.getElementById('navbar-backdrop');
+
+    // Navbar scroll effect
     window.addEventListener('scroll', () => {
         if (navbar) {
             if (window.scrollY > 50) {
@@ -13,11 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
     if (mobileMenuBtn && mobileMenu) {
         mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
             mobileMenu.classList.toggle('hidden');
         });
 
@@ -33,6 +35,32 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                 mobileMenu.classList.add('hidden');
             }
+        });
+    }
+
+    // Navbar backdrop fade effect
+    if (navbar && navbarBackdrop) {
+        navbar.addEventListener('click', (e) => {
+            // Only toggle if we're clicking the navbar itself, not a link inside it
+            // unless it's the mobile menu button
+            if (e.target.closest('a') && !e.target.closest('#mobile-menu-btn')) {
+                navbarBackdrop.classList.remove('backdrop-visible');
+                return;
+            }
+            navbarBackdrop.classList.toggle('backdrop-visible');
+        });
+
+        // Close backdrop when clicking on it
+        navbarBackdrop.addEventListener('click', () => {
+            navbarBackdrop.classList.remove('backdrop-visible');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+        });
+
+        // Close backdrop when a nav link is clicked
+        document.querySelectorAll('.nav-link, #mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navbarBackdrop.classList.remove('backdrop-visible');
+            });
         });
     }
 

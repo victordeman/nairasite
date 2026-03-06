@@ -181,6 +181,41 @@ nav, main, footer {
     color: #000000;
 }
 
+/* Navbar Indigo Overrides - Force all content to Indigo-600 */
+#navbar,
+#navbar a,
+#navbar button,
+#navbar i,
+#navbar span,
+#navbar div:not(.glass-card) {
+    color: #4f46e5 !important;
+}
+
+#navbar a:hover,
+#navbar button:hover {
+    color: #4338ca !important;
+}
+
+/* Fix for buttons that should have white text on hover to maintain contrast */
+#navbar a.hover\:text-white:hover,
+#navbar button.hover\:text-white:hover {
+    color: #ffffff !important;
+}
+
+/* Ensure borders also use the indigo color where appropriate */
+#navbar .border-indigo-600 {
+    border-color: #4f46e5 !important;
+}
+
+#navbar {
+    z-index: 50;
+}
+
+.backdrop-visible {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
 .page-sub .glass-card {
     background: rgba(255, 255, 255, 0.6);
     border: 1px solid rgba(0, 0, 0, 0.1);
