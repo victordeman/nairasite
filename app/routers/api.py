@@ -30,8 +30,8 @@ async def get_pillars(db: libsql_client.Client = Depends(get_db)):
 @router.post("/pillars", response_model=PillarResponse, status_code=201)
 async def create_pillar(pillar: PillarCreate, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute(
-        "INSERT INTO pillars (number, title, description, icon, color) VALUES (?, ?, ?, ?, ?)",
-        (pillar.number, pillar.title, pillar.description, pillar.icon, pillar.color),
+        "INSERT INTO pillars (number, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)",
+        (pillar.number, pillar.title, pillar.summary, pillar.description, pillar.icon, pillar.color),
     )
     new_id = result.last_insert_rowid
     return {**pillar.model_dump(), "id": new_id}
@@ -43,8 +43,8 @@ async def update_pillar(pillar_id: int, pillar: PillarCreate, db: libsql_client.
         raise HTTPException(status_code=404, detail="Pillar not found")
     
     await db.execute(
-        "UPDATE pillars SET number=?, title=?, description=?, icon=?, color=? WHERE id=?",
-        (pillar.number, pillar.title, pillar.description, pillar.icon, pillar.color, pillar_id),
+        "UPDATE pillars SET number=?, title=?, summary=?, description=?, icon=?, color=? WHERE id=?",
+        (pillar.number, pillar.title, pillar.summary, pillar.description, pillar.icon, pillar.color, pillar_id),
     )
     return {**pillar.model_dump(), "id": pillar_id}
 
