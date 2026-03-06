@@ -4,6 +4,7 @@ from datetime import datetime
 class PillarBase(BaseModel):
     number: str
     title: str
+    summary: str = ""
     description: str
     icon: str
     color: str
