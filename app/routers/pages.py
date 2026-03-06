@@ -54,6 +54,15 @@ async def pillars(request: Request, db: libsql_client.Client = Depends(get_db)):
     pillars = to_dict_list(pillars_res)
     return templates.TemplateResponse("pillars.html", {"request": request, "pillars": pillars})
 
+@router.get("/pillars/{number}")
+async def pillar_detail(number: str, request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM pillars WHERE number = ?", (number,))
+    pillar = to_dict_list(res)
+    if not pillar:
+        # Fallback if pillar not found, could also raise 404
+        return templates.TemplateResponse("pillars.html", {"request": request, "pillars": []})
+    return templates.TemplateResponse("pillar_detail.html", {"request": request, "pillar": pillar[0]})
+
 @router.get("/architecture")
 async def architecture(request: Request, db: libsql_client.Client = Depends(get_db)):
     layers_res = await db.execute("SELECT * FROM architecture_layers ORDER BY layer_number")
