@@ -74,6 +74,17 @@ async def migrate():
                 status TEXT NOT NULL
             )
         """)
+        await client.execute("""
+            CREATE TABLE IF NOT EXISTS vision_missions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT UNIQUE NOT NULL,
+                title TEXT NOT NULL,
+                summary TEXT NOT NULL,
+                description TEXT NOT NULL,
+                icon TEXT NOT NULL,
+                color TEXT NOT NULL
+            )
+        """)
 
         print("Checking if seeding is needed...")
         
@@ -136,6 +147,47 @@ async def migrate():
             await client.batch([
                 ("INSERT INTO projects (title, description, icon, category, status) VALUES (?, ?, ?, ?, ?)", p)
                 for p in projects_data
+            ])
+
+        # Seed vision missions
+        cursor = await client.execute("SELECT COUNT(*) FROM vision_missions")
+        if cursor.rows[0][0] == 0:
+            print("Seeding vision missions...")
+            vision_data = [
+                (
+                    "ai-excellence-hub",
+                    "AI Excellence Hub",
+                    "Positioning NBU as a premier AI center in Nigeria and across Africa, setting global standards for African-centered technological innovation.",
+                    """<p>The AI Excellence Hub represents NAIRA’s bold ambition to establish Nnamdi Azikiwe University (NBU) as the undisputed flagship institution for artificial intelligence on the African continent. This is not merely about building another research lab or training more data scientists — it is about creating a world-class epicenter where African priorities, values, languages, philosophies, and lived realities become the foundational inputs for next-generation AI systems.</p>
+                    <p>Rather than continuing the historical pattern of adopting foreign AI models and retrofitting them with limited African data, NAIRA is inverting the paradigm. We are designing, training, and deploying AI architectures that are African-first from the ground up. This means large language models whose pre-training corpora give equal — or even preferential — weight to Hausa oral epics, Yoruba Ifá divination verses, Igbo proverbs and masquerade ontologies, Akan drum language patterns, Amharic Ge’ez script traditions, Kiswahili coastal poetry, Shona mbira tunings, and San click-language storytelling, among hundreds of other knowledge systems.</p>
+                    <p>At the heart of the Excellence Hub lies a commitment to cultural fidelity in model behavior. When an NAIRA-trained model is asked ethical questions, it draws reasoning patterns not only from Western philosophy but also from Ubuntu (“I am because we are”), from the Akan concept of Sankofa (“go back and get it”), from Igbo chi personal-spirit agency, and from Yoruba ori destiny-responsibility frameworks. When it generates educational content, it naturally embeds local metaphors, seasonal agricultural cycles, kinship structures, and indigenous taxonomies rather than defaulting to Euro-American defaults.</p>
+                    <p>The physical and digital infrastructure of the Hub is deliberately Pan-African in character. We maintain high-performance GPU clusters co-located in Awka with mirrored edge nodes in Addis Ababa, Nairobi, Dakar, Cape Town, and Kigali — creating sub-50 ms inference latency across most population centers. Open datasets released under permissive African-centered licenses (inspired by but distinct from Creative Commons) are already being used by universities in Ghana, Kenya, Rwanda, Senegal, and South Africa.</p>
+                    <p>NAIRA’s researchers are publishing in top-tier venues while simultaneously producing high-impact local-language technical reports, video explainers in Pidgin, Igbo, Yoruba, Hausa, and Amharic, and XR-based interactive tutorials that allow secondary-school students in rural communities to understand transformer attention mechanisms through visual storytelling rooted in their own cultural idioms.</p>
+                    <p>By 2030, the goal is unambiguous: when global institutions, development agencies, philanthropies, or tech companies want to understand responsible, inclusive, culturally-grounded AI for the majority world, the first institution they reference — and visit — will be NAIRA at NBU. We are not trying to catch up to Silicon Valley or Shenzhen. We are building a distinct African pole of AI excellence that the rest of the world will eventually need to learn from.</p>""",
+                    "target",
+                    "indigo"
+                ),
+                (
+                    "regional-leadership",
+                    "Regional Leadership",
+                    "Leading Africa's AI-driven innovation and global competitiveness through cutting-edge research and applications.",
+                    """<p>Regional Leadership means NAIRA does not view itself as an isolated academic institute pursuing publications and grants. Instead, we see ourselves as the strategic orchestrator and accelerator of an Africa-wide AI innovation ecosystem that must collectively move the continent from technology consumer → technology co-producer → technology agenda-setter on the global stage.</p>
+                    <p>This leadership manifests in several interlocking dimensions:</p>
+                    <ul class="list-disc pl-6 space-y-4 mt-4">
+                        <li><strong>Benchmark-defining research programs</strong>: We are deliberately targeting grand challenges where Africa has both the greatest need and — paradoxically — structural advantages: multilingual low-resource language modeling, climate-adaptive agriculture AI, decentralized health diagnostics in low-connectivity environments, ethical autonomous financial inclusion systems, and culturally-safe child-protective content moderation.</li>
+                        <li><strong>Pan-African capability diffusion</strong>: Through the NAIRA Fellows program, annual Summer AI Intensives hosted rotationally across ECOWAS, EAC, SADC, and North African university partners, train-the-trainer bootcamps for polytechnics, and open XR-based “AI Literacy Caravans” that travel to secondary schools, we are rapidly widening the base of African AI practitioners.</li>
+                        <li><strong>Industry co-creation pipelines</strong>: We maintain formal innovation partnerships with African fintech unicorns, agritech scale-ups, healthtech consortia, edtech platforms, and renewable energy companies. These are not consulting arrangements — they are joint R&D labs where NAIRA researchers and company engineers co-own IP under clearly defined African-benefit clauses.</li>
+                        <li><strong>Global agenda-setting presence</strong>: NAIRA leads or co-leads African delegations to major AI governance forums (UN Global Digital Compact, GPAI, UNESCO AI Ethics negotiations, AfCFTA digital trade working groups).</li>
+                        <li><strong>Competitive positioning in the global value chain</strong>: By building sovereign model stacks, open-weight culturally-aligned foundation models, high-quality African-language evaluation suites, and verifiable data-provenance infrastructure, NAIRA is helping position African nations to capture higher-value segments of the global AI supply chain.</li>
+                    </ul>
+                    <p class="mt-6">In short, Regional Leadership is the conviction that Africa’s AI future will not be gifted by external powers, nor will it emerge spontaneously from market forces alone. It must be deliberately constructed through coordinated, high-ambition research, aggressive talent multiplication, strategic industry alignment, and unapologetic global advocacy. NAIRA exists to be the institution that makes that coordinated ascent both technically feasible and politically credible.</p>""",
+                    "globe",
+                    "amber"
+                )
+            ]
+            await client.batch([
+                ("INSERT INTO vision_missions (slug, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", v)
+                for v in vision_data
             ])
 
     print("Migration and seeding complete.")

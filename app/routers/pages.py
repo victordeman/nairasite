@@ -45,8 +45,18 @@ async def home(request: Request, db: libsql_client.Client = Depends(get_db)):
     )
 
 @router.get("/vision")
-async def vision(request: Request):
-    return templates.TemplateResponse("vision.html", {"request": request})
+async def vision(request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM vision_missions ORDER BY id")
+    vision_missions = to_dict_list(res)
+    return templates.TemplateResponse("vision.html", {"request": request, "vision_missions": vision_missions})
+
+@router.get("/vision/{slug}")
+async def vision_detail(slug: str, request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM vision_missions WHERE slug = ?", (slug,))
+    vision_mission = to_dict_list(res)
+    if not vision_mission:
+        return templates.TemplateResponse("vision.html", {"request": request, "vision_missions": []})
+    return templates.TemplateResponse("vision_detail.html", {"request": request, "item": vision_mission[0]})
 
 @router.get("/pillars")
 async def pillars(request: Request, db: libsql_client.Client = Depends(get_db)):
