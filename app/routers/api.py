@@ -171,13 +171,18 @@ async def get_stats(db: libsql_client.Client = Depends(get_db)):
 async def get_naira_context(db: libsql_client.Client):
     """Retrieves all core info to serve as LLM context."""
     pillars = await db.execute("SELECT title, description FROM pillars")
+    vision = await db.execute("SELECT title, description FROM vision_missions")
     architecture = await db.execute("SELECT title, description, tags FROM architecture_layers")
     revenue = await db.execute("SELECT title, description FROM revenue_streams")
     projects = await db.execute("SELECT title, description, category, status FROM projects")
     
     context = "NAIRA (NBU AI Research & Advancement Institute) Context:\n\n"
+
+    context += "VISION & MISSION:\n"
+    for v in vision.rows:
+        context += f"- {v[0]}: {v[1]}\n"
     
-    context += "STRATEGIC PILLARS:\n"
+    context += "\nSTRATEGIC PILLARS:\n"
     for p in pillars.rows:
         context += f"- {p[0]}: {p[1]}\n"
         
