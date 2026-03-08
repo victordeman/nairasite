@@ -1,8 +1,9 @@
 from datetime import timedelta
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 import libsql_client
 
+from app.limiter import limiter
 from app.database import get_db
 from app.models.schemas import Token
 from app.security import (
@@ -14,7 +15,9 @@ from app.security import (
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/token", response_model=Token)
+@limiter.limit("5/minute")
 async def login_for_access_token(
+    request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: libsql_client.Client = Depends(get_db)
 ):

@@ -1,6 +1,7 @@
 import json
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 import libsql_client
+from app.limiter import limiter
 from app.database import get_db, to_dict_list
 from app.models.schemas import (
     PillarResponse,
@@ -123,7 +124,8 @@ async def delete_revenue_stream(stream_id: int, db: libsql_client.Client = Depen
 
 # --- Contact Form ---
 @router.post("/contact", response_model=MessageResponse, status_code=201)
-async def submit_contact(submission: ContactSubmission, db: libsql_client.Client = Depends(get_db)):
+@limiter.limit("5/minute")
+async def submit_contact(request: Request, submission: ContactSubmission, db: libsql_client.Client = Depends(get_db)):
     await db.execute(
         "INSERT INTO contact_submissions (name, email, role, message) VALUES (?, ?, ?, ?)",
         (submission.name, submission.email, submission.role, submission.message),
@@ -137,7 +139,8 @@ async def get_contacts(db: libsql_client.Client = Depends(get_db)):
 
 # --- Newsletter ---
 @router.post("/newsletter", response_model=MessageResponse, status_code=201)
-async def subscribe_newsletter(subscription: NewsletterSubscription, db: libsql_client.Client = Depends(get_db)):
+@limiter.limit("5/minute")
+async def subscribe_newsletter(request: Request, subscription: NewsletterSubscription, db: libsql_client.Client = Depends(get_db)):
     try:
         await db.execute(
             "INSERT INTO newsletter_subscribers (email) VALUES (?)",
@@ -202,9 +205,10 @@ async def get_naira_context(db: libsql_client.Client):
     return context
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat_ai(request: ChatRequest, db: libsql_client.Client = Depends(get_db)):
-    user_msg = request.message
-    selected_model = request.model
+@limiter.limit("10/minute")
+async def chat_ai(request: Request, chat_request: ChatRequest, db: libsql_client.Client = Depends(get_db)):
+    user_msg = chat_request.message
+    selected_model = chat_request.model
     naira_context = await get_naira_context(db)
     
     system_prompt = f"""You are the NAIRA AI Assistant, an expert on the NBU AI Research & Advancement Institute.
