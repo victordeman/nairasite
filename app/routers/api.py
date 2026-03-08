@@ -18,8 +18,9 @@ from app.models.schemas import (
     ChatRequest,
     ChatResponse,
 )
+from app.security import get_current_user
 
-router = APIRouter(prefix="/api", tags=["api"])
+router = APIRouter(prefix="/api", tags=["api"], dependencies=[Depends(get_current_user)])
 
 # --- Pillars ---
 @router.get("/pillars", response_model=list[PillarResponse])

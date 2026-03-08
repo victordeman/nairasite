@@ -110,6 +110,29 @@ async def init_db():
                     color TEXT NOT NULL
                 )
             """)
+            await client.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    email TEXT,
+                    full_name TEXT,
+                    hashed_password TEXT NOT NULL,
+                    disabled BOOLEAN DEFAULT 0
+                )
+            """)
+
+            # Seed users if empty
+            cursor = await client.execute("SELECT COUNT(*) FROM users")
+            count = cursor.rows[0][0]
+            if count == 0:
+                logger.info("Seeding users...")
+                from passlib.context import CryptContext
+                pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+                hashed_password = pwd_context.hash("admin123")
+                await client.execute(
+                    "INSERT INTO users (username, email, full_name, hashed_password) VALUES (?, ?, ?, ?)",
+                    ("admin", "admin@naira.institute", "NAIRA Admin", hashed_password)
+                )
 
             # Seed pillars if empty
             cursor = await client.execute("SELECT COUNT(*) FROM pillars")
