@@ -2,6 +2,7 @@ fastapi
 uvicorn
 libsql-client
 jinja2
+email-validator
 pydantic[email]
 python-multipart
 aiofiles

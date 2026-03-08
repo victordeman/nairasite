@@ -288,6 +288,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('lang') || 'en';
     applyLang(savedLang);
 
+    // Load CAPTCHA
+    const loadCaptcha = async () => {
+        const captchaQuestion = document.getElementById('captcha-question');
+        const captchaToken = document.getElementById('captcha-token');
+        if (captchaQuestion && captchaToken) {
+            try {
+                const response = await fetch('/api/captcha');
+                const result = await response.json();
+                captchaQuestion.textContent = result.question;
+                captchaToken.value = result.captcha_token;
+            } catch (error) {
+                captchaQuestion.textContent = "Error loading CAPTCHA";
+            }
+        }
+    };
+    loadCaptcha();
+
     // Contact Form Submission
     const contactForm = document.getElementById('contact-form');
     const contactStatus = document.getElementById('contact-status');
@@ -300,6 +317,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 email: formData.get('email'),
                 role: formData.get('role') || '',
                 message: formData.get('message'),
+                website_url: formData.get('website_url'),
+                captcha_token: formData.get('captcha_token'),
+                captcha_answer: formData.get('captcha_answer'),
             };
             try {
                 const response = await fetch('/api/contact', {
@@ -314,6 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         contactStatus.className = 'text-center py-3 px-4 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30';
                         contactStatus.textContent = result.message;
                         contactForm.reset();
+                        loadCaptcha();
                     } else {
                         contactStatus.className = 'text-center py-3 px-4 rounded-xl bg-red-600/20 text-red-400 border border-red-500/30';
                         contactStatus.textContent = result.message || 'Something went wrong. Please try again.';
@@ -337,6 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(form);
         const data = {
             email: formData.get('email'),
+            website_url: formData.get('website_url'),
         };
         try {
             const response = await fetch('/api/newsletter', {
