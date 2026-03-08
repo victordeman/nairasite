@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ item.title }} - NAIRA{% endblock %}
 {% block content %}
+<style>
+    .content-justified p {
+        text-align: justify;
+    }
+</style>
 <section class="py-32 relative overflow-hidden">
     <div class="container mx-auto px-6 relative z-10">
         <div class="max-w-4xl mx-auto">
@@ -28,7 +33,7 @@
             </div>
 
             <div class="glass-card rounded-3xl p-8 md:p-12 border border-black/10">
-                <div class="text-black text-lg leading-relaxed text-justify space-y-6">
+                <div class="content-justified text-black text-lg leading-relaxed space-y-6">
                     {{ item.description | safe }}
                 </div>
             </div>
