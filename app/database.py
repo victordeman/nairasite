@@ -1,6 +1,13 @@
 import os
 import libsql_client
 import logging
+from app.seed_data import (
+    PILLARS_DATA,
+    ARCHITECTURE_LAYERS_DATA,
+    REVENUE_STREAMS_DATA,
+    PROJECTS_DATA,
+    VISION_MISSIONS_DATA
+)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -14,8 +21,6 @@ def to_dict_list(result_set: libsql_client.ResultSet):
     ]
 
 # Use Turso Database URL and Auth Token from environment variables
-# For local development, it defaults to a local file
-# On Vercel, if TURSO_DATABASE_URL is not provided, fallback to /tmp/naira.db
 if os.getenv("TURSO_DATABASE_URL"):
     DATABASE_URL = os.getenv("TURSO_DATABASE_URL")
 elif os.getenv("VERCEL"):
@@ -58,6 +63,7 @@ async def init_db():
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     number TEXT NOT NULL,
                     title TEXT NOT NULL,
+                    summary TEXT NOT NULL DEFAULT '',
                     description TEXT NOT NULL,
                     icon TEXT NOT NULL,
                     color TEXT NOT NULL
@@ -93,23 +99,26 @@ async def init_db():
                     status TEXT NOT NULL
                 )
             """)
+            await client.execute("""
+                CREATE TABLE IF NOT EXISTS vision_missions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    slug TEXT UNIQUE NOT NULL,
+                    title TEXT NOT NULL,
+                    summary TEXT NOT NULL,
+                    description TEXT NOT NULL,
+                    icon TEXT NOT NULL,
+                    color TEXT NOT NULL
+                )
+            """)
 
             # Seed pillars if empty
             cursor = await client.execute("SELECT COUNT(*) FROM pillars")
             count = cursor.rows[0][0]
             if count == 0:
                 logger.info("Seeding pillars...")
-                pillars_data = [
-                    ("01", "African-Centered AI Research", "Focus on embedding African languages and indigenous knowledge into AI to create culturally relevant technologies that serve local contexts.", "database", "indigo"),
-                    ("02", "Educational Transformation", "Use XR and agentic AI technologies to revolutionize education and automate academic workflows for immersive learning.", "monitor", "amber"),
-                    ("03", "Entrepreneurship Empowerment", "Foster a culture of creators and innovators to promote entrepreneurship within academic communities and beyond.", "users", "emerald"),
-                    ("04", "Pan-African Innovation Network", "Build collaborative networks between universities and industries across Africa to drive innovation and knowledge sharing.", "share-2", "purple"),
-                    ("05", "Sustainable Monetization", "Develop diverse revenue streams and marketplaces for AI and XR solutions to ensure long-term sustainability.", "trending-up", "rose"),
-                    ("06", "Accessibility & Scalability", "Ensure solutions are scalable and accessible across devices using cloud-based architectures and modular platforms.", "cloud", "cyan"),
-                ]
                 await client.batch([
-                    ("INSERT INTO pillars (number, title, description, icon, color) VALUES (?, ?, ?, ?, ?)", p)
-                    for p in pillars_data
+                    ("INSERT INTO pillars (number, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", p)
+                    for p in PILLARS_DATA
                 ])
 
             # Seed architecture layers if empty
@@ -117,14 +126,9 @@ async def init_db():
             count = cursor.rows[0][0]
             if count == 0:
                 logger.info("Seeding architecture layers...")
-                layers_data = [
-                    (1, "Experience Layer", "Focuses on immersive and interactive experiences using XR classrooms to provide immersive learning environments with AI-driven interfaces for students and faculty.", "box", "indigo", '["XR Classrooms", "AI Interfaces", "Immersive Learning"]'),
-                    (2, "Intelligence Layer", "Integrates Generative AI and Agentic AI to provide intelligent decision-making and adaptive learning capabilities through autonomous educational agents.", "cpu", "amber", '["Generative AI", "Agentic Systems", "Adaptive Learning"]'),
-                    (3, "Data & Integration Layer", "Manages data flow and integrates diverse datasets with secure API Gateway and Event Bus enabling interoperability, scalability, and data sovereignty.", "hard-drive", "emerald", '["Secure APIs", "Data Sovereignty", "System Connectivity"]'),
-                ]
                 await client.batch([
                     ("INSERT INTO architecture_layers (layer_number, title, description, icon, color, tags) VALUES (?, ?, ?, ?, ?, ?)", l)
-                    for l in layers_data
+                    for l in ARCHITECTURE_LAYERS_DATA
                 ])
 
             # Seed revenue streams if empty
@@ -132,15 +136,9 @@ async def init_db():
             count = cursor.rows[0][0]
             if count == 0:
                 logger.info("Seeding revenue streams...")
-                revenue_data = [
-                    ("XR Modules Marketplace", "Sell XR lessons to schools, corporate partners, and training centers as a core revenue stream, creating a vibrant ecosystem of African-centered educational content.", "package", "purple"),
-                    ("Corporate & Government Training", "Offer tailored AI and XR courses for professional development in corporate and government sectors, driving digital transformation across industries.", "briefcase", "blue"),
-                    ("Subscription Access", "Provide premium subscriptions granting students and faculty access to advanced simulations and AI agents, ensuring continuous learning and innovation.", "credit-card", "rose"),
-                    ("Research Collaboration & Grants", "Engage in joint research projects funded by African and global institutions to drive innovation and establish thought leadership in AI/XR domains.", "award", "cyan"),
-                ]
                 await client.batch([
                     ("INSERT INTO revenue_streams (title, description, icon, color) VALUES (?, ?, ?, ?)", r)
-                    for r in revenue_data
+                    for r in REVENUE_STREAMS_DATA
                 ])
 
             # Seed projects if empty
@@ -148,18 +146,21 @@ async def init_db():
             count = cursor.rows[0][0]
             if count == 0:
                 logger.info("Seeding projects...")
-                projects_data = [
-                    ("African Language LLM", "Developing large language models specifically optimized for indigenous African languages to improve accessibility and digital inclusion.", "message-circle", "AI Research", "In Progress"),
-                    ("XR Medical Simulation", "An immersive XR platform for medical students in Africa to practice surgical procedures in a safe, virtual environment.", "heart", "XR Education", "Beta"),
-                    ("Agentic Academic Assistant", "AI-driven autonomous agents that help university faculty automate administrative tasks and personalize student learning paths.", "user-check", "Agentic AI", "Early Access"),
-                    ("Pan-African Tech Network", "A decentralized platform connecting innovators across the continent to share resources and collaborate on high-impact tech projects.", "share-2", "Innovation", "Operational"),
-                ]
                 await client.batch([
                     ("INSERT INTO projects (title, description, icon, category, status) VALUES (?, ?, ?, ?, ?)", p)
-                    for p in projects_data
+                    for p in PROJECTS_DATA
+                ])
+
+            # Seed vision missions if empty
+            cursor = await client.execute("SELECT COUNT(*) FROM vision_missions")
+            count = cursor.rows[0][0]
+            if count == 0:
+                logger.info("Seeding vision missions...")
+                await client.batch([
+                    ("INSERT INTO vision_missions (slug, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", v)
+                    for v in VISION_MISSIONS_DATA
                 ])
         logger.info("Database initialization successful.")
     except Exception as e:
         logger.error(f"Failed to initialize database: {e}")
-        # In production we might not want to re-raise, but for debugging Vercel it's better to see the crash
         raise e

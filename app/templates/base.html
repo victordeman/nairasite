@@ -47,62 +47,66 @@
                     NAIRA
                 </a>
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="/" class="nav-link text-sm text-slate-300 hover:text-white {% if request.url.path == '/' %}text-white font-bold{% endif %}" data-key="nav-home">Home</a>
-                    <a href="/vision" class="nav-link text-sm text-slate-300 hover:text-white {% if request.url.path == '/vision' %}text-white font-bold{% endif %}" data-key="nav-vision">Vision</a>
-                    <a href="/pillars" class="nav-link text-sm text-slate-300 hover:text-white {% if request.url.path == '/pillars' %}text-white font-bold{% endif %}" data-key="nav-pillars">Pillars</a>
-                    <a href="/architecture" class="nav-link text-sm text-slate-300 hover:text-white {% if request.url.path == '/architecture' %}text-white font-bold{% endif %}" data-key="nav-architecture">Architecture</a>
-                    <a href="/revenue" class="nav-link text-sm text-slate-300 hover:text-white {% if request.url.path == '/revenue' %}text-white font-bold{% endif %}" data-key="nav-revenue">Revenue</a>
-                    <a href="/content" class="nav-link text-sm text-slate-300 hover:text-white {% if request.url.path == '/content' %}text-white font-bold{% endif %}" data-key="nav-content">Content</a>
-                    <a href="/projects" class="nav-link text-sm text-slate-300 hover:text-white {% if request.url.path == '/projects' %}text-white font-bold{% endif %}" data-key="nav-projects">Projects</a>
+                    <a href="/" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/' %}text-indigo-700 font-bold{% endif %}" data-key="nav-home">Home</a>
+                    <a href="/vision" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/vision' %}text-indigo-700 font-bold{% endif %}" data-key="nav-vision">Vision</a>
+                    <a href="/pillars" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/pillars' %}text-indigo-700 font-bold{% endif %}" data-key="nav-pillars">Pillars</a>
+                    <a href="/architecture" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/architecture' %}text-indigo-700 font-bold{% endif %}" data-key="nav-architecture">Architecture</a>
+                    <a href="/revenue" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/revenue' %}text-indigo-700 font-bold{% endif %}" data-key="nav-revenue">Revenue</a>
+                    <a href="/content" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/content' %}text-indigo-700 font-bold{% endif %}" data-key="nav-content">Content</a>
+                    <a href="/projects" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/projects' %}text-indigo-700 font-bold{% endif %}" data-key="nav-projects">Projects</a>
                 </div>
 
                 <div class="hidden md:flex items-center gap-4">
                     <!-- Language Select -->
                     <div class="relative group">
-                        <button class="flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest">
+                        <button class="flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-700 uppercase tracking-widest">
                             <i data-feather="globe" class="w-4 h-4"></i>
                             <span id="current-lang">EN</span>
                         </button>
-                        <div class="absolute right-0 mt-2 w-32 glass-card rounded-xl border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible overflow-hidden">
-                            <button onclick="switchLang('en')" class="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-white/10">English</button>
-                            <button onclick="switchLang('yo')" class="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-white/10">Yoruba</button>
-                            <button onclick="switchLang('sw')" class="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-white/10">Swahili</button>
+                        <div class="absolute right-0 mt-2 w-32 glass-card rounded-xl border border-indigo-600/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible overflow-hidden">
+                            <button onclick="switchLang('en')" class="w-full text-left px-4 py-2 text-xs text-indigo-600 hover:bg-indigo-600/10">English</button>
+                            <button onclick="switchLang('yo')" class="w-full text-left px-4 py-2 text-xs text-indigo-600 hover:bg-indigo-600/10">Yoruba</button>
+                            <button onclick="switchLang('sw')" class="w-full text-left px-4 py-2 text-xs text-indigo-600 hover:bg-indigo-600/10">Swahili</button>
+                            <button onclick="switchLang('ig')" class="w-full text-left px-4 py-2 text-xs text-indigo-600 hover:bg-indigo-600/10">Igbo</button>
+                            <button onclick="switchLang('ha')" class="w-full text-left px-4 py-2 text-xs text-indigo-600 hover:bg-indigo-600/10">Hausa</button>
                         </div>
                     </div>
 
                     <!-- Theme Toggle -->
-                    <button id="theme-toggle" class="p-2 text-slate-400 hover:text-white">
+                    <button id="theme-toggle" class="p-2 text-indigo-600 hover:text-indigo-700">
                         <i data-feather="moon" id="theme-icon-dark" class="w-5 h-5"></i>
                         <i data-feather="sun" id="theme-icon-light" class="w-5 h-5 hidden"></i>
                     </button>
 
-                    <a href="/contact" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-sm font-medium shadow-lg shadow-indigo-500/20">Contact</a>
+                    <a href="/contact" class="px-5 py-2 border border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-full text-sm font-medium shadow-lg shadow-indigo-500/20 transition-colors">Contact</a>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white">
+                <button id="mobile-menu-btn" class="md:hidden text-indigo-600 hover:text-indigo-700">
                     <i data-feather="menu" class="w-6 h-6"></i>
                 </button>
             </div>
-            <div id="mobile-menu" class="hidden md:hidden pb-6 border-t border-white/5 mt-2 pt-4">
-                <div class="flex flex-col gap-4">
-                    <a href="/" class="text-slate-300 hover:text-white">Home</a>
-                    <a href="/vision" class="text-slate-300 hover:text-white">Vision</a>
-                    <a href="/pillars" class="text-slate-300 hover:text-white">Pillars</a>
-                    <a href="/architecture" class="text-slate-300 hover:text-white">Architecture</a>
-                    <a href="/revenue" class="text-slate-300 hover:text-white">Revenue</a>
-                    <a href="/content" class="text-slate-300 hover:text-white">Content</a>
-                    <a href="/projects" class="text-slate-300 hover:text-white">Projects</a>
-                    <div class="flex items-center justify-between pt-4 border-t border-white/5">
+            <div id="mobile-menu" class="hidden md:hidden pb-6 border-t border-indigo-600/10 mt-2 pt-4 glass-card rounded-2xl px-4 mx-2 shadow-2xl">
+                <div class="flex flex-row flex-wrap items-center justify-center gap-x-6 gap-y-4 py-4">
+                    <a href="/" class="text-indigo-600 hover:text-indigo-700 font-medium">Home</a>
+                    <a href="/vision" class="text-indigo-600 hover:text-indigo-700 font-medium">Vision</a>
+                    <a href="/pillars" class="text-indigo-600 hover:text-indigo-700 font-medium">Pillars</a>
+                    <a href="/architecture" class="text-indigo-600 hover:text-indigo-700 font-medium">Architecture</a>
+                    <a href="/revenue" class="text-indigo-600 hover:text-indigo-700 font-medium">Revenue</a>
+                    <a href="/content" class="text-indigo-600 hover:text-indigo-700 font-medium">Content</a>
+                    <a href="/projects" class="text-indigo-600 hover:text-indigo-700 font-medium">Projects</a>
+                    <div class="flex items-center justify-between w-full pt-4 border-t border-indigo-600/10">
                         <div class="flex gap-4">
-                            <button onclick="switchLang('en')" class="text-xs font-bold text-slate-400">EN</button>
-                            <button onclick="switchLang('yo')" class="text-xs font-bold text-slate-400">YO</button>
-                            <button onclick="switchLang('sw')" class="text-xs font-bold text-slate-400">SW</button>
+                            <button onclick="switchLang('en')" class="text-xs font-bold text-indigo-600">EN</button>
+                            <button onclick="switchLang('yo')" class="text-xs font-bold text-indigo-600">YO</button>
+                            <button onclick="switchLang('sw')" class="text-xs font-bold text-indigo-600">SW</button>
+                            <button onclick="switchLang('ig')" class="text-xs font-bold text-indigo-600">IG</button>
+                            <button onclick="switchLang('ha')" class="text-xs font-bold text-indigo-600">HA</button>
                         </div>
-                        <button id="theme-toggle-mobile" class="p-2 text-slate-400">
+                        <button id="theme-toggle-mobile" class="p-2 text-indigo-600">
                             <i data-feather="moon" class="w-5 h-5"></i>
                         </button>
                     </div>
-                    <a href="/contact" class="px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-medium text-center">Contact Us</a>
+                    <a href="/contact" class="w-full px-5 py-3 border border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-xl text-sm font-medium text-center transition-colors">Contact Us</a>
                 </div>
             </div>
         </div>
@@ -183,5 +187,7 @@
     <script>
         feather.replace();
     </script>
+    <!-- Navbar Backdrop -->
+    <div id="navbar-backdrop" class="fixed inset-0 bg-white/80 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 </body>
 </html>

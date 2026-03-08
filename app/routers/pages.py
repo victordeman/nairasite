@@ -1,3 +1,4 @@
+import os
 import json
 from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
@@ -5,7 +6,10 @@ import libsql_client
 from app.database import get_db, to_dict_list
 
 router = APIRouter(tags=["pages"])
-templates = Jinja2Templates(directory="app/templates")
+
+# Define the base directory for templates
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 @router.get("/")
 async def home(request: Request, db: libsql_client.Client = Depends(get_db)):
@@ -41,14 +45,33 @@ async def home(request: Request, db: libsql_client.Client = Depends(get_db)):
     )
 
 @router.get("/vision")
-async def vision(request: Request):
-    return templates.TemplateResponse("vision.html", {"request": request})
+async def vision(request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM vision_missions ORDER BY id")
+    vision_missions = to_dict_list(res)
+    return templates.TemplateResponse("vision.html", {"request": request, "vision_missions": vision_missions})
+
+@router.get("/vision/{slug}")
+async def vision_detail(slug: str, request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM vision_missions WHERE slug = ?", (slug,))
+    vision_mission = to_dict_list(res)
+    if not vision_mission:
+        return templates.TemplateResponse("vision.html", {"request": request, "vision_missions": []})
+    return templates.TemplateResponse("vision_detail.html", {"request": request, "item": vision_mission[0]})
 
 @router.get("/pillars")
 async def pillars(request: Request, db: libsql_client.Client = Depends(get_db)):
     pillars_res = await db.execute("SELECT * FROM pillars ORDER BY number")
     pillars = to_dict_list(pillars_res)
     return templates.TemplateResponse("pillars.html", {"request": request, "pillars": pillars})
+
+@router.get("/pillars/{number}")
+async def pillar_detail(number: str, request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM pillars WHERE number = ?", (number,))
+    pillar = to_dict_list(res)
+    if not pillar:
+        # Fallback if pillar not found, could also raise 404
+        return templates.TemplateResponse("pillars.html", {"request": request, "pillars": []})
+    return templates.TemplateResponse("pillar_detail.html", {"request": request, "pillar": pillar[0]})
 
 @router.get("/architecture")
 async def architecture(request: Request, db: libsql_client.Client = Depends(get_db)):

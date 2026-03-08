@@ -4,6 +4,7 @@ from datetime import datetime
 class PillarBase(BaseModel):
     number: str
     title: str
+    summary: str = ""
     description: str
     icon: str
     color: str
@@ -11,6 +12,21 @@ class PillarResponse(PillarBase):
     id: int
 class PillarCreate(PillarBase):
     pass
+
+class VisionMissionBase(BaseModel):
+    slug: str
+    title: str
+    summary: str
+    description: str
+    icon: str
+    color: str
+
+class VisionMissionResponse(VisionMissionBase):
+    id: int
+
+class VisionMissionCreate(VisionMissionBase):
+    pass
+
 class ArchitectureLayerBase(BaseModel):
     layer_number: int
     title: str

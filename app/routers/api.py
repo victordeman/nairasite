@@ -30,8 +30,8 @@ async def get_pillars(db: libsql_client.Client = Depends(get_db)):
 @router.post("/pillars", response_model=PillarResponse, status_code=201)
 async def create_pillar(pillar: PillarCreate, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute(
-        "INSERT INTO pillars (number, title, description, icon, color) VALUES (?, ?, ?, ?, ?)",
-        (pillar.number, pillar.title, pillar.description, pillar.icon, pillar.color),
+        "INSERT INTO pillars (number, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)",
+        (pillar.number, pillar.title, pillar.summary, pillar.description, pillar.icon, pillar.color),
     )
     new_id = result.last_insert_rowid
     return {**pillar.model_dump(), "id": new_id}
@@ -43,8 +43,8 @@ async def update_pillar(pillar_id: int, pillar: PillarCreate, db: libsql_client.
         raise HTTPException(status_code=404, detail="Pillar not found")
     
     await db.execute(
-        "UPDATE pillars SET number=?, title=?, description=?, icon=?, color=? WHERE id=?",
-        (pillar.number, pillar.title, pillar.description, pillar.icon, pillar.color, pillar_id),
+        "UPDATE pillars SET number=?, title=?, summary=?, description=?, icon=?, color=? WHERE id=?",
+        (pillar.number, pillar.title, pillar.summary, pillar.description, pillar.icon, pillar.color, pillar_id),
     )
     return {**pillar.model_dump(), "id": pillar_id}
 
@@ -171,13 +171,18 @@ async def get_stats(db: libsql_client.Client = Depends(get_db)):
 async def get_naira_context(db: libsql_client.Client):
     """Retrieves all core info to serve as LLM context."""
     pillars = await db.execute("SELECT title, description FROM pillars")
+    vision = await db.execute("SELECT title, description FROM vision_missions")
     architecture = await db.execute("SELECT title, description, tags FROM architecture_layers")
     revenue = await db.execute("SELECT title, description FROM revenue_streams")
     projects = await db.execute("SELECT title, description, category, status FROM projects")
     
     context = "NAIRA (NBU AI Research & Advancement Institute) Context:\n\n"
+
+    context += "VISION & MISSION:\n"
+    for v in vision.rows:
+        context += f"- {v[0]}: {v[1]}\n"
     
-    context += "STRATEGIC PILLARS:\n"
+    context += "\nSTRATEGIC PILLARS:\n"
     for p in pillars.rows:
         context += f"- {p[0]}: {p[1]}\n"
         
@@ -200,7 +205,7 @@ async def chat_ai(request: ChatRequest, db: libsql_client.Client = Depends(get_d
     user_msg = request.message
     selected_model = request.model
     naira_context = await get_naira_context(db)
-
+    
     system_prompt = f"""You are the NAIRA AI Assistant, an expert on the NBU AI Research & Advancement Institute.
 Your goal is to provide helpful, accurate, and culturally relevant information about NAIRA's work in AI and XR.
 
@@ -213,7 +218,7 @@ Guidelines:
 4. Keep responses concise but informative.
 """
 
-    # For now, we use a mock LLM response that incorporates the context
+    # For now, we use a mock LLM response that incorporates the context 
     # unless an API key is detected (Integration Placeholder)
     import os
     gemini_key = os.getenv("GOOGLE_API_KEY")
@@ -238,5 +243,5 @@ Guidelines:
             return {"response": "We are currently working on several high-impact projects like the African Language LLM and XR Medical Simulations. These aim to solve local challenges using global tech."}
         if any(k in full_message for k in ["architecture", "layer", "system"]):
             return {"response": "Our architecture is built on three layers: Experience (XR), Intelligence (Generative AI), and Data/Integration. This ensures both immersion and intelligence."}
-
+            
         return {"response": f"I'm the NAIRA Assistant. I can tell you all about our vision for African AI. You asked: '{user_msg}'. How can I relate this to our strategic pillars or current projects?"}

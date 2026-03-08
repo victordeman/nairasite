@@ -75,13 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
+                body: JSON.stringify({ 
                     message,
                     model: modelSelect ? modelSelect.value : 'local'
                 }),
             });
             const data = await response.json();
-
+            
             removeLoadingIndicator(loadingId);
             addMessage(data.response, 'ai');
 
@@ -96,9 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function addMessage(text, sender) {
         const div = document.createElement('div');
         div.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'} mb-6`;
-
+        
         const maxWidth = 'max-w-[85%] md:max-w-[70%]';
-
+        
         if (sender === 'user') {
             div.innerHTML = `
                 <div class="${maxWidth} bg-indigo-600 text-white rounded-2xl rounded-tr-none px-4 py-3 shadow-lg shadow-indigo-500/10">
@@ -169,13 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.loadChat = (index) => {
         const chat = chatHistory[index];
         if (!chat) return;
-
+        
         chatBody.innerHTML = '';
         chat.messages.forEach(m => {
             addMessage(m.user, 'user');
             addMessage(m.ai, 'ai');
         });
-
+        
         if (window.innerWidth < 768) {
             sidebar.classList.add('hidden');
         }

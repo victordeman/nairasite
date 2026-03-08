@@ -1,7 +1,12 @@
 // Initialize features on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Navbar scroll effect
+    // Navbar Elements
     const navbar = document.getElementById('navbar');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navbarBackdrop = document.getElementById('navbar-backdrop');
+
+    // Navbar scroll effect
     window.addEventListener('scroll', () => {
         if (navbar) {
             if (window.scrollY > 50) {
@@ -13,11 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
     if (mobileMenuBtn && mobileMenu) {
         mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
             mobileMenu.classList.toggle('hidden');
         });
 
@@ -33,6 +35,32 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                 mobileMenu.classList.add('hidden');
             }
+        });
+    }
+
+    // Navbar backdrop fade effect
+    if (navbar && navbarBackdrop) {
+        navbar.addEventListener('click', (e) => {
+            // Only toggle if we're clicking the navbar itself, not a link inside it
+            // unless it's the mobile menu button
+            if (e.target.closest('a') && !e.target.closest('#mobile-menu-btn')) {
+                navbarBackdrop.classList.remove('backdrop-visible');
+                return;
+            }
+            navbarBackdrop.classList.toggle('backdrop-visible');
+        });
+
+        // Close backdrop when clicking on it
+        navbarBackdrop.addEventListener('click', () => {
+            navbarBackdrop.classList.remove('backdrop-visible');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+        });
+
+        // Close backdrop when a nav link is clicked
+        document.querySelectorAll('.nav-link, #mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navbarBackdrop.classList.remove('backdrop-visible');
+            });
         });
     }
 
@@ -198,6 +226,32 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-badge': "Uanzilishi wa Renaissance ya AI ya Afrika",
             'hero-subtitle': 'TAASISI YA NBU YA UTAFITI NA MAENDELEO YA AI',
             'hero-description': 'Kubadilisha elimu na uvumbuzi kupitia uzoefu wa XR wa kuzama na usanifu wa AI, kupachika lugha za Kiafrika, utamaduni, na maarifa asilia katika suluhisho za teknolojia ya kimataifa.'
+        },
+        'ig': {
+            'nav-home': 'Ụlọ',
+            'nav-vision': 'Ọhụụ',
+            'nav-pillars': 'Ogidi',
+            'nav-architecture': 'Nhazi',
+            'nav-revenue': 'Ego nwetara',
+            'nav-content': 'Ọdịnaya',
+            'nav-projects': 'Ihe omume',
+            'hero-title': 'NAIRA',
+            'hero-badge': "Ịsụ ụzọ AI Renaissance nke Africa",
+            'hero-subtitle': 'NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE',
+            'hero-description': 'Ịgbanwe agụmakwụkwọ na ihe ọhụrụ site na ahụmịhe XR na-emikpu na usoro AI, na-etinye asụsụ Africa, omenala, na ihe ọmụma obodo n\'ime usoro teknụzụ zuru ụwa ọnụ.'
+        },
+        'ha': {
+            'nav-home': 'Gida',
+            'nav-vision': 'Hasashe',
+            'nav-pillars': 'Shika-shikai',
+            'nav-architecture': 'Tsarin Gini',
+            'nav-revenue': 'Kudaden Shiga',
+            'nav-content': 'Abun Ciki',
+            'nav-projects': 'Ayyuka',
+            'hero-title': 'NAIRA',
+            'hero-badge': "Jagorar Farfadowar AI ta Afirka",
+            'hero-subtitle': 'CIBIYAR BINCIKE DA CIGABAN AI TA NBU',
+            'hero-description': 'Canza ilimi da sabbin abubuwa ta hanyar abubuwan XR masu zurfi da tsarin AI, sanya harsunan Afirka, al\'adu, da ilimin asali cikin hanyoyin fasahar duniya.'
         }
     };
 
