@@ -5,3 +5,6 @@ jinja2
 pydantic[email]
 python-multipart
 aiofiles
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1

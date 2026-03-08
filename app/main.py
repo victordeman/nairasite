@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from app.database import init_db
 from app.routers.api import router as api_router
 from app.routers.pages import router as pages_router
+from app.routers.auth import router as auth_router
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -43,6 +44,7 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
 # Include routers
+app.include_router(auth_router)
 app.include_router(api_router)
 app.include_router(pages_router)
 
