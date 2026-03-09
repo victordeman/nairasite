@@ -250,7 +250,7 @@ async def call_huggingface(system_prompt: str, user_msg: str):
 async def chat_ai(request: Request, chat_request: ChatRequest, db: libsql_client.Client = Depends(get_db)):
     user_msg = chat_request.message
     selected_model = chat_request.model
-
+    
     # Enhanced RAG retrieval
     relevant_docs = await rag_manager.query(user_msg)
     naira_context = "\n".join(relevant_docs) if relevant_docs else "No specific NAIRA context found for this query."
