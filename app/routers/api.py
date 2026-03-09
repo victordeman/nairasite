@@ -16,20 +16,21 @@ from app.models.schemas import (
     NewsletterResponse,
     StatsResponse,
     MessageResponse,
+    CaptchaResponse,
     ChatRequest,
     ChatResponse,
 )
 from app.security import get_current_user
 
-router = APIRouter(prefix="/api", tags=["api"], dependencies=[Depends(get_current_user)])
+router = APIRouter(prefix="/api", tags=["api"])
 
 # --- Pillars ---
-@router.get("/pillars", response_model=list[PillarResponse])
+@router.get("/pillars", response_model=list[PillarResponse], dependencies=[Depends(get_current_user)])
 async def get_pillars(db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT * FROM pillars ORDER BY number")
     return to_dict_list(result)
 
-@router.post("/pillars", response_model=PillarResponse, status_code=201)
+@router.post("/pillars", response_model=PillarResponse, status_code=201, dependencies=[Depends(get_current_user)])
 async def create_pillar(pillar: PillarCreate, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute(
         "INSERT INTO pillars (number, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)",
@@ -38,7 +39,7 @@ async def create_pillar(pillar: PillarCreate, db: libsql_client.Client = Depends
     new_id = result.last_insert_rowid
     return {**pillar.model_dump(), "id": new_id}
 
-@router.put("/pillars/{pillar_id}", response_model=PillarResponse)
+@router.put("/pillars/{pillar_id}", response_model=PillarResponse, dependencies=[Depends(get_current_user)])
 async def update_pillar(pillar_id: int, pillar: PillarCreate, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT id FROM pillars WHERE id = ?", (pillar_id,))
     if not result.rows:
@@ -50,7 +51,7 @@ async def update_pillar(pillar_id: int, pillar: PillarCreate, db: libsql_client.
     )
     return {**pillar.model_dump(), "id": pillar_id}
 
-@router.delete("/pillars/{pillar_id}", response_model=MessageResponse)
+@router.delete("/pillars/{pillar_id}", response_model=MessageResponse, dependencies=[Depends(get_current_user)])
 async def delete_pillar(pillar_id: int, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT id FROM pillars WHERE id = ?", (pillar_id,))
     if not result.rows:
@@ -60,7 +61,7 @@ async def delete_pillar(pillar_id: int, db: libsql_client.Client = Depends(get_d
     return {"message": "Pillar deleted", "success": True}
 
 # --- Architecture Layers ---
-@router.get("/architecture", response_model=list[ArchitectureLayerResponse])
+@router.get("/architecture", response_model=list[ArchitectureLayerResponse], dependencies=[Depends(get_current_user)])
 async def get_architecture_layers(db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT * FROM architecture_layers ORDER BY layer_number")
     res_list = to_dict_list(result)
@@ -68,7 +69,7 @@ async def get_architecture_layers(db: libsql_client.Client = Depends(get_db)):
         d["tags"] = json.loads(d["tags"])
     return res_list
 
-@router.post("/architecture", response_model=ArchitectureLayerResponse, status_code=201)
+@router.post("/architecture", response_model=ArchitectureLayerResponse, status_code=201, dependencies=[Depends(get_current_user)])
 async def create_architecture_layer(layer: ArchitectureLayerCreate, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute(
         "INSERT INTO architecture_layers (layer_number, title, description, icon, color, tags) VALUES (?, ?, ?, ?, ?, ?)",
@@ -77,7 +78,7 @@ async def create_architecture_layer(layer: ArchitectureLayerCreate, db: libsql_c
     new_id = result.last_insert_rowid
     return {**layer.model_dump(), "id": new_id}
 
-@router.put("/architecture/{layer_id}", response_model=ArchitectureLayerResponse)
+@router.put("/architecture/{layer_id}", response_model=ArchitectureLayerResponse, dependencies=[Depends(get_current_user)])
 async def update_architecture_layer(layer_id: int, layer: ArchitectureLayerCreate, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT id FROM architecture_layers WHERE id = ?", (layer_id,))
     if not result.rows:
@@ -89,7 +90,7 @@ async def update_architecture_layer(layer_id: int, layer: ArchitectureLayerCreat
     )
     return {**layer.model_dump(), "id": layer_id}
 
-@router.delete("/architecture/{layer_id}", response_model=MessageResponse)
+@router.delete("/architecture/{layer_id}", response_model=MessageResponse, dependencies=[Depends(get_current_user)])
 async def delete_architecture_layer(layer_id: int, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT id FROM architecture_layers WHERE id = ?", (layer_id,))
     if not result.rows:
@@ -99,12 +100,12 @@ async def delete_architecture_layer(layer_id: int, db: libsql_client.Client = De
     return {"message": "Architecture layer deleted", "success": True}
 
 # --- Revenue Streams ---
-@router.get("/revenue-streams", response_model=list[RevenueStreamResponse])
+@router.get("/revenue-streams", response_model=list[RevenueStreamResponse], dependencies=[Depends(get_current_user)])
 async def get_revenue_streams(db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT * FROM revenue_streams ORDER BY id")
     return to_dict_list(result)
 
-@router.post("/revenue-streams", response_model=RevenueStreamResponse, status_code=201)
+@router.post("/revenue-streams", response_model=RevenueStreamResponse, status_code=201, dependencies=[Depends(get_current_user)])
 async def create_revenue_stream(stream: RevenueStreamCreate, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute(
         "INSERT INTO revenue_streams (title, description, icon, color) VALUES (?, ?, ?, ?)",
@@ -113,7 +114,7 @@ async def create_revenue_stream(stream: RevenueStreamCreate, db: libsql_client.C
     new_id = result.last_insert_rowid
     return {**stream.model_dump(), "id": new_id}
 
-@router.delete("/revenue-streams/{stream_id}", response_model=MessageResponse)
+@router.delete("/revenue-streams/{stream_id}", response_model=MessageResponse, dependencies=[Depends(get_current_user)])
 async def delete_revenue_stream(stream_id: int, db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT id FROM revenue_streams WHERE id = ?", (stream_id,))
     if not result.rows:
@@ -122,17 +123,52 @@ async def delete_revenue_stream(stream_id: int, db: libsql_client.Client = Depen
     await db.execute("DELETE FROM revenue_streams WHERE id = ?", (stream_id,))
     return {"message": "Revenue stream deleted", "success": True}
 
+# --- CAPTCHA ---
+@router.get("/captcha", response_model=CaptchaResponse)
+async def get_captcha():
+    import random
+    from app.security import create_access_token
+    from datetime import timedelta
+
+    a = random.randint(1, 10)
+    b = random.randint(1, 10)
+    question = f"{a} + {b} = ?"
+    answer = str(a + b)
+
+    # We use a short-lived token to store the answer
+    token = create_access_token(data={"ans": answer}, expires_delta=timedelta(minutes=5))
+    return {"question": question, "captcha_token": token}
+
 # --- Contact Form ---
 @router.post("/contact", response_model=MessageResponse, status_code=201)
 @limiter.limit("5/minute")
 async def submit_contact(request: Request, submission: ContactSubmission, db: libsql_client.Client = Depends(get_db)):
+    # Honeypot check
+    if submission.honeypot:
+        return {"message": "Thank you for reaching out! We will get back to you soon.", "success": True} # Silent fail for bots
+
+    # CAPTCHA check
+    if not submission.captcha_token or not submission.captcha_answer:
+        raise HTTPException(status_code=400, detail="CAPTCHA required")
+
+    from jose import jwt
+    from app.security import SECRET_KEY, ALGORITHM
+    try:
+        payload = jwt.decode(submission.captcha_token, SECRET_KEY, algorithms=[ALGORITHM])
+        expected_answer = payload.get("ans")
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid or expired CAPTCHA token")
+
+    if submission.captcha_answer.strip() != expected_answer:
+        raise HTTPException(status_code=400, detail="Incorrect CAPTCHA answer")
+
     await db.execute(
         "INSERT INTO contact_submissions (name, email, role, message) VALUES (?, ?, ?, ?)",
         (submission.name, submission.email, submission.role, submission.message),
     )
     return {"message": "Thank you for reaching out! We will get back to you soon.", "success": True}
 
-@router.get("/contact", response_model=list[ContactResponse])
+@router.get("/contact", response_model=list[ContactResponse], dependencies=[Depends(get_current_user)])
 async def get_contacts(db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT * FROM contact_submissions ORDER BY created_at DESC")
     return to_dict_list(result)
@@ -141,6 +177,10 @@ async def get_contacts(db: libsql_client.Client = Depends(get_db)):
 @router.post("/newsletter", response_model=MessageResponse, status_code=201)
 @limiter.limit("5/minute")
 async def subscribe_newsletter(request: Request, subscription: NewsletterSubscription, db: libsql_client.Client = Depends(get_db)):
+    # Honeypot check
+    if subscription.honeypot:
+        return {"message": "Successfully subscribed to the newsletter!", "success": True} # Silent fail for bots
+
     try:
         await db.execute(
             "INSERT INTO newsletter_subscribers (email) VALUES (?)",
@@ -150,13 +190,13 @@ async def subscribe_newsletter(request: Request, subscription: NewsletterSubscri
     except Exception:
         return {"message": "This email is already subscribed.", "success": False}
 
-@router.get("/newsletter", response_model=list[NewsletterResponse])
+@router.get("/newsletter", response_model=list[NewsletterResponse], dependencies=[Depends(get_current_user)])
 async def get_subscribers(db: libsql_client.Client = Depends(get_db)):
     result = await db.execute("SELECT * FROM newsletter_subscribers ORDER BY created_at DESC")
     return to_dict_list(result)
 
 # --- Stats ---
-@router.get("/stats", response_model=StatsResponse)
+@router.get("/stats", response_model=StatsResponse, dependencies=[Depends(get_current_user)])
 async def get_stats(db: libsql_client.Client = Depends(get_db)):
     pillars_res = await db.execute("SELECT COUNT(*) FROM pillars")
     pillars_count = pillars_res.rows[0][0]
@@ -204,7 +244,7 @@ async def get_naira_context(db: libsql_client.Client):
         
     return context
 
-@router.post("/chat", response_model=ChatResponse)
+@router.post("/chat", response_model=ChatResponse, dependencies=[Depends(get_current_user)])
 @limiter.limit("10/minute")
 async def chat_ai(request: Request, chat_request: ChatRequest, db: libsql_client.Client = Depends(get_db)):
     user_msg = chat_request.message
