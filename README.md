@@ -47,6 +47,15 @@ uvicorn app.main:app --reload
 
 The application will be available at `http://127.0.0.1:8000`.
 
+## AI Agent Configuration
+
+The NAIRA AI Assistant supports multiple models, including Gemini 1.5 Pro and Llama 3 (via Hugging Face). To enable these models, set the following environment variables:
+
+- `GOOGLE_API_KEY`: Your Google AI Studio API key (required for Gemini and RAG embeddings).
+- `HF_TOKEN`: Your Hugging Face Access Token (required for Llama 3).
+
+If no keys are provided, the agent will operate in **Local Mode**, using keyword-based search for its knowledge base.
+
 ## API Endpoints
 
 - **GET /**: Home page (Template rendered)
