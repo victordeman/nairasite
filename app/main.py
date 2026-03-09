@@ -9,7 +9,8 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
 from app.limiter import limiter
-from app.database import init_db
+from app.database import init_db, get_all_naira_data
+from app.rag import rag_manager
 from app.routers.api import router as api_router
 from app.routers.pages import router as pages_router
 from app.routers.auth import router as auth_router
@@ -26,10 +27,12 @@ async def lifespan(app: FastAPI):
     logger.info("Starting up application...")
     try:
         await init_db()
+        # Build RAG index
+        logger.info("Building RAG index...")
+        data = await get_all_naira_data()
+        await rag_manager.build_index(data)
     except Exception as e:
-        logger.error(f"Error during database initialization: {e}")
-        # On Vercel, we might want to continue even if init_db fails 
-        # but let's see if we can get more info
+        logger.error(f"Error during application startup: {e}")
     yield
     logger.info("Shutting down application...")
 
