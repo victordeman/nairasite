@@ -33,7 +33,8 @@ def test_chat_missing_keys(auth_header):
     data = response.json()
     assert "Local Mode" in data["response"]
 
-def test_chat_unauthorized():
+def test_chat_requires_auth():
+    # Chat should require a token again
     response = client.post(
         "/api/chat",
         json={"message": "Hello", "model": "local"}

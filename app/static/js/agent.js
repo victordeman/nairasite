@@ -72,9 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const loadingId = addLoadingIndicator();
 
         try {
+            const token = localStorage.getItem('access_token');
             const response = await fetch('/api/chat', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token ? `Bearer ${token}` : ''
+                },
                 body: JSON.stringify({ 
                     message,
                     model: modelSelect ? modelSelect.value : 'local'

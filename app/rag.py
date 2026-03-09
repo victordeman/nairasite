@@ -1,5 +1,6 @@
 import logging
 import os
+import anyio
 import numpy as np
 import google.generativeai as genai
 
@@ -19,12 +20,16 @@ class RAGManager:
             return None
 
         try:
-            genai.configure(api_key=api_key)
-            result = await genai.embed_content_async(
-                model="models/text-embedding-004",
-                content=text,
-                task_type="retrieval_document"
-            )
+            # Use run_sync to call the synchronous embed_content in a thread pool
+            def sync_embed():
+                genai.configure(api_key=api_key)
+                return genai.embed_content(
+                    model="models/text-embedding-004",
+                    content=text,
+                    task_type="retrieval_document"
+                )
+
+            result = await anyio.to_thread.run_sync(sync_embed)
             return result['embedding']
         except Exception as e:
             logger.error(f"Error fetching Gemini embedding: {e}")
@@ -77,9 +82,9 @@ class RAGManager:
         if query_emb and self.embeddings is not None:
             # Cosine similarity using numpy
             q = np.array(query_emb).astype('float32')
-            # Normalize embeddings for cosine similarity
-            norm_q = q / np.linalg.norm(q)
-            norm_embs = self.embeddings / np.linalg.norm(self.embeddings, axis=1, keepdims=True)
+            # Normalize embeddings for cosine similarity, adding epsilon to avoid division by zero
+            norm_q = q / (np.linalg.norm(q) + 1e-9)
+            norm_embs = self.embeddings / (np.linalg.norm(self.embeddings, axis=1, keepdims=True) + 1e-9)
 
             similarities = np.dot(norm_embs, norm_q)
             top_indices = np.argsort(similarities)[::-1][:top_k]
