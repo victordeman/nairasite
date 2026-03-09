@@ -187,3 +187,36 @@ async def init_db():
     except Exception as e:
         logger.error(f"Failed to initialize database: {e}")
         raise e
+
+async def get_all_naira_data():
+    """
+    Collects string representation of all key data for RAG.
+    """
+    data = []
+    async with libsql_client.create_client(url=DATABASE_URL, auth_token=AUTH_TOKEN) as client:
+        # Pillars
+        pillars = await client.execute("SELECT title, description, summary FROM pillars")
+        for p in pillars.rows:
+            data.append(f"Strategic Pillar: {p[0]}. {p[1]} Summary: {p[2]}")
+
+        # Vision/Mission
+        vision = await client.execute("SELECT title, description, summary FROM vision_missions")
+        for v in vision.rows:
+            data.append(f"Vision/Mission: {v[0]}. {v[1]} Summary: {v[2]}")
+
+        # Architecture
+        arch = await client.execute("SELECT title, description, tags FROM architecture_layers")
+        for a in arch.rows:
+            data.append(f"Architecture Layer: {a[0]}. {a[1]} Technologies: {a[2]}")
+
+        # Projects
+        projects = await client.execute("SELECT title, description, category, status FROM projects")
+        for pr in projects.rows:
+            data.append(f"Project: {pr[0]} ({pr[2]}). {pr[1]} Status: {pr[3]}")
+
+        # Revenue
+        revenue = await client.execute("SELECT title, description FROM revenue_streams")
+        for r in revenue.rows:
+            data.append(f"Revenue Stream: {r[0]}. {r[1]}")
+
+    return data
