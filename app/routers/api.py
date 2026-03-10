@@ -245,7 +245,7 @@ async def call_huggingface(system_prompt: str, user_msg: str):
     except Exception as e:
         return f"Error calling Hugging Face: {str(e)}"
 
-@router.post("/chat", response_model=ChatResponse, dependencies=[Depends(get_current_user)])
+@router.post("/chat", response_model=ChatResponse)
 @limiter.limit("10/minute")
 async def chat_ai(request: Request, chat_request: ChatRequest, db: libsql_client.Client = Depends(get_db)):
     user_msg = chat_request.message

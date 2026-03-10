@@ -34,8 +34,9 @@ def test_chat_missing_keys(auth_header):
     assert "Local Mode" in data["response"]
 
 def test_chat_unauthorized():
+    # Chat should now be public
     response = client.post(
         "/api/chat",
         json={"message": "Hello", "model": "local"}
     )
-    assert response.status_code == 401
+    assert response.status_code == 200
