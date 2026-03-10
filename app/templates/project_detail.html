@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} - NAIRA{% endblock %}
+{% block content %}
+<section class="py-32 relative">
+    <div class="container mx-auto px-6">
+        <!-- Breadcrumbs -->
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="/projects" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-indigo-600">
+                        <i data-feather="grid" class="w-4 h-4 mr-2"></i>
+                        Projects
+                    </a>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <i data-feather="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        <span class="ml-1 text-sm font-medium text-indigo-600 md:ml-2">{{ item.title }}</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-12">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-600/10 flex items-center justify-center mb-6">
+                    <i data-feather="{{ item.icon }}" class="w-8 h-8 text-indigo-600"></i>
+                </div>
+                <h1 class="font-display text-4xl md:text-5xl font-bold text-indigo-600 mb-6">{{ item.title }}</h1>
+                <div class="flex flex-wrap gap-4 items-center text-sm">
+                    <span class="px-4 py-1.5 rounded-full bg-indigo-600/10 text-indigo-600 font-bold tracking-widest uppercase text-[10px] border border-indigo-600/20">
+                        {{ item.category }}
+                    </span>
+                    <span class="px-4 py-1.5 rounded-full bg-emerald-600/10 text-emerald-600 font-bold tracking-widest uppercase text-[10px] border border-emerald-600/20">
+                        {{ item.status }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 md:p-12 border border-black/10 bg-white">
+                <div class="prose prose-slate max-w-none">
+                    <div class="text-black text-lg leading-relaxed text-justify space-y-6">
+                        {{ item.full_description | safe }}
+                    </div>
+                </div>
+
+                <div class="mt-12 pt-12 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
+                            <i data-feather="share-2" class="w-5 h-5 text-slate-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Share Project</p>
+                            <div class="flex gap-3 mt-1">
+                                <a href="#" class="text-slate-600 hover:text-indigo-600"><i data-feather="twitter" class="w-4 h-4"></i></a>
+                                <a href="#" class="text-slate-600 hover:text-indigo-600"><i data-feather="linkedin" class="w-4 h-4"></i></a>
+                                <a href="#" class="text-slate-600 hover:text-indigo-600"><i data-feather="link" class="w-4 h-4"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/contact" class="px-8 py-3 bg-indigo-600 text-white rounded-full font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2">
+                        Inquire About This Project
+                        <i data-feather="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

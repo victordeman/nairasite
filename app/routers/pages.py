@@ -95,7 +95,24 @@ async def content(request: Request):
 async def projects(request: Request, db: libsql_client.Client = Depends(get_db)):
     projects_res = await db.execute("SELECT * FROM projects ORDER BY id")
     projects = to_dict_list(projects_res)
-    return templates.TemplateResponse("projects.html", {"request": request, "projects": projects})
+
+    # Group projects by project_group
+    grouped = {
+        "student": [p for p in projects if p["project_group"] == "student"],
+        "research": [p for p in projects if p["project_group"] == "research"],
+        "industry": [p for p in projects if p["project_group"] == "industry"],
+        "gallery": [p for p in projects if p["project_group"] == "gallery"],
+    }
+
+    return templates.TemplateResponse("projects.html", {"request": request, "projects": grouped})
+
+@router.get("/projects/{slug}")
+async def project_detail(slug: str, request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM projects WHERE slug = ?", (slug,))
+    project = to_dict_list(res)
+    if not project:
+        return templates.TemplateResponse("projects.html", {"request": request, "projects": {}})
+    return templates.TemplateResponse("project_detail.html", {"request": request, "item": project[0]})
 
 @router.get("/contact")
 async def contact(request: Request):

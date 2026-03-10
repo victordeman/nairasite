@@ -174,7 +174,7 @@ async def get_naira_context(db: libsql_client.Client):
     vision = await db.execute("SELECT title, description FROM vision_missions")
     architecture = await db.execute("SELECT title, description, tags FROM architecture_layers")
     revenue = await db.execute("SELECT title, description FROM revenue_streams")
-    projects = await db.execute("SELECT title, description, category, status FROM projects")
+    projects = await db.execute("SELECT title, summary, full_description, category, status, project_group FROM projects")
     
     context = "NAIRA (NBU AI Research & Advancement Institute) Context:\n\n"
 
@@ -194,9 +194,9 @@ async def get_naira_context(db: libsql_client.Client):
     for r in revenue.rows:
         context += f"- {r[0]}: {r[1]}\n"
         
-    context += "\nKEY PROJECTS:\n"
+    context += "\nKEY PROJECTS & USE-CASES:\n"
     for pr in projects.rows:
-        context += f"- {pr[0]} ({pr[2]}): {pr[1]} [Status: {pr[3]}]\n"
+        context += f"- {pr[0]} ({pr[3]}): {pr[1]} (Group: {pr[5]}) [Status: {pr[4]}]\n"
         
     return context
 
