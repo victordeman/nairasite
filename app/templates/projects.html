@@ -10,6 +10,7 @@
         </div>
 
         <!-- Student-Centered Use-Cases -->
+        {% if projects.student %}
         <div class="mb-24">
             <div class="flex items-center gap-4 mb-10">
                 <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 flex items-center justify-center">
@@ -18,30 +19,19 @@
                 <h3 class="text-3xl font-display font-bold text-black">Student-Centered Use-Cases</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Adaptive XR Learning</h4>
-                    <p class="text-black text-sm mb-4">XR learning paths in local languages (Yoruba, Igbo, Hausa first).</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Education</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">AI Academic Assistant</h4>
-                    <p class="text-black text-sm mb-4">Academic writing assistant & plagiarism checker with African citation styles.</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Research</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Virtual Internship</h4>
-                    <p class="text-black text-sm mb-4">Virtual internship marketplace with XR simulations.</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Career</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Innovation Showcase</h4>
-                    <p class="text-black text-sm mb-4">Student innovation showcase + pitch-to-investor portal.</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Entrepreneurship</span>
-                </div>
+                {% for item in projects.student %}
+                <a href="/projects/{{ item.slug }}" class="glass-card p-6 rounded-2xl border border-black/10 hover:border-indigo-600/50 transition-all group">
+                    <h4 class="text-xl font-bold text-black mb-3 group-hover:text-indigo-600 transition-colors">{{ item.title }}</h4>
+                    <p class="text-black text-sm mb-4 text-justify">{{ item.summary }}</p>
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">{{ item.category }}</span>
+                </a>
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
 
         <!-- Research-Centered Use-Cases -->
+        {% if projects.research %}
         <div class="mb-24">
             <div class="flex items-center gap-4 mb-10">
                 <div class="w-12 h-12 rounded-2xl bg-amber-600/20 flex items-center justify-center">
@@ -50,30 +40,19 @@
                 <h3 class="text-3xl font-display font-bold text-black">Research-Centered Use-Cases</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">African Dataset Repository</h4>
-                    <p class="text-black text-sm mb-4">Data sovereignty compliant repository for African datasets.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">Data</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Agentic AI Playground</h4>
-                    <p class="text-black text-sm mb-4">Collaborative playground for shareable agentic AI research.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">AI Research</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Automated Lit Review</h4>
-                    <p class="text-black text-sm mb-4">Literature review tool trained specifically on African journals.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">Academia</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Grant Proposal Gen</h4>
-                    <p class="text-black text-sm mb-4">Grant proposal generator + reviewer matching system.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">Funding</span>
-                </div>
+                {% for item in projects.research %}
+                <a href="/projects/{{ item.slug }}" class="glass-card p-6 rounded-2xl border border-black/10 hover:border-amber-600/50 transition-all group">
+                    <h4 class="text-xl font-bold text-black mb-3 group-hover:text-amber-600 transition-colors">{{ item.title }}</h4>
+                    <p class="text-black text-sm mb-4 text-justify">{{ item.summary }}</p>
+                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">{{ item.category }}</span>
+                </a>
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
 
         <!-- Industry-Centered Use-Cases -->
+        {% if projects.industry %}
         <div class="mb-24">
             <div class="flex items-center gap-4 mb-10">
                 <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 flex items-center justify-center">
@@ -82,82 +61,23 @@
                 <h3 class="text-3xl font-display font-bold text-black">Industry-Centered Use-Cases</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Corporate XR Training</h4>
-                    <p class="text-black text-sm mb-4">Marketplace for banking, agriculture, and healthcare modules.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Corporate</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">AI Consultancy Booking</h4>
-                    <p class="text-black text-sm mb-4">Booking system with instant agent demos for businesses.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">B2B</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Sovereignty Dashboard</h4>
-                    <p class="text-black text-sm mb-4">Enterprise tool to keep African data within the continent.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Security</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">White-label AI for SMEs</h4>
-                    <p class="text-black text-sm mb-4">Customizable agentic AI solutions for small businesses.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">SME</span>
-                </div>
+                {% for item in projects.industry %}
+                <a href="/projects/{{ item.slug }}" class="glass-card p-6 rounded-2xl border border-black/10 hover:border-emerald-600/50 transition-all group">
+                    <h4 class="text-xl font-bold text-black mb-3 group-hover:text-emerald-600 transition-colors">{{ item.title }}</h4>
+                    <p class="text-black text-sm mb-4 text-justify">{{ item.summary }}</p>
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">{{ item.category }}</span>
+                </a>
+                {% endfor %}
             </div>
         </div>
-
-        <!-- Quick-Win Bonus Tasks 
-        <div class="bg-indigo-600/10 rounded-3xl p-8 md:p-12 border border-indigo-500/20">
-            <div class="flex items-center gap-4 mb-8">
-                <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 flex items-center justify-center">
-                    <i data-feather="zap" class="w-6 h-6 text-indigo-600"></i>
-                </div>
-                <h3 class="text-3xl font-display font-bold text-black">Quick-Win Bonus Tasks (High ROI)</h3>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="flex gap-4">
-                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 mt-1">
-                        <i data-feather="check" class="w-4 h-4 text-emerald-600"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold text-black">Newsletter Signup</h4>
-                        <p class="text-black">Integrated ConvertKit/Supabase capture for community growth.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 mt-1">
-                        <i data-feather="check" class="w-4 h-4 text-emerald-600"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold text-black">"Try the AI Agent" Live Demo</h4>
-                        <p class="text-black">Interactive hero demo powered by Grok or similar agentic AI.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 mt-1">
-                        <i data-feather="check" class="w-4 h-4 text-emerald-600"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold text-black">Accessibility & Dark Mode</h4>
-                        <p class="text-black">Theme toggles and full accessibility audit for inclusive reach.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 mt-1">
-                        <i data-feather="check" class="w-4 h-4 text-emerald-600"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold text-black">Multilingual Switch</h4>
-                        <p class="text-black">Seamless switching between English, Yoruba, and Swahili.</p>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+        {% endif %}
 
         <!-- Current Projects Gallery -->
+        {% if projects.gallery %}
         <div class="mt-32">
             <h3 class="text-3xl font-display font-bold text-black mb-10 text-center">Active Projects Gallery</h3>
             <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                {% for project in projects %}
+                {% for project in projects.gallery %}
                 <div class="glass-card rounded-3xl overflow-hidden group border border-black/10">
                     <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
                         <i data-feather="{{ project.icon }}" class="w-16 h-16 text-indigo-600 opacity-50"></i>
@@ -167,10 +87,10 @@
                     </div>
                     <div class="p-8">
                         <h3 class="text-2xl font-display font-bold text-black mb-3">{{ project.title }}</h3>
-                        <p class="text-black mb-6 leading-relaxed">{{ project.description }}</p>
+                        <p class="text-black mb-6 leading-relaxed text-justify">{{ project.summary }}</p>
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold tracking-widest uppercase text-indigo-600">{{ project.status }}</span>
-                            <a href="#" class="flex items-center gap-2 text-sm font-medium text-black hover:text-indigo-600">
+                            <a href="/projects/{{ project.slug }}" class="flex items-center gap-2 text-sm font-medium text-black hover:text-indigo-600">
                                 Learn More
                                 <i data-feather="arrow-right" class="w-4 h-4"></i>
                             </a>
@@ -180,6 +100,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}
