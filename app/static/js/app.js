@@ -209,7 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-title': 'NAIRA',
             'hero-badge': "Pioneering Africa's AI Renaissance",
             'hero-subtitle': 'NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE',
-            'hero-description': 'Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African languages, culture, and indigenous knowledge into global technology solutions.'
+            'hero-description': 'Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African languages, culture, and indigenous knowledge into global technology solutions.',
+            'contact-direct-title': 'Direct Email',
+            'contact-direct-desc': 'You can also reach us directly at:'
         },
         'yo': {
             'nav-home': 'Ile',
@@ -222,7 +224,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-title': 'NAIRA',
             'hero-badge': "Asiwaju Isọji AI ti Afirika",
             'hero-subtitle': 'ILE-IṢẸ NBU FUN IWADII ATI ILỌSIWAJU AI',
-            'hero-description': 'Yiyipada eto ẹkọ ati isọdọtun nipasẹ awọn iriri XR immersive ati awọn faaji AI aṣoju, fifi awọn ede Afirika, aṣa, ati imọ abinibi sinu awọn ojutu imọ-ẹrogbaye.'
+            'hero-description': 'Yiyipada eto ẹkọ ati isọdọtun nipasẹ awọn iriri XR immersive ati awọn faaji AI aṣoju, fifi awọn ede Afirika, aṣa, ati imọ abinibi sinu awọn ojutu imọ-ẹrogbaye.',
+            'contact-direct-title': 'Imeeli Taara',
+            'contact-direct-desc': 'O tun le kan si wa taara ni:'
         },
         'sw': {
             'nav-home': 'Nyumbani',
@@ -235,7 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-title': 'NAIRA',
             'hero-badge': "Uanzilishi wa Renaissance ya AI ya Afrika",
             'hero-subtitle': 'TAASISI YA NBU YA UTAFITI NA MAENDELEO YA AI',
-            'hero-description': 'Kubadilisha elimu na uvumbuzi kupitia uzoefu wa XR wa kuzama na usanifu wa AI, kupachika lugha za Kiafrika, utamaduni, na maarifa asilia katika suluhisho za teknolojia ya kimataifa.'
+            'hero-description': 'Kubadilisha elimu na uvumbuzi kupitia uzoefu wa XR wa kuzama na usanifu wa AI, kupachika lugha za Kiafrika, utamaduni, na maarifa asilia katika suluhisho za teknolojia ya kimataifa.',
+            'contact-direct-title': 'Barua Pepe ya Moja kwa Moja',
+            'contact-direct-desc': 'Unaweza pia kuwasiliana nasi moja kwa moja kwa:'
         },
         'ig': {
             'nav-home': 'Ụlọ',
@@ -248,7 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-title': 'NAIRA',
             'hero-badge': "Ịsụ ụzọ AI Renaissance nke Africa",
             'hero-subtitle': 'NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE',
-            'hero-description': 'Ịgbanwe agụmakwụkwọ na ihe ọhụrụ site na ahụmịhe XR na-emikpu na usoro AI, na-etinye asụsụ Africa, omenala, na ihe ọmụma obodo n\'ime usoro teknụzụ zuru ụwa ọnụ.'
+            'hero-description': 'Ịgbanwe agụmakwụkwọ na ihe ọhụrụ site na ahụmịhe XR na-emikpu na usoro AI, na-etinye asụsụ Africa, omenala, na ihe ọmụma obodo n\'ime usoro teknụzụ zuru ụwa ọnụ.',
+            'contact-direct-title': 'Ozi email ozugbo',
+            'contact-direct-desc': 'Ị nwekwara ike ịkpọtụrụ anyị ozugbo na:'
         },
         'ha': {
             'nav-home': 'Gida',
@@ -261,7 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-title': 'NAIRA',
             'hero-badge': "Jagorar Farfadowar AI ta Afirka",
             'hero-subtitle': 'CIBIYAR BINCIKE DA CIGABAN AI TA NBU',
-            'hero-description': 'Canza ilimi da sabbin abubuwa ta hanyar abubuwan XR masu zurfi da tsarin AI, sanya harsunan Afirka, al\'adu, da ilimin asali cikin hanyoyin fasahar duniya.'
+            'hero-description': 'Canza ilimi da sabbin abubuwa ta hanyar abubuwan XR masu zurfi da tsarin AI, sanya harsunan Afirka, al\'adu, da ilimin asali cikin hanyoyin fasahar duniya.',
+            'contact-direct-title': 'Direct Email',
+            'contact-direct-desc': 'Kuna iya tuntuɓar mu kai tsaye a:'
         }
     };
 

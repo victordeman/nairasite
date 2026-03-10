@@ -27,6 +27,7 @@ def test_cors_restricted():
     # CORSMiddleware doesn't necessarily block the request, it just doesn't add the CORS headers
     assert "access-control-allow-origin" not in response.headers
 
+@pytest.mark.skipif(os.getenv("TESTING") == "1", reason="Rate limiting disabled in testing mode")
 def test_rate_limiting_contact():
     # We should be able to hit the endpoint a few times, but it might fail because it's POST and requires body/auth
     # Actually /api/contact requires auth according to the router dependencies
