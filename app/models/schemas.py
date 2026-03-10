@@ -90,11 +90,14 @@ class CaptchaResponse(BaseModel):
 
 class ProjectResponse(BaseModel):
     id: int
+    slug: str
     title: str
-    description: str
+    summary: str
+    full_description: str
     icon: str
     category: str
     status: str
+    project_group: str
 
 class ChatRequest(BaseModel):
     message: str

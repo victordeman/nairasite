@@ -18,26 +18,18 @@
                 <h3 class="text-3xl font-display font-bold text-black">Student-Centered Use-Cases</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Adaptive XR Learning</h4>
-                    <p class="text-black text-sm mb-4">XR learning paths in local languages (Yoruba, Igbo, Hausa first).</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Education</span>
+                {% for project in projects.student %}
+                <div class="glass-card p-6 rounded-2xl border border-black/10 flex flex-col h-full">
+                    <h4 class="text-xl font-bold text-black mb-3">{{ project.title }}</h4>
+                    <p class="text-black text-sm mb-6 flex-grow">{{ project.summary }}</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">{{ project.category }}</span>
+                        <a href="/projects/{{ project.slug }}" class="text-indigo-600 hover:text-indigo-700">
+                            <i data-feather="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">AI Academic Assistant</h4>
-                    <p class="text-black text-sm mb-4">Academic writing assistant & plagiarism checker with African citation styles.</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Research</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Virtual Internship</h4>
-                    <p class="text-black text-sm mb-4">Virtual internship marketplace with XR simulations.</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Career</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Innovation Showcase</h4>
-                    <p class="text-black text-sm mb-4">Student innovation showcase + pitch-to-investor portal.</p>
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Entrepreneurship</span>
-                </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -50,26 +42,18 @@
                 <h3 class="text-3xl font-display font-bold text-black">Research-Centered Use-Cases</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">African Dataset Repository</h4>
-                    <p class="text-black text-sm mb-4">Data sovereignty compliant repository for African datasets.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">Data</span>
+                {% for project in projects.research %}
+                <div class="glass-card p-6 rounded-2xl border border-black/10 flex flex-col h-full">
+                    <h4 class="text-xl font-bold text-black mb-3">{{ project.title }}</h4>
+                    <p class="text-black text-sm mb-6 flex-grow">{{ project.summary }}</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">{{ project.category }}</span>
+                        <a href="/projects/{{ project.slug }}" class="text-amber-600 hover:text-amber-700">
+                            <i data-feather="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Agentic AI Playground</h4>
-                    <p class="text-black text-sm mb-4">Collaborative playground for shareable agentic AI research.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">AI Research</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Automated Lit Review</h4>
-                    <p class="text-black text-sm mb-4">Literature review tool trained specifically on African journals.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">Academia</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Grant Proposal Gen</h4>
-                    <p class="text-black text-sm mb-4">Grant proposal generator + reviewer matching system.</p>
-                    <span class="text-xs font-bold text-amber-600 uppercase tracking-widest">Funding</span>
-                </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -82,26 +66,18 @@
                 <h3 class="text-3xl font-display font-bold text-black">Industry-Centered Use-Cases</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Corporate XR Training</h4>
-                    <p class="text-black text-sm mb-4">Marketplace for banking, agriculture, and healthcare modules.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Corporate</span>
+                {% for project in projects.industry %}
+                <div class="glass-card p-6 rounded-2xl border border-black/10 flex flex-col h-full">
+                    <h4 class="text-xl font-bold text-black mb-3">{{ project.title }}</h4>
+                    <p class="text-black text-sm mb-6 flex-grow">{{ project.summary }}</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">{{ project.category }}</span>
+                        <a href="/projects/{{ project.slug }}" class="text-emerald-600 hover:text-emerald-700">
+                            <i data-feather="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">AI Consultancy Booking</h4>
-                    <p class="text-black text-sm mb-4">Booking system with instant agent demos for businesses.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">B2B</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">Sovereignty Dashboard</h4>
-                    <p class="text-black text-sm mb-4">Enterprise tool to keep African data within the continent.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Security</span>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-black/10">
-                    <h4 class="text-xl font-bold text-black mb-3">White-label AI for SMEs</h4>
-                    <p class="text-black text-sm mb-4">Customizable agentic AI solutions for small businesses.</p>
-                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">SME</span>
-                </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -154,24 +130,24 @@
         </div>-->
 
         <!-- Current Projects Gallery -->
-        <div class="mt-32">
+        <div class="">
             <h3 class="text-3xl font-display font-bold text-black mb-10 text-center">Active Projects Gallery</h3>
             <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                {% for project in projects %}
-                <div class="glass-card rounded-3xl overflow-hidden group border border-black/10">
+                {% for project in projects.gallery %}
+                <div class="glass-card rounded-3xl overflow-hidden group border border-black/10 flex flex-col h-full">
                     <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
                         <i data-feather="{{ project.icon }}" class="w-16 h-16 text-indigo-600 opacity-50"></i>
                         <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/5 backdrop-blur-md border border-black/10 text-xs font-medium text-black">
                             {{ project.category }}
                         </div>
                     </div>
-                    <div class="p-8">
+                    <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-2xl font-display font-bold text-black mb-3">{{ project.title }}</h3>
-                        <p class="text-black mb-6 leading-relaxed">{{ project.description }}</p>
+                        <p class="text-black mb-6 leading-relaxed flex-grow">{{ project.summary }}</p>
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold tracking-widest uppercase text-indigo-600">{{ project.status }}</span>
-                            <a href="#" class="flex items-center gap-2 text-sm font-medium text-black hover:text-indigo-600">
-                                Learn More
+                            <a href="/projects/{{ project.slug }}" class="flex items-center gap-2 text-sm font-medium text-black hover:text-indigo-600">
+                                View Details
                                 <i data-feather="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>

@@ -92,11 +92,14 @@ async def init_db():
             await client.execute("""
                 CREATE TABLE IF NOT EXISTS projects (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    slug TEXT UNIQUE NOT NULL,
                     title TEXT NOT NULL,
-                    description TEXT NOT NULL,
+                    summary TEXT NOT NULL,
+                    full_description TEXT NOT NULL,
                     icon TEXT NOT NULL,
                     category TEXT NOT NULL,
-                    status TEXT NOT NULL
+                    status TEXT NOT NULL,
+                    project_group TEXT NOT NULL
                 )
             """)
             await client.execute("""
