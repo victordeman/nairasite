@@ -114,11 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
             aiInput.value = '';
 
             try {
+                const token = localStorage.getItem('access_token');
                 const response = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: JSON.stringify({ message: text }),
                 });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Failed to connect');
+                }
+
                 const result = await response.json();
                 addChatMessage(result.response || "I'm sorry, I couldn't process that.", 'ai');
             } catch (error) {
