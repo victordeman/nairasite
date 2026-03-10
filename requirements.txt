@@ -2,6 +2,14 @@ fastapi
 uvicorn
 libsql-client
 jinja2
+email-validator
 pydantic[email]
 python-multipart
 aiofiles
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+slowapi
+google-generativeai
+huggingface_hub
+numpy

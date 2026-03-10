@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 from datetime import datetime
 class PillarBase(BaseModel):
@@ -48,10 +48,16 @@ class RevenueStreamResponse(RevenueStreamBase):
 class RevenueStreamCreate(RevenueStreamBase):
     pass
 class ContactSubmission(BaseModel):
-    name: str
-    email: str
-    role: str = ""
-    message: str
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    role: str = Field("", max_length=50)
+    message: str = Field(..., min_length=10, max_length=2000)
+    honeypot: Optional[str] = Field(None, alias="website_url")
+    captcha_token: Optional[str] = None
+    captcha_answer: Optional[str] = None
+
+    class Config:
+        populate_by_name = True
 class ContactResponse(BaseModel):
     id: int
     name: str
@@ -60,7 +66,11 @@ class ContactResponse(BaseModel):
     message: str
     created_at: str
 class NewsletterSubscription(BaseModel):
-    email: str
+    email: EmailStr
+    honeypot: Optional[str] = Field(None, alias="website_url")
+
+    class Config:
+        populate_by_name = True
 class NewsletterResponse(BaseModel):
     id: int
     email: str
@@ -73,6 +83,10 @@ class StatsResponse(BaseModel):
 class MessageResponse(BaseModel):
     message: str
     success: bool = True
+
+class CaptchaResponse(BaseModel):
+    question: str
+    captcha_token: str
 
 class ProjectResponse(BaseModel):
     id: int
@@ -91,3 +105,19 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+class User(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    disabled: Optional[bool] = None
+
+class UserInDB(User):
+    hashed_password: str

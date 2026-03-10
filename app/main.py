@@ -1,13 +1,19 @@
 import os
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
-from app.database import init_db
+from app.limiter import limiter
+from app.database import init_db, get_all_naira_data
+from app.rag import rag_manager
 from app.routers.api import router as api_router
 from app.routers.pages import router as pages_router
+from app.routers.auth import router as auth_router
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -21,20 +27,27 @@ async def lifespan(app: FastAPI):
     logger.info("Starting up application...")
     try:
         await init_db()
+        # Build RAG index
+        logger.info("Building RAG index...")
+        data = await get_all_naira_data()
+        await rag_manager.build_index(data)
     except Exception as e:
-        logger.error(f"Error during database initialization: {e}")
-        # On Vercel, we might want to continue even if init_db fails 
-        # but let's see if we can get more info
+        logger.error(f"Error during application startup: {e}")
     yield
     logger.info("Shutting down application...")
 
 app = FastAPI(title="NAIRA - African AI & XR Excellence Hub", lifespan=lifespan)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
 
-# Disable CORS. Do not remove this for full-stack development.
+# Configure CORS with restricted origins
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -43,6 +56,7 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
 # Include routers
+app.include_router(auth_router)
 app.include_router(api_router)
 app.include_router(pages_router)
 
