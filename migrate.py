@@ -139,7 +139,7 @@ async def migrate():
 
         logger.info("Seeding projects...")
         await client.batch([
-            ("INSERT INTO projects (title, description, icon, category, status) VALUES (?, ?, ?, ?, ?)", p)
+            ("INSERT INTO projects (slug, title, summary, full_description, icon, category, status, project_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", p)
             for p in PROJECTS_DATA
         ])
 

@@ -173,7 +173,7 @@ async def init_db():
             if count == 0:
                 logger.info("Seeding projects...")
                 await client.batch([
-                    ("INSERT INTO projects (title, description, icon, category, status) VALUES (?, ?, ?, ?, ?)", p)
+                    ("INSERT INTO projects (slug, title, summary, full_description, icon, category, status, project_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", p)
                     for p in PROJECTS_DATA
                 ])
 
@@ -213,9 +213,9 @@ async def get_all_naira_data():
             data.append(f"Architecture Layer: {a[0]}. {a[1]} Technologies: {a[2]}")
 
         # Projects
-        projects = await client.execute("SELECT title, description, category, status FROM projects")
+        projects = await client.execute("SELECT title, summary, full_description, category, status FROM projects")
         for pr in projects.rows:
-            data.append(f"Project: {pr[0]} ({pr[2]}). {pr[1]} Status: {pr[3]}")
+            data.append(f"Project: {pr[0]} ({pr[3]}). Summary: {pr[1]} Description: {pr[2]} Status: {pr[4]}")
 
         # Revenue
         revenue = await client.execute("SELECT title, description FROM revenue_streams")
