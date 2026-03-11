@@ -54,6 +54,7 @@
                     <a href="/revenue" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/revenue' %}text-indigo-700 font-bold{% endif %}" data-key="nav-revenue">Revenue</a>
                     <a href="/content" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/content' %}text-indigo-700 font-bold{% endif %}" data-key="nav-content">Content</a>
                     <a href="/projects" class="nav-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/projects' %}text-indigo-700 font-bold{% endif %}" data-key="nav-projects">Projects</a>
+                    <a href="/login" class="nav-link auth-link text-sm text-indigo-600 hover:text-indigo-700 {% if request.url.path == '/login' or request.url.path == '/profile' %}text-indigo-700 font-bold{% endif %}" data-key="nav-auth"><span class="auth-text">Login</span></a>
                 </div>
 
                 <div class="hidden md:flex items-center gap-4">
@@ -94,6 +95,7 @@
                     <a href="/revenue" class="text-indigo-600 hover:text-indigo-700 font-medium">Revenue</a>
                     <a href="/content" class="text-indigo-600 hover:text-indigo-700 font-medium">Content</a>
                     <a href="/projects" class="text-indigo-600 hover:text-indigo-700 font-medium">Projects</a>
+                    <a href="/login" class="auth-link text-indigo-600 hover:text-indigo-700 font-medium {% if request.url.path == '/login' or request.url.path == '/profile' %}font-bold{% endif %}" data-key="nav-auth"><span class="auth-text">Login</span></a>
                     <div class="flex items-center justify-between w-full pt-4 border-t border-indigo-600/10">
                         <div class="flex gap-4">
                             <button onclick="switchLang('en')" class="text-xs font-bold text-indigo-600">EN</button>
