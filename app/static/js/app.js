@@ -211,7 +211,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-subtitle': 'NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE',
             'hero-description': 'Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African languages, culture, and indigenous knowledge into global technology solutions.',
             'contact-direct-title': 'Direct Email',
-            'contact-direct-desc': 'You can also reach us directly at:'
+            'contact-direct-desc': 'You can also reach us directly at:',
+            'nav-auth': 'Login',
+            'hero-auth': 'Login',
+            'nav-profile': 'Profile',
+            'hero-profile': 'Profile'
         },
         'yo': {
             'nav-home': 'Ile',
@@ -226,7 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-subtitle': 'ILE-IṢẸ NBU FUN IWADII ATI ILỌSIWAJU AI',
             'hero-description': 'Yiyipada eto ẹkọ ati isọdọtun nipasẹ awọn iriri XR immersive ati awọn faaji AI aṣoju, fifi awọn ede Afirika, aṣa, ati imọ abinibi sinu awọn ojutu imọ-ẹrogbaye.',
             'contact-direct-title': 'Imeeli Taara',
-            'contact-direct-desc': 'O tun le kan si wa taara ni:'
+            'contact-direct-desc': 'O tun le kan si wa taara ni:',
+            'nav-auth': 'Wọle',
+            'hero-auth': 'Wọle',
+            'nav-profile': 'Profaili',
+            'hero-profile': 'Profaili'
         },
         'sw': {
             'nav-home': 'Nyumbani',
@@ -241,7 +249,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-subtitle': 'TAASISI YA NBU YA UTAFITI NA MAENDELEO YA AI',
             'hero-description': 'Kubadilisha elimu na uvumbuzi kupitia uzoefu wa XR wa kuzama na usanifu wa AI, kupachika lugha za Kiafrika, utamaduni, na maarifa asilia katika suluhisho za teknolojia ya kimataifa.',
             'contact-direct-title': 'Barua Pepe ya Moja kwa Moja',
-            'contact-direct-desc': 'Unaweza pia kuwasiliana nasi moja kwa moja kwa:'
+            'contact-direct-desc': 'Unaweza pia kuwasiliana nasi moja kwa moja kwa:',
+            'nav-auth': 'Ingia',
+            'hero-auth': 'Ingia',
+            'nav-profile': 'Wasifu',
+            'hero-profile': 'Wasifu'
         },
         'ig': {
             'nav-home': 'Ụlọ',
@@ -256,7 +268,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-subtitle': 'NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE',
             'hero-description': 'Ịgbanwe agụmakwụkwọ na ihe ọhụrụ site na ahụmịhe XR na-emikpu na usoro AI, na-etinye asụsụ Africa, omenala, na ihe ọmụma obodo n\'ime usoro teknụzụ zuru ụwa ọnụ.',
             'contact-direct-title': 'Ozi email ozugbo',
-            'contact-direct-desc': 'Ị nwekwara ike ịkpọtụrụ anyị ozugbo na:'
+            'contact-direct-desc': 'Ị nwekwara ike ịkpọtụrụ anyị ozugbo na:',
+            'nav-auth': 'Banye',
+            'hero-auth': 'Banye',
+            'nav-profile': 'Profaịlụ',
+            'hero-profile': 'Profaịlụ'
         },
         'ha': {
             'nav-home': 'Gida',
@@ -271,19 +287,26 @@ document.addEventListener('DOMContentLoaded', () => {
             'hero-subtitle': 'CIBIYAR BINCIKE DA CIGABAN AI TA NBU',
             'hero-description': 'Canza ilimi da sabbin abubuwa ta hanyar abubuwan XR masu zurfi da tsarin AI, sanya harsunan Afirka, al\'adu, da ilimin asali cikin hanyoyin fasahar duniya.',
             'contact-direct-title': 'Direct Email',
-            'contact-direct-desc': 'Kuna iya tuntuɓar mu kai tsaye a:'
+            'contact-direct-desc': 'Kuna iya tuntuɓar mu kai tsaye a:',
+            'nav-auth': 'Shiga',
+            'hero-auth': 'Shiga',
+            'nav-profile': 'Profile',
+            'hero-profile': 'Profile'
         }
     };
 
     window.switchLang = (lang) => {
         localStorage.setItem('lang', lang);
         applyLang(lang);
+        if (window.updateAuthLinks) window.updateAuthLinks();
     };
 
     const applyLang = (lang) => {
         const langStrings = translations[lang] || translations['en'];
         document.querySelectorAll('[data-key]').forEach(el => {
             const key = el.getAttribute('data-key');
+            // Skip auth-link as it's handled by updateAuthLinks
+            if (el.classList.contains('auth-link')) return;
             if (langStrings[key]) {
                 el.textContent = langStrings[key];
             }
@@ -307,6 +330,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize language from localStorage
     const savedLang = localStorage.getItem('lang') || 'en';
     applyLang(savedLang);
+
+    // Authentication Link Handling
+    window.updateAuthLinks = () => {
+        const token = localStorage.getItem('access_token');
+        const authLinks = document.querySelectorAll('.auth-link');
+        const lang = localStorage.getItem('lang') || 'en';
+        const langStrings = translations[lang] || translations['en'];
+
+        authLinks.forEach(link => {
+            const textEl = link.querySelector('.auth-text') || link;
+            if (token) {
+                link.href = '/profile';
+                const key = link.getAttribute('data-key');
+                if (key === 'nav-auth') textEl.textContent = langStrings['nav-profile'] || 'Profile';
+                else if (key === 'hero-auth') textEl.textContent = langStrings['hero-profile'] || 'Profile';
+                else textEl.textContent = 'Profile';
+            } else {
+                link.href = '/login';
+                const key = link.getAttribute('data-key');
+                if (key === 'nav-auth') textEl.textContent = langStrings['nav-auth'] || 'Login';
+                else if (key === 'hero-auth') textEl.textContent = langStrings['hero-auth'] || 'Login';
+                else textEl.textContent = 'Login';
+            }
+        });
+    };
+    window.updateAuthLinks();
 
     // Load CAPTCHA
     const loadCaptcha = async () => {
