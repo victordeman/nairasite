@@ -7,7 +7,8 @@ from app.seed_data import (
     ARCHITECTURE_LAYERS_DATA,
     REVENUE_STREAMS_DATA,
     PROJECTS_DATA,
-    VISION_MISSIONS_DATA
+    VISION_MISSIONS_DATA,
+    CONTENT_MODEL_DATA
 )
 
 # Configure logging
@@ -35,6 +36,7 @@ async def migrate():
             "revenue_streams",
             "projects",
             "vision_missions",
+            "content_model",
             "users"
         ]
         for table in tables:
@@ -120,6 +122,18 @@ async def migrate():
         """)
 
         await client.execute("""
+            CREATE TABLE IF NOT EXISTS content_model (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT UNIQUE NOT NULL,
+                title TEXT NOT NULL,
+                summary TEXT NOT NULL,
+                description TEXT NOT NULL,
+                icon TEXT NOT NULL,
+                color TEXT NOT NULL
+            )
+        """)
+
+        await client.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE NOT NULL,
@@ -178,6 +192,12 @@ async def migrate():
         await client.batch([
             ("INSERT INTO vision_missions (slug, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", v)
             for v in VISION_MISSIONS_DATA
+        ])
+
+        logger.info("Seeding content model...")
+        await client.batch([
+            ("INSERT INTO content_model (slug, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", c)
+            for c in CONTENT_MODEL_DATA
         ])
 
         logger.info("Migration and seeding completed successfully!")

@@ -10,27 +10,15 @@
                 <p class="text-black text-lg">Embedding local languages, culture, and indigenous knowledge systems into scalable, sustainable technological solutions.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8 text-center">
-                <div class="space-y-3">
-                    <div class="w-16 h-16 rounded-full bg-amber-600/20 border border-amber-500/30 flex items-center justify-center mx-auto">
-                        <i data-feather="book-open" class="w-8 h-8 text-amber-600"></i>
+                {% for item in content_models %}
+                <a href="/content/{{ item.slug }}" class="group space-y-3 block transition-transform hover:scale-105">
+                    <div class="w-16 h-16 rounded-full bg-{{ item.color }}-600/20 border border-{{ item.color }}-500/30 flex items-center justify-center mx-auto transition-colors group-hover:bg-{{ item.color }}-600/30">
+                        <i data-feather="{{ item.icon }}" class="w-8 h-8 text-{{ item.color }}-600"></i>
                     </div>
-                    <h3 class="font-display font-bold text-black text-lg">Cultural Relevance</h3>
-                    <p class="text-black text-sm">Content reflects local languages, culture, and knowledge systems unique to Africa.</p>
-                </div>
-                <div class="space-y-3">
-                    <div class="w-16 h-16 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mx-auto">
-                        <i data-feather="layers" class="w-8 h-8 text-indigo-600"></i>
-                    </div>
-                    <h3 class="font-display font-bold text-black text-lg">Scalable Design</h3>
-                    <p class="text-black text-sm">Modular design allows expansion and supports sustainable revenue generation over time.</p>
-                </div>
-                <div class="space-y-3">
-                    <div class="w-16 h-16 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center mx-auto">
-                        <i data-feather="anchor" class="w-8 h-8 text-emerald-600"></i>
-                    </div>
-                    <h3 class="font-display font-bold text-black text-lg">Reference Model Hub</h3>
-                    <p class="text-black text-sm">NBU aims to be a flagship African AI and XR hub attracting students, faculty, and partnerships.</p>
-                </div>
+                    <h3 class="font-display font-bold text-black text-lg group-hover:text-indigo-600 transition-colors">{{ item.title }}</h3>
+                    <p class="text-black text-sm">{{ item.summary }}</p>
+                </a>
+                {% endfor %}
             </div>
         </div>
     </div>
