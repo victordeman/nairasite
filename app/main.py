@@ -37,6 +37,12 @@ async def lifespan(app: FastAPI):
     logger.info("Shutting down application...")
 
 app = FastAPI(title="NAIRA - African AI & XR Excellence Hub", lifespan=lifespan)
+
+# Disable rate limiting for tests
+import os
+if os.getenv("TESTING"):
+    limiter.enabled = False
+
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)

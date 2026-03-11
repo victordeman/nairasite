@@ -1,5 +1,9 @@
 import json
-from fastapi import APIRouter, Depends, HTTPException, Request
+import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from fastapi import APIRouter, Depends, HTTPException, Request, BackgroundTasks
 import libsql_client
 from app.limiter import limiter
 from app.database import get_db, to_dict_list
@@ -140,10 +144,45 @@ async def get_captcha():
     token = create_access_token(data={"ans": answer}, expires_delta=timedelta(minutes=5))
     return {"question": question, "captcha_token": token}
 
+# --- Contact Form Helper ---
+def send_contact_email(submission: ContactSubmission):
+    smtp_host = os.getenv("SMTP_HOST")
+    smtp_port = int(os.getenv("SMTP_PORT", "587"))
+    smtp_user = os.getenv("SMTP_USER")
+    smtp_pass = os.getenv("SMTP_PASSWORD")
+
+    if not all([smtp_host, smtp_user, smtp_pass]):
+        return
+
+    msg = MIMEMultipart()
+    msg['From'] = smtp_user
+    msg['To'] = "naira@nbu.edu.ng"
+    msg['Subject'] = f"New Contact Submission from {submission.name}"
+
+    body = f"""
+    New contact submission received:
+
+    Name: {submission.name}
+    Email: {submission.email}
+    Role: {submission.role}
+
+    Message:
+    {submission.message}
+    """
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        with smtplib.SMTP(smtp_host, smtp_port) as server:
+            server.starttls()
+            server.login(smtp_user, smtp_pass)
+            server.send_message(msg)
+    except Exception:
+        pass
+
 # --- Contact Form ---
 @router.post("/contact", response_model=MessageResponse, status_code=201)
 @limiter.limit("5/minute")
-async def submit_contact(request: Request, submission: ContactSubmission, db: libsql_client.Client = Depends(get_db)):
+async def submit_contact(request: Request, submission: ContactSubmission, background_tasks: BackgroundTasks, db: libsql_client.Client = Depends(get_db)):
     # Honeypot check
     if submission.honeypot:
         return {"message": "Thank you for reaching out! We will get back to you soon.", "success": True} # Silent fail for bots
@@ -167,6 +206,7 @@ async def submit_contact(request: Request, submission: ContactSubmission, db: li
         "INSERT INTO contact_submissions (name, email, role, message) VALUES (?, ?, ?, ?)",
         (submission.name, submission.email, submission.role, submission.message),
     )
+    background_tasks.add_task(send_contact_email, submission)
     return {"message": "Thank you for reaching out! We will get back to you soon.", "success": True}
 
 @router.get("/contact", response_model=list[ContactResponse], dependencies=[Depends(get_current_user)])
@@ -213,7 +253,6 @@ async def get_stats(db: libsql_client.Client = Depends(get_db)):
     }
 
 # --- AI Chat ---
-import os
 import google.generativeai as genai
 from huggingface_hub import AsyncInferenceClient
 
