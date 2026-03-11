@@ -6,7 +6,8 @@ from app.seed_data import (
     ARCHITECTURE_LAYERS_DATA,
     REVENUE_STREAMS_DATA,
     PROJECTS_DATA,
-    VISION_MISSIONS_DATA
+    VISION_MISSIONS_DATA,
+    CONTENT_MODEL_DATA
 )
 
 # Configure logging
@@ -114,6 +115,17 @@ async def init_db():
                 )
             """)
             await client.execute("""
+                CREATE TABLE IF NOT EXISTS content_model (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    slug TEXT UNIQUE NOT NULL,
+                    title TEXT NOT NULL,
+                    summary TEXT NOT NULL,
+                    description TEXT NOT NULL,
+                    icon TEXT NOT NULL,
+                    color TEXT NOT NULL
+                )
+            """)
+            await client.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT UNIQUE NOT NULL,
@@ -196,6 +208,16 @@ async def init_db():
                     ("INSERT INTO vision_missions (slug, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", v)
                     for v in VISION_MISSIONS_DATA
                 ])
+
+            # Seed content model if empty
+            cursor = await client.execute("SELECT COUNT(*) FROM content_model")
+            count = cursor.rows[0][0]
+            if count == 0:
+                logger.info("Seeding content model...")
+                await client.batch([
+                    ("INSERT INTO content_model (slug, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", c)
+                    for c in CONTENT_MODEL_DATA
+                ])
         logger.info("Database initialization successful.")
     except Exception as e:
         logger.error(f"Failed to initialize database: {e}")
@@ -231,5 +253,10 @@ async def get_all_naira_data():
         revenue = await client.execute("SELECT title, description FROM revenue_streams")
         for r in revenue.rows:
             data.append(f"Revenue Stream: {r[0]}. {r[1]}")
+
+        # Content Model
+        content_model = await client.execute("SELECT title, summary, description FROM content_model")
+        for cm in content_model.rows:
+            data.append(f"Content Model: {cm[0]}. Summary: {cm[1]} Description: {cm[2]}")
 
     return data

@@ -88,8 +88,18 @@ async def revenue(request: Request, db: libsql_client.Client = Depends(get_db)):
     return templates.TemplateResponse("revenue.html", {"request": request, "revenue_streams": revenue_streams})
 
 @router.get("/content")
-async def content(request: Request):
-    return templates.TemplateResponse("content.html", {"request": request})
+async def content(request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM content_model ORDER BY id")
+    content_models = to_dict_list(res)
+    return templates.TemplateResponse("content.html", {"request": request, "content_models": content_models})
+
+@router.get("/content/{slug}")
+async def content_detail(slug: str, request: Request, db: libsql_client.Client = Depends(get_db)):
+    res = await db.execute("SELECT * FROM content_model WHERE slug = ?", (slug,))
+    content_model = to_dict_list(res)
+    if not content_model:
+        return templates.TemplateResponse("content.html", {"request": request, "content_models": []})
+    return templates.TemplateResponse("content_detail.html", {"request": request, "item": content_model[0]})
 
 @router.get("/projects")
 async def projects(request: Request, db: libsql_client.Client = Depends(get_db)):
