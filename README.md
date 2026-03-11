@@ -1,24 +1,69 @@
 # NAIRA - African AI & XR Excellence Hub
 
-NAIRA (NBU Artificial Intelligence Research & Advancement Institute) is a full-stack FastAPI application dedicated to transforming education and innovation through immersive XR experiences and agentic AI architectures.
+NAIRA (NBU Artificial Intelligence Research & Advancement Institute) is a full-stack FastAPI application dedicated to transforming education and innovation through immersive XR experiences and agentic AI architectures, centered on African excellence.
 
-## Project Structure
+## 🚀 Features
+
+- **AI Assistant with RAG**: A context-aware AI agent using Retrieval-Augmented Generation (RAG) powered by Google Gemini or Hugging Face. Supports a Local Mode fallback.
+- **Dynamic Content Management**: Strategic pillars, architecture layers, projects, and vision/mission statements are served dynamically from a libSQL/Turso database.
+- **User Authentication**: Secure JWT-based authentication system with registration, login, and profile management.
+- **Multilingual Support**: Built-in support for English, Yoruba, Swahili, Igbo, and Hausa.
+- **Security & Anti-Spam**:
+  - Stateless math CAPTCHA for forms.
+  - Hidden honeypot fields to deter bots.
+  - Rate limiting via SlowAPI.
+  - Secure password hashing with BCrypt.
+- **Responsive Frontend**: Modern UI built with Tailwind CSS, Feather Icons, and Jinja2 templates.
+- **Interactive Pages**: Dedicated sections for Vision, Pillars, Architecture, Projects, and Revenue Streams.
+
+## 📂 Project Structure
 
 ```
 .
 ├── app/
-│   ├── models/          # Pydantic schemas
-│   ├── routers/         # API and Page routers
+│   ├── models/          # Pydantic schemas (schemas.py)
+│   ├── routers/         # API, Auth, and Page routers
 │   ├── static/          # CSS, JS, and image files
 │   ├── templates/       # HTML templates (Jinja2)
-│   ├── __init__.py
-│   ├── database.py      # Database configuration and seeding
-│   └── main.py          # FastAPI application entry point
+│   ├── database.py      # Database configuration and initialization
+│   ├── limiter.py       # Rate limiting configuration
+│   ├── main.py          # FastAPI application entry point & lifespan
+│   ├── rag.py           # RAG Manager for AI Agent context
+│   ├── security.py      # Auth logic, JWT, and password hashing
+│   └── seed_data.py     # Initial database content
+├── tests/               # Pytest suite
+├── migrate.py           # Database migration script
 ├── requirements.txt     # Python dependencies
+├── vercel.json          # Vercel deployment configuration
 └── README.md            # Project documentation
 ```
 
-## Setup and Installation
+## 🛠️ Tech Stack
+
+- **Backend**: FastAPI (Python)
+- **Database**: libSQL / Turso (SQLite compatible)
+- **AI/ML**: Google Generative AI (Gemini), Hugging Face Hub, NumPy (Vector Search)
+- **Security**: Python-Jose (JWT), Passlib (BCrypt), SlowAPI
+- **Frontend**: Tailwind CSS, Feather Icons, Jinja2 Templates
+
+## ⚙️ Environment Variables
+
+To fully enable all features, configure the following environment variables:
+
+| Variable | Description |
+| :--- | :--- |
+| `TURSO_DATABASE_URL` | URL for the Turso/libSQL database. |
+| `TURSO_AUTH_TOKEN` | Auth token for the Turso database. |
+| `GOOGLE_API_KEY` | Google AI Studio key (Required for Gemini & RAG embeddings). |
+| `HF_TOKEN` | Hugging Face Access Token (Optional for Llama/Mistral models). |
+| `SMTP_HOST` | SMTP server host for contact form emails. |
+| `SMTP_PORT` | SMTP server port (default: 587). |
+| `SMTP_USER` | SMTP username. |
+| `SMTP_PASSWORD` | SMTP password. |
+| `ALLOWED_ORIGINS` | Comma-separated list of allowed CORS origins. |
+| `SECRET_KEY` | Secret key for JWT token signing. |
+
+## 🚀 Setup and Installation
 
 1.  **Clone the repository**:
     ```bash
@@ -37,40 +82,34 @@ NAIRA (NBU Artificial Intelligence Research & Advancement Institute) is a full-s
     pip install -r requirements.txt
     ```
 
-## Running the Application
+4.  **Run the application**:
+    ```bash
+    uvicorn app.main:app --reload
+    ```
+    The application will be available at `http://127.0.0.1:8000`.
 
-Start the FastAPI server using `uvicorn`:
+## 🧪 Testing
+
+Run the test suite using `pytest`:
 
 ```bash
-uvicorn app.main:app --reload
+pytest
 ```
 
-The application will be available at `http://127.0.0.1:8000`.
+## 🔗 Key Endpoints
 
-## AI Agent Configuration
+- **Pages**:
+  - `/`: Home
+  - `/vision`: Vision & Mission
+  - `/pillars`: Strategic Pillars
+  - `/architecture`: Technical Architecture
+  - `/projects`: Innovation Projects
+  - `/agent`: AI Assistant Interface
+  - `/login` / `/register` / `/profile`: User Management
 
-The NAIRA AI Assistant supports multiple models, including Gemini 1.5 Pro and Llama 3 (via Hugging Face). To enable these models, set the following environment variables:
-
-- `GOOGLE_API_KEY`: Your Google AI Studio API key (required for Gemini and RAG embeddings).
-- `HF_TOKEN`: Your Hugging Face Access Token (required for Llama 3).
-
-If no keys are provided, the agent will operate in **Local Mode**, using keyword-based search for its knowledge base.
-
-## API Endpoints
-
-- **GET /**: Home page (Template rendered)
-- **GET /healthz**: Health check endpoint
-- **GET /api/pillars**: Get all strategic pillars
-- **GET /api/architecture**: Get all architecture layers
-- **GET /api/revenue-streams**: Get all revenue streams
-- **POST /api/contact**: Submit a contact form
-- **POST /api/newsletter**: Subscribe to the newsletter
-
-For full API documentation, visit `http://127.0.0.1:8000/docs` or `http://127.0.0.1:8000/redoc`.
-
-## Tech Stack
-
-- **Backend**: FastAPI (Python)
-- **Database**: SQLite with `aiosqlite`
-- **Frontend**: Tailwind CSS, Feather Icons, Jinja2 Templates
-- **Icons**: Feather Icons
+- **API**:
+  - `/api/chat`: AI Agent interaction
+  - `/api/contact`: Contact form submission
+  - `/api/newsletter`: Newsletter subscription
+  - `/auth/token`: JWT Token generation
+  - `/docs`: Swagger UI documentation
