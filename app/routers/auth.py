@@ -5,14 +5,29 @@ import libsql_client
 
 from app.limiter import limiter
 from app.database import get_db
-from app.models.schemas import Token
+from app.models.schemas import Token, UserCreate, User
 from app.security import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
     authenticate_user,
     create_access_token,
+    get_password_hash,
 )
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+
+@router.post("/register", response_model=User)
+async def register_user(user: UserCreate, db: libsql_client.Client = Depends(get_db)):
+    # Check if user already exists
+    result = await db.execute("SELECT id FROM users WHERE username = ?", (user.username,))
+    if result.rows:
+        raise HTTPException(status_code=400, detail="Username already registered")
+
+    hashed_password = get_password_hash(user.password)
+    await db.execute(
+        "INSERT INTO users (username, email, full_name, hashed_password, role) VALUES (?, ?, ?, ?, ?)",
+        (user.username, user.email, user.full_name, hashed_password, user.role),
+    )
+    return user
 
 @router.post("/token", response_model=Token)
 @limiter.limit("5/minute")

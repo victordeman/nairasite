@@ -34,7 +34,8 @@ async def migrate():
             "architecture_layers",
             "revenue_streams",
             "projects",
-            "vision_missions"
+            "vision_missions",
+            "users"
         ]
         for table in tables:
             await client.execute(f"DROP TABLE IF EXISTS {table}")
@@ -118,7 +119,37 @@ async def migrate():
             )
         """)
 
+        await client.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                email TEXT,
+                full_name TEXT,
+                hashed_password TEXT NOT NULL,
+                disabled BOOLEAN DEFAULT 0,
+                role TEXT DEFAULT 'user'
+            )
+        """)
+
         # Seeding
+        logger.info("Seeding users...")
+        from passlib.context import CryptContext
+        pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+        # Admin user
+        admin_hashed = pwd_context.hash("admin123")
+        await client.execute(
+            "INSERT INTO users (username, email, full_name, hashed_password, role) VALUES (?, ?, ?, ?, ?)",
+            ("admin", "admin@naira.institute", "NAIRA Admin", admin_hashed, "admin")
+        )
+
+        # Normal user
+        user_hashed = pwd_context.hash("user123")
+        await client.execute(
+            "INSERT INTO users (username, email, full_name, hashed_password, role) VALUES (?, ?, ?, ?, ?)",
+            ("testuser", "user@naira.institute", "Test User", user_hashed, "user")
+        )
+
         logger.info("Seeding pillars...")
         await client.batch([
             ("INSERT INTO pillars (number, title, summary, description, icon, color) VALUES (?, ?, ?, ?, ?, ?)", p)
