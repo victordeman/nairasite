@@ -121,3 +121,15 @@ async def contact(request: Request):
 @router.get("/agent")
 async def agent(request: Request):
     return templates.TemplateResponse("agent.html", {"request": request})
+
+@router.get("/register")
+async def register(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+@router.get("/login")
+async def login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@router.get("/profile")
+async def profile(request: Request):
+    return templates.TemplateResponse("profile.html", {"request": request})

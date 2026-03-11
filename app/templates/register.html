@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Register - NAIRA{% endblock %}
+
+{% block content %}
+<div class="min-h-screen pt-32 pb-20 px-6">
+    <div class="container mx-auto">
+        <div class="max-w-md mx-auto">
+            <div class="glass-card rounded-3xl p-8 border border-white/10 shadow-2xl">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-600/10 flex items-center justify-center mx-auto mb-4">
+                        <i data-feather="user-plus" class="w-8 h-8 text-indigo-600"></i>
+                    </div>
+                    <h1 class="text-3xl font-display font-bold text-slate-900 dark:text-white">Create Account</h1>
+                    <p class="text-slate-500 dark:text-slate-400 mt-2">Join the NAIRA innovation network</p>
+                </div>
+
+                <form id="register-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Username</label>
+                        <input type="text" name="username" required class="w-full bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                        <input type="email" name="email" required class="w-full bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Full Name</label>
+                        <input type="text" name="full_name" class="w-full bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Password</label>
+                        <input type="password" name="password" required class="w-full bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Role</label>
+                        <select name="role" class="w-full bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 transition-colors appearance-none">
+                            <option value="user" class="bg-slate-900">Normal User</option>
+                            <option value="admin" class="bg-slate-900">Administrator</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-500/20 transition-all active:scale-[0.98] mt-4">
+                        Register
+                    </button>
+                </form>
+
+                <div id="register-status" class="mt-6 hidden"></div>
+
+                <p class="text-center text-slate-500 text-sm mt-8">
+                    Already have an account? <a href="/login" class="text-indigo-600 font-bold hover:underline">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    const status = document.getElementById('register-status');
+
+    try {
+        const response = await fetch('/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        status.classList.remove('hidden');
+        if (response.ok) {
+            status.className = 'text-center py-3 px-4 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30';
+            status.textContent = 'Registration successful! Redirecting to login...';
+            setTimeout(() => window.location.href = '/login', 2000);
+        } else {
+            status.className = 'text-center py-3 px-4 rounded-xl bg-red-600/20 text-red-400 border border-red-500/30';
+            status.textContent = result.detail || 'Registration failed';
+        }
+    } catch (error) {
+        status.classList.remove('hidden');
+        status.className = 'text-center py-3 px-4 rounded-xl bg-red-600/20 text-red-400 border border-red-500/30';
+        status.textContent = 'Network error. Please try again.';
+    }
+});
+</script>
+{% endblock %}

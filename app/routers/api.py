@@ -24,10 +24,15 @@ from app.models.schemas import (
     CaptchaResponse,
     ChatRequest,
     ChatResponse,
+    User,
 )
 from app.security import get_current_user
 
 router = APIRouter(prefix="/api", tags=["api"])
+
+@router.get("/me", response_model=User)
+async def get_me(current_user: User = Depends(get_current_user)):
+    return current_user
 
 # --- Pillars ---
 @router.get("/pillars", response_model=list[PillarResponse], dependencies=[Depends(get_current_user)])

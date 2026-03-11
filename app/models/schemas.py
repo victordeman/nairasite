@@ -118,6 +118,10 @@ class User(BaseModel):
     email: Optional[str] = None
     full_name: Optional[str] = None
     disabled: Optional[bool] = None
+    role: Optional[str] = "user"
+
+class UserCreate(User):
+    password: str
 
 class UserInDB(User):
     hashed_password: str

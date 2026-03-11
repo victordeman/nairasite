@@ -120,7 +120,8 @@ async def init_db():
                     email TEXT,
                     full_name TEXT,
                     hashed_password TEXT NOT NULL,
-                    disabled BOOLEAN DEFAULT 0
+                    disabled BOOLEAN DEFAULT 0,
+                    role TEXT DEFAULT 'user'
                 )
             """)
 
@@ -131,10 +132,19 @@ async def init_db():
                 logger.info("Seeding users...")
                 from passlib.context import CryptContext
                 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-                hashed_password = pwd_context.hash("admin123")
+
+                # Admin user
+                admin_hashed = pwd_context.hash("admin123")
                 await client.execute(
-                    "INSERT INTO users (username, email, full_name, hashed_password) VALUES (?, ?, ?, ?)",
-                    ("admin", "admin@naira.institute", "NAIRA Admin", hashed_password)
+                    "INSERT INTO users (username, email, full_name, hashed_password, role) VALUES (?, ?, ?, ?, ?)",
+                    ("admin", "admin@naira.institute", "NAIRA Admin", admin_hashed, "admin")
+                )
+
+                # Normal user
+                user_hashed = pwd_context.hash("user123")
+                await client.execute(
+                    "INSERT INTO users (username, email, full_name, hashed_password, role) VALUES (?, ?, ?, ?, ?)",
+                    ("testuser", "user@naira.institute", "Test User", user_hashed, "user")
                 )
 
             # Seed pillars if empty
