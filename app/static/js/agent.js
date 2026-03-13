@@ -54,6 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Handle Enter key for submission
+    chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            chatForm.requestSubmit();
+        }
+    });
+
     // Handle Form Submission
     chatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
