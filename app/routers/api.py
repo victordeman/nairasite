@@ -273,13 +273,12 @@ async def call_gemini(system_prompt: str, user_msg: str):
     except Exception as e:
         return f"Error calling Gemini: {str(e)}"
 
-async def call_huggingface(system_prompt: str, user_msg: str):
+async def call_huggingface(system_prompt: str, user_msg: str, model_id: str = "mistralai/Mistral-7B-Instruct-v0.3"):
     token = os.getenv("HF_TOKEN")
     if not token:
         return None
     try:
         client = AsyncInferenceClient(token=token)
-        model_id = "mistralai/Mistral-7B-Instruct-v0.3"
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_msg},
@@ -321,7 +320,10 @@ Guidelines:
     elif selected_model == "hf" and hf_token:
         response_text = await call_huggingface(system_prompt, user_msg)
         return {"response": response_text}
-    elif selected_model in ["gemini", "hf"]:
+    elif selected_model == "qwen" and hf_token:
+        response_text = await call_huggingface(system_prompt, user_msg, model_id="Qwen/Qwen3-Next-80B-A3B-Instruct")
+        return {"response": response_text}
+    elif selected_model in ["gemini", "hf", "qwen"]:
         # User selected a premium model but keys are missing
         return {"response": f"I see you selected {selected_model.upper()}, but I'm currently running in Local Mode because no API keys were found. To use {selected_model.upper()}, please configure the environment variables."}
     else:
