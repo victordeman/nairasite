@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const newChatBtn = document.getElementById('new-chat-btn');
     const toggleSidebarBtn = document.getElementById('toggle-sidebar');
     const sidebar = document.getElementById('chat-sidebar');
+    const voiceBtn = document.getElementById('voice-input-btn');
 
     let chatHistory = JSON.parse(localStorage.getItem('naira_chat_history') || '[]');
 
@@ -42,6 +43,59 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     renderHistory();
+
+    // Voice Input Feature
+    if (voiceBtn) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            let isListening = false;
+
+            recognition.onstart = () => {
+                isListening = true;
+                voiceBtn.classList.add('text-red-500', 'animate-pulse');
+                voiceBtn.innerHTML = '<i data-feather="mic-off" class="w-5 h-5"></i>';
+                if (window.feather) feather.replace();
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                voiceBtn.classList.remove('text-red-500', 'animate-pulse');
+                voiceBtn.innerHTML = '<i data-feather="mic" class="w-5 h-5"></i>';
+                if (window.feather) feather.replace();
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                chatInput.value += (chatInput.value ? ' ' : '') + transcript;
+
+                // Trigger auto-resize
+                chatInput.dispatchEvent(new Event('input'));
+                chatInput.focus();
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                recognition.stop();
+            };
+
+            voiceBtn.addEventListener('click', () => {
+                if (isListening) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+        } else {
+            // Hide voice button if not supported
+            voiceBtn.style.display = 'none';
+        }
+    }
 
     // Auto-resize textarea
     chatInput.addEventListener('input', function() {
