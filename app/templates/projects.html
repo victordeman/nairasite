@@ -59,7 +59,7 @@
 
                         <!-- Subtitle Overlay -->
                         <div id="subtitle-overlay" class="subtitle-overlay opacity-0">
-                            <span id="subtitle-text" class="subtitle-text"></span>
+                            <span id="subtitle-text" class="subtitle-text" aria-live="polite"></span>
                         </div>
 
                         <!-- Cinematic Controls Overlay -->
@@ -200,170 +200,26 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const modelViewer = document.querySelector('#cinematic-mask');
-        const playBtn = document.querySelector('#play-tour-btn');
-        const replayBtn = document.querySelector('#replay-tour-btn');
-        const subtitleOverlay = document.querySelector('#subtitle-overlay');
-        const subtitleText = document.querySelector('#subtitle-text');
-        const tourProgress = document.querySelector('#tour-progress');
-        const hotspots = document.querySelectorAll('.hotspot');
-
-        const tourScript = [
-            { time: 0, text: "In the heart of Igboland, where the sacred earth meets the spirit world, the masquerade mask awakens.", orbit: "0deg 75deg 105%", fov: "30deg", exposure: 0.5, hotspot: null },
-            { time: 8, text: "This is not mere wood and pigment. This is Mmanwụ — the living embodiment of our ancestors.", orbit: "45deg 80deg 90%", fov: "25deg", exposure: 0.8, hotspot: "hotspot-material" },
-            { time: 16, text: "Carved from the spirit of the iroko tree, adorned with the colors of the earth and sky...", orbit: "90deg 70deg 100%", fov: "30deg", exposure: 1.0, hotspot: "hotspot-material" },
-            { time: 24, text: "See the bold geometric patterns? They speak the language of Chi — the personal guardian spirit.", orbit: "180deg 85deg 80%", fov: "20deg", exposure: 1.2, hotspot: "hotspot-pattern" },
-            { time: 35, text: "The white chalk markings honor purity and the ancestors who watch over us.", orbit: "220deg 75deg 90%", fov: "25deg", exposure: 1.4, hotspot: "hotspot-eyes" },
-            { time: 45, text: "During the New Yam Festival, these masks become the bridge between the visible and the invisible.", orbit: "360deg 75deg 105%", fov: "30deg", exposure: 1.0, hotspot: null },
-            { time: 60, text: "Through the power of extended reality, NAIRA brings this sacred mask into your world.", orbit: "400deg 70deg 120%", fov: "35deg", exposure: 0.8, hotspot: null },
-            { time: 75, text: "This is Immersive Experiential Learning — where African heritage is lived, felt, and remembered.", orbit: "0deg 75deg 105%", fov: "30deg", exposure: 1.2, hotspot: null },
-            { time: 85, text: "Welcome to the future of African knowledge.", orbit: "0deg 75deg 105%", fov: "30deg", exposure: 1.0, hotspot: null }
-        ];
-
-        let isPlaying = false;
-        let isPaused = false;
-        let tourTimeout;
-        let currentStep = 0;
-        let startTime = 0;
-        let remainingTime = 0;
-
-        const pauseBtn = document.querySelector('#pause-tour-btn');
-
-        const controlsOverlay = document.querySelector('#controls-overlay');
-
-        const runStep = (stepIndex, delay = null) => {
-            if (!isPlaying || stepIndex >= tourScript.length) {
-                endTour();
-                return;
-            }
-
-            currentStep = stepIndex;
-            const step = tourScript[stepIndex];
-            const nextStep = tourScript[stepIndex + 1];
-            const stepDuration = nextStep ? (nextStep.time - step.time) * 1000 : 5000;
-            const actualDelay = delay !== null ? delay : stepDuration;
-
-            // Update UI
-            subtitleText.textContent = step.text;
-            subtitleOverlay.classList.remove('opacity-0');
-
-            // Update Camera & Lighting
-            modelViewer.cameraOrbit = step.orbit;
-            modelViewer.fieldOfView = step.fov;
-            modelViewer.exposure = step.exposure;
-
-            // Manage Hotspots
-            hotspots.forEach(h => h.classList.remove('active'));
-            if (step.hotspot) {
-                const activeHotspot = document.querySelector(`[slot="${step.hotspot}"]`);
-                if (activeHotspot) activeHotspot.classList.add('active');
-            }
-
-            // Progress Bar
-            const progress = ((stepIndex + 1) / tourScript.length) * 100;
-            tourProgress.style.width = `${progress}%`;
-
-            // Narration
-            if (delay === null) {
-                speak(step.text);
-            }
-
-            startTime = Date.now();
-            remainingTime = actualDelay;
-
-            tourTimeout = setTimeout(() => {
-                runStep(stepIndex + 1);
-            }, actualDelay);
-        };
-
-        const startTour = () => {
-            isPlaying = true;
-            isPaused = false;
-            currentStep = 0;
-
-            playBtn.classList.add('hidden');
-            pauseBtn.classList.remove('hidden');
-            pauseBtn.innerHTML = '<i data-feather="pause" class="w-8 h-8 fill-current"></i>';
-            feather.replace();
-
-            // Make overlay cinematic (hidden until hover)
-            controlsOverlay.classList.add('opacity-0', 'group-hover/viewer:opacity-100');
-            replayBtn.classList.add('hidden');
-
-            modelViewer.autoRotate = false;
-            runStep(0);
-        };
-
-        const togglePause = () => {
-            if (!isPlaying) return;
-
-            if (!isPaused) {
-                isPaused = true;
-                clearTimeout(tourTimeout);
-                remainingTime -= (Date.now() - startTime);
-                if (window.speechSynthesis) window.speechSynthesis.pause();
-                pauseBtn.innerHTML = '<i data-feather="play" class="w-8 h-8 fill-current"></i>';
-                feather.replace();
-                controlsOverlay.classList.remove('opacity-0'); // Keep visible while paused
-            } else {
-                isPaused = false;
-                if (window.speechSynthesis) window.speechSynthesis.resume();
-                pauseBtn.innerHTML = '<i data-feather="pause" class="w-8 h-8 fill-current"></i>';
-                feather.replace();
-                controlsOverlay.classList.add('opacity-0');
-                runStep(currentStep, remainingTime);
-            }
-        };
-
-        const endTour = () => {
-            isPlaying = false;
-            isPaused = false;
-            subtitleOverlay.classList.add('opacity-0');
-
-            playBtn.classList.remove('hidden');
-            pauseBtn.classList.add('hidden');
-            controlsOverlay.classList.remove('opacity-0', 'group-hover/viewer:opacity-100');
-
-            replayBtn.classList.remove('hidden');
-            modelViewer.autoRotate = true;
-            modelViewer.exposure = 1.0;
-            tourProgress.style.width = '0%';
-            hotspots.forEach(h => h.classList.remove('active'));
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-        };
-
-        const speak = (text) => {
-            // Placeholder: Use real audio file if available
-            // To use real audio:
-            // 1. Place 'narration.mp3' in 'app/static/audio/'
-            // 2. Uncomment and adjust the following:
-            /*
-            const audio = new Audio('/static/audio/narration.mp3');
-            audio.currentTime = tourScript[currentStep].time;
-            audio.play();
-            */
-
-            // Fallback to Web Speech API
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.85;
-                utterance.pitch = 1.0;
-
-                // Optional: Find a specific voice
-                const voices = window.speechSynthesis.getVoices();
-                const preferredVoice = voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-NG'));
-                if (preferredVoice) utterance.voice = preferredVoice;
-
-                window.speechSynthesis.speak(utterance);
-            }
-        };
-
-        playBtn.addEventListener('click', startTour);
-        replayBtn.addEventListener('click', startTour);
-        pauseBtn.addEventListener('click', togglePause);
+        new XRTour({
+            modelViewer: '#cinematic-mask',
+            playBtn: '#play-tour-btn',
+            pauseBtn: '#pause-tour-btn',
+            replayBtn: '#replay-tour-btn',
+            subtitleOverlay: '#subtitle-overlay',
+            subtitleText: '#subtitle-text',
+            tourProgress: '#tour-progress',
+            controlsOverlay: '#controls-overlay',
+            hotspots: '.hotspot',
+            script: [
+                { time: 0, text: "In the heart of Igboland, where the sacred earth meets the spirit world, the masquerade mask awakens.", orbit: "0deg 75deg 105%", fov: "30deg", exposure: 0.5, hotspot: null },
+                { time: 8, text: "This is not mere wood and pigment. This is Mmanwụ — the living embodiment of our ancestors. Carved from the spirit of the iroko tree, adorned with the colors of the earth and sky, every line tells a story older than memory itself.", orbit: "45deg 80deg 90%", fov: "25deg", exposure: 0.8, hotspot: "hotspot-material" },
+                { time: 24, text: "See the bold geometric patterns? They speak the language of Chi — the personal guardian spirit that guides every soul. The white chalk markings honor purity and the ancestors who watch over us. The fierce yet noble expression reminds us: strength and wisdom must walk together.", orbit: "180deg 85deg 80%", fov: "20deg", exposure: 1.2, hotspot: "hotspot-pattern" },
+                { time: 45, text: "During the New Yam Festival and the grand masquerade seasons, these masks do not simply dance — they become the bridge between the visible and the invisible. They teach our children respect for elders, the importance of community, the rhythm of the seasons, and the unbreakable bond between the living and those who have passed.", orbit: "360deg 75deg 105%", fov: "30deg", exposure: 1.0, hotspot: null },
+                { time: 65, text: "Today, through the power of extended reality, NAIRA brings this sacred mask into your world. Step inside the experience. Hear its story. Feel its presence. Let it teach you the way only our ancestors can.", orbit: "400deg 70deg 120%", fov: "35deg", exposure: 0.8, hotspot: null },
+                { time: 75, text: "This is more than technology. This is Immersive Experiential Learning — where African heritage is no longer studied from books, but lived, felt, and remembered.", orbit: "0deg 75deg 105%", fov: "30deg", exposure: 1.2, hotspot: null },
+                { time: 85, text: "The mask is not in a museum. It is alive. And it is speaking to you. Welcome to the future of African knowledge.", orbit: "0deg 75deg 105%", fov: "30deg", exposure: 1.0, hotspot: null }
+            ]
+        });
     });
 </script>
 {% endblock %}

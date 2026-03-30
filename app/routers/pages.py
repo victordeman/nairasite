@@ -143,3 +143,7 @@ async def login(request: Request):
 @router.get("/profile")
 async def profile(request: Request):
     return templates.TemplateResponse("profile.html", {"request": request})
+
+@router.get("/immersive-learning")
+async def immersive_learning(request: Request):
+    return templates.TemplateResponse("immersive_learning.html", {"request": request})
