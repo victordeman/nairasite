@@ -22,6 +22,69 @@
                 <div id="orality-lab-root"></div>
             </div>
 
+            <!-- Ngwu: The Forest Spirit -->
+            <div id="ngwu-experience" class="mt-20">
+                <div class="text-center mb-12">
+                    <h3 class="font-display text-3xl font-bold text-white mb-4">Spiritual Guardian: <span class="text-indigo-500">Ngwu Masquerade</span></h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto">Step into the sacred grove. The Ngwu masquerade represents the untamed power of the forest. This cinematic experience utilizes spatial storytelling to preserve the sacred orality of Igbo heritage.</p>
+                </div>
+
+                <div class="cinematic-container aspect-video w-full group/viewer relative">
+                    <model-viewer id="ngwu-model"
+                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                        alt="Ngwu Masquerade 3D Experience (Placeholder)"
+                        camera-controls
+                        auto-rotate
+                        touch-action="pan-y"
+                        shadow-intensity="2"
+                        exposure="1"
+                        class="w-full h-full cursor-grab active:cursor-grabbing">
+
+                        <div class="absolute inset-0 pointer-events-none vignette opacity-60"></div>
+                        <div class="absolute inset-0 pointer-events-none film-grain opacity-10"></div>
+
+                        <!-- Hotspots -->
+                        <button class="hotspot" slot="hotspot-mask" data-position="0m 0.6m 0.25m" data-normal="0m 0m 1m">
+                            <div class="hotspot-annotation">Sacred Spirit Mask</div>
+                        </button>
+                        <button class="hotspot" slot="hotspot-raffia" data-position="0.2m 0.4m 0.2m" data-normal="0m 1m 0m">
+                            <div class="hotspot-annotation">Agbisi (Nature's Shroud)</div>
+                        </button>
+                    </model-viewer>
+
+                    <!-- Tour Controls -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500" id="ngwu-controls">
+                        <button id="play-ngwu-tour" class="pointer-events-auto w-20 h-20 bg-indigo-600/90 hover:bg-indigo-500 rounded-full flex items-center justify-center text-white shadow-2xl shadow-indigo-500/40 transform transition hover:scale-110 active:scale-95 group">
+                            <i data-feather="play" class="w-8 h-8 fill-current ml-1 transition-transform group-hover:scale-110"></i>
+                        </button>
+                    </div>
+
+                    <!-- Bottom Overlay (Subtitles & Progress) -->
+                    <div class="absolute bottom-0 left-0 w-full p-8 z-20">
+                        <div class="max-w-4xl mx-auto">
+                            <div class="w-full h-1 bg-white/10 rounded-full mb-6 overflow-hidden">
+                                <div id="ngwu-progress" class="h-full bg-indigo-500 w-0 transition-all duration-300"></div>
+                            </div>
+                            <div id="ngwu-subtitle-overlay" class="opacity-0 transition-opacity duration-500 text-center">
+                                <span id="ngwu-subtitle-text" class="px-6 py-3 rounded-xl bg-slate-900/80 backdrop-blur-md border border-white/10 text-white text-lg inline-block">
+                                    Behold Ngwu, the Forest Spirit...
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Controls -->
+                    <div class="absolute top-6 right-6 flex flex-col gap-3 z-30 opacity-0 group-hover/viewer:opacity-100 transition-opacity duration-300">
+                        <button id="pause-ngwu-tour" class="w-12 h-12 bg-black/50 backdrop-blur-md hover:bg-black/70 rounded-full flex items-center justify-center text-white border border-white/10 hidden">
+                            <i data-feather="pause" class="w-5 h-5"></i>
+                        </button>
+                        <button id="replay-ngwu-tour" class="w-12 h-12 bg-black/50 backdrop-blur-md hover:bg-black/70 rounded-full flex items-center justify-center text-white border border-white/10 hidden">
+                            <i data-feather="rotate-ccw" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Virtual Museum: Treasures of Benin -->
             <div id="museum-tour" class="mt-20">
                 <div class="text-center mb-12">
@@ -153,6 +216,7 @@
         ];
 
         if (window.XRTour) {
+            // Museum Tour
             new XRTour({
                 modelViewer: '#benin-model',
                 playBtn: '#play-museum-tour',
@@ -164,6 +228,25 @@
                 controlsOverlay: '#museum-controls',
                 hotspots: '.hotspot',
                 script: museumScript
+            });
+
+            // Ngwu Tour
+            new XRTour({
+                modelViewer: '#ngwu-model',
+                playBtn: '#play-ngwu-tour',
+                pauseBtn: '#pause-ngwu-tour',
+                replayBtn: '#replay-ngwu-tour',
+                subtitleOverlay: '#ngwu-subtitle-overlay',
+                subtitleText: '#ngwu-subtitle-text',
+                tourProgress: '#ngwu-progress',
+                controlsOverlay: '#ngwu-controls',
+                hotspots: '.hotspot',
+                script: [
+                    { time: 0, text: "Behold Ngwu, the Forest Spirit. It emerges from the sacred soul of the grove, a bridge between man and the eternal.", orbit: "0deg 75deg 105%", fov: "30deg", exposure: 0.6 },
+                    { time: 8, text: "The mask is the gateway. Here, the 'Ogwu' resides—a force of protection and ancestral wisdom.", orbit: "45deg 80deg 85%", fov: "22deg", exposure: 0.9, hotspot: "hotspot-mask" },
+                    { time: 18, text: "The 'Agbisi'—the sacred raffia—shrouds the spirit in nature's own mantle, symbolizing the wild mystery of the woods.", orbit: "120deg 85deg 90%", fov: "25deg", exposure: 0.7, hotspot: "hotspot-raffia" },
+                    { time: 28, text: "NAIRA preserves this sacred knowledge, ensuring the flame of African heritage illuminates the future.", orbit: "360deg 75deg 105%", fov: "30deg", exposure: 1.0 }
+                ]
             });
         }
     });
