@@ -152,9 +152,30 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Transformer Architecture: AI Inner Workings -->
+            <div id="transformer-tour-section" class="mt-20">
+                <div class="text-center mb-12">
+                    <h3 class="font-display text-3xl font-bold text-white mb-4">AI Inner Workings: <span class="text-cyan-500">Transformer Architecture</span></h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto">Explore the geometric beauty of the architecture that powers modern AI. This immersive tour breaks down the components of the transformer encoder.</p>
+                </div>
+
+                <div id="transformer-tour-container" class="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative">
+                    <!-- The Three.js tour will be initialized here -->
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+</script>
 
 <!-- React and Framer Motion CDNs -->
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -249,6 +270,13 @@
                 ]
             });
         }
+    });
+</script>
+
+<script type="module">
+    import { initTransformerTour } from '/static/js/transformer_tour.js';
+    document.addEventListener('DOMContentLoaded', () => {
+        initTransformerTour('transformer-tour-container');
     });
 </script>
 {% endblock %}
