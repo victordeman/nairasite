@@ -1,5 +1,5 @@
 const { useState, useEffect, useMemo } = React;
-const motion = (typeof FramerMotion !== 'undefined' ? FramerMotion.motion : (typeof Motion !== 'undefined' ? Motion.motion : { div: (props) => <div {...props} /> }));
+const motion = (window.Motion && window.Motion.motion) || (window.FramerMotion && window.FramerMotion.motion) || { div: (props) => <div {...props} />, span: (props) => <span {...props} /> };
 
 const VillageSquare = ({ onNodeClick, activeNode }) => {
     return (
@@ -15,30 +15,19 @@ const VillageSquare = ({ onNodeClick, activeNode }) => {
                 <circle cx="200" cy="200" r="190" fill="url(#mudcloth)" opacity="0.3" pointerEvents="none" />
 
                 {/* Connections */}
-                <line x1="200" y1="200" x2="200" y2="80" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" pointerEvents="none" />
-                <line x1="200" y1="200" x2="320" y2="280" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" pointerEvents="none" />
-                <line x1="200" y1="200" x2="80" y2="280" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" pointerEvents="none" />
-
-                {/* The Fire (Center) */}
-                <g
-                    onClick={() => onNodeClick('fire')}
-                    className="cursor-pointer group"
-                >
-                    <circle cx="200" cy="200" r="50" fill={activeNode === 'fire' ? '#FF4D00' : '#B85C38'} className="transition-colors duration-500 shadow-lg" />
-                    <path d="M185 210 Q200 160 215 210 T200 240 Z" fill="#FF9900">
-                        <animate attributeName="d" values="M185 210 Q200 160 215 210 T200 240 Z; M188 210 Q200 150 212 210 T200 250 Z; M185 210 Q200 160 215 210 T200 240 Z" dur="1.5s" repeatCount="indefinite" />
-                    </path>
-                    <text x="200" y="270" textAnchor="middle" fill="#E0AC49" className="text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none">The Fire</text>
-                </g>
+                <path d="M200 100 L300 280 L100 280 Z" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" fill="none" opacity="0.3" pointerEvents="none" />
+                <line x1="200" y1="200" x2="200" y2="100" stroke="#E0AC49" strokeWidth="1" strokeDasharray="3,3" opacity="0.2" pointerEvents="none" />
+                <line x1="200" y1="200" x2="300" y2="280" stroke="#E0AC49" strokeWidth="1" strokeDasharray="3,3" opacity="0.2" pointerEvents="none" />
+                <line x1="200" y1="200" x2="100" y2="280" stroke="#E0AC49" strokeWidth="1" strokeDasharray="3,3" opacity="0.2" pointerEvents="none" />
 
                 {/* The Elder (Top) */}
                 <g
                     onClick={() => onNodeClick('elder')}
                     className="cursor-pointer group"
                 >
-                    <circle cx="200" cy="80" r="40" fill={activeNode === 'elder' ? '#B85C38' : '#5C3D2E'} className="transition-colors duration-500" />
-                    <path d="M190 70 Q200 50 210 70 L205 95 L195 95 Z" fill="#E0AC49" />
-                    <text x="200" y="140" textAnchor="middle" fill="#E0AC49" className="text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none">The Elder</text>
+                    <circle cx="200" cy="100" r="45" fill={activeNode === 'elder' ? '#B85C38' : '#5C3D2E'} className="transition-colors duration-500" />
+                    <path d="M190 90 Q200 70 210 90 L205 115 L195 115 Z" fill="#E0AC49" />
+                    <text x="200" y="165" textAnchor="middle" fill="#E0AC49" className="text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none">The Elder</text>
                 </g>
 
                 {/* The Drum (Bottom Right) */}
@@ -46,20 +35,22 @@ const VillageSquare = ({ onNodeClick, activeNode }) => {
                     onClick={() => onNodeClick('drum')}
                     className="cursor-pointer group"
                 >
-                    <circle cx="320" cy="280" r="40" fill={activeNode === 'drum' ? '#B85C38' : '#5C3D2E'} className="transition-colors duration-500" />
-                    <path d="M310 265 L330 265 L325 295 L315 295 Z" fill="#E0AC49" />
-                    <circle cx="320" cy="265" r="10" fill="#FDFCF8" stroke="#5C3D2E" strokeWidth="2" />
-                    <text x="320" y="340" textAnchor="middle" fill="#E0AC49" className="text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none">The Drum</text>
+                    <circle cx="300" cy="280" r="45" fill={activeNode === 'drum' ? '#B85C38' : '#5C3D2E'} className="transition-colors duration-500" />
+                    <path d="M290 265 L310 265 L305 295 L295 295 Z" fill="#E0AC49" />
+                    <circle cx="300" cy="265" r="10" fill="#FDFCF8" stroke="#5C3D2E" strokeWidth="2" />
+                    <text x="300" y="345" textAnchor="middle" fill="#E0AC49" className="text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none">The Drum</text>
                 </g>
 
-                {/* The Seeker (Bottom Left) */}
+                {/* The Fire (Bottom Left) */}
                 <g
-                    onClick={() => onNodeClick('seeker')}
+                    onClick={() => onNodeClick('fire')}
                     className="cursor-pointer group"
                 >
-                    <circle cx="80" cy="280" r="40" fill={activeNode === 'seeker' ? '#B85C38' : '#5C3D2E'} className="transition-colors duration-500" />
-                    <path d="M70 270 L90 270 L80 300 Z" fill="#E0AC49" />
-                    <text x="80" y="340" textAnchor="middle" fill="#E0AC49" className="text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none">The Seeker</text>
+                    <circle cx="100" cy="280" r="45" fill={activeNode === 'fire' ? '#FF4D00' : '#B85C38'} className="transition-colors duration-500 shadow-lg" />
+                    <path d="M85 290 Q100 240 115 290 T100 320 Z" fill="#FF9900">
+                        <animate attributeName="d" values="M85 290 Q100 240 115 290 T100 320 Z; M88 290 Q100 230 112 290 T100 330 Z; M85 290 Q100 240 115 290 T100 320 Z" dur="1.5s" repeatCount="indefinite" />
+                    </path>
+                    <text x="100" y="345" textAnchor="middle" fill="#E0AC49" className="text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none">The Fire</text>
                 </g>
             </svg>
         </div>
@@ -90,8 +81,10 @@ const RiddleProverb = ({ content, onResponse, isCorrect, showResult }) => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{
                                 delay: i * 0.1,
-                                duration: 0.5,
-                                ease: "easeOut"
+                                duration: 0.6,
+                                type: "spring",
+                                stiffness: 100,
+                                damping: 10
                             }}
                         >
                             {word}
@@ -187,9 +180,22 @@ const OralityLabApp = () => {
         setActiveNode(node);
         setVisitedNodes(prev => new Set(prev).add(node));
 
-        // Pick new content
-        const pool = Math.random() > 0.5 ? KNOWLEDGE_BANK.proverbs : KNOWLEDGE_BANK.riddles;
-        const type = pool === KNOWLEDGE_BANK.proverbs ? 'proverb' : 'riddle';
+        // Pick new content based on node
+        let pool;
+        let type;
+
+        if (node === 'elder') {
+            pool = KNOWLEDGE_BANK.proverbs;
+            type = 'proverb';
+        } else if (node === 'drum') {
+            pool = KNOWLEDGE_BANK.riddles;
+            type = 'riddle';
+        } else {
+            // Fire node is mixed
+            pool = Math.random() > 0.5 ? KNOWLEDGE_BANK.proverbs : KNOWLEDGE_BANK.riddles;
+            type = pool === KNOWLEDGE_BANK.proverbs ? 'proverb' : 'riddle';
+        }
+
         const item = pool[Math.floor(Math.random() * pool.length)];
         setCurrentContent({ ...item, type });
         setShowResult(false);
@@ -216,7 +222,7 @@ const OralityLabApp = () => {
 
     // LT = f(I, T, D)
     const ltModel = useMemo(() => {
-        const I = visitedNodes.size / 4; // Max nodes: Elder, Drum, Fire, Seeker
+        const I = visitedNodes.size / 3; // Max nodes: Elder, Drum, Fire
         const avgT = interactions > 0 ? totalTruth / interactions : 0;
         const avgD = interactions > 0 ? totalDeviation / interactions : 0;
 
@@ -224,11 +230,13 @@ const OralityLabApp = () => {
         return Math.max(0, Math.min(1, lt));
     }, [visitedNodes.size, totalTruth, totalDeviation, interactions]);
 
+    const avgD = interactions > 0 ? totalDeviation / interactions : 0;
+
     return (
-        <div className={`orality-lab-container p-8 md:p-12 rounded-[3rem] transition-all duration-1000 border border-white/10 shadow-2xl relative overflow-hidden ${ltModel > 0.7 ? 'orality-vibrant' : ltModel < 0.3 && interactions > 0 ? 'orality-distorted' : ''}`} style={{ backgroundColor: '#2D2424' }}>
+        <div className={`orality-lab-container p-8 md:p-12 rounded-[3rem] transition-all duration-1000 border border-white/10 shadow-2xl relative overflow-hidden ${ltModel > 0.7 ? 'orality-vibrant' : avgD > 0.5 && interactions > 0 ? 'orality-distorted' : ''}`} style={{ backgroundColor: '#2D2424' }}>
             {/* Visual Feedback Overlays */}
             {ltModel > 0.7 && <div className="absolute inset-0 pointer-events-none animate-pulse bg-indigo-500/5"></div>}
-            {ltModel < 0.3 && interactions > 0 && <div className="absolute inset-0 pointer-events-none bg-slate-900/40 backdrop-grayscale"></div>}
+            {avgD > 0.5 && interactions > 0 && <div className="absolute inset-0 pointer-events-none bg-slate-900/40 backdrop-grayscale"></div>}
 
             <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
                 <div>
