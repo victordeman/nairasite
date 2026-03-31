@@ -12,12 +12,12 @@ const VillageSquare = ({ onNodeClick, activeNode }) => {
                         <circle cx="20" cy="20" r="2" fill="#3D2B1F" />
                     </pattern>
                 </defs>
-                <circle cx="200" cy="200" r="190" fill="url(#mudcloth)" opacity="0.3" />
+                <circle cx="200" cy="200" r="190" fill="url(#mudcloth)" opacity="0.3" pointerEvents="none" />
 
                 {/* Connections */}
-                <line x1="200" y1="200" x2="200" y2="80" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
-                <line x1="200" y1="200" x2="320" y2="280" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
-                <line x1="200" y1="200" x2="80" y2="280" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
+                <line x1="200" y1="200" x2="200" y2="80" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" pointerEvents="none" />
+                <line x1="200" y1="200" x2="320" y2="280" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" pointerEvents="none" />
+                <line x1="200" y1="200" x2="80" y2="280" stroke="#E0AC49" strokeWidth="2" strokeDasharray="5,5" opacity="0.5" pointerEvents="none" />
 
                 {/* The Fire (Center) */}
                 <g
@@ -225,7 +225,7 @@ const OralityLabApp = () => {
     }, [visitedNodes.size, totalTruth, totalDeviation, interactions]);
 
     return (
-        <div className={`p-8 md:p-12 rounded-[3rem] transition-all duration-1000 border border-white/10 shadow-2xl relative overflow-hidden ${ltModel > 0.7 ? 'orality-vibrant' : ltModel < 0.3 && interactions > 0 ? 'orality-distorted' : ''}`} style={{ backgroundColor: '#2D2424' }}>
+        <div className={`orality-lab-container p-8 md:p-12 rounded-[3rem] transition-all duration-1000 border border-white/10 shadow-2xl relative overflow-hidden ${ltModel > 0.7 ? 'orality-vibrant' : ltModel < 0.3 && interactions > 0 ? 'orality-distorted' : ''}`} style={{ backgroundColor: '#2D2424' }}>
             {/* Visual Feedback Overlays */}
             {ltModel > 0.7 && <div className="absolute inset-0 pointer-events-none animate-pulse bg-indigo-500/5"></div>}
             {ltModel < 0.3 && interactions > 0 && <div className="absolute inset-0 pointer-events-none bg-slate-900/40 backdrop-grayscale"></div>}
