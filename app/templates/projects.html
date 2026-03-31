@@ -9,6 +9,117 @@
             <p class="text-black text-lg">Exploring the frontiers of AI and XR to solve real-world challenges in Africa.</p>
         </div>
 
+        <!-- Immersive Experiential Learning: Cinematic XR Experience -->
+        <div class="mb-32">
+            <div class="dark-glass-card p-6 md:p-10 rounded-[3rem] border border-white/10 bg-black/40 shadow-2xl relative overflow-hidden group">
+                <!-- Cinematic Background Decor -->
+                <div class="absolute inset-0 pointer-events-none">
+                    <div class="absolute -top-24 -left-24 w-64 h-64 bg-indigo-600/10 rounded-full blur-[80px]"></div>
+                    <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-amber-600/5 rounded-full blur-[80px]"></div>
+                </div>
+
+                <div class="relative z-10">
+                    <div class="mb-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="w-12 h-[1px] bg-indigo-500"></span>
+                            <span class="text-indigo-400 font-bold uppercase tracking-[0.3em] text-[10px]">Immersive Experiential Learning</span>
+                        </div>
+                        <h3 class="text-3xl md:text-5xl font-display font-bold text-white leading-tight">An Igbo Masquerade Mask <br/><span class="text-indigo-500">Comes Alive</span></h3>
+                    </div>
+
+                    <div class="grid lg:grid-cols-12 gap-10 items-center">
+                        <div class="lg:col-span-8">
+                            <div class="cinematic-container aspect-video rounded-2xl border border-white/5 relative overflow-hidden group/viewer shadow-2xl">
+                                <div class="film-grain"></div>
+                                <div class="vignette"></div>
+
+                                <!-- Model Viewer with placeholder GLB and provided poster image -->
+                                <model-viewer
+                                    id="cinematic-mask"
+                                    src="https://modelviewer.dev/assets/ShopifyModels/Chair.glb"
+                                    poster="https://images.squarespace-cdn.com/content/v1/614f831e90f08045038b4dae/c1265c82-bedf-4e32-9158-8a12c75ecca8/Ngwu-Masquerade-min.jpg?format=2500w"
+                                    alt="An Igbo Masquerade Mask (Mmanwụ)"
+                                    shadow-intensity="2"
+                                    camera-controls
+                                    auto-rotate
+                                    interaction-prompt="none"
+                                    ar
+                                    ar-modes="webxr scene-viewer quick-look"
+                                    camera-orbit="0deg 75deg 105%"
+                                    field-of-view="30deg"
+                                    environment-image="neutral"
+                                    exposure="1"
+                                    class="w-full h-full outline-none z-10"
+                                    style="--poster-color: transparent;">
+
+                                    <!-- Timed Hotspots (Controlled by JS) -->
+                                    <button class="hotspot" slot="hotspot-material" data-position="-0.1m 0.5m 0.15m" data-normal="-0.5m 0.5m 0.7m" data-visibility-attribute="visible">
+                                        <div class="hotspot-annotation">Sacred Iroko Wood</div>
+                                    </button>
+                                    <button class="hotspot" slot="hotspot-pattern" data-position="0m 0.6m 0.2m" data-normal="0m 0.2m 0.9m" data-visibility-attribute="visible">
+                                        <div class="hotspot-annotation">The Language of Chi</div>
+                                    </button>
+                                    <button class="hotspot" slot="hotspot-festival" data-position="0.1m 0.3m 0.1m" data-normal="0.8m 0m 0.6m" data-visibility-attribute="visible">
+                                        <div class="hotspot-annotation">New Yam Festival Spirit</div>
+                                    </button>
+
+                                    <button slot="ar-button" id="ar-button" class="absolute bottom-6 right-6 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-full text-xs font-bold flex items-center gap-2 backdrop-blur-md transition-all">
+                                        <i data-feather="maximize" class="w-3 h-3"></i>
+                                        View in AR
+                                    </button>
+                                </model-viewer>
+
+                                <!-- Subtitle Overlay -->
+                                <div id="subtitle-overlay" class="subtitle-overlay opacity-0">
+                                    <span id="subtitle-text" class="subtitle-text" aria-live="polite"></span>
+                                </div>
+
+                                <!-- Cinematic Controls Overlay -->
+                                <div id="controls-overlay" class="absolute inset-0 z-40 flex items-center justify-center bg-black/20 group-hover/viewer:bg-black/10 transition-all duration-700">
+                                    <button id="play-tour-btn" aria-label="Play Cinematic Tour" class="btn-glowing-indigo w-24 h-24 rounded-full flex items-center justify-center text-white transform transition-all hover:scale-110 active:scale-95 shadow-2xl">
+                                        <i id="play-icon" data-feather="play" class="w-10 h-10 fill-current"></i>
+                                    </button>
+                                    <button id="pause-tour-btn" aria-label="Pause" class="hidden w-20 h-20 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white transform transition-all hover:scale-110 active:scale-95 shadow-2xl">
+                                        <i data-feather="pause" class="w-8 h-8 fill-current"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Progress Bar -->
+                                <div id="tour-progress" class="absolute bottom-0 left-0 h-1 bg-indigo-500 w-0 z-30 transition-all duration-300"></div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-4 space-y-8">
+                            <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+                                <h4 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                                    <i data-feather="info" class="w-5 h-5 text-indigo-400"></i>
+                                    About the Experience
+                                </h4>
+                                <p class="text-slate-300 text-sm leading-relaxed text-justify mb-6">
+                                    Step into the heart of Igboland. This cinematic tour explores the spiritual and cultural depth of Mmanwụ—the living embodiment of ancestors. Through synchronized narration and camera fly-throughs, witness how African heritage is preserved through technology.
+                                </p>
+                                <div class="flex flex-wrap gap-3">
+                                    <span class="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-[10px] font-bold text-indigo-300 uppercase tracking-widest">Narration</span>
+                                    <span class="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-[10px] font-bold text-indigo-300 uppercase tracking-widest">3D / XR</span>
+                                    <span class="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-[10px] font-bold text-indigo-300 uppercase tracking-widest">Culture</span>
+                                </div>
+                            </div>
+
+                            <button id="replay-tour-btn" class="hidden w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold transition-all flex items-center justify-center gap-3 shadow-lg shadow-indigo-600/20">
+                                <i data-feather="refresh-cw" class="w-5 h-5"></i>
+                                Replay Experience
+                            </button>
+
+                            <div class="flex items-center gap-4 text-slate-400 text-xs px-2">
+                                <i data-feather="volume-2" class="w-4 h-4 text-indigo-400"></i>
+                                <span>Audio narration will play automatically. Check your volume.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Student-Centered Use-Cases -->
         {% if projects.student %}
         <div class="mb-24">
@@ -103,5 +214,81 @@
         {% endif %}
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize the XR Tour for the Igbo Masquerade Mask
+        // Placeholder for real audio file: Add path to config if available, e.g., audioPath: '/static/audio/narration.mp3'
+        new XRTour({
+            modelViewer: '#cinematic-mask',
+            playBtn: '#play-tour-btn',
+            pauseBtn: '#pause-tour-btn',
+            replayBtn: '#replay-tour-btn',
+            subtitleOverlay: '#subtitle-overlay',
+            subtitleText: '#subtitle-text',
+            tourProgress: '#tour-progress',
+            controlsOverlay: '#controls-overlay',
+            hotspots: '.hotspot',
+            script: [
+                {
+                    time: 0,
+                    text: "In the heart of Igboland, where the sacred earth meets the spirit world, the masquerade mask awakens.",
+                    orbit: "0deg 75deg 105%",
+                    fov: "30deg",
+                    exposure: 0.5,
+                    hotspot: null
+                },
+                {
+                    time: 8,
+                    text: "This is not mere wood and pigment. This is Mmanwụ — the living embodiment of our ancestors. Carved from the spirit of the iroko tree, adorned with the colors of the earth and sky, every line tells a story older than memory itself.",
+                    orbit: "45deg 80deg 90%",
+                    fov: "25deg",
+                    exposure: 0.8,
+                    hotspot: "hotspot-material"
+                },
+                {
+                    time: 24,
+                    text: "See the bold geometric patterns? They speak the language of Chi — the personal guardian spirit that guides every soul. The white chalk markings honor purity and the ancestors who watch over us. The fierce yet noble expression reminds us: strength and wisdom must walk together.",
+                    orbit: "180deg 85deg 80%",
+                    fov: "20deg",
+                    exposure: 1.2,
+                    hotspot: "hotspot-pattern"
+                },
+                {
+                    time: 45,
+                    text: "During the New Yam Festival and the grand masquerade seasons, these masks do not simply dance — they become the bridge between the visible and the invisible. They teach our children respect for elders, the importance of community, the rhythm of the seasons, and the unbreakable bond between the living and those who have passed.",
+                    orbit: "360deg 75deg 105%",
+                    fov: "30deg",
+                    exposure: 1.0,
+                    hotspot: "hotspot-festival"
+                },
+                {
+                    time: 65,
+                    text: "Today, through the power of extended reality, NAIRA brings this sacred mask into your world. Step inside the experience. Hear its story. Feel its presence. Let it teach you the way only our ancestors can.",
+                    orbit: "400deg 70deg 120%",
+                    fov: "35deg",
+                    exposure: 0.8,
+                    hotspot: null
+                },
+                {
+                    time: 75,
+                    text: "This is more than technology. This is Immersive Experiential Learning — where African heritage is no longer studied from books, but lived, felt, and remembered.",
+                    orbit: "0deg 75deg 105%",
+                    fov: "30deg",
+                    exposure: 1.2,
+                    hotspot: null
+                },
+                {
+                    time: 85,
+                    text: "The mask is not in a museum. It is alive. And it is speaking to you. Welcome to the future of African knowledge.",
+                    orbit: "0deg 75deg 105%",
+                    fov: "30deg",
+                    exposure: 1.0,
+                    hotspot: null
+                }
+            ]
+        });
+    });
+</script>
 
 {% endblock %}
