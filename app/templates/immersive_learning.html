@@ -21,6 +21,74 @@
             <div id="orality-lab" class="mt-20">
                 <div id="orality-lab-root"></div>
             </div>
+
+            <!-- Virtual Museum: Treasures of Benin -->
+            <div id="museum-tour" class="mt-20">
+                <div class="text-center mb-12">
+                    <h3 class="font-display text-3xl font-bold text-white mb-4">Virtual Museum: <span class="text-amber-500">Treasures of Benin</span></h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto">Interact with the legendary bronzes of the Benin Kingdom. Use your mouse to rotate and explore the intricate details of African craftsmanship.</p>
+                </div>
+
+                <div class="cinematic-container aspect-video w-full group/viewer relative">
+                    <!-- 3D Model Viewer -->
+                    <!-- Placeholder model: Astronaut.glb (Replace with actual Benin Bronze GLB when available) -->
+                    <model-viewer id="benin-model"
+                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                        alt="A 3D model representing an African artifact (Placeholder)"
+                        camera-controls
+                        auto-rotate
+                        touch-action="pan-y"
+                        shadow-intensity="2"
+                        exposure="1"
+                        class="w-full h-full cursor-grab active:cursor-grabbing">
+
+                        <div class="absolute inset-0 pointer-events-none vignette opacity-60"></div>
+                        <div class="absolute inset-0 pointer-events-none film-grain opacity-10"></div>
+
+                        <!-- Hotspots -->
+                        <button class="hotspot" slot="hotspot-head" data-position="0m 1.7m 0.2m" data-normal="0m 0m 1m">
+                            <div class="hotspot-annotation">Intricate Headgear</div>
+                        </button>
+                        <button class="hotspot" slot="hotspot-chest" data-position="0m 1.2m 0.3m" data-normal="0m 0m 1m">
+                            <div class="hotspot-annotation">Royal Insignia</div>
+                        </button>
+                    </model-viewer>
+
+                    <!-- Tour Controls -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500" id="museum-controls">
+                        <button id="play-museum-tour" class="pointer-events-auto w-20 h-20 bg-indigo-600/90 hover:bg-indigo-500 rounded-full flex items-center justify-center text-white shadow-2xl shadow-indigo-500/40 transform transition hover:scale-110 active:scale-95 group">
+                            <i data-feather="play" class="w-8 h-8 fill-current ml-1 transition-transform group-hover:scale-110"></i>
+                        </button>
+                    </div>
+
+                    <!-- Bottom Overlay (Subtitles & Progress) -->
+                    <div class="absolute bottom-0 left-0 w-full p-8 z-20">
+                        <div class="max-w-4xl mx-auto">
+                            <!-- Progress Bar -->
+                            <div class="w-full h-1 bg-white/10 rounded-full mb-6 overflow-hidden">
+                                <div id="museum-progress" class="h-full bg-indigo-500 w-0 transition-all duration-300"></div>
+                            </div>
+
+                            <!-- Subtitle Overlay -->
+                            <div id="museum-subtitle-overlay" class="opacity-0 transition-opacity duration-500 text-center">
+                                <span id="museum-subtitle-text" class="px-6 py-3 rounded-xl bg-slate-900/80 backdrop-blur-md border border-white/10 text-white text-lg inline-block">
+                                    Exploring the craftsmanship of the Benin Kingdom...
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Controls -->
+                    <div class="absolute top-6 right-6 flex flex-col gap-3 z-30 opacity-0 group-hover/viewer:opacity-100 transition-opacity duration-300">
+                        <button id="pause-museum-tour" class="w-12 h-12 bg-black/50 backdrop-blur-md hover:bg-black/70 rounded-full flex items-center justify-center text-white border border-white/10 hidden">
+                            <i data-feather="pause" class="w-5 h-5"></i>
+                        </button>
+                        <button id="replay-museum-tour" class="w-12 h-12 bg-black/50 backdrop-blur-md hover:bg-black/70 rounded-full flex items-center justify-center text-white border border-white/10 hidden">
+                            <i data-feather="rotate-ccw" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -36,7 +104,68 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Immersive experiences removed as requested.
+        // Initialize Museum Tour
+        const museumScript = [
+            {
+                time: 0,
+                text: "Welcome to the Royal Court of Benin. You are looking at a masterpiece of African bronze casting.",
+                orbit: "45deg 75deg 2.5m",
+                fov: "30deg",
+                exposure: "1.0"
+            },
+            {
+                time: 5,
+                text: "The Kingdom of Benin, located in present-day Nigeria, was world-renowned for its intricate lost-wax casting technique.",
+                orbit: "-45deg 75deg 2.5m",
+                fov: "30deg",
+                exposure: "1.2"
+            },
+            {
+                time: 11,
+                text: "Observe the detailed headgear and the coral bead collars, symbols of supreme authority and royal dignity.",
+                orbit: "0deg 85deg 1.5m",
+                fov: "20deg",
+                exposure: "1.0",
+                hotspot: "hotspot-head"
+            },
+            {
+                time: 17,
+                text: "These artifacts weren't just art; they were historical records, documenting the reign and achievements of the Obas.",
+                orbit: "180deg 75deg 2.5m",
+                fov: "30deg",
+                exposure: "0.8"
+            },
+            {
+                time: 23,
+                text: "Today, we use digital XR technology to preserve and celebrate this legacy for future generations.",
+                orbit: "0deg 75deg 3m",
+                fov: "40deg",
+                exposure: "1.0",
+                hotspot: "hotspot-chest"
+            },
+            {
+                time: 29,
+                text: "The tour has concluded. Feel free to rotate the artifact yourself to explore its every detail.",
+                orbit: "45deg 75deg 2.5m",
+                fov: "30deg",
+                exposure: "1.0"
+            }
+        ];
+
+        if (window.XRTour) {
+            new XRTour({
+                modelViewer: '#benin-model',
+                playBtn: '#play-museum-tour',
+                pauseBtn: '#pause-museum-tour',
+                replayBtn: '#replay-museum-tour',
+                subtitleOverlay: '#museum-subtitle-overlay',
+                subtitleText: '#museum-subtitle-text',
+                tourProgress: '#museum-progress',
+                controlsOverlay: '#museum-controls',
+                hotspots: '.hotspot',
+                script: museumScript
+            });
+        }
     });
 </script>
 {% endblock %}
