@@ -449,3 +449,55 @@ model-viewer::part(default-progress-bar) {
         box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
     }
 }
+
+/* Orality Lab Earthy Tones & Feedback */
+:root {
+    --orality-terracotta: #B85C38;
+    --orality-ochre: #E0AC49;
+    --orality-mudcloth: #5C3D2E;
+    --orality-bg: #2D2424;
+}
+
+.orality-vibrant {
+    background-image: radial-gradient(circle at center, var(--orality-terracotta) 0%, var(--orality-bg) 100%);
+    box-shadow: 0 0 50px rgba(184, 92, 56, 0.3);
+}
+
+.orality-vibrant::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.orality-distorted {
+    filter: grayscale(1) contrast(1.2) brightness(0.8);
+}
+
+.orality-distorted::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 5;
+    animation: orality-noise 0.2s infinite;
+}
+
+@keyframes orality-noise {
+    0% { transform: translate(0,0) }
+    10% { transform: translate(-1%,-1%) }
+    20% { transform: translate(-2%,1%) }
+    30% { transform: translate(1%,-2%) }
+    40% { transform: translate(-1%,2%) }
+    50% { transform: translate(-2%,-2%) }
+    60% { transform: translate(2%,1%) }
+    70% { transform: translate(1%,1%) }
+    80% { transform: translate(-2%,1%) }
+    90% { transform: translate(1%,-2%) }
+    100% { transform: translate(0,0) }
+}
