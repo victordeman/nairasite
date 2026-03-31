@@ -13,7 +13,14 @@ class XRTour {
         this.subtitleText = document.querySelector(config.subtitleText);
         this.tourProgress = document.querySelector(config.tourProgress);
         this.controlsOverlay = document.querySelector(config.controlsOverlay);
-        this.hotspots = document.querySelectorAll(config.hotspots);
+
+        // Scope hotspots to the model viewer if possible
+        if (typeof config.hotspots === 'string' && this.modelViewer) {
+            this.hotspots = this.modelViewer.querySelectorAll(config.hotspots);
+        } else {
+            this.hotspots = document.querySelectorAll(config.hotspots);
+        }
+
         this.script = config.script;
         this.audioPath = config.audioPath || null;
 
@@ -58,10 +65,10 @@ class XRTour {
             this.modelViewer.exposure = step.exposure;
         }
 
-        // Manage Hotspots
+        // Manage Hotspots - scope to current viewer
         this.hotspots.forEach(h => h.classList.remove('active'));
-        if (step.hotspot) {
-            const activeHotspot = document.querySelector(`[slot="${step.hotspot}"]`);
+        if (step.hotspot && this.modelViewer) {
+            const activeHotspot = this.modelViewer.querySelector(`[slot="${step.hotspot}"]`);
             if (activeHotspot) activeHotspot.classList.add('active');
         }
 
@@ -73,7 +80,7 @@ class XRTour {
 
         // Narration
         if (delay === null) {
-            this.speak(step.text);
+            this.speak(step.text, step.audioId);
         }
 
         this.startTime = Date.now();
@@ -119,6 +126,7 @@ class XRTour {
             clearTimeout(this.tourTimeout);
             this.remainingTime -= (Date.now() - this.startTime);
             if (window.speechSynthesis) window.speechSynthesis.pause();
+            if (this.currentAudio) this.currentAudio.pause();
 
             if (this.pauseBtn) {
                 this.pauseBtn.innerHTML = '<i data-feather="play" class="w-8 h-8 fill-current"></i>';
@@ -128,6 +136,7 @@ class XRTour {
         } else {
             this.isPaused = false;
             if (window.speechSynthesis) window.speechSynthesis.resume();
+            if (this.currentAudio) this.currentAudio.play().catch(e => console.warn(e));
 
             if (this.pauseBtn) {
                 this.pauseBtn.innerHTML = '<i data-feather="pause" class="w-8 h-8 fill-current"></i>';
@@ -163,12 +172,27 @@ class XRTour {
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
         }
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio.currentTime = 0;
+        }
     }
 
-    speak(text) {
-        // Option to use real audio if audioPath is provided
-        if (this.audioPath) {
-            // Logic for synchronized MP3 playback could go here
+    speak(text, audioId = null) {
+        // Stop any current audio
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio.currentTime = 0;
+        }
+
+        // Use real audio if audioId is provided
+        if (audioId) {
+            const audio = document.getElementById(audioId);
+            if (audio) {
+                this.currentAudio = audio;
+                audio.play().catch(e => console.warn("Audio play failed:", e));
+                return;
+            }
         }
 
         // Fallback to Web Speech API
