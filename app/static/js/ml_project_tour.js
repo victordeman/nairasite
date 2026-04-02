@@ -7,6 +7,7 @@ class MLProjectTour {
         if (!this.container) return;
 
         this.onStepChange = options.onStepChange || (() => {});
+        this.interactive = options.interactive || false;
         this.currentStep = -1;
         this.isTouring = false;
 
@@ -20,52 +21,71 @@ class MLProjectTour {
 
         this.camera.position.set(0, 10, 20);
 
-        this.components = [];
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+
         this.steps = [
             {
+                id: 0,
                 title: "Data Ingestion",
                 text: "The foundation of any ML project. We collect diverse datasets, from structured logs to unstructured text and images.",
+                deliverables: ["Pipeline logs", "Raw data lakes", "Ingestion triggers"],
                 position: { x: -10, y: 0, z: 0 },
                 camera: { x: -10, y: 5, z: 10 }
             },
             {
+                id: 1,
                 title: "Preprocessing",
                 text: "Cleaning, normalizing, and transforming raw data into high-quality features that models can understand.",
+                deliverables: ["Clean datasets", "Feature stores", "Transformation DAGs"],
                 position: { x: -5, y: 0, z: 0 },
                 camera: { x: -5, y: 5, z: 10 }
             },
             {
+                id: 2,
                 title: "Model Training",
                 text: "Where the magic happens. Using powerful compute to find patterns and optimize parameters.",
+                deliverables: ["Trained weights", "Hyperparameter logs", "Training metrics"],
                 position: { x: 0, y: 0, z: 0 },
                 camera: { x: 0, y: 5, z: 10 }
             },
             {
+                id: 3,
                 title: "Model Registry",
                 text: "Version control for AI. Storing trained models with their metadata and performance metrics.",
+                deliverables: ["Model versions", "Approval workflows", "Artifact storage"],
                 position: { x: 5, y: 0, z: 0 },
                 camera: { x: 5, y: 5, z: 10 }
             },
             {
+                id: 4,
                 title: "Deployment",
                 text: "Taking models from the lab to the real world, serving predictions through scalable APIs.",
+                deliverables: ["API endpoints", "Scalable clusters", "Prediction logs"],
                 position: { x: 10, y: 0, z: 0 },
                 camera: { x: 10, y: 5, z: 10 }
             },
             {
+                id: 5,
                 title: "Monitoring",
                 text: "Closing the loop. Tracking model performance, drift, and bias in production to ensure reliability.",
+                deliverables: ["Drift alerts", "Latency metrics", "Performance dashboards"],
                 position: { x: 0, y: -5, z: 5 },
                 camera: { x: 0, y: 2, z: 15 }
             }
         ];
 
+        this.components = [];
         this.initLights();
         this.initControls();
         this.createGeometries();
         this.animate();
 
         window.addEventListener('resize', () => this.onWindowResize());
+        if (this.interactive) {
+            this.container.addEventListener('click', (e) => this.onClick(e));
+            this.container.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        }
     }
 
     initLights() {
@@ -90,8 +110,9 @@ class MLProjectTour {
     }
 
     createGeometries() {
-        // 1. Data Ingestion (Cylinders/Database icon)
+        // 1. Data Ingestion
         const dataGroup = new THREE.Group();
+        dataGroup.userData = this.steps[0];
         const dataGeom = new THREE.CylinderGeometry(1.5, 1.5, 0.5, 32);
         const dataMat = new THREE.MeshPhongMaterial({ color: 0x4f46e5, shininess: 100 });
         for (let i = 0; i < 3; i++) {
@@ -103,79 +124,101 @@ class MLProjectTour {
         this.scene.add(dataGroup);
         this.components.push(dataGroup);
 
-        // 2. Preprocessing (Gear/Cog)
+        // 2. Preprocessing
         const preGeom = new THREE.TorusGeometry(1.2, 0.4, 16, 32);
         const preMat = new THREE.MeshPhongMaterial({ color: 0x10b981, shininess: 100 });
         const preMesh = new THREE.Mesh(preGeom, preMat);
+        preMesh.userData = this.steps[1];
         preMesh.position.set(-5, 0.5, 0);
         preMesh.rotation.x = Math.PI / 2;
         this.scene.add(preMesh);
         this.components.push(preMesh);
 
-        // 3. Training (Sphere/Brain)
+        // 3. Training
+        const trainGroup = new THREE.Group();
+        trainGroup.userData = this.steps[2];
         const trainGeom = new THREE.IcosahedronGeometry(1.8, 1);
         const trainMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, wireframe: true });
         const trainMesh = new THREE.Mesh(trainGeom, trainMat);
-        trainMesh.position.set(0, 1, 0);
-        this.scene.add(trainMesh);
-        this.components.push(trainMesh);
+        trainGroup.add(trainMesh);
 
-        // Inner core for training
         const coreGeom = new THREE.SphereGeometry(1, 32, 32);
         const coreMat = new THREE.MeshPhongMaterial({ color: 0xf59e0b, emissive: 0xf59e0b, emissiveIntensity: 0.5 });
         const coreMesh = new THREE.Mesh(coreGeom, coreMat);
-        coreMesh.position.set(0, 1, 0);
-        this.scene.add(coreMesh);
+        trainGroup.add(coreMesh);
 
-        // 4. Registry (Box/Package)
+        trainGroup.position.set(0, 1, 0);
+        this.scene.add(trainGroup);
+        this.components.push(trainGroup);
+
+        // 4. Registry
         const regGeom = new THREE.BoxGeometry(2, 2, 2);
         const regMat = new THREE.MeshPhongMaterial({ color: 0x8b5cf6, shininess: 100 });
         const regMesh = new THREE.Mesh(regGeom, regMat);
+        regMesh.userData = this.steps[3];
         regMesh.position.set(5, 1, 0);
         this.scene.add(regMesh);
         this.components.push(regMesh);
 
-        // 5. Deployment (Rocket/Pyramid)
+        // 5. Deployment
         const deployGeom = new THREE.ConeGeometry(1.5, 3, 4);
         const deployMat = new THREE.MeshPhongMaterial({ color: 0xec4899, shininess: 100 });
         const deployMesh = new THREE.Mesh(deployGeom, deployMat);
+        deployMesh.userData = this.steps[4];
         deployMesh.position.set(10, 1.5, 0);
         this.scene.add(deployMesh);
         this.components.push(deployMesh);
 
-        // 6. Monitoring (Ring/Radar)
+        // 6. Monitoring
         const monGeom = new THREE.RingGeometry(2, 2.5, 32);
         const monMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
         const monMesh = new THREE.Mesh(monGeom, monMat);
+        monMesh.userData = this.steps[5];
         monMesh.position.set(0, -2, 5);
         monMesh.rotation.x = -Math.PI / 2;
         this.scene.add(monMesh);
         this.components.push(monMesh);
 
-        // Connections (Pipes)
         this.createConnections();
     }
 
     createConnections() {
         const material = new THREE.MeshBasicMaterial({ color: 0x334155, transparent: true, opacity: 0.3 });
-
-        // Horizontal line
         const pipeGeom = new THREE.CylinderGeometry(0.1, 0.1, 20, 8);
         const pipe = new THREE.Mesh(pipeGeom, material);
         pipe.rotation.z = Math.PI / 2;
         pipe.position.set(0, 0, 0);
         this.scene.add(pipe);
+    }
 
-        // Loop back from deployment/registry to monitoring/training
-        const curve = new THREE.QuadraticBezierCurve3(
-            new THREE.Vector3(10, 0, 0),
-            new THREE.Vector3(5, -5, 5),
-            new THREE.Vector3(0, -2, 5)
-        );
-        const points = curve.getPoints(20);
-        const curveGeom = new THREE.BufferGeometry().setFromPoints(points);
-        const curveLine = new THREE.Line(curveGeom, new THREE.LineBasicMaterial({ color: 0x334155 }));
-        this.scene.add(curveLine);
+    onClick(event) {
+        const rect = this.container.getBoundingClientRect();
+        this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        this.raycaster.setFromCamera(this.mouse, this.camera);
+        const intersects = this.raycaster.intersectObjects(this.components, true);
+
+        if (intersects.length > 0) {
+            let obj = intersects[0].object;
+            while (obj.parent && !obj.userData.title) {
+                obj = obj.parent;
+            }
+            if (obj.userData.title) {
+                this.goToStep(obj.userData.id);
+            }
+        }
+    }
+
+    onMouseMove(event) {
+        const rect = this.container.getBoundingClientRect();
+        this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        this.raycaster.setFromCamera(this.mouse, this.camera);
+        const intersects = this.raycaster.intersectObjects(this.components, true);
+
+        this.container.style.cursor = intersects.length > 0 ? 'pointer' : 'grab';
     }
 
     onWindowResize() {
@@ -188,7 +231,6 @@ class MLProjectTour {
     animate() {
         requestAnimationFrame(() => this.animate());
 
-        // Rotation for some objects
         if (this.components[1]) this.components[1].rotation.z += 0.01;
         if (this.components[2]) this.components[2].rotation.y += 0.005;
         if (this.components[5]) this.components[5].rotation.z += 0.02;
@@ -199,6 +241,10 @@ class MLProjectTour {
         if (this.isTouring && this.targetCameraPos) {
             this.camera.position.lerp(this.targetCameraPos, 0.05);
             this.controls.target.lerp(this.targetLookAt, 0.05);
+
+            if (this.camera.position.distanceTo(this.targetCameraPos) < 0.1) {
+                this.isTouring = false;
+            }
         }
     }
 
@@ -227,9 +273,9 @@ class MLProjectTour {
         this.isTouring = false;
         this.targetCameraPos = null;
         this.targetLookAt = null;
-        // Smoothly return to default if possible or just let OrbitControls take over
         this.camera.position.set(0, 10, 20);
         this.controls.target.set(0, 0, 0);
+        this.currentStep = -1;
     }
 }
 
