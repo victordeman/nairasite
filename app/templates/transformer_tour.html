@@ -4,9 +4,6 @@
 <div id="transformer-tour-container" class="w-full h-screen bg-[#050a18] relative">
     <div id="transformer-canvas-container" class="w-full h-full"></div>
 
-    <!-- Description Labels Container -->
-    <div id="labels-container" class="absolute inset-0 pointer-events-none z-0"></div>
-
     <div class="absolute top-6 left-6 pointer-events-none z-10">
         <h1 class="text-sm font-bold tracking-widest text-purple-400 uppercase">Transformer 3D Tour</h1>
         <h2 id="arch-name" class="text-2xl font-bold text-white">Original Transformer (2017)</h2>
@@ -204,6 +201,9 @@
             panelHeader.style.background = `linear-gradient(to bottom, ${darkColor}, ${midColor})`;
             panelHeader.style.borderBottom = `1px solid ${hexColor}22`;
 
+            panelHeader.style.background = `linear-gradient(to bottom, ${darkColor}, ${midColor})`;
+            panelHeader.style.borderBottom = `1px solid ${hexColor}22`;
+            
             statusDot.style.backgroundColor = hexColor;
             statusDot.style.boxShadow = `0 0 20px ${hexColor}`;
 
