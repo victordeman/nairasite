@@ -13,6 +13,18 @@ export const TransformerTourPage: React.FC = () => {
     setSelectedBlock(block);
   };
 
+  const getDarkerColor = (hex: number, factor: number) => {
+    const r = (hex >> 16) & 255;
+    const g = (hex >> 8) & 255;
+    const b = hex & 255;
+    
+    const nr = Math.floor(r * factor);
+    const ng = Math.floor(g * factor);
+    const nb = Math.floor(b * factor);
+    
+    return `#${((1 << 24) + (nr << 16) + (ng << 8) + nb).toString(16).slice(1)}`;
+  };
+
   return (
     <div className="w-full h-screen bg-[#050a18] relative overflow-hidden">
       {/* 3D Canvas */}
@@ -58,7 +70,7 @@ export const TransformerTourPage: React.FC = () => {
           <div 
             className="px-8 py-6 flex items-center justify-between border-b transition-all duration-700"
             style={{ 
-              background: `linear-gradient(to bottom, #${(selectedBlock.color * 0.1).toString(16).split('.')[0].padStart(6, '0')}, #${(selectedBlock.color * 0.18).toString(16).split('.')[0].padStart(6, '0')})`,
+              background: `linear-gradient(to bottom, ${getDarkerColor(selectedBlock.color, 0.1)}, ${getDarkerColor(selectedBlock.color, 0.18)})`,
               borderBottomColor: `#${selectedBlock.color.toString(16).padStart(6, '0')}22`
             }}
           >
@@ -99,7 +111,7 @@ export const TransformerTourPage: React.FC = () => {
             <button 
               className="w-full transition-all text-white font-bold py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide"
               style={{
-                background: `linear-gradient(to bottom, #${(selectedBlock.color * 0.15).toString(16).split('.')[0].padStart(6, '0')}, #${(selectedBlock.color * 0.1).toString(16).split('.')[0].padStart(6, '0')})`,
+                background: `linear-gradient(to bottom, ${getDarkerColor(selectedBlock.color, 0.15)}, ${getDarkerColor(selectedBlock.color, 0.1)})`,
                 borderColor: `#${selectedBlock.color.toString(16).padStart(6, '0')}44`,
                 color: `#${selectedBlock.color.toString(16).padStart(6, '0')}`
               }}
