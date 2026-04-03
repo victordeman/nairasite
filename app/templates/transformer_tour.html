@@ -2,10 +2,10 @@
 {% block title %}Transformer 3D Tour - NAIRA{% endblock %}
 {% block content %}
 <div id="transformer-tour-container" class="w-full h-screen bg-[#050a18] relative">
-    <div id="transformer-canvas-container" class="w-full h-full"></div>
+    <div id="transformer-canvas-container" class="w-full h-full absolute inset-0 z-0"></div>
     
     <!-- Description Labels Container -->
-    <div id="labels-container" class="absolute inset-0 pointer-events-none z-0"></div>
+    <div id="labels-container" class="absolute inset-0 pointer-events-none z-10"></div>
 
     <div class="absolute top-6 left-6 pointer-events-none z-10">
         <h1 class="text-sm font-bold tracking-widest text-purple-400 uppercase">Transformer 3D Tour</h1>
@@ -78,11 +78,11 @@
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x050a18);
     
-    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 2, 12);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
@@ -230,8 +230,8 @@
             // Project 3D position to 2D screen coordinates
             pos.project(camera);
 
-            const x = (pos.x + 1) * container.clientWidth / 2;
-            const y = (-pos.y + 1) * container.clientHeight / 2;
+            const x = (pos.x + 1) * window.innerWidth / 2;
+            const y = (-pos.y + 1) * window.innerHeight / 2;
 
             l.element.style.left = `${x}px`;
             l.element.style.top = `${y}px`;
@@ -272,32 +272,15 @@
     animate(0);
 
     window.addEventListener('resize', () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);
     });
 </script>
 
 <style>
     #navbar { background: rgba(2, 6, 23, 0.5) !important; backdrop-filter: blur(8px); }
-    body { overflow: hidden; }
-
-    /* Specific overrides for Transformer Tour to counter global page-sub styles */
-    #info-panel #comp-name-en,
-    #info-panel #comp-desc-en {
-        color: #ffffff !important;
-    }
-    
-    #info-panel #comp-name-ig {
-        color: #94a3b8 !important;
-    }
-
-    #labels-container .text-white {
-        color: #ffffff !important;
-    }
-
-    #labels-container .text-slate-400 {
-        color: #94a3b8 !important;
-    }
+    body { overflow: hidden !important; background-color: #050a18 !important; }
+    #transformer-tour-container { background-color: #050a18 !important; }
 </style>
 {% endblock %}
