@@ -1,6 +1,7 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import * as THREE from 'three';
 import { Background } from '../components/Background';
 import { OLD_TRANSFORMER, MODERN_TRANSFORMER } from '../data/architectureData';
 import { BlockData } from '../types';

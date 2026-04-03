@@ -10,7 +10,7 @@ export const OLD_TRANSFORMER: ArchitectureData = {
       nameIgbo: 'Mtinyere Ihe Ntinye',
       description: 'Converts input tokens into dense vectors of d_model dimensions.',
       descriptionIgbo: 'Ọ na-atụgharị mkpụrụokwu ntinye ka ọ bụrụ vectors dị arọ nke akụkụ d_model.',
-      position: [0, -4, 0],
+      position: [0, -5, 0],
       color: 0x6366f1
     },
     {
@@ -19,7 +19,7 @@ export const OLD_TRANSFORMER: ArchitectureData = {
       nameIgbo: 'Ntinye Ọnọdụ',
       description: 'Adds information about the relative or absolute position of the tokens.',
       descriptionIgbo: 'Na-agbakwunye ozi gbasara ọnọdụ ikwu ma ọ bụ zuru oke nke akara ndị ahụ.',
-      position: [0, -2.8, 0],
+      position: [0, -3, 0],
       color: 0xa855f7
     },
     {
@@ -28,7 +28,7 @@ export const OLD_TRANSFORMER: ArchitectureData = {
       nameIgbo: 'Nleba anya nwere ọtụtụ isi',
       description: 'Allows the model to jointly attend to information from different representation subspaces.',
       descriptionIgbo: 'Na-enye ohere ka ihe nlereanya ahụ lekọta ozi sitere na subspaces nnọchite anya dịiche iche.',
-      position: [0, -1.2, 0],
+      position: [0, -1, 0],
       color: 0x3b82f6
     },
     {
@@ -37,7 +37,7 @@ export const OLD_TRANSFORMER: ArchitectureData = {
       nameIgbo: 'Tinye & Hazie',
       description: 'Residual connection followed by layer normalization.',
       descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.',
-      position: [0, 0.4, 0],
+      position: [0, 1, 0],
       color: 0x10b981
     },
     {
@@ -46,7 +46,7 @@ export const OLD_TRANSFORMER: ArchitectureData = {
       nameIgbo: 'Nye n\'ihu',
       description: 'Point-wise fully connected layers applied to each position identically.',
       descriptionIgbo: 'Ihe mkpuchi ejikọtara nke ọma na-emetụta ọnọdụ ọ bụla n\'otu aka ahụ.',
-      position: [0, 2.0, 0],
+      position: [0, 3, 0],
       color: 0xf97316
     },
     {
@@ -55,7 +55,7 @@ export const OLD_TRANSFORMER: ArchitectureData = {
       nameIgbo: 'Mmepụta Linear + Softmax',
       description: 'The final linear layer projects the decoder output to the vocabulary size. Softmax converts these logits to probabilities over the vocabulary.',
       descriptionIgbo: 'Ọwa linear ikpeazụ na-atụgharị mmepụta decoder n\'ogo okwu. Softmax na-atụgharị logits ndị a n\'ike n\'elu okwu.',
-      position: [5, 0.4, 0],
+      position: [5, 1, 0],
       color: 0xec4899
     }
   ]

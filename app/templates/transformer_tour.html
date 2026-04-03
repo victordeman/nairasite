@@ -66,12 +66,12 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
     const DATA = [
-        { id: 'enc-input-embedding', name: 'Input Embedding', nameIgbo: 'Mtinyere Ihe Ntinye', description: 'Converts input tokens into dense vectors of d_model dimensions.', descriptionIgbo: 'Ọ na-atụgharị mkpụrụokwu ntinye ka ọ bụrụ vectors dị arọ nke akụkụ d_model.', position: [0, -4, 0], color: 0x6366f1 },
-        { id: 'enc-pos-encoding', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds information about the relative or absolute position of the tokens.', descriptionIgbo: 'Na-agbakwunye ozi gbasara ọnọdụ ikwu ma ọ bụ zuru oke nke akara ndị ahụ.', position: [0, -2.8, 0], color: 0xa855f7 },
-        { id: 'enc-mha', name: 'Multi-Head Attention', nameIgbo: 'Nleba anya nwere ọtụtụ isi', description: 'Allows the model to jointly attend to information from different representation subspaces.', descriptionIgbo: 'Na-enye ohere ka ihe nlereanya ahụ lekọta ozi sitere na subspaces nnọchite anya dịiche iche.', position: [0, -1.2, 0], color: 0x3b82f6 },
-        { id: 'enc-add-norm', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [0, 0.4, 0], color: 0x10b981 },
-        { id: 'enc-ffn', name: 'Feed Forward', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers applied to each position identically.', descriptionIgbo: 'Ihe mkpuchi ejikọtara nke ọma na-emetụta ọnọdụ ọ bụla n\'otu aka ahụ.', position: [0, 2.0, 0], color: 0xf97316 },
-        { id: 'out-linear-softmax', name: 'Linear + Softmax Output', nameIgbo: 'Mmepụta Linear + Softmax', description: 'The final linear layer projects the decoder output to the vocabulary size (e.g., 30,000 dimensions). Softmax converts these logits to probabilities over the vocabulary. The token with the highest probability is selected as the next output token.', descriptionIgbo: 'Ọwa linear ikpeazụ na-atụgharị mmepụta decoder n\'ogo okwu (dịka ọkwa 30,000). Softmax na-atụgharị logits ndị a n\'ike n\'elu okwu. A na-ahọrọ akara nke nwere ike kachasị dị elu dị ka akara mmepụta ọzọ.', position: [5, 0.4, 0], color: 0xec4899 }
+        { id: 'enc-input-embedding', name: 'Input Embedding', nameIgbo: 'Mtinyere Ihe Ntinye', description: 'Converts input tokens into dense vectors of d_model dimensions.', descriptionIgbo: 'Ọ na-atụgharị mkpụrụokwu ntinye ka ọ bụrụ vectors dị arọ nke akụkụ d_model.', position: [0, -5, 0], color: 0x6366f1 },
+        { id: 'enc-pos-encoding', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds information about the relative or absolute position of the tokens.', descriptionIgbo: 'Na-agbakwunye ozi gbasara ọnọdụ ikwu ma ọ bụ zuru oke nke akara ndị ahụ.', position: [0, -3, 0], color: 0xa855f7 },
+        { id: 'enc-mha', name: 'Multi-Head Attention', nameIgbo: 'Nleba anya nwere ọtụtụ isi', description: 'Allows the model to jointly attend to information from different representation subspaces.', descriptionIgbo: 'Na-enye ohere ka ihe nlereanya ahụ lekọta ozi sitere na subspaces nnọchite anya dịiche iche.', position: [0, -1, 0], color: 0x3b82f6 },
+        { id: 'enc-add-norm', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [0, 1, 0], color: 0x10b981 },
+        { id: 'enc-ffn', name: 'Feed Forward', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers applied to each position identically.', descriptionIgbo: 'Ihe mkpuchi ejikọtara nke ọma na-emetụta ọnọdụ ọ bụla n\'otu aka ahụ.', position: [0, 3, 0], color: 0xf97316 },
+        { id: 'out-linear-softmax', name: 'Linear + Softmax Output', nameIgbo: 'Mmepụta Linear + Softmax', description: 'The final linear layer projects the decoder output to the vocabulary size (e.g., 30,000 dimensions). Softmax converts these logits to probabilities over the vocabulary. The token with the highest probability is selected as the next output token.', descriptionIgbo: 'Ọwa linear ikpeazụ na-atụgharị mmepụta decoder n\'ogo okwu (dịka ọkwa 30,000). Softmax na-atụgharị logits ndị a n\'ike n\'elu okwu. A na-ahọrọ akara nke nwere ike kachasị dị elu dị ka akara mmepụta ọzọ.', position: [5, 1, 0], color: 0xec4899 }
     ];
 
     const container = document.getElementById('transformer-canvas-container');
@@ -115,6 +115,100 @@
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
     dirLight.position.set(10, 10, 10);
     scene.add(dirLight);
+
+    function createUMLTexture(d) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d');
+
+        const color = '#' + d.color.toString(16).padStart(6, '0');
+
+        // Background
+        ctx.fillStyle = '#0a1020';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Blueprint Grid
+        ctx.strokeStyle = 'rgba(99, 102, 241, 0.1)';
+        ctx.lineWidth = 1;
+        for(let i=0; i<canvas.width; i+=40) {
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+        }
+        for(let i=0; i<canvas.height; i+=40) {
+            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+        }
+
+        // Outer Glow & Border
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 6;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = color;
+        ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+        ctx.shadowBlur = 0;
+
+        // UML Decoration
+        ctx.fillStyle = color;
+        ctx.font = 'bold 22px monospace';
+        ctx.fillText(`«Component»`, 35, 45);
+        ctx.font = 'bold 36px monospace';
+        ctx.fillText(d.name.toUpperCase(), 35, 85);
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+
+        if (d.id === 'enc-input-embedding') {
+            ctx.strokeRect(60, 120, 160, 90);
+            ctx.font = '18px monospace';
+            ctx.fillText("Tokenizer", 85, 175);
+            ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(300, 165); ctx.stroke();
+            ctx.strokeRect(300, 120, 160, 90);
+            ctx.fillText("Embedding", 325, 175);
+        } else if (d.id === 'enc-pos-encoding') {
+            ctx.strokeRect(60, 120, 180, 90);
+            ctx.fillText("Sin/Cos Gen", 85, 175);
+            ctx.beginPath(); ctx.arc(360, 165, 45, 0, Math.PI*2); ctx.stroke();
+            ctx.font = '32px monospace';
+            ctx.fillText("+", 350, 178);
+            ctx.beginPath(); ctx.moveTo(240, 165); ctx.lineTo(315, 165); ctx.stroke();
+        } else if (d.id === 'enc-mha') {
+            for(let j=0; j<3; j++) {
+                ctx.strokeRect(40 + j*30, 110 + j*25, 180, 70);
+                ctx.font = '18px monospace';
+                ctx.fillText(`Attention Head ${j+1}`, 55 + j*30, 150 + j*25);
+            }
+            ctx.strokeRect(340, 120, 130, 100);
+            ctx.fillText("CONCAT", 365, 175);
+        } else if (d.id === 'enc-add-norm') {
+            ctx.beginPath(); ctx.arc(140, 165, 40, 0, Math.PI*2); ctx.stroke();
+            ctx.font = '32px monospace';
+            ctx.fillText("+", 130, 178);
+            ctx.strokeRect(260, 130, 200, 70);
+            ctx.font = '22px monospace';
+            ctx.fillText("LayerNorm", 300, 172);
+            ctx.beginPath(); ctx.moveTo(180, 165); ctx.lineTo(260, 165); ctx.stroke();
+        } else if (d.id === 'enc-ffn') {
+            ctx.strokeRect(40, 130, 120, 70);
+            ctx.font = '16px monospace';
+            ctx.fillText("Linear 1", 60, 170);
+            ctx.strokeRect(200, 130, 100, 70);
+            ctx.fillText("ReLU", 230, 170);
+            ctx.strokeRect(340, 130, 120, 70);
+            ctx.fillText("Linear 2", 360, 170);
+            ctx.beginPath(); ctx.moveTo(160, 165); ctx.lineTo(200, 165); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(300, 165); ctx.lineTo(340, 165); ctx.stroke();
+        } else if (d.id === 'out-linear-softmax') {
+            ctx.strokeRect(60, 130, 160, 70);
+            ctx.font = '18px monospace';
+            ctx.fillText("Linear", 100, 170);
+            ctx.strokeRect(280, 130, 180, 70);
+            ctx.fillText("Softmax", 330, 170);
+            ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(280, 165); ctx.stroke();
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        return texture;
+    }
 
     // Blocks
     const blocks = [];
@@ -261,9 +355,9 @@
             b.position.y = offset;
             
             // Also update label target position if block moves
-            const xOffset = (i % 2 === 0) ? -2.5 : 2.5;
+            const xOffset = (i % 2 === 0) ? -3.0 : 3.0;
             labelElements[i].position.x = b.userData.position[0] + xOffset;
-            labelElements[i].position.y = b.userData.position[1] + 0.6 + offset;
+            labelElements[i].position.y = b.userData.position[1] + 1.0 + offset;
         });
         controls.update();
         updateLabels();
