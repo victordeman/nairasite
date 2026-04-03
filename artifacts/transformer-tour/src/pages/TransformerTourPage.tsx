@@ -1,6 +1,7 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import * as THREE from 'three';
 import { Background } from '../components/Background';
 import { OLD_TRANSFORMER, MODERN_TRANSFORMER } from '../data/architectureData';
 import { BlockData } from '../types';
@@ -12,6 +13,59 @@ export const TransformerTourPage: React.FC = () => {
   const handleBlockClick = (block: BlockData) => {
     setSelectedBlock(block);
   };
+
+  const createUMLTexture = useMemo(() => (d: BlockData) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d')!;
+
+    const color = '#' + d.color.toString(16).padStart(6, '0');
+    ctx.fillStyle = '#0a1020';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(99, 102, 241, 0.1)';
+    ctx.lineWidth = 1;
+    for(let i=0; i<canvas.width; i+=40) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke(); }
+    for(let i=0; i<canvas.height; i+=40) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke(); }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 6;
+    ctx.shadowBlur = 15; ctx.shadowColor = color;
+    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = color;
+    ctx.font = 'bold 22px monospace'; ctx.fillText(`«Component»`, 35, 45);
+    ctx.font = 'bold 36px monospace'; ctx.fillText(d.name.toUpperCase(), 35, 85);
+    ctx.strokeStyle = color; ctx.lineWidth = 3;
+    if (d.id === 'enc-input-embedding') {
+        ctx.strokeRect(60, 120, 160, 90); ctx.font = '18px monospace'; ctx.fillText("Tokenizer", 85, 175);
+        ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(300, 165); ctx.stroke();
+        ctx.strokeRect(300, 120, 160, 90); ctx.fillText("Embedding", 325, 175);
+    } else if (d.id === 'enc-pos-encoding') {
+        ctx.strokeRect(60, 120, 180, 90); ctx.fillText("Sin/Cos Gen", 85, 175);
+        ctx.beginPath(); ctx.arc(360, 165, 45, 0, Math.PI*2); ctx.stroke();
+        ctx.font = '32px monospace'; ctx.fillText("+", 350, 178);
+        ctx.beginPath(); ctx.moveTo(240, 165); ctx.lineTo(315, 165); ctx.stroke();
+    } else if (d.id === 'enc-mha') {
+        for(let j=0; j<3; j++) { ctx.strokeRect(40 + j*30, 110 + j*25, 180, 70); ctx.font = '18px monospace'; ctx.fillText(`Attention Head ${j+1}`, 55 + j*30, 150 + j*25); }
+        ctx.strokeRect(340, 120, 130, 100); ctx.fillText("CONCAT", 365, 175);
+    } else if (d.id === 'enc-add-norm') {
+        ctx.beginPath(); ctx.arc(140, 165, 40, 0, Math.PI*2); ctx.stroke();
+        ctx.font = '32px monospace'; ctx.fillText("+", 130, 178);
+        ctx.strokeRect(260, 130, 200, 70); ctx.font = '22px monospace'; ctx.fillText("LayerNorm", 300, 172);
+        ctx.beginPath(); ctx.moveTo(180, 165); ctx.lineTo(260, 165); ctx.stroke();
+    } else if (d.id === 'enc-ffn') {
+        ctx.strokeRect(40, 130, 120, 70); ctx.font = '16px monospace'; ctx.fillText("Linear 1", 60, 170);
+        ctx.strokeRect(200, 130, 100, 70); ctx.fillText("ReLU", 230, 170);
+        ctx.strokeRect(340, 130, 120, 70); ctx.fillText("Linear 2", 360, 170);
+        ctx.beginPath(); ctx.moveTo(160, 165); ctx.lineTo(200, 165); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(300, 165); ctx.lineTo(340, 165); ctx.stroke();
+    } else if (d.id === 'out-linear-softmax') {
+        ctx.strokeRect(60, 130, 160, 70); ctx.font = '18px monospace'; ctx.fillText("Linear", 100, 170);
+        ctx.strokeRect(280, 130, 180, 70); ctx.fillText("Softmax", 330, 170);
+        ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(280, 165); ctx.stroke();
+    }
+    return new THREE.CanvasTexture(canvas);
+  }, []);
 
   const getDarkerColor = (hex: number, factor: number) => {
     const r = (hex >> 16) & 255;
@@ -36,24 +90,56 @@ export const TransformerTourPage: React.FC = () => {
           <OrbitControls enableDamping dampingFactor={0.05} />
 
           <group>
-            {selectedArch.blocks.map((block) => (
-              <mesh
-                key={block.id}
-                position={block.position}
-                onClick={() => handleBlockClick(block)}
-                onPointerOver={() => (document.body.style.cursor = 'pointer')}
-                onPointerOut={() => (document.body.style.cursor = 'auto')}
-              >
-                <boxGeometry args={[3, 0.8, 1]} />
-                <meshPhongMaterial
-                  color={block.color}
-                  emissive={block.color}
-                  emissiveIntensity={selectedBlock?.id === block.id ? 1.5 : 0.4}
-                  transparent
-                  opacity={0.9}
-                />
-              </mesh>
-            ))}
+            {selectedArch.blocks.map((block) => {
+              const texture = createUMLTexture(block);
+              return (
+                <mesh
+                  key={block.id}
+                  position={block.position}
+                  onClick={() => handleBlockClick(block)}
+                  onPointerOver={() => (document.body.style.cursor = 'pointer')}
+                  onPointerOut={() => (document.body.style.cursor = 'auto')}
+                >
+                  <boxGeometry args={[3, 1.5, 0.6]} />
+                  <meshPhongMaterial
+                    attach="material-0"
+                    color={0x0a1020}
+                    emissive={block.color}
+                    emissiveIntensity={0.1}
+                  />
+                  <meshPhongMaterial
+                    attach="material-1"
+                    color={0x0a1020}
+                    emissive={block.color}
+                    emissiveIntensity={0.1}
+                  />
+                  <meshPhongMaterial
+                    attach="material-2"
+                    color={0x0a1020}
+                    emissive={block.color}
+                    emissiveIntensity={0.1}
+                  />
+                  <meshPhongMaterial
+                    attach="material-3"
+                    color={0x0a1020}
+                    emissive={block.color}
+                    emissiveIntensity={0.1}
+                  />
+                  <meshPhongMaterial
+                    attach="material-4"
+                    map={texture}
+                    emissive={block.color}
+                    emissiveIntensity={selectedBlock?.id === block.id ? 1.5 : 0.4}
+                  />
+                  <meshPhongMaterial
+                    attach="material-5"
+                    color={0x0a1020}
+                    emissive={block.color}
+                    emissiveIntensity={0.1}
+                  />
+                </mesh>
+              );
+            })}
           </group>
         </Suspense>
       </Canvas>
