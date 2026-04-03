@@ -3,6 +3,9 @@
 {% block content %}
 <div id="transformer-tour-container" class="w-full h-screen bg-[#050a18] relative">
     <div id="transformer-canvas-container" class="w-full h-full"></div>
+    
+    <!-- Description Labels Container -->
+    <div id="labels-container" class="absolute inset-0 pointer-events-none z-0"></div>
 
     <!-- Description Labels Container -->
     <div id="labels-container" class="absolute inset-0 pointer-events-none z-0"></div>
@@ -12,29 +15,24 @@
         <h2 id="arch-name" class="text-2xl font-bold text-white">Original Transformer (2017)</h2>
     </div>
 
-    <div id="info-panel" class="hidden fixed top-20 right-6 w-96 bg-[#0f172a] border border-slate-700 rounded-3xl shadow-2xl overflow-hidden z-50">
-        <!-- Dynamic Header -->
-        <div id="panel-header" class="px-6 py-4 flex items-center justify-between border-b transition-all duration-300">
-            <div class="flex items-center gap-3">
-                <div id="status-dot" class="w-3 h-3 rounded-full ring-2 transition-all duration-300"></div>
-                <div>
-                    <h2 id="comp-name-en" class="text-white font-semibold text-lg tracking-tight leading-tight"></h2>
-                    <p id="comp-name-ig" class="text-slate-400 text-xs"></p>
-                </div>
+    <div id="info-panel" class="hidden absolute top-24 right-6 w-96 z-20">
+        <div class="glass-card p-8 rounded-3xl border border-white/10 shadow-2xl relative">
+            <button id="close-info" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">✕</button>
+            
+            <div class="text-center mb-8">
+                <div id="comp-name" class="text-3xl font-display font-bold text-purple-400 mb-1">AI</div>
+                <div id="comp-group" class="text-sm text-slate-400 uppercase tracking-widest">Agentic Systems</div>
             </div>
-            <button id="close-info" class="text-slate-400 hover:text-white transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
 
-        <div class="p-6 space-y-6">
-            <!-- English Section -->
-            <div class="space-y-2">
-                <div class="flex items-center gap-2 text-cyan-400 text-xs font-bold tracking-widest uppercase">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    ENGLISH
+            <div class="space-y-6 text-sm leading-relaxed text-slate-300">
+                <div class="p-4 rounded-2xl bg-white/5 border border-white/5">
+                    <span class="text-purple-400 font-bold block mb-2 text-[10px] tracking-widest uppercase">Description (English)</span>
+                    <p id="comp-desc-en" class="text-justify"></p>
                 </div>
-                <p id="comp-desc-en" class="text-slate-200 leading-relaxed text-[14px] text-justify"></p>
+                <div class="p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                    <span class="text-purple-400 font-bold block mb-2 text-[10px] tracking-widest uppercase">Nkọwa (Igbo)</span>
+                    <p id="comp-desc-ig" class="italic text-justify"></p>
+                </div>
             </div>
 
             <div class="border-t border-slate-800"></div>
@@ -88,7 +86,7 @@
     const container = document.getElementById('transformer-canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x050a18);
-
+    
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.set(0, 2, 12);
 
@@ -138,13 +136,13 @@
     DATA.forEach((d, i) => {
         const group = new THREE.Group();
         group.position.set(...d.position);
-
+        
         const geometry = new THREE.BoxGeometry(3, 0.8, 1);
         const material = new THREE.MeshPhongMaterial({ color: d.color, emissive: d.color, emissiveIntensity: 0.4, transparent: true, opacity: 0.9 });
         const mesh = new THREE.Mesh(geometry, material);
         mesh.userData = d;
         group.add(mesh);
-
+        
         // Create HTML Label
         const label = document.createElement('div');
         label.className = 'absolute pointer-events-none text-center transform -translate-x-1/2 -translate-y-full mb-4';
@@ -154,11 +152,11 @@
             <div class="text-slate-400 text-[9px] leading-tight px-2 line-clamp-2">${d.description.split('.')[0]}</div>
         `;
         labelsContainer.appendChild(label);
-
+        
         // Offset labels alternately to reduce overlap
         const xOffset = (i % 2 === 0) ? -2.5 : 2.5;
         labelElements.push({ element: label, position: new THREE.Vector3(...d.position).add(new THREE.Vector3(xOffset, 0.6, 0)) });
-
+        
         scene.add(group);
         blocks.push(mesh);
     });
@@ -193,6 +191,8 @@
         );
     }
 
+    const compGroup = document.getElementById('comp-group');
+
     container.addEventListener('click', (event) => {
         const rect = container.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -203,8 +203,8 @@
 
         if (intersects.length > 0) {
             const data = intersects[0].object.userData;
-            compNameEn.textContent = data.name;
-            compNameIg.textContent = data.nameIgbo;
+            compName.textContent = data.name;
+            compGroup.textContent = data.id.includes('enc') ? 'Encoder Layer' : 'Output Mechanism';
             compDescEn.textContent = data.description;
             compDescIg.textContent = data.descriptionIgbo;
 
@@ -227,7 +227,7 @@
             drillDownBtn.style.border = `1px solid ${hexColor}44`;
 
             infoPanel.classList.remove('hidden');
-
+            
             // Highlight selected block
             blocks.forEach(b => b.material.emissiveIntensity = 0.4);
             intersects[0].object.material.emissiveIntensity = 1.5;
@@ -253,7 +253,7 @@
 
             // Hide if behind camera or too close/far
             const dist = camera.position.distanceTo(l.position);
-
+            
             // Logic to prevent overlap: hide labels that are too close to each other in 2D space?
             // Simple approach: fade out based on distance and projection depth
             if (pos.z > 1) {
@@ -274,7 +274,7 @@
         blocks.forEach((b, i) => {
             const offset = Math.sin(t * 0.002 + b.userData.position[1]) * 0.1;
             b.position.y = offset;
-
+            
             // Also update label target position if block moves
             const xOffset = (i % 2 === 0) ? -2.5 : 2.5;
             labelElements[i].position.x = b.userData.position[0] + xOffset;
