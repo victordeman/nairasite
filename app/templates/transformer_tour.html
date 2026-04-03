@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block title %}Transformer 3D Tour - NAIRA{% endblock %}
+{% block content %}
+<div id="transformer-tour-container" class="w-full h-screen bg-[#050a18] relative">
+    <div id="transformer-canvas-container" class="w-full h-full"></div>
+
+    <div class="absolute top-6 left-6 pointer-events-none z-10">
+        <h1 class="text-sm font-bold tracking-widest text-indigo-400 uppercase">Transformer 3D Tour</h1>
+        <h2 id="arch-name" class="text-2xl font-bold text-white">Original Transformer (2017)</h2>
+    </div>
+
+    <div id="info-panel" class="hidden absolute top-24 right-6 w-80 bg-slate-900/80 backdrop-blur-xl rounded-3xl p-6 border border-white/10 shadow-2xl z-20">
+        <button id="close-info" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">✕</button>
+        <h3 id="comp-name" class="text-xl font-bold mb-4"></h3>
+        <div class="space-y-4 text-sm leading-relaxed text-slate-300">
+            <div>
+                <span class="text-indigo-400 font-bold block mb-1 text-[10px] tracking-widest uppercase">English</span>
+                <p id="comp-desc-en"></p>
+            </div>
+            <div>
+                <span class="text-indigo-400 font-bold block mb-1 text-[10px] tracking-widest uppercase">Igbo</span>
+                <p id="comp-desc-ig" class="italic"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-6 left-6 text-[10px] text-slate-500 uppercase tracking-widest z-10">
+        Click blocks to explore · Drag to rotate · Scroll to zoom
+    </div>
+</div>
+
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+</script>
+
+<script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const DATA = [
+        { id: 'enc-input-embedding', name: 'Input Embedding', nameIgbo: 'Mtinyere Ihe Ntinye', description: 'Converts input tokens into dense vectors of d_model dimensions.', descriptionIgbo: 'Ọ na-atụgharị mkpụrụokwu ntinye ka ọ bụrụ vectors dị arọ nke akụkụ d_model.', position: [0, -4, 0], color: 0x6366f1 },
+        { id: 'enc-pos-encoding', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds information about the relative or absolute position of the tokens.', descriptionIgbo: 'Na-agbakwunye ozi gbasara ọnọdụ ikwu ma ọ bụ zuru oke nke akara ndị ahụ.', position: [0, -2.8, 0], color: 0xa855f7 },
+        { id: 'enc-mha', name: 'Multi-Head Attention', nameIgbo: 'Nleba anya nwere ọtụtụ isi', description: 'Allows the model to jointly attend to information from different representation subspaces.', descriptionIgbo: 'Na-enye ohere ka ihe nlereanya ahụ lekọta ozi sitere na subspaces nnọchite anya dịiche iche.', position: [0, -1.2, 0], color: 0x3b82f6 },
+        { id: 'enc-add-norm', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [0, 0.4, 0], color: 0x10b981 },
+        { id: 'enc-ffn', name: 'Feed Forward', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers applied to each position identically.', descriptionIgbo: 'Ihe mkpuchi ejikọtara nke ọma na-emetụta ọnọdụ ọ bụla n\'otu aka ahụ.', position: [0, 2.0, 0], color: 0xf97316 },
+        { id: 'out-linear-softmax', name: 'Linear + Softmax Output', nameIgbo: 'Mmepụta Linear + Softmax', description: 'The final linear layer projects the decoder output to the vocabulary size (e.g., 30,000 dimensions). Softmax converts these logits to probabilities over the vocabulary. The token with the highest probability is selected as the next output token.', descriptionIgbo: 'Ọwa linear ikpeazụ na-atụgharị mmepụta decoder n\'ogo okwu (dịka ọkwa 30,000). Softmax na-atụgharị logits ndị a n\'ike n\'elu okwu. A na-ahọrọ akara nke nwere ike kachasị dị elu dị ka akara mmepụta ọzọ.', position: [5, 0.4, 0], color: 0xec4899 }
+    ];
+
+    const container = document.getElementById('transformer-canvas-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x050a18);
+
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 2, 12);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    // Background Stars
+    const starCount = 3000;
+    const starGeometry = new THREE.BufferGeometry();
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+        starPositions[i * 3] = (Math.random() - 0.5) * 100;
+        starPositions[i * 3 + 1] = (Math.random() - 0.5) * 100;
+        starPositions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+    }
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.05, transparent: true, opacity: 0.8 });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    // Grid
+    const grid = new THREE.GridHelper(100, 100, 0x1e293b, 0x1e293b);
+    grid.position.y = -6;
+    grid.material.opacity = 0.1;
+    grid.material.transparent = true;
+    scene.add(grid);
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0x4488ff, 0.5));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    dirLight.position.set(10, 10, 10);
+    scene.add(dirLight);
+
+    // Blocks
+    const blocks = [];
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    DATA.forEach(d => {
+        const geometry = new THREE.BoxGeometry(3, 0.8, 1);
+        const material = new THREE.MeshPhongMaterial({ color: d.color, emissive: d.color, emissiveIntensity: 0.4, transparent: true, opacity: 0.9 });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(...d.position);
+        mesh.userData = d;
+        scene.add(mesh);
+        blocks.push(mesh);
+    });
+
+    const infoPanel = document.getElementById('info-panel');
+    const compName = document.getElementById('comp-name');
+    const compDescEn = document.getElementById('comp-desc-en');
+    const compDescIg = document.getElementById('comp-desc-ig');
+
+    container.addEventListener('click', (event) => {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(blocks);
+
+        if (intersects.length > 0) {
+            const data = intersects[0].object.userData;
+            compName.textContent = data.name;
+            compName.style.color = '#' + data.color.toString(16).padStart(6, '0');
+            compDescEn.textContent = data.description;
+            compDescIg.textContent = data.descriptionIgbo;
+            infoPanel.classList.remove('hidden');
+        } else {
+            infoPanel.classList.add('hidden');
+        }
+    });
+
+    document.getElementById('close-info').onclick = () => infoPanel.classList.add('hidden');
+
+    function animate(t) {
+        requestAnimationFrame(animate);
+        stars.rotation.y = t * 0.00005;
+        blocks.forEach(b => {
+            b.position.y = b.userData.position[1] + Math.sin(t * 0.002 + b.userData.position[1]) * 0.1;
+        });
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate(0);
+
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+</script>
+
+<style>
+    #navbar { background: rgba(2, 6, 23, 0.5) !important; backdrop-filter: blur(8px); }
+    body { overflow: hidden; }
+</style>
+{% endblock %}

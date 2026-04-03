@@ -1,45 +1,79 @@
 {% extends "base.html" %}
 {% block title %}Immersive Experiential Learning - NAIRA{% endblock %}
 {% block content %}
-<section class="py-32 relative bg-slate-950 min-h-screen overflow-hidden">
-    <!-- Cinematic Background Elements -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px]"></div>
-        <div class="absolute top-1/2 -right-48 w-[500px] h-[500px] bg-amber-600/5 rounded-full blur-[150px]"></div>
-        <div class="film-grain opacity-10"></div>
-    </div>
-
-    <div class="container mx-auto px-6 relative z-10">
+<section class="py-32 relative">
+    <div class="container mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-20">
-            <span class="text-indigo-400 font-medium tracking-[0.3em] uppercase text-xs">Immersive Media Gallery</span>
-            <h2 class="font-display text-4xl md:text-6xl font-bold mt-4 mb-6 text-white leading-tight">African Heritage <br/><span class="text-indigo-500">Comes Alive</span></h2>
-            <p class="text-slate-400 text-lg md:text-xl">Step inside the history and spirit of Africa through cinematic XR storytelling.</p>
+            <span class="text-indigo-600 font-medium tracking-wider uppercase text-sm">Immersive Media Gallery</span>
+            <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-indigo-600">African Heritage <br/><span class="text-indigo-600">Comes Alive</span></h2>
+            <p class="text-black text-lg">Step inside the history and spirit of Africa through cinematic XR storytelling.</p>
         </div>
 
-        <div class="grid grid-cols-1 gap-16">
-            <!-- IKS: The Orality Lab -->
-            <div id="orality-lab" class="mt-20">
-                <div id="orality-lab-root"></div>
+        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <!-- ML Project Life Cycle Explorer -->
+            <div class="glass-card rounded-3xl overflow-hidden group border border-black/10">
+                <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
+                    <i data-feather="layers" class="w-16 h-16 text-indigo-600 opacity-50"></i>
+                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/5 backdrop-blur-md border border-black/10 text-xs font-medium text-black">
+                        AI Lifecycle
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-display font-bold text-black mb-3">ML Project Life Cycle</h3>
+                    <p class="text-black mb-6 leading-relaxed text-justify">Explore the complex engineering pipeline behind production-grade AI. An interactive 3D tour through data, training, and deployment.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold tracking-widest uppercase text-indigo-600">Interactive XR</span>
+                        <a href="/ml-lifecycle" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm font-medium text-black hover:text-indigo-600">
+                            Launch Explorer
+                            <i data-feather="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transformer Explorer Section -->
+            <div class="glass-card rounded-3xl overflow-hidden group border border-black/10">
+                <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
+                    <i data-feather="cpu" class="w-16 h-16 text-indigo-600 opacity-50"></i>
+                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/5 backdrop-blur-md border border-black/10 text-xs font-medium text-black">
+                        AI Architecture
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-display font-bold text-black mb-3">Transformer Explorer</h3>
+                    <p class="text-black mb-6 leading-relaxed text-justify">Journey into the heart of modern AI. Visualize how transformer architectures process information and see the inner workings of the models that power NAIRA.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold tracking-widest uppercase text-indigo-600">Visualization</span>
+                        <a href="https://transformer-explorer.replit.app/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm font-medium text-black hover:text-indigo-600">
+                            Launch Explorer
+                            <i data-feather="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Transformer 3D Tour -->
+            <div class="glass-card rounded-3xl overflow-hidden group border border-black/10">
+                <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
+                    <i data-feather="box" class="w-16 h-16 text-indigo-600 opacity-50"></i>
+                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/5 backdrop-blur-md border border-black/10 text-xs font-medium text-black">
+                        Enhanced XR
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-display font-bold text-black mb-3">Transformer 3D Tour</h3>
+                    <p class="text-black mb-6 leading-relaxed text-justify">Experience an enhanced, bilingual 3D exploration of the Transformer architecture with cinematic cosmic visuals and deep-dive internals.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold tracking-widest uppercase text-indigo-600">Immersive Experience</span>
+                        <a href="/transformer-tour" class="flex items-center gap-2 text-sm font-medium text-black hover:text-indigo-600">
+                            Launch Tour
+                            <i data-feather="play" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-      }
-    }
-</script>
-
-<!-- React and Framer Motion CDNs -->
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.js"></script>
-
-<script src="/static/js/knowledge_bank.js"></script>
-<script type="text/babel" src="/static/js/orality_lab.js"></script>
 {% endblock %}
