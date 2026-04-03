@@ -9,10 +9,10 @@ interface BackgroundProps {
   starCount?: number;
 }
 
-export const Background: React.FC<BackgroundProps> = ({ 
-  variant = "overview", 
-  showGrid = true, 
-  starCount = 3000 
+export const Background: React.FC<BackgroundProps> = ({
+  variant = "overview",
+  showGrid = true,
+  starCount = 3000
 }) => {
   const starsRef = useRef<THREE.Points>(null);
 
@@ -37,7 +37,7 @@ export const Background: React.FC<BackgroundProps> = ({
   return (
     <>
       <color attach="background" args={['#050a18']} />
-      
+
       {/* Star Field */}
       <Points ref={starsRef} positions={positions} stride={3} frustumCulled={false}>
         <PointMaterial
