@@ -19,22 +19,22 @@ export const TransformerTourPage: React.FC = () => {
       <Canvas shadows>
         <Suspense fallback={null}>
           <Background variant={selectedBlock ? "drilldown" : "overview"} />
-          
+
           <PerspectiveCamera makeDefault position={[0, 2, 12]} />
           <OrbitControls enableDamping dampingFactor={0.05} />
 
           <group>
             {selectedArch.blocks.map((block) => (
-              <mesh 
-                key={block.id} 
+              <mesh
+                key={block.id}
                 position={block.position}
                 onClick={() => handleBlockClick(block)}
                 onPointerOver={() => (document.body.style.cursor = 'pointer')}
                 onPointerOut={() => (document.body.style.cursor = 'auto')}
               >
                 <boxGeometry args={[3, 0.8, 1]} />
-                <meshPhongMaterial 
-                  color={block.color} 
+                <meshPhongMaterial
+                  color={block.color}
                   emissive={block.color}
                   emissiveIntensity={selectedBlock?.id === block.id ? 1.5 : 0.4}
                   transparent
@@ -55,17 +55,17 @@ export const TransformerTourPage: React.FC = () => {
       {/* Info Panel */}
       {selectedBlock && (
         <div className="fixed top-20 right-6 w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
-          <div 
+          <div
             className="px-8 py-6 flex items-center justify-between border-b transition-all duration-700"
-            style={{ 
+            style={{
               background: `linear-gradient(to bottom, #${(selectedBlock.color * 0.1).toString(16).split('.')[0].padStart(6, '0')}, #${(selectedBlock.color * 0.18).toString(16).split('.')[0].padStart(6, '0')})`,
               borderBottomColor: `#${selectedBlock.color.toString(16).padStart(6, '0')}22`
             }}
           >
             <div className="flex items-center gap-4">
-              <div 
+              <div
                 className="w-2.5 h-2.5 rounded-full transition-all duration-700"
-                style={{ 
+                style={{
                   backgroundColor: `#${selectedBlock.color.toString(16).padStart(6, '0')}`,
                   boxShadow: `0 0 20px #${selectedBlock.color.toString(16).padStart(6, '0')}`
                 }}
@@ -75,7 +75,7 @@ export const TransformerTourPage: React.FC = () => {
                 <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider opacity-80">{selectedBlock.nameIgbo}</p>
               </div>
             </div>
-            <button 
+            <button
               onClick={() => setSelectedBlock(null)}
               className="text-slate-500 hover:text-white transition-all hover:rotate-90 duration-300 p-2"
             >
@@ -96,7 +96,7 @@ export const TransformerTourPage: React.FC = () => {
           </div>
 
           <div className="px-8 pb-8">
-            <button 
+            <button
               className="w-full transition-all text-white font-bold py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide"
               style={{
                 background: `linear-gradient(to bottom, #${(selectedBlock.color * 0.15).toString(16).split('.')[0].padStart(6, '0')}, #${(selectedBlock.color * 0.1).toString(16).split('.')[0].padStart(6, '0')})`,
