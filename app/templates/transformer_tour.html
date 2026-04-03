@@ -281,5 +281,23 @@
 <style>
     #navbar { background: rgba(2, 6, 23, 0.5) !important; backdrop-filter: blur(8px); }
     body { overflow: hidden; }
+
+    /* Specific overrides for Transformer Tour to counter global page-sub styles */
+    #info-panel #comp-name-en,
+    #info-panel #comp-desc-en {
+        color: #ffffff !important;
+    }
+    
+    #info-panel #comp-name-ig {
+        color: #94a3b8 !important;
+    }
+
+    #labels-container .text-white {
+        color: #ffffff !important;
+    }
+
+    #labels-container .text-slate-400 {
+        color: #94a3b8 !important;
+    }
 </style>
 {% endblock %}
