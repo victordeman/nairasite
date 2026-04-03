@@ -14,68 +14,15 @@ export const TransformerTourPage: React.FC = () => {
     setSelectedBlock(block);
   };
 
-  const createUMLTexture = useMemo(() => (d: BlockData) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 256;
-    const ctx = canvas.getContext('2d')!;
-
-    const color = '#' + d.color.toString(16).padStart(6, '0');
-    ctx.fillStyle = '#0a1020';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = 'rgba(99, 102, 241, 0.1)';
-    ctx.lineWidth = 1;
-    for(let i=0; i<canvas.width; i+=40) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke(); }
-    for(let i=0; i<canvas.height; i+=40) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke(); }
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 6;
-    ctx.shadowBlur = 15; ctx.shadowColor = color;
-    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = color;
-    ctx.font = 'bold 22px monospace'; ctx.fillText(`«Component»`, 35, 45);
-    ctx.font = 'bold 36px monospace'; ctx.fillText(d.name.toUpperCase(), 35, 85);
-    ctx.strokeStyle = color; ctx.lineWidth = 3;
-    if (d.id === 'enc-input-embedding') {
-        ctx.strokeRect(60, 120, 160, 90); ctx.font = '18px monospace'; ctx.fillText("Tokenizer", 85, 175);
-        ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(300, 165); ctx.stroke();
-        ctx.strokeRect(300, 120, 160, 90); ctx.fillText("Embedding", 325, 175);
-    } else if (d.id === 'enc-pos-encoding') {
-        ctx.strokeRect(60, 120, 180, 90); ctx.fillText("Sin/Cos Gen", 85, 175);
-        ctx.beginPath(); ctx.arc(360, 165, 45, 0, Math.PI*2); ctx.stroke();
-        ctx.font = '32px monospace'; ctx.fillText("+", 350, 178);
-        ctx.beginPath(); ctx.moveTo(240, 165); ctx.lineTo(315, 165); ctx.stroke();
-    } else if (d.id === 'enc-mha') {
-        for(let j=0; j<3; j++) { ctx.strokeRect(40 + j*30, 110 + j*25, 180, 70); ctx.font = '18px monospace'; ctx.fillText(`Attention Head ${j+1}`, 55 + j*30, 150 + j*25); }
-        ctx.strokeRect(340, 120, 130, 100); ctx.fillText("CONCAT", 365, 175);
-    } else if (d.id === 'enc-add-norm') {
-        ctx.beginPath(); ctx.arc(140, 165, 40, 0, Math.PI*2); ctx.stroke();
-        ctx.font = '32px monospace'; ctx.fillText("+", 130, 178);
-        ctx.strokeRect(260, 130, 200, 70); ctx.font = '22px monospace'; ctx.fillText("LayerNorm", 300, 172);
-        ctx.beginPath(); ctx.moveTo(180, 165); ctx.lineTo(260, 165); ctx.stroke();
-    } else if (d.id === 'enc-ffn') {
-        ctx.strokeRect(40, 130, 120, 70); ctx.font = '16px monospace'; ctx.fillText("Linear 1", 60, 170);
-        ctx.strokeRect(200, 130, 100, 70); ctx.fillText("ReLU", 230, 170);
-        ctx.strokeRect(340, 130, 120, 70); ctx.fillText("Linear 2", 360, 170);
-        ctx.beginPath(); ctx.moveTo(160, 165); ctx.lineTo(200, 165); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(300, 165); ctx.lineTo(340, 165); ctx.stroke();
-    } else if (d.id === 'out-linear-softmax') {
-        ctx.strokeRect(60, 130, 160, 70); ctx.font = '18px monospace'; ctx.fillText("Linear", 100, 170);
-        ctx.strokeRect(280, 130, 180, 70); ctx.fillText("Softmax", 330, 170);
-        ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(280, 165); ctx.stroke();
-    }
-    return new THREE.CanvasTexture(canvas);
-  }, []);
-
   const getDarkerColor = (hex: number, factor: number) => {
     const r = (hex >> 16) & 255;
     const g = (hex >> 8) & 255;
     const b = hex & 255;
-
+    
     const nr = Math.floor(r * factor);
     const ng = Math.floor(g * factor);
     const nb = Math.floor(b * factor);
-
+    
     return `#${((1 << 24) + (nr << 16) + (ng << 8) + nb).toString(16).slice(1)}`;
   };
 
@@ -85,61 +32,29 @@ export const TransformerTourPage: React.FC = () => {
       <Canvas shadows>
         <Suspense fallback={null}>
           <Background variant={selectedBlock ? "drilldown" : "overview"} />
-
+          
           <PerspectiveCamera makeDefault position={[0, 2, 12]} />
           <OrbitControls enableDamping dampingFactor={0.05} />
 
           <group>
-            {selectedArch.blocks.map((block) => {
-              const texture = createUMLTexture(block);
-              return (
-                <mesh
-                  key={block.id}
-                  position={block.position}
-                  onClick={() => handleBlockClick(block)}
-                  onPointerOver={() => (document.body.style.cursor = 'pointer')}
-                  onPointerOut={() => (document.body.style.cursor = 'auto')}
-                >
-                  <boxGeometry args={[3, 1.5, 0.6]} />
-                  <meshPhongMaterial
-                    attach="material-0"
-                    color={0x0a1020}
-                    emissive={block.color}
-                    emissiveIntensity={0.1}
-                  />
-                  <meshPhongMaterial
-                    attach="material-1"
-                    color={0x0a1020}
-                    emissive={block.color}
-                    emissiveIntensity={0.1}
-                  />
-                  <meshPhongMaterial
-                    attach="material-2"
-                    color={0x0a1020}
-                    emissive={block.color}
-                    emissiveIntensity={0.1}
-                  />
-                  <meshPhongMaterial
-                    attach="material-3"
-                    color={0x0a1020}
-                    emissive={block.color}
-                    emissiveIntensity={0.1}
-                  />
-                  <meshPhongMaterial
-                    attach="material-4"
-                    map={texture}
-                    emissive={block.color}
-                    emissiveIntensity={selectedBlock?.id === block.id ? 1.5 : 0.4}
-                  />
-                  <meshPhongMaterial
-                    attach="material-5"
-                    color={0x0a1020}
-                    emissive={block.color}
-                    emissiveIntensity={0.1}
-                  />
-                </mesh>
-              );
-            })}
+            {selectedArch.blocks.map((block) => (
+              <mesh 
+                key={block.id} 
+                position={block.position}
+                onClick={() => handleBlockClick(block)}
+                onPointerOver={() => (document.body.style.cursor = 'pointer')}
+                onPointerOut={() => (document.body.style.cursor = 'auto')}
+              >
+                <boxGeometry args={[3, 0.8, 1]} />
+                <meshPhongMaterial 
+                  color={block.color} 
+                  emissive={block.color}
+                  emissiveIntensity={selectedBlock?.id === block.id ? 1.5 : 0.4}
+                  transparent
+                  opacity={0.9}
+                />
+              </mesh>
+            ))}
           </group>
         </Suspense>
       </Canvas>
@@ -153,17 +68,17 @@ export const TransformerTourPage: React.FC = () => {
       {/* Info Panel */}
       {selectedBlock && (
         <div className="fixed top-20 right-6 w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
-          <div
+          <div 
             className="px-8 py-6 flex items-center justify-between border-b transition-all duration-700"
-            style={{
+            style={{ 
               background: `linear-gradient(to bottom, ${getDarkerColor(selectedBlock.color, 0.1)}, ${getDarkerColor(selectedBlock.color, 0.18)})`,
               borderBottomColor: `#${selectedBlock.color.toString(16).padStart(6, '0')}22`
             }}
           >
             <div className="flex items-center gap-4">
-              <div
+              <div 
                 className="w-2.5 h-2.5 rounded-full transition-all duration-700"
-                style={{
+                style={{ 
                   backgroundColor: `#${selectedBlock.color.toString(16).padStart(6, '0')}`,
                   boxShadow: `0 0 20px #${selectedBlock.color.toString(16).padStart(6, '0')}`
                 }}
@@ -173,7 +88,7 @@ export const TransformerTourPage: React.FC = () => {
                 <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider opacity-80">{selectedBlock.nameIgbo}</p>
               </div>
             </div>
-            <button
+            <button 
               onClick={() => setSelectedBlock(null)}
               className="text-slate-500 hover:text-white transition-all hover:rotate-90 duration-300 p-2"
             >
@@ -194,7 +109,7 @@ export const TransformerTourPage: React.FC = () => {
           </div>
 
           <div className="px-8 pb-8">
-            <button
+            <button 
               className="w-full transition-all text-white font-bold py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide"
               style={{
                 background: `linear-gradient(to bottom, ${getDarkerColor(selectedBlock.color, 0.15)}, ${getDarkerColor(selectedBlock.color, 0.1)})`,
