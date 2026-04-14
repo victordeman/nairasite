@@ -4,8 +4,6 @@
 <div id="transformer-tour-container" class="w-full h-screen bg-[#050a18] relative">
     <div id="transformer-canvas-container" class="w-full h-full absolute inset-0 z-0"></div>
     
-    <!-- Description Labels Container -->
-    <div id="labels-container" class="absolute inset-0 pointer-events-none z-10"></div>
 
     <div class="absolute top-6 left-6 pointer-events-none z-10">
         <h1 class="text-sm font-bold tracking-widest text-purple-400 uppercase">Transformer 3D Tour</h1>
@@ -66,12 +64,24 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
     const DATA = [
-        { id: 'enc-input-embedding', name: 'Input Embedding', nameIgbo: 'Mtinyere Ihe Ntinye', description: 'Converts input tokens into dense vectors of d_model dimensions.', descriptionIgbo: 'Ọ na-atụgharị mkpụrụokwu ntinye ka ọ bụrụ vectors dị arọ nke akụkụ d_model.', position: [0, -5, 0], color: 0x6366f1 },
-        { id: 'enc-pos-encoding', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds information about the relative or absolute position of the tokens.', descriptionIgbo: 'Na-agbakwunye ozi gbasara ọnọdụ ikwu ma ọ bụ zuru oke nke akara ndị ahụ.', position: [0, -3, 0], color: 0xa855f7 },
-        { id: 'enc-mha', name: 'Multi-Head Attention', nameIgbo: 'Nleba anya nwere ọtụtụ isi', description: 'Allows the model to jointly attend to information from different representation subspaces.', descriptionIgbo: 'Na-enye ohere ka ihe nlereanya ahụ lekọta ozi sitere na subspaces nnọchite anya dịiche iche.', position: [0, -1, 0], color: 0x3b82f6 },
-        { id: 'enc-add-norm', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [0, 1, 0], color: 0x10b981 },
-        { id: 'enc-ffn', name: 'Feed Forward', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers applied to each position identically.', descriptionIgbo: 'Ihe mkpuchi ejikọtara nke ọma na-emetụta ọnọdụ ọ bụla n\'otu aka ahụ.', position: [0, 3, 0], color: 0xf97316 },
-        { id: 'out-linear-softmax', name: 'Linear + Softmax Output', nameIgbo: 'Mmepụta Linear + Softmax', description: 'The final linear layer projects the decoder output to the vocabulary size (e.g., 30,000 dimensions). Softmax converts these logits to probabilities over the vocabulary. The token with the highest probability is selected as the next output token.', descriptionIgbo: 'Ọwa linear ikpeazụ na-atụgharị mmepụta decoder n\'ogo okwu (dịka ọkwa 30,000). Softmax na-atụgharị logits ndị a n\'ike n\'elu okwu. A na-ahọrọ akara nke nwere ike kachasị dị elu dị ka akara mmepụta ọzọ.', position: [5, 1, 0], color: 0xec4899 }
+        // Encoder Stack
+        { id: 'enc-input-embedding', stack: 'encoder', name: 'Input Embedding', nameIgbo: 'Mtinyere Ihe Ntinye', description: 'Converts input tokens into dense vectors of d_model dimensions.', position: [-4, -6, 0], color: 0x6366f1, textColor: 'white' },
+        { id: 'enc-pos-encoding', stack: 'encoder', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds information about the relative or absolute position of the tokens.', position: [-4, -4.5, 0], color: 0xff9f1c, textColor: 'dark' },
+        { id: 'enc-mha', stack: 'encoder', name: 'Multi-Head Self-Attention', nameIgbo: 'Nleba anya nwere ọtụtụ isi', description: 'Allows the model to jointly attend to information from different representation subspaces.', position: [-4, -2.5, 0], color: 0x00b4ff, textColor: 'white' },
+        { id: 'enc-add-norm-1', stack: 'encoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', position: [-4, -1, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'enc-ffn', stack: 'encoder', name: 'Feed-Forward Network', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers applied to each position identically.', position: [-4, 1, 0], color: 0x00e676, textColor: 'white' },
+        { id: 'enc-add-norm-2', stack: 'encoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', position: [-4, 2.5, 0], color: 0x78909c, textColor: 'white' },
+
+        // Decoder Stack
+        { id: 'dec-output-embedding', stack: 'decoder', name: 'Output Embedding', nameIgbo: 'Mtinyere Ihe Mpụta', description: 'Converts target tokens into dense vectors for the decoder.', position: [4, -6, 0], color: 0x6366f1, textColor: 'white' },
+        { id: 'dec-pos-encoding', stack: 'decoder', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds positional information to the target embeddings.', position: [4, -4.5, 0], color: 0xff9f1c, textColor: 'dark' },
+        { id: 'dec-masked-mha', stack: 'decoder', name: 'Masked Multi-Head Self-Attention', nameIgbo: 'Nlebara anya nwere ọtụtụ isi ekpuchiri ekpuchiri', description: 'Prevents positions from attending to subsequent positions.', position: [4, -2.5, 0], color: 0x00b4ff, textColor: 'white' },
+        { id: 'dec-add-norm-1', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection and normalization after masked attention.', position: [4, -1, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'dec-cross-attn', stack: 'decoder', name: 'Cross-Attention', nameIgbo: 'Nlebara anya gafere', description: 'Allows the decoder to attend to the encoder output.', position: [4, 1, 0], color: 0x00f5ff, textColor: 'white' },
+        { id: 'dec-add-norm-2', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection and normalization after cross-attention.', position: [4, 2.5, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'dec-ffn', stack: 'decoder', name: 'Feed-Forward Network', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers in the decoder stack.', position: [4, 4.5, 0], color: 0x00e676, textColor: 'white' },
+        { id: 'dec-add-norm-3', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Final residual connection and normalization.', position: [4, 6, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'dec-linear-softmax', stack: 'decoder', name: 'Linear + Softmax Output', nameIgbo: 'Mmepụta Linear + Softmax', description: 'Converts decoder output to probabilities over the vocabulary.', position: [4, 8, 0], color: 0x6366f1, textColor: 'white' }
     ];
 
     const container = document.getElementById('transformer-canvas-container');
@@ -79,7 +89,7 @@
     scene.background = new THREE.Color(0x050a18);
     
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 2, 12);
+    camera.position.set(0, 1, 15);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -116,93 +126,73 @@
     dirLight.position.set(10, 10, 10);
     scene.add(dirLight);
 
-    function createUMLTexture(d) {
+    function createBlockTexture(d) {
         const canvas = document.createElement('canvas');
-        canvas.width = 512;
-        canvas.height = 256;
+        // Match the aspect ratio of the 4.5x1.2 block to prevent stretching
+        canvas.width = 1024;
+        canvas.height = 1024 * (1.2 / 4.5);
         const ctx = canvas.getContext('2d');
 
         const color = '#' + d.color.toString(16).padStart(6, '0');
+        const textColor = d.textColor === 'dark' ? '#0f172a' : '#ffffff';
 
         // Background
-        ctx.fillStyle = '#0a1020';
+        ctx.fillStyle = color;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Blueprint Grid
-        ctx.strokeStyle = 'rgba(99, 102, 241, 0.1)';
-        ctx.lineWidth = 1;
-        for(let i=0; i<canvas.width; i+=40) {
-            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-        }
-        for(let i=0; i<canvas.height; i+=40) {
-            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
-        }
+        // Native Surface Integration: Subtle border and sheen
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
 
-        // Outer Glow & Border
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 6;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = color;
-        ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-        ctx.shadowBlur = 0;
+        // Typography Settings
+        ctx.textAlign = 'center';
+        ctx.fillStyle = textColor;
 
-        // UML Decoration
-        ctx.fillStyle = color;
-        ctx.font = 'bold 22px monospace';
-        ctx.fillText(`«Component»`, 35, 45);
-        ctx.font = 'bold 36px monospace';
-        ctx.fillText(d.name.toUpperCase(), 35, 85);
+        // Block Name (Bold Sans-Serif)
+        ctx.font = 'bold 36px "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+        ctx.fillText(d.name.toUpperCase(), canvas.width / 2, 60);
 
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
+        // Description (Standard Sans-Serif with wrapping)
+        ctx.font = '500 22px "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
-        if (d.id === 'enc-input-embedding') {
-            ctx.strokeRect(60, 120, 160, 90);
-            ctx.font = '18px monospace';
-            ctx.fillText("Tokenizer", 85, 175);
-            ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(300, 165); ctx.stroke();
-            ctx.strokeRect(300, 120, 160, 90);
-            ctx.fillText("Embedding", 325, 175);
-        } else if (d.id === 'enc-pos-encoding') {
-            ctx.strokeRect(60, 120, 180, 90);
-            ctx.fillText("Sin/Cos Gen", 85, 175);
-            ctx.beginPath(); ctx.arc(360, 165, 45, 0, Math.PI*2); ctx.stroke();
-            ctx.font = '32px monospace';
-            ctx.fillText("+", 350, 178);
-            ctx.beginPath(); ctx.moveTo(240, 165); ctx.lineTo(315, 165); ctx.stroke();
-        } else if (d.id === 'enc-mha') {
-            for(let j=0; j<3; j++) {
-                ctx.strokeRect(40 + j*30, 110 + j*25, 180, 70);
-                ctx.font = '18px monospace';
-                ctx.fillText(`Attention Head ${j+1}`, 55 + j*30, 150 + j*25);
+        const wrapText = (text, x, y, maxWidth, lineHeight) => {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
             }
-            ctx.strokeRect(340, 120, 130, 100);
-            ctx.fillText("CONCAT", 365, 175);
-        } else if (d.id === 'enc-add-norm') {
-            ctx.beginPath(); ctx.arc(140, 165, 40, 0, Math.PI*2); ctx.stroke();
-            ctx.font = '32px monospace';
-            ctx.fillText("+", 130, 178);
-            ctx.strokeRect(260, 130, 200, 70);
-            ctx.font = '22px monospace';
-            ctx.fillText("LayerNorm", 300, 172);
-            ctx.beginPath(); ctx.moveTo(180, 165); ctx.lineTo(260, 165); ctx.stroke();
-        } else if (d.id === 'enc-ffn') {
-            ctx.strokeRect(40, 130, 120, 70);
-            ctx.font = '16px monospace';
-            ctx.fillText("Linear 1", 60, 170);
-            ctx.strokeRect(200, 130, 100, 70);
-            ctx.fillText("ReLU", 230, 170);
-            ctx.strokeRect(340, 130, 120, 70);
-            ctx.fillText("Linear 2", 360, 170);
-            ctx.beginPath(); ctx.moveTo(160, 165); ctx.lineTo(200, 165); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(300, 165); ctx.lineTo(340, 165); ctx.stroke();
-        } else if (d.id === 'out-linear-softmax') {
-            ctx.strokeRect(60, 130, 160, 70);
-            ctx.font = '18px monospace';
-            ctx.fillText("Linear", 100, 170);
-            ctx.strokeRect(280, 130, 180, 70);
-            ctx.fillText("Softmax", 330, 170);
-            ctx.beginPath(); ctx.moveTo(220, 165); ctx.lineTo(280, 165); ctx.stroke();
+            ctx.fillText(line, x, currentY);
+        };
+
+        wrapText(d.description, canvas.width / 2, 110, 900, 30);
+
+        // Background diagram accents (Native integration)
+        ctx.globalAlpha = 0.15;
+        ctx.strokeStyle = textColor;
+        ctx.lineWidth = 2;
+
+        if (d.name.includes('Attention')) {
+            for(let i=0; i<3; i++) ctx.strokeRect(100 + i*40, 180 + i*10, 150, 40);
+        } else if (d.name.includes('Norm')) {
+            ctx.beginPath(); ctx.arc(canvas.width - 100, 200, 40, 0, Math.PI*2); ctx.stroke();
+            ctx.font = 'bold 40px monospace';
+            ctx.fillText("+", canvas.width - 100, 215);
+        } else if (d.name.includes('Forward')) {
+            ctx.strokeRect(100, 200, 100, 40);
+            ctx.strokeRect(250, 200, 100, 40);
+            ctx.strokeRect(400, 200, 100, 40);
         }
 
         const texture = new THREE.CanvasTexture(canvas);
@@ -215,36 +205,64 @@
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
-    const labelsContainer = document.getElementById('labels-container');
-    const labelElements = [];
-
     DATA.forEach((d, i) => {
         const group = new THREE.Group();
         group.position.set(...d.position);
         
-        const geometry = new THREE.BoxGeometry(3, 0.8, 1);
-        const material = new THREE.MeshPhongMaterial({ color: d.color, emissive: d.color, emissiveIntensity: 0.4, transparent: true, opacity: 0.9 });
-        const mesh = new THREE.Mesh(geometry, material);
+        const texture = createBlockTexture(d);
+        const geometry = new THREE.BoxGeometry(4.5, 1.2, 1);
+
+        // Array of materials: [right, left, top, bottom, front, back]
+        const sideMaterial = new THREE.MeshStandardMaterial({ color: d.color, roughness: 0.3, metalness: 0.2 });
+        const frontBackMaterial = new THREE.MeshStandardMaterial({
+            map: texture,
+            emissive: d.color,
+            emissiveIntensity: 0.2,
+            roughness: 0.2,
+            metalness: 0.3
+        });
+
+        const materials = [
+            sideMaterial, sideMaterial, sideMaterial, sideMaterial,
+            frontBackMaterial, frontBackMaterial
+        ];
+
+        const mesh = new THREE.Mesh(geometry, materials);
         mesh.userData = d;
         group.add(mesh);
-        
-        // Create HTML Label
-        const label = document.createElement('div');
-        label.className = 'absolute pointer-events-none text-center transform -translate-x-1/2 -translate-y-full mb-4';
-        label.style.width = '200px';
-        label.innerHTML = `
-            <div class="text-white font-bold text-xs mb-0.5" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5)">${d.name}</div>
-            <div class="text-slate-400 text-[9px] leading-tight px-2 line-clamp-2">${d.description.split('.')[0]}</div>
-        `;
-        labelsContainer.appendChild(label);
-        
-        // Offset labels alternately to reduce overlap
-        const xOffset = (i % 2 === 0) ? -2.5 : 2.5;
-        labelElements.push({ element: label, position: new THREE.Vector3(...d.position).add(new THREE.Vector3(xOffset, 0.6, 0)) });
         
         scene.add(group);
         blocks.push(mesh);
     });
+
+    // Stack Highlights (Rims)
+    function createStackRim(stack, color) {
+        const stackBlocks = blocks.filter(b => b.userData.stack === stack);
+        if (stackBlocks.length === 0) return;
+
+        const box = new THREE.Box3();
+        stackBlocks.forEach(b => {
+            const bBox = new THREE.Box3().setFromObject(b);
+            box.union(bBox);
+        });
+
+        // Expand slightly to avoid Z-fighting and provide a "rim" look
+        box.expandByScalar(0.2);
+
+        const size = new THREE.Vector3();
+        box.getSize(size);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
+        const edges = new THREE.EdgesGeometry(geometry);
+        const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0.5, linewidth: 2 }));
+        line.position.copy(center);
+        scene.add(line);
+    }
+
+    createStackRim('encoder', 0x00b4ff); // Deep Electric Blue
+    createStackRim('decoder', 0x00e676); // Vibrant Emerald Green
 
     const infoPanel = document.getElementById('info-panel');
     const compNameEn = document.getElementById('comp-name-en');
@@ -318,49 +336,14 @@
 
     document.getElementById('close-info').onclick = () => infoPanel.classList.add('hidden');
 
-    function updateLabels() {
-        labelElements.forEach(l => {
-            const pos = l.position.clone();
-            // Project 3D position to 2D screen coordinates
-            pos.project(camera);
-
-            const x = (pos.x + 1) * window.innerWidth / 2;
-            const y = (-pos.y + 1) * window.innerHeight / 2;
-
-            l.element.style.left = `${x}px`;
-            l.element.style.top = `${y}px`;
-
-            // Hide if behind camera or too close/far
-            const dist = camera.position.distanceTo(l.position);
-            
-            // Logic to prevent overlap: hide labels that are too close to each other in 2D space?
-            // Simple approach: fade out based on distance and projection depth
-            if (pos.z > 1) {
-                l.element.style.display = 'none';
-            } else {
-                l.element.style.display = 'block';
-                // Adjust scale and opacity based on distance to reduce visual clutter
-                const scale = Math.max(0.5, 1.2 - dist / 20);
-                l.element.style.transform = `translate(-50%, -100%) scale(${scale})`;
-                l.element.style.opacity = Math.max(0, 1 - (dist - 5) / 25);
-            }
-        });
-    }
-
     function animate(t) {
         requestAnimationFrame(animate);
         stars.rotation.y = t * 0.00005;
         blocks.forEach((b, i) => {
             const offset = Math.sin(t * 0.002 + b.userData.position[1]) * 0.1;
             b.position.y = offset;
-            
-            // Also update label target position if block moves
-            const xOffset = (i % 2 === 0) ? -3.0 : 3.0;
-            labelElements[i].position.x = b.userData.position[0] + xOffset;
-            labelElements[i].position.y = b.userData.position[1] + 1.0 + offset;
         });
         controls.update();
-        updateLabels();
         renderer.render(scene, camera);
     }
     animate(0);
