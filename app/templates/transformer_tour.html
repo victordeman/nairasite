@@ -65,23 +65,23 @@
 
     const DATA = [
         // Encoder Stack
-        { id: 'enc-input-embedding', stack: 'encoder', name: 'Input Embedding', nameIgbo: 'Mtinyere Ihe Ntinye', description: 'Converts input tokens into dense vectors of d_model dimensions.', position: [-4, -6, 0], color: 0x6366f1, textColor: 'white' },
-        { id: 'enc-pos-encoding', stack: 'encoder', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds information about the relative or absolute position of the tokens.', position: [-4, -4.5, 0], color: 0xff9f1c, textColor: 'dark' },
-        { id: 'enc-mha', stack: 'encoder', name: 'Multi-Head Self-Attention', nameIgbo: 'Nleba anya nwere ọtụtụ isi', description: 'Allows the model to jointly attend to information from different representation subspaces.', position: [-4, -2.5, 0], color: 0x00b4ff, textColor: 'white' },
-        { id: 'enc-add-norm-1', stack: 'encoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', position: [-4, -1, 0], color: 0xd100d1, textColor: 'white' },
-        { id: 'enc-ffn', stack: 'encoder', name: 'Feed-Forward Network', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers applied to each position identically.', position: [-4, 1, 0], color: 0x00e676, textColor: 'white' },
-        { id: 'enc-add-norm-2', stack: 'encoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', position: [-4, 2.5, 0], color: 0xd100d1, textColor: 'white' },
+        { id: 'enc-input-embedding', stack: 'encoder', name: 'Input Embedding', nameIgbo: 'Mtinyere Ihe Ntinye', description: 'Converts input tokens into dense vectors of d_model dimensions.', descriptionIgbo: 'Ọ na-atụgharị mkpụrụokwu ntinye ka ọ bụrụ vectors dị arọ nke akụkụ d_model.', position: [-4, -6, 0], color: 0x6366f1, textColor: 'white' },
+        { id: 'enc-pos-encoding', stack: 'encoder', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds information about the relative or absolute position of the tokens.', descriptionIgbo: 'Na-agbakwunye ozi gbasara ọnọdụ ikwu ma ọ bụ zuru oke nke akara ndị ahụ.', position: [-4, -4.5, 0], color: 0xff9f1c, textColor: 'dark' },
+        { id: 'enc-mha', stack: 'encoder', name: 'Multi-Head Self-Attention', nameIgbo: 'Nleba anya nwere ọtụtụ isi', description: 'Allows the model to jointly attend to information from different representation subspaces.', descriptionIgbo: 'Na-enye ohere ka ihe nlereanya ahụ lekọta ozi sitere na subspaces nnọchite anya dịiche iche.', position: [-4, -2.5, 0], color: 0x00b4ff, textColor: 'white' },
+        { id: 'enc-add-norm-1', stack: 'encoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [-4, -1, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'enc-ffn', stack: 'encoder', name: 'Feed-Forward Network', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers applied to each position identically.', descriptionIgbo: 'Ihe mkpuchi ejikọtara nke ọma na-emetụta ọnọdụ ọ bụla n\'otu aka ahụ.', position: [-4, 1, 0], color: 0x00e676, textColor: 'white' },
+        { id: 'enc-add-norm-2', stack: 'encoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection followed by layer normalization.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [-4, 2.5, 0], color: 0x78909c, textColor: 'white' },
 
         // Decoder Stack
-        { id: 'dec-output-embedding', stack: 'decoder', name: 'Output Embedding', nameIgbo: 'Mtinyere Ihe Mpụta', description: 'Converts target tokens into dense vectors for the decoder.', position: [4, -6, 0], color: 0x6366f1, textColor: 'white' },
-        { id: 'dec-pos-encoding', stack: 'decoder', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds positional information to the target embeddings.', position: [4, -4.5, 0], color: 0xff9f1c, textColor: 'dark' },
-        { id: 'dec-masked-mha', stack: 'decoder', name: 'Masked Multi-Head Self-Attention', nameIgbo: 'Nlebara anya nwere ọtụtụ isi ekpuchiri ekpuchiri', description: 'Prevents positions from attending to subsequent positions.', position: [4, -2.5, 0], color: 0x00b4ff, textColor: 'white' },
-        { id: 'dec-add-norm-1', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection and normalization after masked attention.', position: [4, -1, 0], color: 0xd100d1, textColor: 'white' },
-        { id: 'dec-cross-attn', stack: 'decoder', name: 'Cross-Attention', nameIgbo: 'Nlebara anya gafere', description: 'Allows the decoder to attend to the encoder output.', position: [4, 1, 0], color: 0x00f5ff, textColor: 'white' },
-        { id: 'dec-add-norm-2', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection and normalization after cross-attention.', position: [4, 2.5, 0], color: 0xd100d1, textColor: 'white' },
-        { id: 'dec-ffn', stack: 'decoder', name: 'Feed-Forward Network', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers in the decoder stack.', position: [4, 4.5, 0], color: 0x00e676, textColor: 'white' },
-        { id: 'dec-add-norm-3', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Final residual connection and normalization.', position: [4, 6, 0], color: 0xd100d1, textColor: 'white' },
-        { id: 'dec-linear-softmax', stack: 'decoder', name: 'Linear + Softmax Output', nameIgbo: 'Mmepụta Linear + Softmax', description: 'Converts decoder output to probabilities over the vocabulary.', position: [4, 8, 0], color: 0xec4899, textColor: 'white' }
+        { id: 'dec-output-embedding', stack: 'decoder', name: 'Output Embedding', nameIgbo: 'Mtinyere Ihe Mpụta', description: 'Converts target tokens into dense vectors for the decoder.', descriptionIgbo: 'Ọ na-atụgharị mkpụrụokwu ezubere iche ka ọ bụrụ vectors maka decoder.', position: [4, -6, 0], color: 0x6366f1, textColor: 'white' },
+        { id: 'dec-pos-encoding', stack: 'decoder', name: 'Positional Encoding', nameIgbo: 'Ntinye Ọnọdụ', description: 'Adds positional information to the target embeddings.', descriptionIgbo: 'Na-agbakwunye ozi gbasara ọnọdụ ikwu ma ọ bụ zuru oke nke akara ndị ahụ.', position: [4, -4.5, 0], color: 0xff9f1c, textColor: 'dark' },
+        { id: 'dec-masked-mha', stack: 'decoder', name: 'Masked Multi-Head Self-Attention', nameIgbo: 'Nlebara anya nwere ọtụtụ isi ekpuchiri ekpuchiri', description: 'Prevents positions from attending to subsequent positions.', descriptionIgbo: 'Na-eme ka ihe nlereanya ahụ lekwasị anya na ọnọdụ ndị gara aga iji nọgide na causality.', position: [4, -2.5, 0], color: 0x00b4ff, textColor: 'white' },
+        { id: 'dec-add-norm-1', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection and normalization after masked attention.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [4, -1, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'dec-cross-attn', stack: 'decoder', name: 'Cross-Attention', nameIgbo: 'Nlebara anya gafere', description: 'Allows the decoder to attend to the encoder output.', descriptionIgbo: 'Na-enye ohere ka decoder leba anya na mmepụta encoder.', position: [4, 1, 0], color: 0x00f5ff, textColor: 'white' },
+        { id: 'dec-add-norm-2', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Residual connection and normalization after cross-attention.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [4, 2.5, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'dec-ffn', stack: 'decoder', name: 'Feed-Forward Network', nameIgbo: 'Nye n\'ihu', description: 'Point-wise fully connected layers in the decoder stack.', descriptionIgbo: 'Ihe mkpuchi ejikọtara nke ọma na-emetụta ọnọdụ ọ bụla n\'otu aka ahụ.', position: [4, 4.5, 0], color: 0x00e676, textColor: 'white' },
+        { id: 'dec-add-norm-3', stack: 'decoder', name: 'Add & Norm', nameIgbo: 'Tinye & Hazie', description: 'Final residual connection and normalization.', descriptionIgbo: 'Njikọ residual na-esochi ya site na nhazi oyi akwa.', position: [4, 6, 0], color: 0x78909c, textColor: 'white' },
+        { id: 'dec-linear-softmax', stack: 'decoder', name: 'Linear + Softmax Output', nameIgbo: 'Mmepụta Linear + Softmax', description: 'Converts decoder output to probabilities over the vocabulary.', descriptionIgbo: 'Ọwa linear ikpeazụ na-atụgharị mmepụta decoder n\'ogo okwu. Softmax na-atụgharị logits ndị a n\'ike n\'elu okwu.', position: [4, 8, 0], color: 0xec4899, textColor: 'white' }
     ];
 
     const container = document.getElementById('transformer-canvas-container');
@@ -156,11 +156,14 @@
         ctx.shadowOffsetY = 2;
 
         // Block Name (Ultra Bold Sans-Serif)
-        ctx.font = '900 42px "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+        ctx.font = '900 48px "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = textColor;
+        ctx.strokeText(d.name.toUpperCase(), canvas.width / 2, 65);
         ctx.fillText(d.name.toUpperCase(), canvas.width / 2, 65);
 
-        // Description (Bold Sans-Serif with wrapping)
-        ctx.font = '700 24px "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+        // Description (Ultra Bold Sans-Serif with wrapping)
+        ctx.font = '900 26px "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
         const wrapText = (text, x, y, maxWidth, lineHeight) => {
             const words = text.split(' ');
@@ -172,6 +175,7 @@
                 const metrics = ctx.measureText(testLine);
                 const testWidth = metrics.width;
                 if (testWidth > maxWidth && n > 0) {
+                    ctx.strokeText(line, x, currentY);
                     ctx.fillText(line, x, currentY);
                     line = words[n] + ' ';
                     currentY += lineHeight;
@@ -179,6 +183,7 @@
                     line = testLine;
                 }
             }
+            ctx.strokeText(line, x, currentY);
             ctx.fillText(line, x, currentY);
         };
 
@@ -325,6 +330,7 @@
             compNameEn.textContent = data.name;
             compNameIg.textContent = data.nameIgbo;
             compDescEn.textContent = data.description;
+            compDescIg.textContent = data.descriptionIgbo;
             
             // Dynamic Colors
             const baseColor = data.color;
