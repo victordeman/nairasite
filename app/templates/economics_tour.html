@@ -105,7 +105,7 @@
     </aside>
 
     <!-- Info Panel (Side Aligned like Transformer Tour) -->
-    <div id="eco-info-panel" class="hidden fixed top-24 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-100 w-[90%] md:w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50 md:mr-96">
+    <div id="eco-info-panel" class="hidden fixed top-24 right-6 w-[90%] md:w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
         <div id="eco-panel-header" class="px-8 py-6 flex items-center justify-between border-b border-indigo-500/20 bg-gradient-to-b from-indigo-900/20 to-indigo-950/40">
             <div class="flex items-center gap-4">
                 <div class="w-2.5 h-2.5 rounded-full bg-indigo-400 shadow-[0_0_15px_rgba(129,140,248,0.8)]"></div>
@@ -196,7 +196,8 @@
     const PHASES = [
         {
             id: 1,
-            title: "Phase 1: Foundations of Demand and Supply",
+            title: "Phase 1: Foundations",
+            summary: "Market Equilibrium and the Laws of Demand and Supply.",
             content: `
                 <div class="space-y-4">
                     <p><strong>Definition of Demand:</strong> The quantity of a good that consumers are willing and able to purchase at various prices during a given period.</p>
@@ -214,7 +215,8 @@
         },
         {
             id: 2,
-            title: "Phase 2: Shifts in Demand and Supply",
+            title: "Phase 2: Shifts",
+            summary: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
             content: `
                 <div class="space-y-4">
                     <p><strong>Demand Shifters (T.R.I.B.E):</strong></p>
@@ -236,7 +238,8 @@
         },
         {
             id: 3,
-            title: "Phase 3: Disequilibrium and Interventions",
+            title: "Phase 3: Interventions",
+            summary: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
             content: `
                 <div class="space-y-4">
                     <p><strong>Shortage:</strong> QD > QS (Price below Equilibrium).</p>
@@ -283,19 +286,21 @@
 
     function createAxisLabel(text, position, color) {
         const canvas = document.createElement('canvas');
-        canvas.width = 512;
-        canvas.height = 128;
+        canvas.width = 1024;
+        canvas.height = 256;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = color;
-        ctx.font = 'bold 64px Inter';
+        ctx.font = 'bold 72px "Inter", sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(text, 256, 80);
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 10;
+        ctx.fillText(text, 512, 150);
 
         const texture = new THREE.CanvasTexture(canvas);
         const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
         const sprite = new THREE.Sprite(spriteMat);
         sprite.position.copy(position);
-        sprite.scale.set(8, 2, 1);
+        sprite.scale.set(12, 3, 1);
         return sprite;
     }
 
@@ -307,6 +312,29 @@
 
     // --- Market Elements ---
     let demandShift = 0;
+
+    function createCurveLabel(text, color) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = color;
+        ctx.font = 'bold 48px "Inter", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(text, 256, 80);
+
+        const texture = new THREE.CanvasTexture(canvas);
+        const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+        const sprite = new THREE.Sprite(spriteMat);
+        sprite.scale.set(6, 1.5, 1);
+        return sprite;
+    }
+
+    const demandLabel = createCurveLabel('DEMAND', '#818cf8');
+    scene.add(demandLabel);
+
+    const supplyLabel = createCurveLabel('SUPPLY', '#f43f5e');
+    scene.add(supplyLabel);
     let supplyShift = 0;
     let showCeiling = false;
     let showFloor = false;
@@ -379,38 +407,92 @@
     floorPlane.rotation.x = -Math.PI / 2;
     scene.add(floorPlane);
 
-    // Phase Nodes
+    function createBlockTexture(d) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1024;
+        canvas.height = 1024 * (1.2 / 4.5);
+        const ctx = canvas.getContext('2d');
+
+        const color = '#6366f1';
+        const textColor = '#ffffff';
+
+        // Background
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Native Surface Integration
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+        // Typography
+        ctx.textAlign = 'center';
+        ctx.fillStyle = textColor;
+
+        // Phase Title
+        ctx.font = 'bold 44px "Inter", sans-serif';
+        ctx.fillText(d.title.toUpperCase(), canvas.width / 2, 75);
+
+        // Summary Text (with wrapping)
+        ctx.font = '500 26px "Inter", sans-serif';
+        ctx.globalAlpha = 0.9;
+
+        const wrapText = (text, x, y, maxWidth, lineHeight) => {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, currentY);
+        };
+
+        wrapText(d.summary, canvas.width / 2, 135, 900, 35);
+
+        // Subtle instruction at the bottom
+        ctx.font = 'bold 18px "Inter", sans-serif';
+        ctx.globalAlpha = 0.5;
+        ctx.fillText("TAP TO EXPLORE DETAILS", canvas.width / 2, 230);
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        return texture;
+    }
+
+    // Phase Nodes (Blocks)
     const nodes = [];
     PHASES.forEach(phase => {
         const group = new THREE.Group();
         group.position.set(...phase.position);
 
-        const sphere = new THREE.Mesh(
-            new THREE.SphereGeometry(1, 32, 32),
-            new THREE.MeshStandardMaterial({ color: 0x6366f1, emissive: 0x6366f1, emissiveIntensity: 0.5 })
-        );
-        sphere.userData = phase;
-        group.add(sphere);
+        const texture = createBlockTexture(phase);
+        const geometry = new THREE.BoxGeometry(4.5, 1.2, 1);
 
-        // Add Label (Sprite)
-        const canvas = document.createElement('canvas');
-        canvas.width = 256;
-        canvas.height = 64;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#6366f1';
-        ctx.font = 'bold 24px Inter';
-        ctx.textAlign = 'center';
-        ctx.fillText(`PHASE ${phase.id}`, 128, 40);
+        const sideMat = new THREE.MeshStandardMaterial({ color: 0x6366f1, roughness: 0.3, metalness: 0.2 });
+        const frontBackMat = new THREE.MeshStandardMaterial({
+            map: texture,
+            emissive: 0x6366f1,
+            emissiveIntensity: 0.3,
+            roughness: 0.2,
+            metalness: 0.3
+        });
 
-        const texture = new THREE.CanvasTexture(canvas);
-        const spriteMat = new THREE.SpriteMaterial({ map: texture });
-        const sprite = new THREE.Sprite(spriteMat);
-        sprite.position.y = 2;
-        sprite.scale.set(4, 1, 1);
-        group.add(sprite);
+        const materials = [sideMat, sideMat, sideMat, sideMat, frontBackMat, frontBackMat];
+        const mesh = new THREE.Mesh(geometry, materials);
+        mesh.userData = phase;
+        group.add(mesh);
 
         scene.add(group);
-        nodes.push(sphere);
+        nodes.push(mesh);
     });
 
     // --- Logic & Animation ---
@@ -464,6 +546,10 @@
     };
 
     function updateMarket() {
+        // Update Curve Labels positions
+        demandLabel.position.set(-8 + demandShift/5, 8 + demandShift/10, 0.5);
+        supplyLabel.position.set(8 + supplyShift/5, 8 - supplyShift/10, 0.5);
+
         // Linear model where positive shift = rightward/upward increase
         // Demand: P = (100 + dS) - Q
         // Supply: P = Q - sS
