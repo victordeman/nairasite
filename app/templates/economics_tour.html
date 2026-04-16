@@ -5,7 +5,7 @@
     <!-- Main 3D Scene -->
     <div id="economics-canvas-container" class="flex-1 h-full relative z-0">
         <!-- Instructional Overlays -->
-        <div class="absolute top-24 left-8 z-50 space-y-4">
+        <div class="absolute top-24 left-8 z-40 space-y-4">
             <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <h1 class="english-label" style="margin-bottom: 8px;">Demand & Supply Economics 3D Tour</h1>
                 <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #e4e4e7 !important;">Original Market Model</h2>
@@ -17,7 +17,7 @@
         </button>
         </div>
 
-        <div class="absolute bottom-8 left-8 z-50 flex flex-col gap-4">
+        <div class="absolute bottom-8 left-8 z-40 flex flex-col gap-4">
             <div class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <div class="flex flex-col">
                     <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Equilibrium Price</span>
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Floating Controls Panel -->
-        <div class="absolute bottom-8 right-8 z-50 w-72 space-y-4">
+        <div class="absolute bottom-8 right-8 z-40 w-72 space-y-4">
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-6">
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
@@ -70,7 +70,7 @@
     </div>
 
     <!-- AI Assistant Sidebar -->
-    <aside id="eco-sidebar" class="w-96 h-full bg-[#0a0f1a] border-l border-slate-800/40 flex flex-col z-50 transform transition-transform duration-500 translate-x-0">
+    <aside id="eco-sidebar" class="w-96 bg-[#0a0f1a] border-l border-slate-800/40 flex flex-col z-40 transform transition-transform duration-500 translate-x-0 fixed right-0 top-20 h-[calc(100vh-80px)]">
         <div class="p-6 border-b border-white/5 flex items-center justify-between bg-slate-900/40">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-2xl bg-indigo-600/20 flex items-center justify-center">
@@ -136,7 +136,7 @@
     </div>
 
     <!-- Static Diagrams Modal -->
-    <div id="diagrams-modal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="diagrams-modal" class="fixed inset-0 z-40 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
         <div class="relative w-full max-w-4xl bg-[#0a0f1a] border border-white/10 rounded-[40px] overflow-hidden shadow-2xl">
             <div class="p-8 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
                 <h3 class="description-text" style="font-size: 18px; font-weight: 500; color: #e4e4e7;">Market Model Reference Diagrams</h3>
@@ -338,7 +338,7 @@
     const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-2.5, 20, 0), '#22d3ee');
     scene.add(priceLabel);
 
-    const quantityLabel = createAxisLabel('QUANTITY OF GOODS/SERVICES', new THREE.Vector3(20, -2, 0), '#22d3ee');
+    const quantityLabel = createAxisLabel('QUANTITY OF PRODUCTS', new THREE.Vector3(20, -2, 0), '#22d3ee');
     scene.add(quantityLabel);
 
     // --- Market Elements ---
@@ -1004,11 +1004,12 @@
     .description-panel {
       position: fixed;
       right: 32px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 100; /* Ensure it's above the sidebar */
+      top: 100px;
+      bottom: 32px;
+      z-index: 40; /* Ensure it's above the sidebar but below navbar */
       width: 380px;
       max-width: 95vw;
+      overflow-y: auto;
       background: rgba(24, 24, 27, 0.95); /* zinc-900/95 */
       backdrop-filter: blur(24px);
       border: 1px solid rgba(255,255,255,0.1);
@@ -1051,8 +1052,8 @@
     }
 
     @keyframes panelPop {
-        from { opacity: 0; transform: translateY(-45%) scale(0.95); }
-        to { opacity: 1; transform: translateY(-50%) scale(1); }
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
     }
 </style>
 {% endblock %}
