@@ -616,7 +616,7 @@
     function startTour() {
         tourActive = true;
         currentTourStep = 0;
-        goToStep(currentTourStep);
+        window.goToTourStep(currentTourStep);
     }
 
     window.goToTourStep = (stepIndex) => {
@@ -815,7 +815,7 @@
             showInfo(data, obj);
         } else {
             ecoInfoPanel.classList.add('hidden');
-            nodes.forEach(n => n.material.emissiveIntensity = 0.1);
+            nodes.forEach(n => n.material.forEach(m => { if (m.emissiveIntensity !== undefined) m.emissiveIntensity = 0.1; }));
             selectedGlow.userData.targetBlock = null;
             selectedGlow.material.opacity = 0;
         }
@@ -860,8 +860,8 @@
 
         // Highlight and Glow
         if (nodes.includes(obj)) {
-            nodes.forEach(n => n.material.emissiveIntensity = 0.1);
-            obj.material.emissiveIntensity = 1.0;
+            nodes.forEach(n => n.material.forEach(m => { if (m.emissiveIntensity !== undefined) m.emissiveIntensity = 0.1; }));
+            obj.material.forEach(m => { if (m.emissiveIntensity !== undefined) m.emissiveIntensity = 1.0; });
 
             selectedGlow.userData.targetBlock = obj;
             selectedGlow.material.color.setHex(numericColor);
@@ -869,7 +869,7 @@
             selectedGlow.material.opacity = 0.4;
             selectedGlow.scale.set(1, 1, 1);
         } else if (obj === demandPlane || obj === supplyPlane || obj === equilibriumDot) {
-            nodes.forEach(n => n.material.emissiveIntensity = 0.1);
+            nodes.forEach(n => n.material.forEach(m => { if (m.emissiveIntensity !== undefined) m.emissiveIntensity = 0.1; }));
             selectedGlow.userData.targetBlock = obj;
             selectedGlow.material.color.setHex(numericColor);
             selectedGlow.material.emissive.setHex(numericColor);
