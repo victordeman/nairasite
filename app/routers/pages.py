@@ -155,3 +155,7 @@ async def ml_lifecycle(request: Request):
 @router.get("/transformer-tour")
 async def transformer_tour(request: Request):
     return templates.TemplateResponse("transformer_tour.html", {"request": request})
+
+@router.get("/economics-tour")
+async def economics_tour(request: Request):
+    return templates.TemplateResponse("economics_tour.html", {"request": request})
