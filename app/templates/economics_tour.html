@@ -105,27 +105,48 @@
     </aside>
 
     <!-- Info Panel (Side Aligned like Transformer Tour) -->
-    <div id="eco-info-panel" class="hidden fixed top-24 right-6 w-[90%] md:w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
-        <div id="eco-panel-header" class="px-8 py-6 flex items-center justify-between border-b border-indigo-500/20 bg-gradient-to-b from-indigo-900/20 to-indigo-950/40">
+    <div id="eco-info-panel" class="hidden fixed top-20 right-6 w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
+        <!-- Dynamic Header -->
+        <div id="eco-panel-header" class="px-8 py-6 flex items-center justify-between border-b transition-all duration-700">
             <div class="flex items-center gap-4">
-                <div class="w-2.5 h-2.5 rounded-full bg-indigo-400 shadow-[0_0_15px_rgba(129,140,248,0.8)]"></div>
-                <h2 id="eco-panel-title" class="text-white font-bold text-xl">Phase 1: Foundations</h2>
+                <div id="status-dot" class="w-2.5 h-2.5 rounded-full transition-all duration-700"></div>
+                <div>
+                    <h2 id="eco-panel-title" class="text-white font-bold text-xl tracking-tight leading-none mb-1.5"></h2>
+                    <p id="eco-panel-subtitle" class="text-slate-400 text-xs font-semibold uppercase tracking-wider opacity-80">ECONOMICS COMPONENT</p>
+                </div>
             </div>
             <button id="close-eco-info" class="text-slate-500 hover:text-white transition-all hover:rotate-90 duration-300 p-2">
-                <i data-feather="x" class="w-5 h-5"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
         </div>
-        <div class="p-8 max-h-[60vh] overflow-y-auto">
-            <div id="eco-panel-content" class="text-slate-100 leading-relaxed text-[15px] space-y-6">
-                <!-- Content injected here -->
+
+        <div class="p-8 space-y-10 max-h-[60vh] overflow-y-auto">
+            <!-- English Section -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-2.5 text-[#38bdf8] text-[11px] font-black tracking-[0.2em] uppercase">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    ENGLISH
+                </div>
+                <div id="eco-panel-content" class="text-white leading-relaxed text-[16px] font-medium tracking-wide"></div>
+            </div>
+
+            <!-- Igbo Section -->
+            <div id="igbo-section" class="hidden space-y-4">
+                <div class="flex items-center gap-2.5 text-[#00e676] text-[11px] font-black tracking-[0.2em] uppercase">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    IGBO
+                </div>
+                <div id="eco-panel-content-ig" class="text-white leading-relaxed text-[16px] font-medium tracking-wide"></div>
             </div>
         </div>
+
+        <!-- Action Buttons -->
         <div class="px-8 pb-8 space-y-3">
-            <button id="eco-drill-down" class="w-full py-5 rounded-[24px] bg-gradient-to-b from-indigo-600/20 to-indigo-700/10 border border-indigo-500/40 text-indigo-400 font-bold flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all">
-                <i data-feather="zap" class="w-5 h-5"></i>
+            <button id="eco-drill-down" class="w-full transition-all text-white font-bold py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
                 Drill Down — See Internals
             </button>
-            <button onclick="toggleDiagrams()" class="w-full py-3 rounded-2xl bg-white/5 border border-white/10 text-slate-400 text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all">
+            <button onclick="toggleDiagrams()" class="w-full py-4 rounded-[20px] bg-white/5 border border-white/10 text-slate-400 text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all">
                 View Static Diagrams
             </button>
         </div>
@@ -197,7 +218,13 @@
         {
             id: 1,
             title: "Phase 1: Foundations",
+            name: "Phase 1: Foundations",
+            nameIgbo: "Ntọala Ahịa",
             summary: "Market Equilibrium and the Laws of Demand and Supply.",
+            description: "Market Equilibrium and the Laws of Demand and Supply.",
+            descriptionIgbo: "Nhazi ahịa na iwu nke ọchịchọ na nnyefe.",
+            color: 0x6366f1,
+            textColor: 'white',
             content: `
                 <div class="space-y-4">
                     <p><strong>Definition of Demand:</strong> The quantity of a good that consumers are willing and able to purchase at various prices during a given period.</p>
@@ -216,7 +243,13 @@
         {
             id: 2,
             title: "Phase 2: Shifts",
+            name: "Phase 2: Shifts",
+            nameIgbo: "Mgbanwe Ahịa",
             summary: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
+            description: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
+            descriptionIgbo: "Ihe ndị na-ebugharị usoro ọchịchọ na nnyefe.",
+            color: 0x818cf8,
+            textColor: 'white',
             content: `
                 <div class="space-y-4">
                     <p><strong>Demand Shifters (T.R.I.B.E):</strong></p>
@@ -239,7 +272,13 @@
         {
             id: 3,
             title: "Phase 3: Interventions",
+            name: "Phase 3: Interventions",
+            nameIgbo: "Ntinye aka Gọọmentị",
             summary: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
+            description: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
+            descriptionIgbo: "Oke ọnụahịa na ihe ndị ọzọ na-emetụta ahịa.",
+            color: 0x10b981,
+            textColor: 'white',
             content: `
                 <div class="space-y-4">
                     <p><strong>Shortage:</strong> QD > QS (Price below Equilibrium).</p>
@@ -290,24 +329,25 @@
         canvas.height = 256;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = color;
-        ctx.font = 'bold 72px "Inter", sans-serif';
+        ctx.font = '900 72px "Segoe UI", Roboto, Arial, sans-serif';
         ctx.textAlign = 'center';
-        ctx.shadowColor = 'rgba(0,0,0,0.5)';
-        ctx.shadowBlur = 10;
-        ctx.fillText(text, 512, 150);
+        ctx.lineWidth = 8;
+        ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+        ctx.strokeText(text.toUpperCase(), 512, 150);
+        ctx.fillText(text.toUpperCase(), 512, 150);
         
         const texture = new THREE.CanvasTexture(canvas);
-        const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
-        const sprite = new THREE.Sprite(spriteMat);
-        sprite.position.copy(position);
-        sprite.scale.set(12, 3, 1);
-        return sprite;
+        const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide, depthWrite: false });
+        const geometry = new THREE.PlaneGeometry(12, 3);
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.copy(position);
+        return mesh;
     }
 
-    const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-1.5, 20, 0), '#818cf8');
+    const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-2.5, 20, 0), '#818cf8');
     scene.add(priceLabel);
 
-    const quantityLabel = createAxisLabel('QUANTITY OF GOODS/SERVICES', new THREE.Vector3(20, -1.5, 0), '#10b981');
+    const quantityLabel = createAxisLabel('QUANTITY OF GOODS/SERVICES', new THREE.Vector3(20, -2, 0), '#10b981');
     scene.add(quantityLabel);
 
     // --- Market Elements ---
@@ -319,15 +359,18 @@
         canvas.height = 128;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = color;
-        ctx.font = 'bold 48px "Inter", sans-serif';
+        ctx.font = '900 48px "Segoe UI", Roboto, Arial, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(text, 256, 80);
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+        ctx.strokeText(text.toUpperCase(), 256, 80);
+        ctx.fillText(text.toUpperCase(), 256, 80);
         
         const texture = new THREE.CanvasTexture(canvas);
-        const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
-        const sprite = new THREE.Sprite(spriteMat);
-        sprite.scale.set(6, 1.5, 1);
-        return sprite;
+        const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide, depthWrite: false });
+        const geometry = new THREE.PlaneGeometry(6, 1.5);
+        const mesh = new THREE.Mesh(geometry, material);
+        return mesh;
     }
 
     const demandLabel = createCurveLabel('DEMAND', '#818cf8');
@@ -407,61 +450,90 @@
     floorPlane.rotation.x = -Math.PI / 2;
     scene.add(floorPlane);
 
-    function createBlockTexture(d) {
+    // Selection Glow
+    const glowGeometry = new THREE.BoxGeometry(4.7, 1.4, 1.2);
+    const glowMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        emissive: 0xffffff,
+        emissiveIntensity: 2,
+        transparent: true,
+        opacity: 0
+    });
+    const selectedGlow = new THREE.Mesh(glowGeometry, glowMaterial);
+    selectedGlow.userData = { targetBlock: null };
+    scene.add(selectedGlow);
+
+    function createBlockTexture(d, isTextOnly = false) {
         const canvas = document.createElement('canvas');
         canvas.width = 1024;
         canvas.height = 1024 * (1.2 / 4.5);
         const ctx = canvas.getContext('2d');
 
-        const color = '#6366f1';
-        const textColor = '#ffffff';
+        const color = '#' + d.color.toString(16).padStart(6, '0');
+        const textColor = d.textColor === 'dark' ? '#0f172a' : '#ffffff';
 
-        // Background
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (!isTextOnly) {
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+            ctx.globalAlpha = 0.15;
+            ctx.strokeStyle = textColor;
+            ctx.lineWidth = 2;
 
-        // Native Surface Integration
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-        ctx.lineWidth = 10;
-        ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+            // Subtle icon for nodes
+            ctx.beginPath();
+            ctx.arc(canvas.width - 100, 200, 40, 0, Math.PI*2);
+            ctx.stroke();
+            ctx.font = 'bold 40px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText("?", canvas.width - 100, 215);
 
-        // Typography
-        ctx.textAlign = 'center';
-        ctx.fillStyle = textColor;
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.textAlign = 'center';
+            ctx.fillStyle = textColor;
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = 'rgba(0,0,0,1)';
+            ctx.shadowOffsetX = 6;
+            ctx.shadowOffsetY = 6;
 
-        // Phase Title
-        ctx.font = 'bold 44px "Inter", sans-serif';
-        ctx.fillText(d.title.toUpperCase(), canvas.width / 2, 75);
-
-        // Summary Text (with wrapping)
-        ctx.font = '500 26px "Inter", sans-serif';
-        ctx.globalAlpha = 0.9;
-        
-        const wrapText = (text, x, y, maxWidth, lineHeight) => {
-            const words = text.split(' ');
-            let line = '';
-            let currentY = y;
-            for (let n = 0; n < words.length; n++) {
-                const testLine = line + words[n] + ' ';
-                const metrics = ctx.measureText(testLine);
-                const testWidth = metrics.width;
-                if (testWidth > maxWidth && n > 0) {
-                    ctx.fillText(line, x, currentY);
-                    line = words[n] + ' ';
-                    currentY += lineHeight;
-                } else {
-                    line = testLine;
-                }
+            // Fit Header Text
+            let fontSize = 64;
+            ctx.font = `900 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
+            while (ctx.measureText(d.name.toUpperCase()).width > 950 && fontSize > 30) {
+                fontSize -= 2;
+                ctx.font = `900 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
             }
-            ctx.fillText(line, x, currentY);
-        };
+            ctx.lineWidth = 14;
+            ctx.strokeStyle = 'rgba(0,0,0,0.9)';
+            ctx.strokeText(d.name.toUpperCase(), canvas.width / 2, 75);
+            ctx.fillText(d.name.toUpperCase(), canvas.width / 2, 75);
 
-        wrapText(d.summary, canvas.width / 2, 135, 900, 35);
-
-        // Subtle instruction at the bottom
-        ctx.font = 'bold 18px "Inter", sans-serif';
-        ctx.globalAlpha = 0.5;
-        ctx.fillText("TAP TO EXPLORE DETAILS", canvas.width / 2, 230);
+            // Description
+            ctx.font = '900 36px "Segoe UI", Roboto, Arial, sans-serif';
+            ctx.lineWidth = 8;
+            const wrapText = (text, x, y, maxWidth, lineHeight) => {
+                const words = text.split(' ');
+                let line = '';
+                let currentY = y;
+                for (let n = 0; n < words.length; n++) {
+                    const testLine = line + words[n] + ' ';
+                    if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+                        ctx.strokeText(line, x, currentY);
+                        ctx.fillText(line, x, currentY);
+                        line = words[n] + ' ';
+                        currentY += lineHeight;
+                    } else {
+                        line = testLine;
+                    }
+                }
+                ctx.strokeText(line, x, currentY);
+                ctx.fillText(line, x, currentY);
+            };
+            wrapText(d.description, canvas.width / 2, 135, 940, 44);
+        }
 
         const texture = new THREE.CanvasTexture(canvas);
         texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -474,26 +546,68 @@
         const group = new THREE.Group();
         group.position.set(...phase.position);
         
-        const texture = createBlockTexture(phase);
+        // 1. Base Block
+        const blockTexture = createBlockTexture(phase, false);
         const geometry = new THREE.BoxGeometry(4.5, 1.2, 1);
         
-        const sideMat = new THREE.MeshStandardMaterial({ color: 0x6366f1, roughness: 0.3, metalness: 0.2 });
-        const frontBackMat = new THREE.MeshStandardMaterial({
-            map: texture,
-            emissive: 0x6366f1,
-            emissiveIntensity: 0.3,
-            roughness: 0.2,
-            metalness: 0.3
+        const sideMat = new THREE.MeshStandardMaterial({ color: phase.color, roughness: 0.4, metalness: 0.1 });
+        const faceMat = new THREE.MeshStandardMaterial({
+            map: blockTexture,
+            roughness: 0.3,
+            metalness: 0.2,
+            emissive: phase.color,
+            emissiveIntensity: 0.1
         });
 
-        const materials = [sideMat, sideMat, sideMat, sideMat, frontBackMat, frontBackMat];
-        const mesh = new THREE.Mesh(geometry, materials);
+        const mesh = new THREE.Mesh(geometry, [sideMat, sideMat, sideMat, sideMat, faceMat, faceMat]);
         mesh.userData = phase;
         group.add(mesh);
+
+        // 2. Labels
+        const labelTexture = createBlockTexture(phase, true);
+        const labelGeometry = new THREE.PlaneGeometry(4.4, 1.1);
+        const labelMaterial = new THREE.MeshBasicMaterial({
+            map: labelTexture,
+            transparent: true,
+            opacity: 1,
+            depthWrite: false,
+            side: THREE.FrontSide
+        });
+
+        const frontLabel = new THREE.Mesh(labelGeometry, labelMaterial);
+        frontLabel.position.z = 0.51;
+        group.add(frontLabel);
+
+        const backLabel = new THREE.Mesh(labelGeometry, labelMaterial.clone());
+        backLabel.position.z = -0.51;
+        backLabel.rotation.y = Math.PI;
+        group.add(backLabel);
         
         scene.add(group);
         nodes.push(mesh);
     });
+
+    // --- UTILS ---
+    function hexToRgb(hex) {
+        return {
+            r: (hex >> 16) & 255,
+            g: (hex >> 8) & 255,
+            b: hex & 255
+        };
+    }
+
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    function darken(hex, amount) {
+        const rgb = hexToRgb(hex);
+        return rgbToHex(
+            Math.max(0, Math.floor(rgb.r * (1 - amount))),
+            Math.max(0, Math.floor(rgb.g * (1 - amount))),
+            Math.max(0, Math.floor(rgb.b * (1 - amount)))
+        );
+    }
 
     // --- Logic & Animation ---
     let tourActive = false;
@@ -507,7 +621,9 @@
 
     window.goToTourStep = (stepIndex) => {
         const phase = PHASES[stepIndex];
-        showInfo(phase);
+        // Find the corresponding node mesh
+        const node = nodes.find(n => n.userData.id === phase.id);
+        showInfo(phase, node);
         
         // Move camera to focus on node
         const targetPos = new THREE.Vector3(...phase.position).add(new THREE.Vector3(5, 5, 10));
@@ -621,8 +737,22 @@
         updateMarket();
         
         nodes.forEach((node, i) => {
-            node.position.y = Math.sin(t * 0.002 + i) * 0.5;
+            const offset = Math.sin(t * 0.002 + node.userData.position[1]) * 0.1;
+            node.position.y = offset;
         });
+
+        if (selectedGlow.userData.targetBlock) {
+            const target = selectedGlow.userData.targetBlock;
+            const worldPos = new THREE.Vector3();
+            target.getWorldPosition(worldPos);
+            selectedGlow.position.copy(worldPos);
+
+            if (target === demandPlane || target === supplyPlane) {
+                selectedGlow.rotation.copy(target.rotation);
+            } else {
+                selectedGlow.rotation.set(0, 0, 0);
+            }
+        }
 
         controls.update();
         renderer.render(scene, camera);
@@ -633,24 +763,124 @@
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
+    const ecoInfoPanel = document.getElementById('eco-info-panel');
+    const ecoPanelTitle = document.getElementById('eco-panel-title');
+    const ecoPanelContent = document.getElementById('eco-panel-content');
+    const ecoPanelHeader = document.getElementById('eco-panel-header');
+    const statusDot = document.getElementById('status-dot');
+    const ecoDrillDown = document.getElementById('eco-drill-down');
+
     container.addEventListener('click', (event) => {
         const rect = container.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(nodes);
+
+        // Add curves and equilibrium dot to interactable objects
+        const interactables = [...nodes, demandPlane, supplyPlane, equilibriumDot];
+        const intersects = raycaster.intersectObjects(interactables);
 
         if (intersects.length > 0) {
-            const phase = intersects[0].object.userData;
-            showInfo(phase);
+            const obj = intersects[0].object;
+            let data = obj.userData;
+
+            // Default data for non-node objects
+            if (obj === demandPlane) {
+                data = {
+                    title: "Demand Curve",
+                    name: "Demand Curve",
+                    description: "Represents the inverse relationship between price and quantity demanded. As prices fall, consumers buy more.",
+                    content: "The Demand Curve shows how much of a good or service consumers are willing and able to buy at different prices. It typically slopes downward from left to right.",
+                    color: 0x4f46e5
+                };
+            } else if (obj === supplyPlane) {
+                data = {
+                    title: "Supply Curve",
+                    name: "Supply Curve",
+                    description: "Represents the direct relationship between price and quantity supplied. As prices rise, producers offer more.",
+                    content: "The Supply Curve shows how much of a good or service producers are willing and able to offer for sale at different prices. It typically slopes upward from left to right.",
+                    color: 0xe11d48
+                };
+            } else if (obj === equilibriumDot) {
+                data = {
+                    title: "Equilibrium (E)",
+                    name: "Equilibrium (E)",
+                    description: "The 'market clearing' price where Quantity Demanded (QD) equals Quantity Supplied (QS).",
+                    content: "At equilibrium, there is no surplus or shortage. The market is stable, and resources are allocated efficiently.",
+                    color: 0xffffff
+                };
+            }
+
+            showInfo(data, obj);
+        } else {
+            ecoInfoPanel.classList.add('hidden');
+            nodes.forEach(n => n.material.emissiveIntensity = 0.1);
+            selectedGlow.userData.targetBlock = null;
+            selectedGlow.material.opacity = 0;
         }
     });
 
-    function showInfo(phase) {
-        document.getElementById('eco-panel-title').textContent = phase.title;
-        document.getElementById('eco-panel-content').innerHTML = phase.content;
-        document.getElementById('eco-info-panel').classList.remove('hidden');
+    function showInfo(data, obj) {
+        ecoPanelTitle.textContent = data.title;
+        ecoPanelContent.innerHTML = data.content || data.description;
+
+        const subtitle = document.getElementById('eco-panel-subtitle');
+        const igboSection = document.getElementById('igbo-section');
+        const igboContent = document.getElementById('eco-panel-content-ig');
+
+        if (data.nameIgbo) {
+            subtitle.textContent = data.nameIgbo;
+            if (igboSection) igboSection.classList.remove('hidden');
+            if (igboContent) igboContent.textContent = data.descriptionIgbo || "";
+        } else {
+            subtitle.textContent = "ECONOMICS COMPONENT";
+            if (igboSection) igboSection.classList.add('hidden');
+        }
+
+        // Dynamic Colors
+        const baseColor = data.color || 0x6366f1;
+        const hexColor = typeof baseColor === 'string' ? baseColor : '#' + baseColor.toString(16).padStart(6, '0');
+        const numericColor = typeof baseColor === 'string' ? parseInt(baseColor.replace('#', ''), 16) : baseColor;
+
+        const darkColor = darken(numericColor, 0.9);
+        const midColor = darken(numericColor, 0.82);
+
+        ecoPanelHeader.style.background = `linear-gradient(to bottom, ${darkColor}, ${midColor})`;
+        ecoPanelHeader.style.borderBottom = `1px solid ${hexColor}22`;
+
+        statusDot.style.backgroundColor = hexColor;
+        statusDot.style.boxShadow = `0 0 20px ${hexColor}`;
+
+        ecoDrillDown.style.background = `linear-gradient(to bottom, ${darken(numericColor, 0.85)}, ${darken(numericColor, 0.9)})`;
+        ecoDrillDown.style.borderColor = `${hexColor}44`;
+        ecoDrillDown.style.color = hexColor;
+
+        ecoInfoPanel.classList.remove('hidden');
+
+        // Highlight and Glow
+        if (nodes.includes(obj)) {
+            nodes.forEach(n => n.material.emissiveIntensity = 0.1);
+            obj.material.emissiveIntensity = 1.0;
+
+            selectedGlow.userData.targetBlock = obj;
+            selectedGlow.material.color.setHex(numericColor);
+            selectedGlow.material.emissive.setHex(numericColor);
+            selectedGlow.material.opacity = 0.4;
+            selectedGlow.scale.set(1, 1, 1);
+        } else if (obj === demandPlane || obj === supplyPlane || obj === equilibriumDot) {
+            nodes.forEach(n => n.material.emissiveIntensity = 0.1);
+            selectedGlow.userData.targetBlock = obj;
+            selectedGlow.material.color.setHex(numericColor);
+            selectedGlow.material.emissive.setHex(numericColor);
+            selectedGlow.material.opacity = 0.4;
+
+            if (obj === equilibriumDot) {
+                selectedGlow.scale.set(0.2, 0.2, 0.2);
+            } else {
+                selectedGlow.scale.set(4, 4, 1);
+            }
+        }
     }
 
     document.getElementById('close-eco-info').onclick = () => {
