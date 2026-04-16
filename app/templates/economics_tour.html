@@ -105,7 +105,7 @@
     </aside>
 
     <!-- Info Panel (Side Aligned like Transformer Tour) -->
-    <div id="eco-info-panel" class="hidden fixed top-20 right-6 w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
+    <div id="eco-info-panel" class="hidden fixed top-20 right-6 w-[90%] md:w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
         <!-- Dynamic Header -->
         <div id="eco-panel-header" class="px-8 py-6 flex items-center justify-between border-b transition-all duration-700">
             <div class="flex items-center gap-4">
@@ -738,7 +738,7 @@
         
         nodes.forEach((node, i) => {
             const offset = Math.sin(t * 0.002 + node.userData.position[1]) * 0.1;
-            node.position.y = offset;
+            node.parent.position.y = node.userData.position[1] + offset;
         });
 
         if (selectedGlow.userData.targetBlock) {
