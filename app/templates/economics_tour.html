@@ -7,7 +7,7 @@
         <!-- Instructional Overlays -->
         <div class="absolute top-24 left-8 z-50 space-y-4">
             <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
-                <h1 class="english-label" style="margin-bottom: 8px;">English: Demand & Supply Economics 3D Tour</h1>
+                <h1 class="english-label" style="margin-bottom: 8px;">Demand & Supply Economics 3D Tour</h1>
                 <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #e4e4e7 !important;">Original Market Model</h2>
                 <p class="description-text max-w-md">Interactive Tour of How Prices and Quantities Are Determined</p>
             </div>
@@ -20,18 +20,18 @@
         <div class="absolute bottom-8 left-8 z-50 flex flex-col gap-4">
             <div class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <div class="flex flex-col">
-                    <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">English: Equilibrium Price</span>
+                    <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Equilibrium Price</span>
                     <span id="p-star-val" class="description-text" style="color: #22d3ee; font-size: 22px; font-weight: 700;">$50.00</span>
                 </div>
                 <div class="w-px h-10 bg-white/10"></div>
                 <div class="flex flex-col">
-                    <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">English: Equilibrium Quantity</span>
+                    <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Equilibrium Quantity</span>
                     <span id="q-star-val" class="description-text" style="color: #22d3ee; font-size: 22px; font-weight: 700;">500 units</span>
                 </div>
             </div>
             
             <div class="english-label" style="font-size: 11px; letter-spacing: 0.2em; padding: 10px 24px; border-radius: 999px; background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1); display: inline-block; width: fit-content; font-weight: 600;">
-                English: Drag to rotate · Scroll to zoom · Click elements to explore
+                Drag to rotate · Scroll to zoom · Click elements to explore
             </div>
         </div>
 
@@ -40,7 +40,7 @@
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-6">
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
-                        <label class="english-label" style="margin-bottom: 0;">English: Demand Shift</label>
+                        <label class="english-label" style="margin-bottom: 0;">Demand Shift</label>
                         <span id="demand-shift-val" class="description-text" style="font-size: 12px;">0</span>
                     </div>
                     <input type="range" id="demand-slider" min="-20" max="20" value="0" step="1" class="w-full accent-indigo-500 bg-white/5 h-1.5 rounded-lg appearance-none cursor-pointer">
@@ -48,7 +48,7 @@
                 
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
-                        <label class="english-label" style="margin-bottom: 0;">English: Supply Shift</label>
+                        <label class="english-label" style="margin-bottom: 0;">Supply Shift</label>
                         <span id="supply-shift-val" class="description-text" style="font-size: 12px;">0</span>
                     </div>
                     <input type="range" id="supply-slider" min="-20" max="20" value="0" step="1" class="w-full accent-rose-500 bg-white/5 h-1.5 rounded-lg appearance-none cursor-pointer">
@@ -56,13 +56,13 @@
 
                 <div class="pt-4 border-t border-white/5 space-y-4">
                     <button id="toggle-ceiling" class="w-full py-4 px-6 bg-indigo-600/20 hover:bg-indigo-600 text-white rounded-full border border-indigo-500/30 transition-all english-label shadow-lg hover:shadow-indigo-500/40" style="margin-bottom: 0; text-align: center; font-weight: 600;">
-                        English: Toggle Price Ceiling
+                        Toggle Price Ceiling
                     </button>
                     <button id="toggle-floor" class="w-full py-4 px-6 bg-indigo-600/20 hover:bg-indigo-600 text-white rounded-full border border-indigo-500/30 transition-all english-label shadow-lg hover:shadow-indigo-500/40" style="margin-bottom: 0; text-align: center; font-weight: 600;">
-                        English: Toggle Price Floor
+                        Toggle Price Floor
                     </button>
                     <button id="reset-sim" class="w-full py-4 px-6 bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-white/10 transition-all description-text shadow-lg" style="font-size: 13px; text-transform: uppercase; text-align: center; font-weight: 600;">
-                        English: Reset Market
+                        Reset Market
                     </button>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                     <i data-feather="cpu" class="w-5 h-5 text-indigo-400"></i>
                 </div>
                 <div>
-                    <p class="english-label" style="font-size: 10px; margin-bottom: 2px;">English: AI Assistant</p>
+                    <p class="english-label" style="font-size: 10px; margin-bottom: 2px;">AI Assistant</p>
                     <h3 class="description-text" style="font-size: 14px; color: #e4e4e7;">NAIRA Economics Specialist</h3>
                 </div>
             </div>
@@ -89,7 +89,7 @@
         <!-- Chat Body -->
         <div id="eco-chat-body" class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-950/20">
             <div class="p-4 rounded-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
-                <span class="english-label" style="font-size: 10px; margin-bottom: 8px;">English: Introduction</span>
+                <span class="english-label" style="font-size: 10px; margin-bottom: 8px;">Introduction</span>
                 <p class="description-text" style="font-size: 14px; color: #e4e4e7;">Hello! I'm the NAIRA Economics Assistant. I can help explain market equilibrium, shifts, and government interventions in this 3D tour. What would you like to explore?</p>
             </div>
         </div>
@@ -115,7 +115,7 @@
             <div id="eco-panel-header" class="transition-all duration-700">
                 <div class="flex items-center gap-3 mb-4">
                     <div id="status-dot" class="w-2 h-2 rounded-full transition-all duration-700" style="background-color: rgb(34, 211, 238); box-shadow: rgb(34, 211, 238) 0px 0px 20px;"></div>
-                    <span id="eco-panel-subtitle" class="english-label" style="margin-bottom: 0;">English: Economics Component</span>
+                    <span id="eco-panel-subtitle" class="english-label" style="margin-bottom: 0;">Economics Component</span>
                 </div>
                 <h2 id="eco-panel-title" class="text-[#e4e4e7] font-medium text-2xl tracking-tight leading-none"></h2>
             </div>
@@ -201,7 +201,7 @@
         {
             id: 1,
             title: "Phase 1: Foundations",
-            name: "English: Phase 1: Foundations",
+            name: "Phase 1: Foundations",
             summary: "Market Equilibrium and the Laws of Demand and Supply.",
             description: "Market Equilibrium and the Laws of Demand and Supply.",
             color: 0x00B4FF,
@@ -214,7 +214,7 @@
                     <p><strong>Law of Supply:</strong> Ceteris paribus, as the price of a good increases, the quantity supplied increases. This results in an upward-sloping Supply Curve (Red).</p>
                     <p><strong>Market Equilibrium:</strong> The point where the Demand and Supply curves intersect. At this point, Quantity Demanded (QD) equals Quantity Supplied (QS), resulting in the Equilibrium Price (P*) and Equilibrium Quantity (Q*).</p>
                     <button onclick="window.goToTourStep(1)" class="w-full py-4 mt-4 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-indigo-500/30" style="margin-bottom: 0;">
-                        <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">English: Next — Market Shifts</span>
+                        <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Market Shifts</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
                 </div>
@@ -224,7 +224,7 @@
         {
             id: 2,
             title: "Phase 2: Shifts",
-            name: "English: Phase 2: Shifts",
+            name: "Phase 2: Shifts",
             summary: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
             description: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
             color: 0x00B4FF,
@@ -241,7 +241,7 @@
                     </ul>
                     <p>A rightward shift represents an increase, while a leftward shift represents a decrease. Use the sliders to see how equilibrium moves.</p>
                     <button onclick="window.goToTourStep(2)" class="w-full py-4 mt-4 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-indigo-500/30" style="margin-bottom: 0;">
-                        <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">English: Next — Interventions</span>
+                        <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Interventions</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
                 </div>
@@ -251,7 +251,7 @@
         {
             id: 3,
             title: "Phase 3: Interventions",
-            name: "English: Phase 3: Interventions",
+            name: "Phase 3: Interventions",
             summary: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
             description: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
             color: 0x00E676,
@@ -264,7 +264,7 @@
                     <p><strong>Price Floor:</strong> A legal minimum price (results in Surplus).</p>
                     <p><strong>Efficiency Loss:</strong> Interventions cause deadweight loss by preventing the market from clearing at the optimal price.</p>
                     <button onclick="window.resetMarket()" class="w-full py-4 mt-4 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-indigo-500/30" style="margin-bottom: 0;">
-                        <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">English: Reset Market</span>
+                        <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Reset Market</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>
                     </button>
                 </div>
@@ -335,10 +335,10 @@
         return mesh;
     }
 
-    const priceLabel = createAxisLabel('ENGLISH: PRICE', new THREE.Vector3(-2.5, 20, 0), '#22d3ee');
+    const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-2.5, 20, 0), '#22d3ee');
     scene.add(priceLabel);
 
-    const quantityLabel = createAxisLabel('ENGLISH: QUANTITY OF GOODS/SERVICES', new THREE.Vector3(20, -2, 0), '#22d3ee');
+    const quantityLabel = createAxisLabel('QUANTITY OF GOODS/SERVICES', new THREE.Vector3(20, -2, 0), '#22d3ee');
     scene.add(quantityLabel);
 
     // --- Market Elements ---
@@ -374,10 +374,10 @@
         return mesh;
     }
 
-    const demandLabel = createCurveLabel('ENGLISH: DEMAND', '#22d3ee');
+    const demandLabel = createCurveLabel('DEMAND', '#22d3ee');
     scene.add(demandLabel);
 
-    const supplyLabel = createCurveLabel('ENGLISH: SUPPLY', '#22d3ee');
+    const supplyLabel = createCurveLabel('SUPPLY', '#22d3ee');
     scene.add(supplyLabel);
     let supplyShift = 0;
     let showCeiling = false;
@@ -506,7 +506,7 @@
             ctx.shadowOffsetY = 6;
 
             // Fit Header Text
-            let headerText = "ENGLISH: " + d.name.toUpperCase();
+            let headerText = "" + d.name.toUpperCase();
             let fontSize = 54;
             ctx.font = `900 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
             while (ctx.measureText(headerText).width > 950 && fontSize > 25) {
@@ -838,7 +838,7 @@
         ecoPanelContent.innerHTML = data.content || data.description;
 
         const subtitle = document.getElementById('eco-panel-subtitle');
-        subtitle.textContent = "English: Economics Component";
+        subtitle.textContent = "Economics Component";
 
         // Dynamic Colors - Cyan
         const baseColor = '#22d3ee';
@@ -933,7 +933,7 @@
         // Add user message
         const userDiv = document.createElement('div');
         userDiv.className = 'bg-white/10 border border-white/20 p-4 rounded-2xl ml-8';
-        userDiv.innerHTML = `<span class="english-label" style="font-size: 10px; margin-bottom: 4px;">English: User</span><p class="description-text" style="font-size: 14px; color: #e4e4e7;">${msg}</p>`;
+        userDiv.innerHTML = `<span class="english-label" style="font-size: 10px; margin-bottom: 4px;">User</span><p class="description-text" style="font-size: 14px; color: #e4e4e7;">${msg}</p>`;
         chatBody.appendChild(userDiv);
         chatInput.value = '';
         chatBody.scrollTop = chatBody.scrollHeight;
@@ -949,7 +949,7 @@
             
             const aiDiv = document.createElement('div');
             aiDiv.className = 'bg-indigo-600/20 border border-indigo-500/30 p-4 rounded-2xl mr-8';
-            aiDiv.innerHTML = `<span class="english-label" style="font-size: 10px; margin-bottom: 4px;">English: Assistant</span><p class="description-text" style="font-size: 14px; color: #e4e4e7;">${data.response}</p>`;
+            aiDiv.innerHTML = `<span class="english-label" style="font-size: 10px; margin-bottom: 4px;">Assistant</span><p class="description-text" style="font-size: 14px; color: #e4e4e7;">${data.response}</p>`;
             chatBody.appendChild(aiDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
         } catch (err) {
