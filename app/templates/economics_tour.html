@@ -7,11 +7,11 @@
         <!-- Instructional Overlays -->
         <div class="absolute top-24 left-8 z-10 space-y-4">
             <div class="pointer-events-none space-y-2">
-                <h1 class="text-sm font-bold tracking-[0.3em] text-indigo-400 uppercase">Demand & Supply Economics 3D Tour</h1>
-                <h2 id="current-phase-title" class="text-3xl font-display font-bold text-white">Original Market Model</h2>
-                <p class="text-slate-400 text-sm max-w-md">Interactive Tour of How Prices and Quantities Are Determined</p>
+                <h1 class="english-label" style="margin-bottom: 4px;">Demand & Supply Economics 3D Tour</h1>
+                <h2 id="current-phase-title" class="text-3xl font-display font-medium text-[#e4e4e7] mb-2">Original Market Model</h2>
+                <p class="description-text max-w-md">Interactive Tour of How Prices and Quantities Are Determined</p>
             </div>
-            <button id="start-tour-btn" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-full shadow-lg shadow-indigo-500/20 flex items-center gap-2 transition-all active:scale-95">
+            <button id="start-tour-btn" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg shadow-indigo-500/20 flex items-center gap-2 transition-all active:scale-95 description-text" style="font-size: 14px; text-transform: uppercase;">
                 <i data-feather="play" class="w-4 h-4"></i>
                 Start Guided Tour
             </button>
@@ -20,17 +20,17 @@
         <div class="absolute bottom-8 left-8 z-10 flex flex-col gap-4">
             <div class="flex items-center gap-6 px-6 py-3 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl">
                 <div class="flex flex-col">
-                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Equilibrium Price</span>
-                    <span id="p-star-val" class="text-xl font-mono font-bold text-indigo-400">$50.00</span>
+                    <span class="english-label" style="margin-bottom: 2px; font-size: 10px;">Equilibrium Price</span>
+                    <span id="p-star-val" class="description-text" style="color: #22d3ee; font-size: 20px;">$50.00</span>
                 </div>
                 <div class="w-px h-8 bg-white/10"></div>
                 <div class="flex flex-col">
-                    <span class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Equilibrium Quantity</span>
-                    <span id="q-star-val" class="text-xl font-mono font-bold text-emerald-400">500 units</span>
+                    <span class="english-label" style="margin-bottom: 2px; font-size: 10px;">Equilibrium Quantity</span>
+                    <span id="q-star-val" class="description-text" style="color: #22d3ee; font-size: 20px;">500 units</span>
                 </div>
             </div>
             
-            <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em]">
+            <div class="english-label" style="font-size: 10px; letter-spacing: 0.2em;">
                 Drag to rotate · Scroll to zoom · Click elements to explore
             </div>
         </div>
@@ -40,28 +40,28 @@
             <div class="glass-card p-6 rounded-[2rem] border border-white/10 space-y-6">
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
-                        <label class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Demand Shift</label>
-                        <span id="demand-shift-val" class="text-[10px] font-mono text-slate-400">0</span>
+                        <label class="english-label" style="margin-bottom: 0;">Demand Shift</label>
+                        <span id="demand-shift-val" class="description-text" style="font-size: 12px;">0</span>
                     </div>
                     <input type="range" id="demand-slider" min="-20" max="20" value="0" step="1" class="w-full accent-indigo-500 bg-white/5 h-1.5 rounded-lg appearance-none cursor-pointer">
                 </div>
                 
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
-                        <label class="text-xs font-bold text-rose-400 uppercase tracking-wider">Supply Shift</label>
-                        <span id="supply-shift-val" class="text-[10px] font-mono text-slate-400">0</span>
+                        <label class="english-label" style="margin-bottom: 0; color: #fb7185;">Supply Shift</label>
+                        <span id="supply-shift-val" class="description-text" style="font-size: 12px;">0</span>
                     </div>
                     <input type="range" id="supply-slider" min="-20" max="20" value="0" step="1" class="w-full accent-rose-500 bg-white/5 h-1.5 rounded-lg appearance-none cursor-pointer">
                 </div>
 
                 <div class="pt-4 border-t border-white/5 space-y-3">
-                    <button id="toggle-ceiling" class="w-full py-3 px-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-widest transition-all">
+                    <button id="toggle-ceiling" class="w-full py-3 px-4 rounded-xl border border-cyan-500/20 bg-cyan-500/5 hover:bg-cyan-500/10 english-label" style="margin-bottom: 0; text-align: center;">
                         Toggle Price Ceiling
                     </button>
-                    <button id="toggle-floor" class="w-full py-3 px-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-widest transition-all">
+                    <button id="toggle-floor" class="w-full py-3 px-4 rounded-xl border border-cyan-500/20 bg-cyan-500/5 hover:bg-cyan-500/10 english-label" style="margin-bottom: 0; text-align: center;">
                         Toggle Price Floor
                     </button>
-                    <button id="reset-sim" class="w-full py-3 px-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white text-[10px] font-bold uppercase tracking-widest transition-all">
+                    <button id="reset-sim" class="w-full py-3 px-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 description-text" style="font-size: 12px; text-transform: uppercase; text-align: center;">
                         Reset Market
                     </button>
                 </div>
@@ -77,8 +77,8 @@
                     <i data-feather="cpu" class="w-5 h-5 text-indigo-400"></i>
                 </div>
                 <div>
-                    <h3 class="text-white font-bold text-sm">NAIRA AI Assistant</h3>
-                    <p class="text-emerald-500 text-[10px] uppercase font-bold tracking-widest">Economics Specialist</p>
+                    <h3 class="description-text" style="font-size: 14px;">NAIRA AI Assistant</h3>
+                    <p class="english-label" style="font-size: 10px; margin-bottom: 0;">Economics Specialist</p>
                 </div>
             </div>
             <button id="close-sidebar" class="p-2 text-slate-500 hover:text-white transition-colors lg:hidden">
@@ -89,14 +89,14 @@
         <!-- Chat Body -->
         <div id="eco-chat-body" class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-950/20">
             <div class="bg-indigo-600/10 border border-indigo-500/20 p-4 rounded-2xl">
-                <p class="text-slate-300 text-sm leading-relaxed">Hello! I'm the NAIRA Economics Assistant. I can help explain market equilibrium, shifts, and government interventions in this 3D tour. What would you like to explore?</p>
+                <p class="description-text" style="font-size: 14px;">Hello! I'm the NAIRA Economics Assistant. I can help explain market equilibrium, shifts, and government interventions in this 3D tour. What would you like to explore?</p>
             </div>
         </div>
 
         <!-- Chat Input -->
         <div class="p-6 border-t border-white/5 bg-slate-900/40">
             <form id="eco-chat-form" class="relative">
-                <input type="text" id="eco-chat-input" placeholder="Ask about the market..." class="w-full bg-slate-950 border border-white/10 rounded-xl py-4 pl-4 pr-12 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all">
+                <input type="text" id="eco-chat-input" placeholder="Ask about the market..." class="w-full bg-slate-950 border border-white/10 rounded-xl py-4 pl-4 pr-12 description-text focus:outline-none focus:border-indigo-500 transition-all" style="font-size: 14px;">
                 <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-indigo-600 rounded-lg text-white hover:bg-indigo-700 transition-all">
                     <i data-feather="arrow-up" class="w-4 h-4"></i>
                 </button>
@@ -104,49 +104,31 @@
         </div>
     </aside>
 
-    <!-- Info Panel (Side Aligned like Transformer Tour) -->
-    <div id="eco-info-panel" class="hidden fixed top-20 right-6 w-[90%] md:w-[420px] bg-[#0a0f1a] border border-slate-800/40 rounded-[32px] shadow-[0_24px_64px_rgba(0,0,0,0.6)] overflow-hidden z-50">
-        <!-- Dynamic Header -->
-        <div id="eco-panel-header" class="px-8 py-6 flex items-center justify-between border-b transition-all duration-700">
-            <div class="flex items-center gap-4">
-                <div id="status-dot" class="w-2.5 h-2.5 rounded-full transition-all duration-700"></div>
-                <div>
-                    <h2 id="eco-panel-title" class="text-white font-bold text-xl tracking-tight leading-none mb-1.5"></h2>
-                    <p id="eco-panel-subtitle" class="text-slate-400 text-xs font-semibold uppercase tracking-wider opacity-80">ECONOMICS COMPONENT</p>
-                </div>
-            </div>
-            <button id="close-eco-info" class="text-slate-500 hover:text-white transition-all hover:rotate-90 duration-300 p-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
+    <!-- Description Panel – matches exactly the style of the quoted text -->
+    <div id="eco-info-panel" class="description-panel hidden">
+        <button id="close-eco-info" class="close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
 
-        <div class="p-8 space-y-10 max-h-[60vh] overflow-y-auto">
-            <!-- English Section -->
-            <div class="space-y-4">
-                <div class="flex items-center gap-2.5 text-[#38bdf8] text-[11px] font-black tracking-[0.2em] uppercase">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    ENGLISH
+        <div class="space-y-6">
+            <div id="eco-panel-header" class="transition-all duration-700">
+                <div class="flex items-center gap-3 mb-4">
+                    <div id="status-dot" class="w-2 h-2 rounded-full transition-all duration-700"></div>
+                    <span id="eco-panel-subtitle" class="english-label" style="margin-bottom: 0;">ECONOMICS COMPONENT</span>
                 </div>
-                <div id="eco-panel-content" class="text-white leading-relaxed text-[16px] font-medium tracking-wide"></div>
+                <h2 id="eco-panel-title" class="text-[#e4e4e7] font-medium text-2xl tracking-tight leading-none"></h2>
             </div>
 
-            <!-- Igbo Section -->
-            <div id="igbo-section" class="hidden space-y-4">
-                <div class="flex items-center gap-2.5 text-[#00e676] text-[11px] font-black tracking-[0.2em] uppercase">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    IGBO
-                </div>
-                <div id="eco-panel-content-ig" class="text-white leading-relaxed text-[16px] font-medium tracking-wide"></div>
-            </div>
+            <div id="eco-panel-content" class="description-text"></div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="px-8 pb-8 space-y-3">
-            <button id="eco-drill-down" class="w-full transition-all text-white font-bold py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide">
+        <div class="mt-8 space-y-3">
+            <button id="eco-drill-down" class="w-full transition-all text-white py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide description-text" style="font-size: 14px; text-transform: uppercase;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
                 Drill Down — See Internals
             </button>
-            <button onclick="toggleDiagrams()" class="w-full py-4 rounded-[20px] bg-white/5 border border-white/10 text-slate-400 text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all">
+            <button onclick="toggleDiagrams()" class="w-full py-4 rounded-[20px] bg-white/5 border border-white/10 transition-all english-label" style="margin-bottom: 0; text-align: center;">
                 View Static Diagrams
             </button>
         </div>
@@ -156,7 +138,7 @@
     <div id="diagrams-modal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
         <div class="relative w-full max-w-4xl bg-[#0a0f1a] border border-white/10 rounded-[40px] overflow-hidden shadow-2xl">
             <div class="p-8 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
-                <h3 class="text-2xl font-bold text-white">Market Model Reference Diagrams</h3>
+                <h3 class="description-text" style="font-size: 18px; font-weight: 500; color: #e4e4e7;">Market Model Reference Diagrams</h3>
                 <button onclick="toggleDiagrams()" class="p-3 hover:bg-white/10 rounded-full transition-all text-slate-400 hover:text-white">
                     <i data-feather="x" class="w-6 h-6"></i>
                 </button>
@@ -166,34 +148,34 @@
                     <div class="aspect-video bg-indigo-500/5 border border-indigo-500/20 rounded-3xl flex items-center justify-center relative overflow-hidden group">
                         <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent"></div>
                         <div class="w-full h-1 bg-indigo-500 -rotate-[30deg] shadow-[0_0_20px_rgba(99,102,241,0.4)]"></div>
-                        <span class="absolute bottom-6 left-6 text-xs font-bold text-indigo-400 uppercase tracking-[0.2em]">The Demand Curve</span>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0;">The Demand Curve</span>
                     </div>
-                    <p class="text-sm text-slate-400 leading-relaxed">Represents the inverse relationship between price and quantity demanded. As prices fall, consumers buy more.</p>
+                    <p class="description-text" style="font-size: 14px;">Represents the inverse relationship between price and quantity demanded. As prices fall, consumers buy more.</p>
                 </div>
                 <div class="space-y-4">
                     <div class="aspect-video bg-rose-500/5 border border-rose-500/20 rounded-3xl flex items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-transparent"></div>
                         <div class="w-full h-1 bg-rose-500 rotate-[30deg] shadow-[0_0_20px_rgba(225,29,72,0.4)]"></div>
-                        <span class="absolute bottom-6 left-6 text-xs font-bold text-rose-400 uppercase tracking-[0.2em]">The Supply Curve</span>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: #fb7185;">The Supply Curve</span>
                     </div>
-                    <p class="text-sm text-slate-400 leading-relaxed">Represents the direct relationship between price and quantity supplied. As prices rise, producers offer more.</p>
+                    <p class="description-text" style="font-size: 14px;">Represents the direct relationship between price and quantity supplied. As prices rise, producers offer more.</p>
                 </div>
                 <div class="space-y-4">
                     <div class="aspect-video bg-slate-900 border border-white/10 rounded-3xl flex items-center justify-center relative">
                         <div class="w-full h-0.5 bg-indigo-500/40 -rotate-[30deg] absolute"></div>
                         <div class="w-full h-0.5 bg-rose-500/40 rotate-[30deg] absolute"></div>
                         <div class="w-4 h-4 bg-white rounded-full shadow-[0_0_20px_rgba(255,255,255,0.8)] z-10 animate-pulse"></div>
-                        <span class="absolute bottom-6 left-6 text-xs font-bold text-white uppercase tracking-[0.2em]">Equilibrium Point (E)</span>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: #ffffff;">Equilibrium Point (E)</span>
                     </div>
-                    <p class="text-sm text-slate-400 leading-relaxed">The "market clearing" price where QD = QS. No surplus or shortage exists here.</p>
+                    <p class="description-text" style="font-size: 14px;">The "market clearing" price where QD = QS. No surplus or shortage exists here.</p>
                 </div>
                 <div class="space-y-4">
                     <div class="aspect-video bg-emerald-500/5 border border-emerald-500/20 rounded-3xl flex items-center justify-center relative">
                         <div class="absolute top-1/3 left-0 right-0 h-0.5 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
                         <div class="absolute top-1/3 left-1/4 right-1/4 h-3 bg-orange-500/40 rounded-full animate-pulse border border-orange-500/20"></div>
-                        <span class="absolute bottom-6 left-6 text-xs font-bold text-emerald-400 uppercase tracking-[0.2em]">Price Intervention</span>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0;">Price Intervention</span>
                     </div>
-                    <p class="text-sm text-slate-400 leading-relaxed">Government set prices like ceilings or floors that prevent the market from reaching equilibrium.</p>
+                    <p class="description-text" style="font-size: 14px;">Government set prices like ceilings or floors that prevent the market from reaching equilibrium.</p>
                 </div>
             </div>
         </div>
@@ -219,10 +201,8 @@
             id: 1,
             title: "Phase 1: Foundations",
             name: "Phase 1: Foundations",
-            nameIgbo: "Ntọala Ahịa",
             summary: "Market Equilibrium and the Laws of Demand and Supply.",
             description: "Market Equilibrium and the Laws of Demand and Supply.",
-            descriptionIgbo: "Nhazi ahịa na iwu nke ọchịchọ na nnyefe.",
             color: 0x6366f1,
             textColor: 'white',
             content: `
@@ -244,10 +224,8 @@
             id: 2,
             title: "Phase 2: Shifts",
             name: "Phase 2: Shifts",
-            nameIgbo: "Mgbanwe Ahịa",
             summary: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
             description: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
-            descriptionIgbo: "Ihe ndị na-ebugharị usoro ọchịchọ na nnyefe.",
             color: 0x818cf8,
             textColor: 'white',
             content: `
@@ -273,10 +251,8 @@
             id: 3,
             title: "Phase 3: Interventions",
             name: "Phase 3: Interventions",
-            nameIgbo: "Ntinye aka Gọọmentị",
             summary: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
             description: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
-            descriptionIgbo: "Oke ọnụahịa na ihe ndị ọzọ na-emetụta ahịa.",
             color: 0x10b981,
             textColor: 'white',
             content: `
@@ -329,7 +305,7 @@
         canvas.height = 256;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = color;
-        ctx.font = '900 72px "Segoe UI", Roboto, Arial, sans-serif';
+        ctx.font = '500 72px "Segoe UI", Roboto, Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.lineWidth = 8;
         ctx.strokeStyle = 'rgba(0,0,0,0.8)';
@@ -344,10 +320,10 @@
         return mesh;
     }
 
-    const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-2.5, 20, 0), '#818cf8');
+    const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-2.5, 20, 0), '#22d3ee');
     scene.add(priceLabel);
 
-    const quantityLabel = createAxisLabel('QUANTITY OF GOODS/SERVICES', new THREE.Vector3(20, -2, 0), '#10b981');
+    const quantityLabel = createAxisLabel('QUANTITY OF GOODS/SERVICES', new THREE.Vector3(20, -2, 0), '#22d3ee');
     scene.add(quantityLabel);
 
     // --- Market Elements ---
@@ -359,7 +335,7 @@
         canvas.height = 128;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = color;
-        ctx.font = '900 48px "Segoe UI", Roboto, Arial, sans-serif';
+        ctx.font = '500 48px "Segoe UI", Roboto, Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.lineWidth = 6;
         ctx.strokeStyle = 'rgba(0,0,0,0.8)';
@@ -373,10 +349,10 @@
         return mesh;
     }
 
-    const demandLabel = createCurveLabel('DEMAND', '#818cf8');
+    const demandLabel = createCurveLabel('DEMAND', '#22d3ee');
     scene.add(demandLabel);
 
-    const supplyLabel = createCurveLabel('SUPPLY', '#f43f5e');
+    const supplyLabel = createCurveLabel('SUPPLY', '#22d3ee');
     scene.add(supplyLabel);
     let supplyShift = 0;
     let showCeiling = false;
@@ -470,7 +446,7 @@
         const ctx = canvas.getContext('2d');
 
         const color = '#' + d.color.toString(16).padStart(6, '0');
-        const textColor = d.textColor === 'dark' ? '#0f172a' : '#ffffff';
+        const textColor = '#e4e4e7';
 
         if (!isTextOnly) {
             ctx.fillStyle = color;
@@ -501,10 +477,10 @@
 
             // Fit Header Text
             let fontSize = 64;
-            ctx.font = `900 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
+            ctx.font = `500 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
             while (ctx.measureText(d.name.toUpperCase()).width > 950 && fontSize > 30) {
                 fontSize -= 2;
-                ctx.font = `900 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
+                ctx.font = `500 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
             }
             ctx.lineWidth = 14;
             ctx.strokeStyle = 'rgba(0,0,0,0.9)';
@@ -512,7 +488,7 @@
             ctx.fillText(d.name.toUpperCase(), canvas.width / 2, 75);
 
             // Description
-            ctx.font = '900 36px "Segoe UI", Roboto, Arial, sans-serif';
+            ctx.font = '500 36px "Segoe UI", Roboto, Arial, sans-serif';
             ctx.lineWidth = 8;
             const wrapText = (text, x, y, maxWidth, lineHeight) => {
                 const words = text.split(' ');
@@ -826,33 +802,16 @@
         ecoPanelContent.innerHTML = data.content || data.description;
 
         const subtitle = document.getElementById('eco-panel-subtitle');
-        const igboSection = document.getElementById('igbo-section');
-        const igboContent = document.getElementById('eco-panel-content-ig');
-
-        if (data.nameIgbo) {
-            subtitle.textContent = data.nameIgbo;
-            if (igboSection) igboSection.classList.remove('hidden');
-            if (igboContent) igboContent.textContent = data.descriptionIgbo || "";
-        } else {
-            subtitle.textContent = "ECONOMICS COMPONENT";
-            if (igboSection) igboSection.classList.add('hidden');
-        }
+        subtitle.textContent = "ECONOMICS COMPONENT";
 
         // Dynamic Colors
-        const baseColor = data.color || 0x6366f1;
-        const hexColor = typeof baseColor === 'string' ? baseColor : '#' + baseColor.toString(16).padStart(6, '0');
-        const numericColor = typeof baseColor === 'string' ? parseInt(baseColor.replace('#', ''), 16) : baseColor;
-
-        const darkColor = darken(numericColor, 0.9);
-        const midColor = darken(numericColor, 0.82);
-
-        ecoPanelHeader.style.background = `linear-gradient(to bottom, ${darkColor}, ${midColor})`;
-        ecoPanelHeader.style.borderBottom = `1px solid ${hexColor}22`;
+        const baseColor = '#22d3ee';
+        const hexColor = '#22d3ee';
+        const numericColor = 0x22d3ee;
 
         statusDot.style.backgroundColor = hexColor;
         statusDot.style.boxShadow = `0 0 20px ${hexColor}`;
 
-        ecoDrillDown.style.background = `linear-gradient(to bottom, ${darken(numericColor, 0.85)}, ${darken(numericColor, 0.9)})`;
         ecoDrillDown.style.borderColor = `${hexColor}44`;
         ecoDrillDown.style.color = hexColor;
 
@@ -937,7 +896,7 @@
         // Add user message
         const userDiv = document.createElement('div');
         userDiv.className = 'bg-white/5 border border-white/10 p-4 rounded-2xl ml-8';
-        userDiv.innerHTML = `<p class="text-white text-sm">${msg}</p>`;
+        userDiv.innerHTML = `<p class="description-text" style="font-size: 14px;">${msg}</p>`;
         chatBody.appendChild(userDiv);
         chatInput.value = '';
         chatBody.scrollTop = chatBody.scrollHeight;
@@ -953,7 +912,7 @@
             
             const aiDiv = document.createElement('div');
             aiDiv.className = 'bg-indigo-600/10 border border-indigo-500/20 p-4 rounded-2xl mr-8';
-            aiDiv.innerHTML = `<p class="text-slate-300 text-sm">${data.response}</p>`;
+            aiDiv.innerHTML = `<p class="description-text" style="font-size: 14px;">${data.response}</p>`;
             chatBody.appendChild(aiDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
         } catch (err) {
@@ -1002,6 +961,58 @@
         background: #6366f1;
         cursor: pointer;
         box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    /* Description Panel – matches exactly the style of the quoted text */
+    .description-panel {
+        position: fixed;
+        right: 32px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 50;
+        width: 380px;
+        max-width: 95vw;
+        background: rgba(24, 24, 27, 0.95); /* zinc-900/95 */
+        backdrop-filter: blur(24px);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+        padding: 32px;
+        color: #e4e4e7;
+        animation: panelPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .english-label {
+        color: #22d3ee;           /* cyan-400 */
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .description-text {
+        font-size: 15.5px;
+        line-height: 1.65;
+        font-weight: 500;
+        color: #e4e4e7;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        color: #a1a1aa; /* zinc-400 */
+        transition: color 0.2s;
+    }
+    .close-btn:hover {
+        color: #ffffff;
+    }
+
+    @keyframes panelPop {
+        from { opacity: 0; transform: translateY(-45%) scale(0.95); }
+        to { opacity: 1; transform: translateY(-50%) scale(1); }
     }
 </style>
 {% endblock %}
