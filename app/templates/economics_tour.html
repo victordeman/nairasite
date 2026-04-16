@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Economics 3D Tour - NAIRA{% endblock %}
 {% block content %}
-<div id="economics-tour-container" class="w-full h-screen bg-[#050a18] relative flex overflow-hidden">
+<div id="economics-tour-container" class="w-full h-screen bg-[#050a18] relative flex overflow-hidden pt-20">
     <!-- Main 3D Scene -->
     <div id="economics-canvas-container" class="flex-1 h-full relative z-0">
         <!-- Instructional Overlays -->
@@ -67,10 +67,39 @@
                 </div>
             </div>
         </div>
+        <!-- Description Panel – moved inside canvas container to avoid overlap with sidebar -->
+        <div id="eco-info-panel" class="description-panel hidden">
+            <button id="close-eco-info" class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <div class="space-y-6">
+                <div id="eco-panel-header" class="transition-all duration-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div id="status-dot" class="w-2 h-2 rounded-full transition-all duration-700" style="background-color: rgb(34, 211, 238); box-shadow: rgb(34, 211, 238) 0px 0px 20px;"></div>
+                        <span id="eco-panel-subtitle" class="english-label" style="margin-bottom: 0;">Economics Component</span>
+                    </div>
+                    <h2 id="eco-panel-title" class="text-[#e4e4e7] font-medium text-2xl tracking-tight leading-none"></h2>
+                </div>
+
+                <div id="eco-panel-content" class="description-text"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-8 space-y-3">
+                <button id="eco-drill-down" class="w-full transition-all text-white py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide description-text" style="font-size: 14px; text-transform: uppercase; border-color: rgba(34, 211, 238, 0.5); color: rgb(34, 211, 238); background: rgba(34, 211, 238, 0.1);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                    Drill Down — See Internals
+                </button>
+                <button onclick="toggleDiagrams()" class="w-full py-4 rounded-[20px] bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/30 transition-all english-label" style="margin-bottom: 0; text-align: center;">
+                    View Static Diagrams
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- AI Assistant Sidebar -->
-    <aside id="eco-sidebar" class="w-96 bg-[#0a0f1a] border-l border-slate-800/40 flex flex-col z-40 transform transition-transform duration-500 translate-x-0 fixed right-0 top-20 h-[calc(100vh-80px)]">
+    <aside id="eco-sidebar" class="w-96 bg-[#0a0f1a] border-l border-slate-800/40 flex flex-col z-40 transform transition-transform duration-500 translate-x-0 lg:relative fixed right-0 top-0 h-full">
         <div class="p-6 border-b border-white/5 flex items-center justify-between bg-slate-900/40">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-2xl bg-indigo-600/20 flex items-center justify-center">
@@ -105,38 +134,8 @@
         </div>
     </aside>
 
-    <!-- Description Panel – matches exactly the style of the quoted text -->
-    <div id="eco-info-panel" class="description-panel hidden">
-        <button id="close-eco-info" class="close-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-
-        <div class="space-y-6">
-            <div id="eco-panel-header" class="transition-all duration-700">
-                <div class="flex items-center gap-3 mb-4">
-                    <div id="status-dot" class="w-2 h-2 rounded-full transition-all duration-700" style="background-color: rgb(34, 211, 238); box-shadow: rgb(34, 211, 238) 0px 0px 20px;"></div>
-                    <span id="eco-panel-subtitle" class="english-label" style="margin-bottom: 0;">Economics Component</span>
-                </div>
-                <h2 id="eco-panel-title" class="text-[#e4e4e7] font-medium text-2xl tracking-tight leading-none"></h2>
-            </div>
-
-            <div id="eco-panel-content" class="description-text"></div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="mt-8 space-y-3">
-            <button id="eco-drill-down" class="w-full transition-all text-white py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide description-text" style="font-size: 14px; text-transform: uppercase; border-color: rgba(34, 211, 238, 0.5); color: rgb(34, 211, 238); background: rgba(34, 211, 238, 0.1);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Drill Down — See Internals
-            </button>
-            <button onclick="toggleDiagrams()" class="w-full py-4 rounded-[20px] bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/30 transition-all english-label" style="margin-bottom: 0; text-align: center;">
-                View Static Diagrams
-            </button>
-        </div>
-    </div>
-
     <!-- Static Diagrams Modal -->
-    <div id="diagrams-modal" class="fixed inset-0 z-40 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="diagrams-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
         <div class="relative w-full max-w-4xl bg-[#0a0f1a] border border-white/10 rounded-[40px] overflow-hidden shadow-2xl">
             <div class="p-8 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
                 <h3 class="description-text" style="font-size: 18px; font-weight: 500; color: #e4e4e7;">Market Model Reference Diagrams</h3>
@@ -1002,9 +1001,9 @@
 
     /* Description Panel – matches exactly the style of the quoted text */
     .description-panel {
-      position: fixed;
+      position: absolute;
       right: 32px;
-      top: 100px;
+      top: 20px;
       bottom: 32px;
       z-index: 40; /* Ensure it's above the sidebar but below navbar */
       width: 380px;
