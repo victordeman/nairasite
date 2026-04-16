@@ -126,9 +126,8 @@
     dirLight.position.set(10, 10, 10);
     scene.add(dirLight);
 
-    function createBlockTexture(d) {
+    function createBlockTexture(d, isTextOnly = false) {
         const canvas = document.createElement('canvas');
-        // Match the aspect ratio of the 4.5x1.2 block to prevent stretching
         canvas.width = 1024;
         canvas.height = 1024 * (1.2 / 4.5);
         const ctx = canvas.getContext('2d');
@@ -136,74 +135,69 @@
         const color = '#' + d.color.toString(16).padStart(6, '0');
         const textColor = d.textColor === 'dark' ? '#0f172a' : '#ffffff';
 
-        // Background
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Native Surface Integration: Subtle border and sheen
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-        ctx.lineWidth = 10;
-        ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
-
-        // Typography Settings
-        ctx.textAlign = 'center';
-        ctx.fillStyle = textColor;
-
-        // High-Contrast Text Shadow / Outline
-        ctx.shadowBlur = 4;
-        ctx.shadowColor = d.textColor === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.8)';
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-
-        // Block Name (Ultra Bold Sans-Serif)
-        ctx.font = '900 48px "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = textColor;
-        ctx.strokeText(d.name.toUpperCase(), canvas.width / 2, 65);
-        ctx.fillText(d.name.toUpperCase(), canvas.width / 2, 65);
-
-        // Description (Ultra Bold Sans-Serif with wrapping)
-        ctx.font = '900 26px "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-
-        const wrapText = (text, x, y, maxWidth, lineHeight) => {
-            const words = text.split(' ');
-            let line = '';
-            let currentY = y;
-
-            for (let n = 0; n < words.length; n++) {
-                const testLine = line + words[n] + ' ';
-                const metrics = ctx.measureText(testLine);
-                const testWidth = metrics.width;
-                if (testWidth > maxWidth && n > 0) {
-                    ctx.strokeText(line, x, currentY);
-                    ctx.fillText(line, x, currentY);
-                    line = words[n] + ' ';
-                    currentY += lineHeight;
-                } else {
-                    line = testLine;
-                }
+        if (!isTextOnly) {
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+            ctx.globalAlpha = 0.15;
+            ctx.strokeStyle = textColor;
+            ctx.lineWidth = 2;
+            if (d.name.includes('Attention')) {
+                for(let i=0; i<3; i++) ctx.strokeRect(100 + i*40, 180 + i*10, 150, 40);
+            } else if (d.name.includes('Norm')) {
+                ctx.beginPath(); ctx.arc(canvas.width - 100, 200, 40, 0, Math.PI*2); ctx.stroke();
+                ctx.font = 'bold 40px monospace';
+                ctx.fillText("+", canvas.width - 100, 215);
+            } else if (d.name.includes('Forward')) {
+                ctx.strokeRect(100, 200, 100, 40);
+                ctx.strokeRect(250, 200, 100, 40);
+                ctx.strokeRect(400, 200, 100, 40);
             }
-            ctx.strokeText(line, x, currentY);
-            ctx.fillText(line, x, currentY);
-        };
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.textAlign = 'center';
+            ctx.fillStyle = textColor;
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = 'rgba(0,0,0,1)';
+            ctx.shadowOffsetX = 6;
+            ctx.shadowOffsetY = 6;
 
-        wrapText(d.description, canvas.width / 2, 110, 900, 30);
+            // Fit Header Text
+            let fontSize = 64;
+            ctx.font = `900 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
+            while (ctx.measureText(d.name.toUpperCase()).width > 950 && fontSize > 30) {
+                fontSize -= 2;
+                ctx.font = `900 ${fontSize}px "Segoe UI", Roboto, Arial, sans-serif`;
+            }
+            ctx.lineWidth = 14;
+            ctx.strokeStyle = 'rgba(0,0,0,0.9)';
+            ctx.strokeText(d.name.toUpperCase(), canvas.width / 2, 75);
+            ctx.fillText(d.name.toUpperCase(), canvas.width / 2, 75);
 
-        // Background diagram accents (Native integration)
-        ctx.globalAlpha = 0.15;
-        ctx.strokeStyle = textColor;
-        ctx.lineWidth = 2;
-
-        if (d.name.includes('Attention')) {
-            for(let i=0; i<3; i++) ctx.strokeRect(100 + i*40, 180 + i*10, 150, 40);
-        } else if (d.name.includes('Norm')) {
-            ctx.beginPath(); ctx.arc(canvas.width - 100, 200, 40, 0, Math.PI*2); ctx.stroke();
-            ctx.font = 'bold 40px monospace';
-            ctx.fillText("+", canvas.width - 100, 215);
-        } else if (d.name.includes('Forward')) {
-            ctx.strokeRect(100, 200, 100, 40);
-            ctx.strokeRect(250, 200, 100, 40);
-            ctx.strokeRect(400, 200, 100, 40);
+            // Description
+            ctx.font = '900 36px "Segoe UI", Roboto, Arial, sans-serif';
+            ctx.lineWidth = 8;
+            const wrapText = (text, x, y, maxWidth, lineHeight) => {
+                const words = text.split(' ');
+                let line = '';
+                let currentY = y;
+                for (let n = 0; n < words.length; n++) {
+                    const testLine = line + words[n] + ' ';
+                    if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+                        ctx.strokeText(line, x, currentY);
+                        ctx.fillText(line, x, currentY);
+                        line = words[n] + ' ';
+                        currentY += lineHeight;
+                    } else {
+                        line = testLine;
+                    }
+                }
+                ctx.strokeText(line, x, currentY);
+                ctx.fillText(line, x, currentY);
+            };
+            wrapText(d.description, canvas.width / 2, 135, 940, 44);
         }
 
         const texture = new THREE.CanvasTexture(canvas);
@@ -220,27 +214,43 @@
         const group = new THREE.Group();
         group.position.set(...d.position);
         
-        const texture = createBlockTexture(d);
+        // 1. Base Block (Opaque)
+        const blockTexture = createBlockTexture(d, false);
         const geometry = new THREE.BoxGeometry(4.5, 1.2, 1);
 
-        // Array of materials: [right, left, top, bottom, front, back]
-        const sideMaterial = new THREE.MeshStandardMaterial({ color: d.color, roughness: 0.3, metalness: 0.2 });
-        const frontBackMaterial = new THREE.MeshStandardMaterial({
-            map: texture,
+        const sideMat = new THREE.MeshStandardMaterial({ color: d.color, roughness: 0.4, metalness: 0.1 });
+        const faceMat = new THREE.MeshStandardMaterial({
+            map: blockTexture,
+            roughness: 0.3,
+            metalness: 0.2,
             emissive: d.color,
-            emissiveIntensity: 0.2,
-            roughness: 0.2,
-            metalness: 0.3
+            emissiveIntensity: 0.1
         });
 
-        const materials = [
-            sideMaterial, sideMaterial, sideMaterial, sideMaterial,
-            frontBackMaterial, frontBackMaterial
-        ];
-
-        const mesh = new THREE.Mesh(geometry, materials);
+        const mesh = new THREE.Mesh(geometry, [sideMat, sideMat, sideMat, sideMat, faceMat, faceMat]);
         mesh.userData = d;
         group.add(mesh);
+
+        // 2. "In Front" Labels (Front & Back)
+        const labelTexture = createBlockTexture(d, true);
+        const labelGeometry = new THREE.PlaneGeometry(4.4, 1.1); // Slightly smaller to avoid edges
+        const labelMaterial = new THREE.MeshBasicMaterial({
+            map: labelTexture,
+            transparent: true,
+            opacity: 1,
+            depthTest: true,
+            depthWrite: false, // Don't block things behind it, let depthTest handle it
+            side: THREE.FrontSide
+        });
+
+        const frontLabel = new THREE.Mesh(labelGeometry, labelMaterial);
+        frontLabel.position.z = 0.51;
+        group.add(frontLabel);
+
+        const backLabel = new THREE.Mesh(labelGeometry, labelMaterial);
+        backLabel.position.z = -0.51;
+        backLabel.rotation.y = Math.PI;
+        group.add(backLabel);
         
         scene.add(group);
         blocks.push(mesh);
@@ -352,12 +362,10 @@
             
             // Highlight selected block
             blocks.forEach(b => {
-                b.material[4].emissiveIntensity = 0.2;
-                b.material[5].emissiveIntensity = 0.2;
+                b.material.emissiveIntensity = 0.1;
             });
             const obj = intersects[0].object;
-            obj.material[4].emissiveIntensity = 2.0;
-            obj.material[5].emissiveIntensity = 2.0;
+            obj.material.emissiveIntensity = 1.0;
 
             // Update Glow Mesh
             selectedGlow.userData.targetBlock = obj;
@@ -367,8 +375,7 @@
         } else {
             infoPanel.classList.add('hidden');
             blocks.forEach(b => {
-                b.material[4].emissiveIntensity = 0.2;
-                b.material[5].emissiveIntensity = 0.2;
+                b.material.emissiveIntensity = 0.1;
             });
             selectedGlow.userData.targetBlock = null;
             selectedGlow.material.opacity = 0;
