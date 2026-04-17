@@ -21,7 +21,7 @@
             <div class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <div class="flex flex-col">
                     <span class="english-label" style="margin-bottom: 4px; font-size: 11px; color: #f97316 !important;">Firing Temperature</span>
-                    <span id="firing-temp-val" class="description-text" style="color: #fb923c; font-size: 22px; font-weight: 700;">800 °C</span>
+                    <span id="firing-temp-val" class="description-text" style="color: #fb923c; font-size: 22px; font-weight: 700;">25 °C</span>
                 </div>
                 <div class="w-px h-10 bg-white/10"></div>
                 <div class="flex flex-col">
@@ -155,20 +155,22 @@
     const PHASES = [
         {
             id: 1,
-            title: "Phase 1: Foundations",
-            name: "Phase 1: Foundations",
-            summary: "What is Terracotta and its production process.",
-            description: "What is Terracotta and its production process.",
+            title: "Phase 1: Foundations of Terracotta",
+            name: "Phase 1: Foundations of Terracotta",
+            summary: "This phase introduces the core material and the fundamental process that turns soft earth into durable ceramic. All analysis assumes ceteris paribus (standard clay composition and firing conditions).",
+            description: "This phase introduces the core material and the fundamental process that turns soft earth into durable ceramic. All analysis assumes ceteris paribus (standard clay composition and firing conditions).",
             color: 0xB85C38,
             textColor: 'white',
             content: `
                 <div class="space-y-4 description-text">
+                    <p>This phase introduces the core material and the fundamental process that turns soft earth into durable ceramic. All analysis assumes ceteris paribus (standard clay composition and firing conditions).</p>
                     <p><strong>What is Terracotta?</strong></p>
                     <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
                         <li><strong>Definition:</strong> Fired earthenware clay (primarily silica, alumina, and iron oxides) baked at low-to-medium temperatures (600–1000 °C).</li>
                         <li><strong>Key Properties:</strong> Porous, reddish-brown/orange color (due to iron), lightweight yet strong, excellent thermal insulation, naturally breathable.</li>
                         <li><strong>Difference from other ceramics:</strong> Lower firing temperature than stoneware or porcelain → remains porous unless glazed.</li>
                     </ul>
+                    <p class="italic text-orange-400/80">Leads to: Production process (next node).</p>
                     <p><strong>The Terracotta Production Process</strong></p>
                     <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
                         <li><strong>Step 1: Clay Preparation:</strong> Sourcing, wedging, removing impurities.</li>
@@ -182,6 +184,7 @@
                         <li>Chemical transformation during firing (loss of water, sintering of particles).</li>
                         <li>Color variations (iron content, firing atmosphere — oxidation vs reduction).</li>
                     </ul>
+                    <p class="pt-4 border-t border-white/10 italic text-orange-400/80">Leads to: Historical evolution and cultural adaptations (Phase 2).</p>
                     <button onclick="window.goToTourStep(1)" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Evolution & Techniques</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -192,14 +195,15 @@
         },
         {
             id: 2,
-            title: "Phase 2: Evolution & Techniques",
-            name: "Phase 2: Evolution & Techniques",
-            summary: "Historical traditions and forming methods.",
-            description: "Historical traditions and forming methods.",
+            title: "Phase 2: Evolution, Techniques & Cultural Adaptations",
+            name: "Phase 2: Evolution, Techniques & Cultural Adaptations",
+            summary: "Building on the foundational material, this phase explores how terracotta evolved across civilizations and the diverse techniques that gave it unique artistic identities.",
+            description: "Building on the foundational material, this phase explores how terracotta evolved across civilizations and the diverse techniques that gave it unique artistic identities.",
             color: 0xE0AC49,
             textColor: 'white',
             content: `
                 <div class="space-y-4 description-text">
+                    <p>Building on the foundational material, this phase explores how terracotta evolved across civilizations and the diverse techniques that gave it unique artistic identities.</p>
                     <p><strong>Historical Timeline & Major Traditions</strong></p>
                     <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
                         <li>Prehistoric Origins (Venus figurines ~20,000 BCE).</li>
@@ -208,6 +212,7 @@
                         <li>Greek & Etruscan (Tanagra figurines, temple decorations).</li>
                         <li>Chinese Terracotta Army (210 BCE).</li>
                     </ul>
+                    <p class="italic text-orange-400/80">Leads to: Regional techniques and innovations.</p>
                     <p><strong>Forming & Decoration Techniques</strong></p>
                     <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
                         <li>Hand-building methods (coiling, pinching, slab).</li>
@@ -222,6 +227,7 @@
                         <li>Architectural terracotta (Indian temple reliefs, Roman roof tiles).</li>
                         <li>Ritual & everyday objects (Greek Tanagra dancers, African pottery).</li>
                     </ul>
+                    <p class="pt-4 border-t border-white/10 italic text-orange-400/80">Leads to: Iconic masterpieces and modern legacy (Phase 3).</p>
                     <button onclick="window.goToTourStep(2)" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Masterpieces</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -232,17 +238,18 @@
         },
         {
             id: 3,
-            title: "Phase 3: Masterpieces & Legacy",
-            name: "Phase 3: Masterpieces & Legacy",
-            summary: "Iconic works and contemporary practice.",
-            description: "Iconic works and contemporary practice.",
+            title: "Phase 3: Masterpieces, Cultural Impact & Contemporary Practice",
+            name: "Phase 3: Masterpieces, Cultural Impact & Contemporary Practice",
+            summary: "This phase focuses on the most celebrated works, their deeper meaning, and how terracotta continues to live today.",
+            description: "This phase focuses on the most celebrated works, their deeper meaning, and how terracotta continues to live today.",
             color: 0x5C3D2E,
             textColor: 'white',
             content: `
                 <div class="space-y-4 description-text">
+                    <p>This phase focuses on the most celebrated works, their deeper meaning, and how terracotta continues to live today.</p>
                     <p><strong>Iconic Masterpieces</strong></p>
                     <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
-                        <li>The Terracotta Army of Emperor Qin Shi Huang (8,000+ unique warriors).</li>
+                        <li>The Terracotta Army of Emperor Qin Shi Huang (8,000+ unique warriors, horses, chariots).</li>
                         <li>Hellenistic Tanagra figurines.</li>
                         <li>Bengal Terracotta Temples (narrative relief panels).</li>
                         <li>Etruscan Canopic urns and sarcophagi.</li>
@@ -252,13 +259,14 @@
                         <li>Symbol of power, immortality, and craftsmanship.</li>
                         <li>Role in religion, politics, and daily life.</li>
                         <li>Democratization of art (mass-producible yet highly expressive).</li>
+                        <li>Influence on later sculpture and ceramics (from Renaissance to modern studio pottery).</li>
                     </ul>
                     <p><strong>Modern & Contemporary Uses</strong></p>
                     <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
                         <li>Architecture & design (contemporary tiles, facades, sculptures).</li>
-                        <li>Studio pottery & fine art.</li>
-                        <li>Conservation challenges (porosity, salt efflorescence).</li>
-                        <li>Sustainable & eco-friendly applications.</li>
+                        <li>Studio pottery & fine art (contemporary artists reviving ancient techniques).</li>
+                        <li>Conservation challenges (porosity, salt efflorescence, pigment fading).</li>
+                        <li>Sustainable & eco-friendly applications (low-energy firing, local clays).</li>
                     </ul>
                     <button onclick="window.resetExperience()" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Reset Experience</span>
@@ -316,16 +324,29 @@
         emissiveIntensity: 0.3
     });
     const clayCore = new THREE.Mesh(coreGeo, coreMat);
+    clayCore.userData = {
+        name: "Central Clay Core",
+        title: "The Living Clay Core",
+        description: "The heart of the terracotta process, where raw earth transforms into ceramic through heat and craftsmanship.",
+        content: "The central core pulses with the energy of creation. It represents the raw clay material (silica, alumina, iron oxides) that serves as the foundation for all terracotta art. As you adjust the firing heat, observe how the core's chemical state changes.",
+        color: 0xB85C38
+    };
     scene.add(clayCore);
 
     // Process Rings
     const rings = [];
     const ringColors = [0x78350f, 0x92400e, 0xb45309, 0xd97706, 0xf59e0b];
+    const processSteps = ["Preparation", "Forming", "Drying", "Firing", "Finishing"];
     for (let i = 0; i < 5; i++) {
         const ringGeo = new THREE.TorusGeometry(7 + i * 2.5, 0.08, 16, 100);
         const ringMat = new THREE.MeshBasicMaterial({ color: ringColors[i], transparent: true, opacity: 0.2 });
         const ring = new THREE.Mesh(ringGeo, ringMat);
         ring.rotation.x = Math.PI / 2;
+        ring.userData = {
+            name: `Step ${i+1}: ${processSteps[i]}`,
+            description: `Part of the 5-stage terracotta production sequence.`,
+            color: ringColors[i]
+        };
         scene.add(ring);
         rings.push(ring);
     }
@@ -341,30 +362,92 @@
     moldShell.visible = false;
     scene.add(moldShell);
 
-    // Draggable Cultural Nodes
+    const wheelShell = new THREE.Mesh(shellGeo, new THREE.MeshPhongMaterial({ color: 0x10b981, transparent: true, opacity: 0.3, side: THREE.DoubleSide }));
+    wheelShell.rotation.z = Math.PI / 2;
+    wheelShell.visible = false;
+    scene.add(wheelShell);
+
+    // Modern Application Planes
+    const interventionGeo = new THREE.PlaneGeometry(25, 25);
+    const sustainabilityPlane = new THREE.Mesh(interventionGeo, new THREE.MeshPhongMaterial({ color: 0x10b981, transparent: true, opacity: 0.2, side: THREE.DoubleSide, visible: false }));
+    sustainabilityPlane.rotation.x = -Math.PI / 2;
+    sustainabilityPlane.position.y = 8;
+    sustainabilityPlane.userData = {
+        title: "Sustainability Plane",
+        name: "Sustainability Plane",
+        description: "Low-energy firing and local clay sourcing impact.",
+        content: "Traditional terracotta is already relatively eco-friendly due to lower firing temperatures. Modern sustainability efforts focus on sourcing local clays to reduce transport emissions and using renewable energy for kilns.",
+        color: 0x10b981
+    };
+    scene.add(sustainabilityPlane);
+
+    const formsPlane = new THREE.Mesh(interventionGeo, new THREE.MeshPhongMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.2, side: THREE.DoubleSide, visible: false }));
+    formsPlane.rotation.x = -Math.PI / 2;
+    formsPlane.position.y = 12;
+    formsPlane.userData = {
+        title: "New Forms Plane",
+        name: "New Forms Plane",
+        description: "Contemporary architectural facades and sculptural innovations.",
+        content: "Contemporary architects use terracotta for highly expressive, rain-screen facades that provide excellent thermal insulation while allowing for complex, organic shapes that were previously impossible.",
+        color: 0xf59e0b
+    };
+    scene.add(formsPlane);
+
+    const digitalPlane = new THREE.Mesh(interventionGeo, new THREE.MeshPhongMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.2, side: THREE.DoubleSide, visible: false }));
+    digitalPlane.rotation.x = -Math.PI / 2;
+    digitalPlane.position.y = 16;
+    digitalPlane.userData = {
+        title: "Digital Fabrication Plane",
+        name: "Digital Fabrication Plane",
+        description: "Hybrid models combining 3D printing with traditional terracotta.",
+        content: "3D clay printing allows for intricate internal geometries and precision that hand-forming cannot achieve, enabling new functional applications in heat exchange and acoustic design.",
+        color: 0x3b82f6
+    };
+    scene.add(digitalPlane);
+
+    // Draggable Cultural Nodes & Raw Clay
     const culturalNodes = [];
     const tubes = [];
-    CULTURAL_NODES.forEach(data => {
-        const geo = new THREE.IcosahedronGeometry(1.5, 0);
+    const CLAY_NODES = [
+        { name: "Raw Clay A", position: [-12, -8, 5], color: 0x78350f, isClay: true },
+        { name: "Raw Clay B", position: [12, -8, -5], color: 0x78350f, isClay: true }
+    ];
+
+    const MODERN_NODES = [
+        { name: "Sustainability", position: [15, 8, 10], color: 0x10b981, isModern: true, plane: "sustainability" },
+        { name: "New Forms", position: [15, 12, 10], color: 0xf59e0b, isModern: true, plane: "forms" },
+        { name: "Digital Fabrication", position: [15, 16, 10], color: 0x3b82f6, isModern: true, plane: "digital" }
+    ];
+
+    const TECHNIQUE_NODES = [
+        { name: "Hand-building", position: [-15, 2, -5], color: 0x3b82f6, isTechnique: true, shell: "hand" },
+        { name: "Molding", position: [-15, 5, -5], color: 0xef4444, isTechnique: true, shell: "mold" },
+        { name: "Wheel-throwing", position: [-15, 8, -5], color: 0x10b981, isTechnique: true, shell: "wheel" }
+    ];
+
+    [...CULTURAL_NODES, ...CLAY_NODES, ...MODERN_NODES, ...TECHNIQUE_NODES].forEach(data => {
+        const geo = data.isClay ? new THREE.SphereGeometry(1.2, 16, 16) : new THREE.IcosahedronGeometry(1.5, 0);
         const mat = new THREE.MeshStandardMaterial({
             color: data.color,
             emissive: data.color,
             emissiveIntensity: 0.5,
-            metalness: 0.5,
-            roughness: 0.2
+            metalness: data.isClay ? 0 : 0.5,
+            roughness: data.isClay ? 1 : 0.2
         });
         const node = new THREE.Mesh(geo, mat);
         node.position.set(...data.position);
-        node.userData = { ...data, isDraggable: true };
+        node.userData = { ...data, isDraggable: true, originalPos: node.position.clone() };
         scene.add(node);
         culturalNodes.push(node);
 
-        // Glowing Tubes
-        const tubeMat = new THREE.MeshBasicMaterial({ color: data.color, transparent: true, opacity: 0.4 });
-        const tubeGeo = new THREE.CylinderGeometry(0.1, 0.1, 1, 8);
-        const tube = new THREE.Mesh(tubeGeo, tubeMat);
-        scene.add(tube);
-        tubes.push({ mesh: tube, start: clayCore, end: node });
+        if (!data.isClay) {
+            // Glowing Tubes for cultural nodes
+            const tubeMat = new THREE.MeshBasicMaterial({ color: data.color, transparent: true, opacity: 0.4 });
+            const tubeGeo = new THREE.CylinderGeometry(0.1, 0.1, 1, 8);
+            const tube = new THREE.Mesh(tubeGeo, tubeMat);
+            scene.add(tube);
+            tubes.push({ mesh: tube, start: clayCore, end: node });
+        }
     });
 
     // Particle Embers
@@ -382,11 +465,29 @@
     PHASES.forEach(phase => {
         const group = new THREE.Group();
         group.position.set(...phase.position);
-        const blockGeo = new THREE.BoxGeometry(5, 1.5, 1);
-        const blockMat = new THREE.MeshStandardMaterial({ color: phase.color, roughness: 0.5, emissive: phase.color, emissiveIntensity: 0.1 });
-        const mesh = new THREE.Mesh(blockGeo, blockMat);
+
+        // Use identical block structure to economics tour
+        const geometry = new THREE.BoxGeometry(4.5, 1.2, 1);
+        const sideMat = new THREE.MeshStandardMaterial({ color: phase.color, roughness: 0.4, metalness: 0.1 });
+        const faceMat = new THREE.MeshStandardMaterial({
+            color: phase.color,
+            roughness: 0.3,
+            metalness: 0.2,
+            emissive: phase.color,
+            emissiveIntensity: 0.1
+        });
+
+        const mesh = new THREE.Mesh(geometry, [sideMat, sideMat, sideMat, sideMat, faceMat, faceMat]);
         mesh.userData = phase;
         group.add(mesh);
+
+        // Add floating labels for consistency
+        const labelGeo = new THREE.PlaneGeometry(4.4, 1.1);
+        const labelMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
+        const label = new THREE.Mesh(labelGeo, labelMat);
+        label.position.z = 0.51;
+        group.add(label);
+
         scene.add(group);
         phaseNodes.push(mesh);
     });
@@ -414,6 +515,9 @@
     let draggedObject = null;
     const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
+    const cameraTargetPos = camera.position.clone();
+    const controlsTargetPos = controls.target.clone();
+
     container.addEventListener('mousedown', onMouseDown);
     container.addEventListener('mousemove', onMouseMove);
     container.addEventListener('mouseup', onMouseUp);
@@ -424,7 +528,8 @@
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects([...culturalNodes, ...phaseNodes, clayCore]);
+        const interactables = [...culturalNodes, ...phaseNodes, clayCore, sustainabilityPlane, formsPlane, digitalPlane];
+        const intersects = raycaster.intersectObjects(interactables);
 
         if (intersects.length > 0) {
             const obj = intersects[0].object;
@@ -446,15 +551,80 @@
             const intersectPoint = new THREE.Vector3();
             raycaster.ray.intersectPlane(plane, intersectPoint);
             draggedObject.position.copy(intersectPoint);
+
+            // Interaction Physics: Check proximity to rings and core
+            const distToCore = draggedObject.position.distanceTo(clayCore.position);
+
+            if (draggedObject.userData.isClay) {
+                // Light up rings sequentially based on distance
+                rings.forEach((ring, i) => {
+                    const ringRadius = 7 + i * 2.5;
+                    const distToRing = Math.abs(distToCore - ringRadius);
+                    if (distToRing < 1.5) {
+                        ring.material.opacity = 0.8;
+                        ring.scale.set(1.1, 1.1, 1.1);
+                        // transformation effect
+                        embers.material.opacity = 1.0;
+                        embers.position.copy(draggedObject.position);
+                    } else {
+                        ring.material.opacity = 0.2;
+                        ring.scale.set(1, 1, 1);
+                    }
+                });
+            }
+
+            if (distToCore < 5) {
+                clayCore.material.emissiveIntensity = 2.0;
+                // Snap effect
+                if (distToCore < 4.2) {
+                    draggedObject.scale.set(0.5, 0.5, 0.5);
+                    // "Build" animation
+                    const colorShift = draggedObject.material.color.getHex();
+                    clayCore.material.color.setHex(colorShift);
+
+                    if (draggedObject.userData.isModern) {
+                        // Activate corresponding plane
+                        if (draggedObject.userData.plane === "sustainability") sustainabilityPlane.visible = true;
+                        if (draggedObject.userData.plane === "forms") formsPlane.visible = true;
+                        if (draggedObject.userData.plane === "digital") digitalPlane.visible = true;
+                    }
+
+                    if (draggedObject.userData.isTechnique) {
+                        // Activate corresponding shell
+                        if (draggedObject.userData.shell === "hand") handShell.visible = true;
+                        if (draggedObject.userData.shell === "mold") moldShell.visible = true;
+                        if (draggedObject.userData.shell === "wheel") wheelShell.visible = true;
+                    }
+                }
+            } else {
+                clayCore.material.emissiveIntensity = 0.3;
+                draggedObject.scale.set(1, 1, 1);
+            }
         }
     }
 
     function onMouseUp() {
+        if (draggedObject) {
+            const distToCore = draggedObject.position.distanceTo(clayCore.position);
+            if (distToCore < 5) {
+                // Successfully "Built"
+                const buildMsg = document.createElement('div');
+                buildMsg.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-orange-600 text-white px-6 py-3 rounded-full font-bold shadow-2xl pointer-events-none transition-all description-text';
+                buildMsg.textContent = `Integration Successful: ${draggedObject.userData.name}`;
+                container.appendChild(buildMsg);
+                setTimeout(() => buildMsg.remove(), 2000);
+            }
+            // Return to original position if not built
+            if (distToCore > 5) {
+                draggedObject.position.copy(draggedObject.userData.originalPos);
+            }
+        }
         draggedObject = null;
         controls.enabled = true;
     }
 
     function showInfo(data, obj) {
+        if (!data) return;
         const title = document.getElementById('terra-panel-title');
         const content = document.getElementById('terra-panel-content');
         const statusDot = document.getElementById('status-dot');
@@ -470,10 +640,14 @@
         terraDrillDown.style.borderColor = `${hexColor}44`;
         terraDrillDown.style.color = hexColor;
 
-        selectedGlow.position.copy(obj.position);
+        // Ensure we get world position for the glow
+        const worldPos = new THREE.Vector3();
+        obj.getWorldPosition(worldPos);
+        selectedGlow.position.copy(worldPos);
         selectedGlow.material.opacity = 0.3;
-        selectedGlow.material.color.setHex(data.color);
-        selectedGlow.material.emissive.setHex(data.color);
+        const color = data.color || 0xf97316;
+        selectedGlow.material.color.setHex(color);
+        selectedGlow.material.emissive.setHex(color);
     }
 
     // --- Update Loop ---
@@ -493,6 +667,8 @@
     }
 
     let firingHeat = 0;
+    let ironContent = 50;
+
     function animate(t) {
         requestAnimationFrame(animate);
 
@@ -502,6 +678,10 @@
 
         rings.forEach((r, i) => r.rotation.z += 0.01 * (i + 1));
         embers.rotation.y += 0.001;
+
+        // Smooth Camera Lerp
+        camera.position.lerp(cameraTargetPos, 0.05);
+        controls.target.lerp(controlsTargetPos, 0.05);
 
         updateTubes();
         controls.update();
@@ -522,9 +702,28 @@
         // Move camera to focus on node
         const targetPos = new THREE.Vector3(...phase.position).add(new THREE.Vector3(10, 10, 15));
 
-        // Use lerping for smooth transition (simplified here as direct set but logic exists)
-        controls.target.set(...phase.position);
-        camera.position.set(targetPos.x, targetPos.y, targetPos.z);
+        // Update target positions for lerping in animate()
+        controlsTargetPos.set(...phase.position);
+        cameraTargetPos.copy(targetPos);
+
+        // Show/Hide modern/technique nodes based on phase
+        culturalNodes.forEach(n => {
+            if (n.userData.isModern) {
+                n.visible = (idx === 2);
+            }
+            if (n.userData.isTechnique) {
+                n.visible = (idx === 1);
+            }
+        });
+
+        // Hide planes by default in tour, they react to dragging in phase 3
+        sustainabilityPlane.visible = false;
+        formsPlane.visible = false;
+        digitalPlane.visible = false;
+    };
+
+    window.resetExperience = () => {
+        location.reload();
     };
 
     document.getElementById('terra-drill-down').onclick = (e) => {
@@ -544,26 +743,41 @@
 
         // Also move camera closer to core
         const zoomPos = clayCore.position.clone().add(new THREE.Vector3(8, 8, 12));
-        camera.position.set(zoomPos.x, zoomPos.y, zoomPos.z);
-        controls.target.set(0, 0, 0);
+        cameraTargetPos.copy(zoomPos);
+        controlsTargetPos.set(0, 0, 0);
 
         // Show Conservation Aura
         auraMat.opacity = 0.8;
         setTimeout(() => { auraMat.opacity = 0; }, 3000);
     };
 
-    document.getElementById('heat-slider').oninput = (e) => {
-        firingHeat = e.target.value;
-        const temp = 25 + firingHeat * 10;
-        document.getElementById('firing-temp-val').textContent = `${temp.toFixed(0)} °C`;
-        clayCore.material.emissiveIntensity = 0.3 + firingHeat / 100;
+    function updateCoreAppearance() {
+        const baseColor = new THREE.Color(0xB85C38);
+        const ironColor = new THREE.Color(0x78350f); // Darker/Redder for high iron
+        const currentColor = baseColor.clone().lerp(ironColor, (ironContent - 50) / 100);
+
         if(firingHeat > 70) {
             clayCore.material.color.setHex(0xef4444);
             document.getElementById('material-state-val').textContent = "Firing Stage";
         } else {
-            clayCore.material.color.setHex(0xB85C38);
+            clayCore.material.color.copy(currentColor);
             document.getElementById('material-state-val').textContent = "Raw Clay";
         }
+        clayCore.material.emissiveIntensity = 0.3 + firingHeat / 100;
+    }
+
+    document.getElementById('heat-slider').oninput = (e) => {
+        firingHeat = e.target.value;
+        const temp = 25 + firingHeat * 10;
+        document.getElementById('firing-temp-val').textContent = `${temp.toFixed(0)} °C`;
+        updateCoreAppearance();
+    };
+
+    document.getElementById('iron-slider').oninput = (e) => {
+        ironContent = e.target.value;
+        const valText = ironContent < 30 ? "Low" : ironContent > 70 ? "High" : "Medium";
+        document.getElementById('iron-val').textContent = valText;
+        updateCoreAppearance();
     };
 
     document.getElementById('toggle-glaze').onclick = () => {
@@ -574,6 +788,7 @@
     document.getElementById('build-mode').onclick = () => {
         handShell.visible = !handShell.visible;
         moldShell.visible = handShell.visible;
+        wheelShell.visible = handShell.visible;
     };
 
     document.getElementById('reset-tour').onclick = () => {
@@ -620,6 +835,11 @@
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    // Initially hide modern and technique nodes
+    culturalNodes.forEach(n => {
+        if (n.userData.isModern || n.userData.isTechnique) n.visible = false;
     });
 
     if (window.feather) feather.replace();
