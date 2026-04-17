@@ -5,7 +5,7 @@
     <!-- Main 3D Scene -->
     <div id="terracotta-canvas-container" class="flex-1 h-full relative z-0">
         <!-- Instructional Overlays -->
-        <div class="absolute top-24 left-8 z-40 space-y-4">
+        <div id="intro-overlay" class="absolute top-24 left-8 z-40 space-y-4 transition-all duration-700">
             <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <h1 class="english-label" style="margin-bottom: 8px; color: #f97316 !important;">Terracotta 3D Tour</h1>
                 <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #e4e4e7 !important;">“Baked Earth: The Living History of Terracotta”</h2>
@@ -515,14 +515,16 @@
     let draggedObject = null;
     const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
-    const cameraTargetPos = camera.position.clone();
-    const controlsTargetPos = controls.target.clone();
+    let cameraTargetPos = camera.position.clone();
+    let controlsTargetPos = controls.target.clone();
+    let isAutoMoving = false;
 
     container.addEventListener('mousedown', onMouseDown);
     container.addEventListener('mousemove', onMouseMove);
     container.addEventListener('mouseup', onMouseUp);
 
     function onMouseDown(event) {
+        isAutoMoving = false;
         if (event.target !== renderer.domElement) return;
         const rect = container.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -681,8 +683,13 @@
         embers.rotation.y += 0.001;
 
         // Smooth Camera Lerp
-        camera.position.lerp(cameraTargetPos, 0.05);
-        controls.target.lerp(controlsTargetPos, 0.05);
+        if (isAutoMoving) {
+            camera.position.lerp(cameraTargetPos, 0.05);
+            controls.target.lerp(controlsTargetPos, 0.05);
+            if (camera.position.distanceTo(cameraTargetPos) < 0.1 && controls.target.distanceTo(controlsTargetPos) < 0.1) {
+                isAutoMoving = false;
+            }
+        }
 
         updateTubes();
         controls.update();
@@ -692,6 +699,7 @@
 
     // --- Buttons ---
     document.getElementById('start-tour-btn').onclick = () => {
+        document.getElementById('intro-overlay').classList.add('opacity-0', 'pointer-events-none');
         window.goToTourStep(0);
     };
 
@@ -706,6 +714,7 @@
         // Update target positions for lerping in animate()
         controlsTargetPos.set(...phase.position);
         cameraTargetPos.copy(targetPos);
+        isAutoMoving = true;
 
         // Show/Hide modern/technique nodes based on phase
         culturalNodes.forEach(n => {
@@ -724,9 +733,13 @@
     };
 
     window.resetExperience = () => {
+        // Show intro again
+        document.getElementById('intro-overlay').classList.remove('opacity-0', 'pointer-events-none');
+
         // Reset 3D Scene state
         cameraTargetPos.set(25, 20, 35);
         controlsTargetPos.set(0, 0, 0);
+        isAutoMoving = true;
 
         // Reset Sliders & Internal State
         firingHeat = 0;
@@ -799,6 +812,7 @@
         const zoomPos = clayCore.position.clone().add(new THREE.Vector3(8, 8, 12));
         cameraTargetPos.copy(zoomPos);
         controlsTargetPos.set(0, 0, 0);
+        isAutoMoving = true;
 
         // Show Conservation Aura
         auraMat.opacity = 0.8;
@@ -884,6 +898,10 @@
             chatBody.scrollTop = chatBody.scrollHeight;
         } catch (err) { console.error(err); }
     };
+
+    window.addEventListener('wheel', () => {
+        isAutoMoving = false;
+    }, { passive: true });
 
     window.addEventListener('resize', () => {
         camera.aspect = container.clientWidth / container.clientHeight;
