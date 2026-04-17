@@ -155,3 +155,7 @@ async def transformer_tour(request: Request):
 @router.get("/economics-tour")
 async def economics_tour(request: Request):
     return templates.TemplateResponse("economics_tour.html", {"request": request})
+
+@router.get("/terracotta-tour")
+async def terracotta_tour(request: Request):
+    return templates.TemplateResponse("terracotta_tour.html", {"request": request})
