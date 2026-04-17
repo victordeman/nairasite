@@ -148,10 +148,6 @@ async def profile(request: Request):
 async def immersive_learning(request: Request):
     return templates.TemplateResponse("immersive_learning.html", {"request": request})
 
-@router.get("/ml-lifecycle")
-async def ml_lifecycle(request: Request):
-    return templates.TemplateResponse("ml_lifecycle.html", {"request": request})
-
 @router.get("/transformer-tour")
 async def transformer_tour(request: Request):
     return templates.TemplateResponse("transformer_tour.html", {"request": request})
