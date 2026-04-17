@@ -1,6 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Immersive Experiential Learning - NAIRA{% endblock %}
 {% block content %}
+<style>
+    /* Force dark theme for this page to match tours */
+    body {
+        background-color: #050a18 !important;
+        background-image:
+            radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.05) 0%, transparent 50%) !important;
+    }
+    #navbar {
+        background: rgba(5, 10, 24, 0.8) !important;
+        backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+    #navbar * {
+        color: #818cf8 !important; /* indigo-400 */
+    }
+    .glass-card {
+        background: rgba(15, 23, 42, 0.6) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+</style>
+
 <section class="py-32 relative">
     <div class="container mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-20">
@@ -9,9 +32,9 @@
             <p class="text-zinc-400 text-lg">Step inside the history and spirit of Africa through cinematic XR storytelling.</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <!-- Economics 3D Tour -->
-            <div class="glass-card rounded-3xl overflow-hidden group border border-white/10 bg-zinc-900/40">
+            <div class="glass-card rounded-3xl overflow-hidden group">
                 <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
                     <i data-feather="trending-up" class="w-16 h-16 text-indigo-400 opacity-50"></i>
                     <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-xs font-medium text-zinc-300">
@@ -32,7 +55,7 @@
             </div>
 
             <!-- Terracotta 3D Tour -->
-            <div class="glass-card rounded-3xl overflow-hidden group border border-white/10 bg-zinc-900/40">
+            <div class="glass-card rounded-3xl overflow-hidden group">
                 <div class="h-48 bg-orange-600/10 flex items-center justify-center relative overflow-hidden">
                     <i data-feather="database" class="w-16 h-16 text-orange-400 opacity-50"></i>
                     <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-xs font-medium text-zinc-300">
@@ -45,48 +68,6 @@
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-bold tracking-widest uppercase text-orange-400">Baked Earth</span>
                         <a href="/terracotta-tour" class="flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-orange-400">
-                            Launch Tour
-                            <i data-feather="play" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Transformer Explorer Section -->
-            <div class="glass-card rounded-3xl overflow-hidden group border border-white/10 bg-zinc-900/40">
-                <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
-                    <i data-feather="cpu" class="w-16 h-16 text-indigo-400 opacity-50"></i>
-                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-xs font-medium text-zinc-300">
-                        AI Architecture
-                    </div>
-                </div>
-                <div class="p-8">
-                    <h3 class="text-2xl font-display font-bold text-white mb-3">Transformer Explorer</h3>
-                    <p class="text-zinc-300 mb-6 leading-relaxed text-justify">Journey into the heart of modern AI. Visualize how transformer architectures process information and see the inner workings of the models that power NAIRA.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold tracking-widest uppercase text-indigo-400">Visualization</span>
-                        <a href="https://transformer-explorer.replit.app/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-indigo-400">
-                            Launch Explorer
-                            <i data-feather="external-link" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Enhanced Transformer 3D Tour -->
-            <div class="glass-card rounded-3xl overflow-hidden group border border-white/10 bg-zinc-900/40">
-                <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
-                    <i data-feather="box" class="w-16 h-16 text-indigo-400 opacity-50"></i>
-                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-xs font-medium text-zinc-300">
-                        Enhanced XR
-                    </div>
-                </div>
-                <div class="p-8">
-                    <h3 class="text-2xl font-display font-bold text-white mb-3">Transformer 3D Tour</h3>
-                    <p class="text-zinc-300 mb-6 leading-relaxed text-justify">Experience an enhanced, bilingual 3D exploration of the Transformer architecture with cinematic cosmic visuals and deep-dive internals.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold tracking-widest uppercase text-indigo-400">Immersive Experience</span>
-                        <a href="/transformer-tour" class="flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-indigo-400">
                             Launch Tour
                             <i data-feather="play" class="w-4 h-4"></i>
                         </a>
