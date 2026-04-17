@@ -838,6 +838,8 @@
         firingHeat = e.target.value;
         const temp = 25 + firingHeat * 10;
         document.getElementById('firing-temp-val').textContent = `${temp.toFixed(0)} °C`;
+        const valText = firingHeat < 30 ? "Low" : firingHeat > 70 ? "High" : "Medium";
+        document.getElementById('heat-val').textContent = valText;
         updateCoreAppearance();
     };
 
