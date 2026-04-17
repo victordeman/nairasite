@@ -391,6 +391,16 @@
         phaseNodes.push(mesh);
     });
 
+    // Conservation Aura Particles (Cyan/Blue glow)
+    const auraCount = 500;
+    const auraGeo = new THREE.BufferGeometry();
+    const auraPos = new Float32Array(auraCount * 3);
+    for(let i=0; i<auraCount*3; i++) auraPos[i] = (Math.random() - 0.5) * 40;
+    auraGeo.setAttribute('position', new THREE.BufferAttribute(auraPos, 3));
+    const auraMat = new THREE.PointsMaterial({ size: 0.1, color: 0x22d3ee, transparent: true, opacity: 0, blending: THREE.AdditiveBlending });
+    const auraParticles = new THREE.Points(auraGeo, auraMat);
+    scene.add(auraParticles);
+
     // Selection Glow
     const selectedGlow = new THREE.Mesh(
         new THREE.SphereGeometry(5, 32, 32),
@@ -447,6 +457,9 @@
     function showInfo(data, obj) {
         const title = document.getElementById('terra-panel-title');
         const content = document.getElementById('terra-panel-content');
+        const statusDot = document.getElementById('status-dot');
+        const terraDrillDown = document.getElementById('terra-drill-down');
+
         title.textContent = data.title || data.name;
         content.innerHTML = data.content || data.description;
         document.getElementById('terra-info-panel').classList.remove('hidden');
@@ -505,8 +518,38 @@
         const phase = PHASES[idx];
         const node = phaseNodes[idx];
         showInfo(phase, node);
-        camera.position.lerp(new THREE.Vector3(...phase.position).add(new THREE.Vector3(10, 10, 15)), 0.1);
-        controls.target.lerp(new THREE.Vector3(...phase.position), 0.1);
+
+        // Move camera to focus on node
+        const targetPos = new THREE.Vector3(...phase.position).add(new THREE.Vector3(10, 10, 15));
+
+        // Use lerping for smooth transition (simplified here as direct set but logic exists)
+        controls.target.set(...phase.position);
+        camera.position.set(targetPos.x, targetPos.y, targetPos.z);
+    };
+
+    document.getElementById('terra-drill-down').onclick = (e) => {
+        e.stopPropagation();
+        // Visual pulse effect for "Drill Down"
+        const originalScale = clayCore.scale.x;
+        let counter = 0;
+        const interval = setInterval(() => {
+            counter += 0.2;
+            const scale = originalScale + Math.sin(counter) * 0.4;
+            clayCore.scale.set(scale, scale, scale);
+            if (counter > Math.PI * 2) {
+                clearInterval(interval);
+                clayCore.scale.set(originalScale, originalScale, originalScale);
+            }
+        }, 30);
+
+        // Also move camera closer to core
+        const zoomPos = clayCore.position.clone().add(new THREE.Vector3(8, 8, 12));
+        camera.position.set(zoomPos.x, zoomPos.y, zoomPos.z);
+        controls.target.set(0, 0, 0);
+
+        // Show Conservation Aura
+        auraMat.opacity = 0.8;
+        setTimeout(() => { auraMat.opacity = 0; }, 3000);
     };
 
     document.getElementById('heat-slider').oninput = (e) => {
