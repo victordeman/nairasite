@@ -740,6 +740,7 @@
         cameraTargetPos.set(25, 20, 35);
         controlsTargetPos.set(0, 0, 0);
         isAutoMoving = true;
+
         
         // Reset Sliders & Internal State
         firingHeat = 0;
@@ -750,11 +751,13 @@
         document.getElementById('iron-val').textContent = "Medium";
         document.getElementById('firing-temp-val').textContent = "25 °C";
         document.getElementById('material-state-val').textContent = "Raw Clay";
+
         
         // Reset Models
         updateCoreAppearance();
         clayCore.material.roughness = 0.9;
         clayCore.material.metalness = 0.1;
+
         
         // Hide Shells & Planes
         handShell.visible = false;
@@ -763,6 +766,7 @@
         sustainabilityPlane.visible = false;
         formsPlane.visible = false;
         digitalPlane.visible = false;
+
         
         // Reset Nodes & Interactions
         culturalNodes.forEach(n => {
@@ -771,11 +775,20 @@
             if (n.userData.isModern || n.userData.isTechnique) n.visible = false;
             else n.visible = true;
         });
+
         
         rings.forEach(ring => {
             ring.material.opacity = 0.2;
             ring.scale.set(1, 1, 1);
         });
+
+        embers.material.opacity = 0.8;
+        auraMat.opacity = 0;
+
+        // Close Panels
+        document.getElementById('terra-info-panel').classList.add('hidden');
+        selectedGlow.material.opacity = 0;
+
         
         embers.material.opacity = 0.8;
         auraMat.opacity = 0;
@@ -813,6 +826,7 @@
         cameraTargetPos.copy(zoomPos);
         controlsTargetPos.set(0, 0, 0);
         isAutoMoving = true;
+
         
         // Show Conservation Aura
         auraMat.opacity = 0.8;
