@@ -5,7 +5,7 @@
     <!-- Main 3D Scene -->
     <div id="terracotta-canvas-container" class="flex-1 h-full relative z-0">
         <!-- Instructional Overlays -->
-        <div class="absolute top-24 left-8 z-40 space-y-4">
+        <div id="intro-overlay" class="absolute top-24 left-8 z-40 space-y-4 transition-all duration-700">
             <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <h1 class="english-label" style="margin-bottom: 8px; color: #f97316 !important;">Terracotta 3D Tour</h1>
                 <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #e4e4e7 !important;">“Baked Earth: The Living History of Terracotta”</h2>
@@ -29,7 +29,7 @@
                     <span id="material-state-val" class="description-text" style="color: #fb923c; font-size: 22px; font-weight: 700;">Raw Clay</span>
                 </div>
             </div>
-
+            
             <div class="english-label" style="font-size: 11px; letter-spacing: 0.2em; padding: 10px 24px; border-radius: 999px; background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1); display: inline-block; width: fit-content; font-weight: 600; color: #f97316 !important;">
                 Drag to rotate · Scroll to zoom · Click elements to explore
             </div>
@@ -45,7 +45,7 @@
                     </div>
                     <input type="range" id="heat-slider" min="0" max="100" value="0" step="1" class="w-full accent-orange-600 bg-white/5 h-1.5 rounded-lg appearance-none cursor-pointer">
                 </div>
-
+                
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
                         <label class="english-label" style="margin-bottom: 0; color: #f97316 !important;">Iron Content</label>
@@ -185,7 +185,7 @@
                         <li>Color variations (iron content, firing atmosphere — oxidation vs reduction).</li>
                     </ul>
                     <p class="pt-4 border-t border-white/10 italic text-orange-400/80">Leads to: Historical evolution and cultural adaptations (Phase 2).</p>
-                    <button onclick="window.goToTourStep(1)" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
+                    <button onclick="event.stopPropagation(); window.goToTourStep(1);" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Evolution & Techniques</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
@@ -228,7 +228,7 @@
                         <li>Ritual & everyday objects (Greek Tanagra dancers, African pottery).</li>
                     </ul>
                     <p class="pt-4 border-t border-white/10 italic text-orange-400/80">Leads to: Iconic masterpieces and modern legacy (Phase 3).</p>
-                    <button onclick="window.goToTourStep(2)" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
+                    <button onclick="event.stopPropagation(); window.goToTourStep(2);" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Masterpieces</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
@@ -268,7 +268,7 @@
                         <li>Conservation challenges (porosity, salt efflorescence, pigment fading).</li>
                         <li>Sustainable & eco-friendly applications (low-energy firing, local clays).</li>
                     </ul>
-                    <button onclick="window.resetExperience()" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
+                    <button onclick="event.stopPropagation(); window.resetExperience();" class="w-full py-4 mt-4 bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-orange-500/30" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Reset Experience</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>
                     </button>
@@ -316,8 +316,8 @@
 
     // --- Core Visuals ---
     const coreGeo = new THREE.SphereGeometry(4, 64, 64);
-    const coreMat = new THREE.MeshStandardMaterial({
-        color: 0xB85C38,
+    const coreMat = new THREE.MeshStandardMaterial({ 
+        color: 0xB85C38, 
         roughness: 0.9,
         metalness: 0.1,
         emissive: 0xB85C38,
@@ -372,8 +372,8 @@
     const sustainabilityPlane = new THREE.Mesh(interventionGeo, new THREE.MeshPhongMaterial({ color: 0x10b981, transparent: true, opacity: 0.2, side: THREE.DoubleSide, visible: false }));
     sustainabilityPlane.rotation.x = -Math.PI / 2;
     sustainabilityPlane.position.y = 8;
-    sustainabilityPlane.userData = {
-        title: "Sustainability Plane",
+    sustainabilityPlane.userData = { 
+        title: "Sustainability Plane", 
         name: "Sustainability Plane",
         description: "Low-energy firing and local clay sourcing impact.",
         content: "Traditional terracotta is already relatively eco-friendly due to lower firing temperatures. Modern sustainability efforts focus on sourcing local clays to reduce transport emissions and using renewable energy for kilns.",
@@ -384,8 +384,8 @@
     const formsPlane = new THREE.Mesh(interventionGeo, new THREE.MeshPhongMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.2, side: THREE.DoubleSide, visible: false }));
     formsPlane.rotation.x = -Math.PI / 2;
     formsPlane.position.y = 12;
-    formsPlane.userData = {
-        title: "New Forms Plane",
+    formsPlane.userData = { 
+        title: "New Forms Plane", 
         name: "New Forms Plane",
         description: "Contemporary architectural facades and sculptural innovations.",
         content: "Contemporary architects use terracotta for highly expressive, rain-screen facades that provide excellent thermal insulation while allowing for complex, organic shapes that were previously impossible.",
@@ -396,8 +396,8 @@
     const digitalPlane = new THREE.Mesh(interventionGeo, new THREE.MeshPhongMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.2, side: THREE.DoubleSide, visible: false }));
     digitalPlane.rotation.x = -Math.PI / 2;
     digitalPlane.position.y = 16;
-    digitalPlane.userData = {
-        title: "Digital Fabrication Plane",
+    digitalPlane.userData = { 
+        title: "Digital Fabrication Plane", 
         name: "Digital Fabrication Plane",
         description: "Hybrid models combining 3D printing with traditional terracotta.",
         content: "3D clay printing allows for intricate internal geometries and precision that hand-forming cannot achieve, enabling new functional applications in heat exchange and acoustic design.",
@@ -427,9 +427,9 @@
 
     [...CULTURAL_NODES, ...CLAY_NODES, ...MODERN_NODES, ...TECHNIQUE_NODES].forEach(data => {
         const geo = data.isClay ? new THREE.SphereGeometry(1.2, 16, 16) : new THREE.IcosahedronGeometry(1.5, 0);
-        const mat = new THREE.MeshStandardMaterial({
-            color: data.color,
-            emissive: data.color,
+        const mat = new THREE.MeshStandardMaterial({ 
+            color: data.color, 
+            emissive: data.color, 
             emissiveIntensity: 0.5,
             metalness: data.isClay ? 0 : 0.5,
             roughness: data.isClay ? 1 : 0.2
@@ -465,7 +465,7 @@
     PHASES.forEach(phase => {
         const group = new THREE.Group();
         group.position.set(...phase.position);
-
+        
         // Use identical block structure to economics tour
         const geometry = new THREE.BoxGeometry(4.5, 1.2, 1);
         const sideMat = new THREE.MeshStandardMaterial({ color: phase.color, roughness: 0.4, metalness: 0.1 });
@@ -480,7 +480,7 @@
         const mesh = new THREE.Mesh(geometry, [sideMat, sideMat, sideMat, sideMat, faceMat, faceMat]);
         mesh.userData = phase;
         group.add(mesh);
-
+        
         // Add floating labels for consistency
         const labelGeo = new THREE.PlaneGeometry(4.4, 1.1);
         const labelMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
@@ -515,14 +515,17 @@
     let draggedObject = null;
     const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
-    const cameraTargetPos = camera.position.clone();
-    const controlsTargetPos = controls.target.clone();
+    let cameraTargetPos = camera.position.clone();
+    let controlsTargetPos = controls.target.clone();
+    let isAutoMoving = false;
 
     container.addEventListener('mousedown', onMouseDown);
     container.addEventListener('mousemove', onMouseMove);
     container.addEventListener('mouseup', onMouseUp);
 
     function onMouseDown(event) {
+        isAutoMoving = false;
+        if (event.target !== renderer.domElement) return;
         const rect = container.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -554,7 +557,7 @@
 
             // Interaction Physics: Check proximity to rings and core
             const distToCore = draggedObject.position.distanceTo(clayCore.position);
-
+            
             if (draggedObject.userData.isClay) {
                 // Light up rings sequentially based on distance
                 rings.forEach((ring, i) => {
@@ -581,7 +584,7 @@
                     // "Build" animation
                     const colorShift = draggedObject.material.color.getHex();
                     clayCore.material.color.setHex(colorShift);
-
+                    
                     if (draggedObject.userData.isModern) {
                         // Activate corresponding plane
                         if (draggedObject.userData.plane === "sustainability") sustainabilityPlane.visible = true;
@@ -629,7 +632,7 @@
         const content = document.getElementById('terra-panel-content');
         const statusDot = document.getElementById('status-dot');
         const terraDrillDown = document.getElementById('terra-drill-down');
-
+        
         title.textContent = data.title || data.name;
         content.innerHTML = data.content || data.description;
         document.getElementById('terra-info-panel').classList.remove('hidden');
@@ -657,7 +660,7 @@
             const end = new THREE.Vector3();
             t.start.getWorldPosition(start);
             t.end.getWorldPosition(end);
-
+            
             const direction = new THREE.Vector3().subVectors(end, start);
             const length = direction.length();
             t.mesh.scale.set(1, length, 1);
@@ -671,7 +674,7 @@
 
     function animate(t) {
         requestAnimationFrame(animate);
-
+        
         clayCore.rotation.y += 0.005;
         const pulse = 1 + Math.sin(t * 0.001) * 0.03;
         clayCore.scale.set(pulse, pulse, pulse);
@@ -680,8 +683,13 @@
         embers.rotation.y += 0.001;
 
         // Smooth Camera Lerp
-        camera.position.lerp(cameraTargetPos, 0.05);
-        controls.target.lerp(controlsTargetPos, 0.05);
+        if (isAutoMoving) {
+            camera.position.lerp(cameraTargetPos, 0.05);
+            controls.target.lerp(controlsTargetPos, 0.05);
+            if (camera.position.distanceTo(cameraTargetPos) < 0.1 && controls.target.distanceTo(controlsTargetPos) < 0.1) {
+                isAutoMoving = false;
+            }
+        }
 
         updateTubes();
         controls.update();
@@ -691,6 +699,7 @@
 
     // --- Buttons ---
     document.getElementById('start-tour-btn').onclick = () => {
+        document.getElementById('intro-overlay').classList.add('opacity-0', 'pointer-events-none');
         window.goToTourStep(0);
     };
 
@@ -698,13 +707,14 @@
         const phase = PHASES[idx];
         const node = phaseNodes[idx];
         showInfo(phase, node);
-
+        
         // Move camera to focus on node
         const targetPos = new THREE.Vector3(...phase.position).add(new THREE.Vector3(10, 10, 15));
-
+        
         // Update target positions for lerping in animate()
         controlsTargetPos.set(...phase.position);
         cameraTargetPos.copy(targetPos);
+        isAutoMoving = true;
 
         // Show/Hide modern/technique nodes based on phase
         culturalNodes.forEach(n => {
@@ -723,7 +733,77 @@
     };
 
     window.resetExperience = () => {
-        location.reload();
+        // Show intro again
+        document.getElementById('intro-overlay').classList.remove('opacity-0', 'pointer-events-none');
+
+        // Reset 3D Scene state
+        cameraTargetPos.set(25, 20, 35);
+        controlsTargetPos.set(0, 0, 0);
+        isAutoMoving = true;
+
+        
+        // Reset Sliders & Internal State
+        firingHeat = 0;
+        ironContent = 50;
+        document.getElementById('heat-slider').value = 0;
+        document.getElementById('iron-slider').value = 50;
+        document.getElementById('heat-val').textContent = "Low";
+        document.getElementById('iron-val').textContent = "Medium";
+        document.getElementById('firing-temp-val').textContent = "25 °C";
+        document.getElementById('material-state-val').textContent = "Raw Clay";
+
+        
+        // Reset Models
+        updateCoreAppearance();
+        clayCore.material.roughness = 0.9;
+        clayCore.material.metalness = 0.1;
+
+        
+        // Hide Shells & Planes
+        handShell.visible = false;
+        moldShell.visible = false;
+        wheelShell.visible = false;
+        sustainabilityPlane.visible = false;
+        formsPlane.visible = false;
+        digitalPlane.visible = false;
+
+        
+        // Reset Nodes & Interactions
+        culturalNodes.forEach(n => {
+            n.position.copy(n.userData.originalPos);
+            n.scale.set(1, 1, 1);
+            if (n.userData.isModern || n.userData.isTechnique) n.visible = false;
+            else n.visible = true;
+        });
+
+        
+        rings.forEach(ring => {
+            ring.material.opacity = 0.2;
+            ring.scale.set(1, 1, 1);
+        });
+
+        embers.material.opacity = 0.8;
+        auraMat.opacity = 0;
+
+        // Close Panels
+        document.getElementById('terra-info-panel').classList.add('hidden');
+        selectedGlow.material.opacity = 0;
+
+        
+        embers.material.opacity = 0.8;
+        auraMat.opacity = 0;
+        
+        // Close Panels
+        document.getElementById('terra-info-panel').classList.add('hidden');
+        selectedGlow.material.opacity = 0;
+        
+        // Reset AI Sidebar
+        document.getElementById('terra-chat-body').innerHTML = `
+            <div class="p-4 rounded-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
+                <span class="english-label" style="font-size: 10px; margin-bottom: 8px; color: #f97316 !important;">Introduction</span>
+                <p class="description-text" style="font-size: 14px; color: #e4e4e7;">Hello! I'm the NAIRA Terracotta Assistant. I can help explain the science, history, and techniques of baked earth in this 3D tour. What would you like to explore?</p>
+            </div>
+        `;
     };
 
     document.getElementById('terra-drill-down').onclick = (e) => {
@@ -740,12 +820,14 @@
                 clayCore.scale.set(originalScale, originalScale, originalScale);
             }
         }, 30);
-
+        
         // Also move camera closer to core
         const zoomPos = clayCore.position.clone().add(new THREE.Vector3(8, 8, 12));
         cameraTargetPos.copy(zoomPos);
         controlsTargetPos.set(0, 0, 0);
+        isAutoMoving = true;
 
+        
         // Show Conservation Aura
         auraMat.opacity = 0.8;
         setTimeout(() => { auraMat.opacity = 0; }, 3000);
@@ -755,7 +837,7 @@
         const baseColor = new THREE.Color(0xB85C38);
         const ironColor = new THREE.Color(0x78350f); // Darker/Redder for high iron
         const currentColor = baseColor.clone().lerp(ironColor, (ironContent - 50) / 100);
-
+        
         if(firingHeat > 70) {
             clayCore.material.color.setHex(0xef4444);
             document.getElementById('material-state-val').textContent = "Firing Stage";
@@ -770,6 +852,8 @@
         firingHeat = e.target.value;
         const temp = 25 + firingHeat * 10;
         document.getElementById('firing-temp-val').textContent = `${temp.toFixed(0)} °C`;
+        const valText = firingHeat < 30 ? "Low" : firingHeat > 70 ? "High" : "Medium";
+        document.getElementById('heat-val').textContent = valText;
         updateCoreAppearance();
     };
 
@@ -792,7 +876,7 @@
     };
 
     document.getElementById('reset-tour').onclick = () => {
-        location.reload();
+        window.resetExperience();
     };
 
     document.getElementById('close-terra-info').onclick = () => {
@@ -831,6 +915,10 @@
         } catch (err) { console.error(err); }
     };
 
+    window.addEventListener('wheel', () => {
+        isAutoMoving = false;
+    }, { passive: true });
+
     window.addEventListener('resize', () => {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
@@ -838,8 +926,8 @@
     });
 
     // Initially hide modern and technique nodes
-    culturalNodes.forEach(n => {
-        if (n.userData.isModern || n.userData.isTechnique) n.visible = false;
+    culturalNodes.forEach(n => { 
+        if (n.userData.isModern || n.userData.isTechnique) n.visible = false; 
     });
 
     if (window.feather) feather.replace();
@@ -849,7 +937,7 @@
     #navbar { background: rgba(12, 10, 9, 0.5) !important; backdrop-filter: blur(8px); }
     body { overflow: hidden !important; background-color: #0f0a05 !important; }
     #terracotta-tour-container { background-color: #0f0a05 !important; }
-
+    
     .glass-card { background: rgba(28, 25, 23, 0.6); backdrop-filter: blur(20px); }
 
     input[type=range]::-webkit-slider-thumb {
