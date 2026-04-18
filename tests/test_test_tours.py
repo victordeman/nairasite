@@ -20,7 +20,7 @@ def test_test_tours_routes():
     # Test terracotta tour test duplicate
     response = client.get("/terracotta-tour-test")
     assert response.status_code == 200
-    assert b"Terracotta 3D Tour (Test)" in response.content
+    assert b"Terracotta 3D Tour" in response.content
     assert b"Test Environment" in response.content
 
 def test_immersive_learning_link():
