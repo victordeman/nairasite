@@ -159,3 +159,15 @@ async def economics_tour(request: Request):
 @router.get("/terracotta-tour")
 async def terracotta_tour(request: Request):
     return templates.TemplateResponse("terracotta_tour.html", {"request": request})
+
+@router.get("/immersive-learning/test-tours")
+async def test_tours(request: Request):
+    return templates.TemplateResponse("test_tours.html", {"request": request})
+
+@router.get("/economics-tour-test")
+async def economics_tour_test(request: Request):
+    return templates.TemplateResponse("economics_tour_test.html", {"request": request})
+
+@router.get("/terracotta-tour-test")
+async def terracotta_tour_test(request: Request):
+    return templates.TemplateResponse("terracotta_tour_test.html", {"request": request})
