@@ -6,68 +6,68 @@
     <div id="economics-canvas-container" class="flex-1 h-full relative z-0">
         <!-- Instructional Overlays -->
         <div class="absolute top-24 left-8 z-40 space-y-4">
-            <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,1);">
                 <h1 class="english-label" style="margin-bottom: 8px;">D-Supply Test</h1>
-                <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #e4e4e7 !important;">Test Market Model</h2>
-                <p class="description-text max-w-md">Interactive Tour of How Prices and Quantities Are Determined</p>
+                <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #ffffff !important;">Test Market Model</h2>
+                <p class="description-text max-w-md" style="color: white !important;">Interactive Tour of How Prices and Quantities Are Determined</p>
             </div>
-        <button id="start-tour-btn" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg shadow-indigo-500/20 flex items-center gap-2 transition-all active:scale-95 description-text" style="font-size: 14px; text-transform: uppercase;">
+        <button id="start-tour-btn" class="px-6 py-3 bg-zinc-900 text-white rounded-full shadow-lg border border-white flex items-center gap-2 transition-all active:scale-95 description-text" style="font-size: 14px; text-transform: uppercase;">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play w-4 h-4"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             Start Guided Tour
         </button>
         </div>
 
         <div class="absolute bottom-8 left-8 z-40 flex flex-col gap-4">
-            <div class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,1);">
                 <div class="flex flex-col">
                     <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Equilibrium Price</span>
-                    <span id="p-star-val" class="description-text" style="color: #22d3ee; font-size: 22px; font-weight: 700;">$50.00</span>
+                    <span id="p-star-val" class="description-text" style="color: #ffffff; font-size: 22px; font-weight: 700;">$50.00</span>
                 </div>
-                <div class="w-px h-10 bg-white/10"></div>
+                <div class="w-px h-10 bg-white"></div>
                 <div class="flex flex-col">
                     <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Equilibrium Quantity</span>
-                    <span id="q-star-val" class="description-text" style="color: #22d3ee; font-size: 22px; font-weight: 700;">500 units</span>
+                    <span id="q-star-val" class="description-text" style="color: #ffffff; font-size: 22px; font-weight: 700;">500 units</span>
                 </div>
             </div>
 
-            <div class="english-label" style="font-size: 11px; letter-spacing: 0.2em; padding: 10px 24px; border-radius: 999px; background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1); display: inline-block; width: fit-content; font-weight: 600;">
+            <div class="english-label" style="font-size: 11px; letter-spacing: 0.2em; padding: 10px 24px; border-radius: 999px; background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,1); display: inline-block; width: fit-content; font-weight: 600; color: #ffffff !important;">
                 Drag to rotate · Scroll to zoom · Click elements to explore
             </div>
         </div>
 
         <!-- Floating Controls Panel -->
         <div class="absolute bottom-8 right-8 z-40 w-72 space-y-4">
-            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-6">
+            <div class="glass-card p-6 rounded-3xl border border-white space-y-6">
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
                         <label class="english-label" style="margin-bottom: 0;">Demand Shift</label>
-                        <span id="demand-shift-val" class="description-text" style="font-size: 12px;">0</span>
+                        <span id="demand-shift-val" class="description-text" style="font-size: 12px; color: white !important;">0</span>
                     </div>
-                    <input type="range" id="demand-slider" min="-20" max="20" value="0" step="1" class="w-full accent-indigo-500 bg-white/5 h-1.5 rounded-lg appearance-none cursor-pointer">
+                    <input type="range" id="demand-slider" min="-20" max="20" value="0" step="1" class="w-full accent-white bg-white h-1.5 rounded-lg appearance-none cursor-pointer">
                 </div>
 
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
                         <label class="english-label" style="margin-bottom: 0;">Supply Shift</label>
-                        <span id="supply-shift-val" class="description-text" style="font-size: 12px;">0</span>
+                        <span id="supply-shift-val" class="description-text" style="font-size: 12px; color: white !important;">0</span>
                     </div>
-                    <input type="range" id="supply-slider" min="-20" max="20" value="0" step="1" class="w-full accent-rose-500 bg-white/5 h-1.5 rounded-lg appearance-none cursor-pointer">
+                    <input type="range" id="supply-slider" min="-20" max="20" value="0" step="1" class="w-full accent-white bg-white h-1.5 rounded-lg appearance-none cursor-pointer">
                 </div>
 
-                <div class="pt-4 border-t border-white/5 space-y-4">
-                    <button id="toggle-ceiling" class="w-full py-4 px-6 bg-indigo-600/20 hover:bg-indigo-600 text-white rounded-full border border-indigo-500/30 transition-all english-label shadow-lg hover:shadow-indigo-500/40" style="margin-bottom: 0; text-align: center; font-weight: 600;">
+                <div class="pt-4 border-t border-white space-y-4">
+                    <button id="toggle-ceiling" class="w-full py-4 px-6 bg-zinc-900 text-white rounded-full border border-white transition-all english-label shadow-lg" style="margin-bottom: 0; text-align: center; font-weight: 600;">
                         Toggle Price Ceiling
                     </button>
-                    <button id="toggle-floor" class="w-full py-4 px-6 bg-indigo-600/20 hover:bg-indigo-600 text-white rounded-full border border-indigo-500/30 transition-all english-label shadow-lg hover:shadow-indigo-500/40" style="margin-bottom: 0; text-align: center; font-weight: 600;">
+                    <button id="toggle-floor" class="w-full py-4 px-6 bg-zinc-900 text-white rounded-full border border-white transition-all english-label shadow-lg" style="margin-bottom: 0; text-align: center; font-weight: 600;">
                         Toggle Price Floor
                     </button>
-                    <button id="reset-sim" class="w-full py-4 px-6 bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-white/10 transition-all description-text shadow-lg" style="font-size: 13px; text-transform: uppercase; text-align: center; font-weight: 600;">
+                    <button id="reset-sim" class="w-full py-4 px-6 bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-white transition-all description-text shadow-lg" style="font-size: 13px; text-transform: uppercase; text-align: center; font-weight: 600;">
                         Reset Market
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Description Panel – moved inside canvas container to avoid overlap with sidebar -->
+        <!-- Description Panel -->
         <div id="eco-info-panel" class="description-panel hidden">
             <button id="close-eco-info" class="close-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -76,22 +76,22 @@
             <div class="space-y-6">
                 <div id="eco-panel-header" class="transition-all duration-700">
                     <div class="flex items-center gap-3 mb-4">
-                        <div id="status-dot" class="w-2 h-2 rounded-full transition-all duration-700" style="background-color: rgb(34, 211, 238); box-shadow: rgb(34, 211, 238) 0px 0px 20px;"></div>
+                        <div id="status-dot" class="w-2 h-2 rounded-full transition-all duration-700" style="background-color: white; box-shadow: white 0px 0px 20px;"></div>
                         <span id="eco-panel-subtitle" class="english-label" style="margin-bottom: 0;">Economics Component</span>
                     </div>
-                    <h2 id="eco-panel-title" class="text-[#e4e4e7] font-medium text-2xl tracking-tight leading-none"></h2>
+                    <h2 id="eco-panel-title" class="text-white font-medium text-2xl tracking-tight leading-none"></h2>
                 </div>
 
-                <div id="eco-panel-content" class="description-text"></div>
+                <div id="eco-panel-content" class="description-text text-white"></div>
             </div>
 
             <!-- Action Buttons -->
             <div class="mt-8 space-y-3">
-                <button id="eco-drill-down" class="w-full transition-all text-white py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide description-text" style="font-size: 14px; text-transform: uppercase; border-color: rgba(34, 211, 238, 0.5); color: rgb(34, 211, 238); background: rgba(34, 211, 238, 0.1);">
+                <button id="eco-drill-down" class="w-full transition-all text-white py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border border-white tracking-wide description-text" style="font-size: 14px; text-transform: uppercase; background: rgba(255, 255, 255, 0.1);">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
                     Drill Down — See Internals
                 </button>
-                <button onclick="toggleDiagrams()" class="w-full py-4 rounded-[20px] bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/30 transition-all english-label" style="margin-bottom: 0; text-align: center;">
+                <button onclick="toggleDiagrams()" class="w-full py-4 rounded-[20px] bg-zinc-900 text-white border border-white transition-all english-label" style="margin-bottom: 0; text-align: center;">
                     View Static Diagrams
                 </button>
             </div>
@@ -99,35 +99,35 @@
     </div>
 
     <!-- AI Assistant Sidebar -->
-    <aside id="eco-sidebar" class="w-96 bg-[#0a0f1a] border-l border-slate-800/40 flex flex-col z-40 transform transition-transform duration-500 translate-x-0 lg:relative fixed right-0 top-0 h-full">
-        <div class="p-6 border-b border-white/5 flex items-center justify-between bg-slate-900/40">
+    <aside id="eco-sidebar" class="w-96 bg-[#0a0f1a] border-l border-white flex flex-col z-40 transform transition-transform duration-500 translate-x-0 lg:relative fixed right-0 top-0 h-full">
+        <div class="p-6 border-b border-white flex items-center justify-between bg-[#0a0f1a]">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-indigo-600/20 flex items-center justify-center">
-                    <i data-feather="cpu" class="w-5 h-5 text-indigo-400"></i>
+                <div class="w-10 h-10 rounded-2xl bg-zinc-800 flex items-center justify-center border border-white">
+                    <i data-feather="cpu" class="w-5 h-5 text-white"></i>
                 </div>
                 <div>
-                    <p class="english-label" style="font-size: 10px; margin-bottom: 2px;">AI Assistant</p>
-                    <h3 class="description-text" style="font-size: 14px; color: #e4e4e7;">NAIRA D-Supply Test Specialist</h3>
+                    <p class="english-label" style="font-size: 10px; margin-bottom: 2px; color: white !important;">AI Assistant</p>
+                    <h3 class="description-text" style="font-size: 14px; color: white !important;">NAIRA D-Supply Test Specialist</h3>
                 </div>
             </div>
-            <button id="close-sidebar" class="p-2 text-white hover:text-indigo-400 transition-colors lg:hidden">
+            <button id="close-sidebar" class="p-2 text-white hover:opacity-100 transition-opacity lg:hidden">
                 <i data-feather="x" class="w-5 h-5"></i>
             </button>
         </div>
 
         <!-- Chat Body -->
-        <div id="eco-chat-body" class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-950/20">
-            <div class="p-4 rounded-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
-                <span class="english-label" style="font-size: 10px; margin-bottom: 8px;">Introduction</span>
-                <p class="description-text" style="font-size: 14px; color: #e4e4e7;">Hello! I'm the NAIRA Economics Assistant. I can help explain market equilibrium, shifts, and government interventions in this 3D tour. What would you like to explore?</p>
+        <div id="eco-chat-body" class="flex-1 overflow-y-auto p-6 space-y-4 bg-[#0a0f1a]">
+            <div class="p-4 rounded-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,1);">
+                <span class="english-label" style="font-size: 10px; margin-bottom: 8px; color: white !important;">Introduction</span>
+                <p class="description-text" style="font-size: 14px; color: white !important;">Hello! I'm the NAIRA Economics Assistant. I can help explain market equilibrium, shifts, and government interventions in this 3D tour. What would you like to explore?</p>
             </div>
         </div>
 
         <!-- Chat Input -->
-        <div class="p-6 border-t border-white/5 bg-slate-900/40">
+        <div class="p-6 border-t border-white bg-[#0a0f1a]">
             <form id="eco-chat-form" class="relative">
-                <input type="text" id="eco-chat-input" placeholder="Ask about the market..." class="w-full bg-slate-950 border border-white/10 rounded-xl py-4 pl-4 pr-12 description-text focus:outline-none focus:border-indigo-500 transition-all" style="font-size: 14px;">
-                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-indigo-600 rounded-lg text-white hover:bg-indigo-700 transition-all">
+                <input type="text" id="eco-chat-input" placeholder="Ask about the market..." class="w-full bg-black border border-white rounded-xl py-4 pl-4 pr-12 description-text text-white focus:outline-none focus:border-white transition-all" style="font-size: 14px;">
+                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-zinc-800 rounded-lg text-white hover:bg-zinc-700 border border-white transition-all">
                     <i data-feather="arrow-up" class="w-4 h-4"></i>
                 </button>
             </form>
@@ -135,47 +135,44 @@
     </aside>
 
     <!-- Static Diagrams Modal -->
-    <div id="diagrams-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="relative w-full max-w-4xl bg-[#0a0f1a] border border-white/10 rounded-[40px] overflow-hidden shadow-2xl">
-            <div class="p-8 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
-                <h3 class="description-text" style="font-size: 18px; font-weight: 500; color: #e4e4e7;">Market Model Reference Diagrams</h3>
-                <button onclick="toggleDiagrams()" class="p-3 hover:bg-white/10 rounded-full transition-all text-white hover:text-cyan-400">
+    <div id="diagrams-modal" class="fixed inset-0 z-50 hidden bg-black backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl bg-[#0a0f1a] border border-white rounded-[40px] overflow-hidden shadow-2xl">
+            <div class="p-8 border-b border-white flex justify-between items-center bg-[#0a0f1a]">
+                <h3 class="description-text" style="font-size: 18px; font-weight: 500; color: white !important;">Market Model Reference Diagrams</h3>
+                <button onclick="toggleDiagrams()" class="p-3 hover:bg-zinc-800 rounded-full transition-all text-white">
                     <i data-feather="x" class="w-6 h-6"></i>
                 </button>
             </div>
             <div class="p-8 overflow-y-auto max-h-[70vh] grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-4">
-                    <div class="aspect-video bg-indigo-500/5 border border-indigo-500/20 rounded-3xl flex items-center justify-center relative overflow-hidden group">
-                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent"></div>
-                        <div class="w-full h-1 bg-indigo-500 -rotate-[30deg] shadow-[0_0_20px_rgba(99,102,241,0.4)]"></div>
-                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0;">The Demand Curve</span>
+                    <div class="aspect-video bg-zinc-900 border border-white rounded-3xl flex items-center justify-center relative overflow-hidden group">
+                        <div class="w-full h-1 bg-white -rotate-[30deg] shadow-[0_0_20px_rgba(255,255,255,0.2)]"></div>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: white !important;">The Demand Curve</span>
                     </div>
-                    <p class="description-text" style="font-size: 14px;">Represents the inverse relationship between price and quantity demanded. As prices fall, consumers buy more.</p>
+                    <p class="description-text text-white" style="font-size: 14px;">Represents the inverse relationship between price and quantity demanded. As prices fall, consumers buy more.</p>
                 </div>
                 <div class="space-y-4">
-                    <div class="aspect-video bg-rose-500/5 border border-rose-500/20 rounded-3xl flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-transparent"></div>
-                        <div class="w-full h-1 bg-rose-500 rotate-[30deg] shadow-[0_0_20px_rgba(225,29,72,0.4)]"></div>
-                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: #fb7185;">The Supply Curve</span>
+                    <div class="aspect-video bg-zinc-900 border border-white rounded-3xl flex items-center justify-center relative overflow-hidden">
+                        <div class="w-full h-1 bg-white rotate-[30deg] shadow-[0_0_20px_rgba(255,255,255,0.2)]"></div>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: white !important;">The Supply Curve</span>
                     </div>
-                    <p class="description-text" style="font-size: 14px;">Represents the direct relationship between price and quantity supplied. As prices rise, producers offer more.</p>
+                    <p class="description-text text-white" style="font-size: 14px;">Represents the direct relationship between price and quantity supplied. As prices rise, producers offer more.</p>
                 </div>
                 <div class="space-y-4">
-                    <div class="aspect-video bg-slate-900 border border-white/10 rounded-3xl flex items-center justify-center relative">
-                        <div class="w-full h-0.5 bg-indigo-500/40 -rotate-[30deg] absolute"></div>
-                        <div class="w-full h-0.5 bg-rose-500/40 rotate-[30deg] absolute"></div>
+                    <div class="aspect-video bg-zinc-900 border border-white rounded-3xl flex items-center justify-center relative">
+                        <div class="w-full h-0.5 bg-white -rotate-[30deg] absolute"></div>
+                        <div class="w-full h-0.5 bg-white rotate-[30deg] absolute"></div>
                         <div class="w-4 h-4 bg-white rounded-full shadow-[0_0_20px_rgba(255,255,255,0.8)] z-10 animate-pulse"></div>
-                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: #ffffff;">Equilibrium Point (E)</span>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: white !important;">Equilibrium Point (E)</span>
                     </div>
-                    <p class="description-text" style="font-size: 14px;">The "market clearing" price where QD = QS. No surplus or shortage exists here.</p>
+                    <p class="description-text text-white" style="font-size: 14px;">The "market clearing" price where QD = QS. No surplus or shortage exists here.</p>
                 </div>
                 <div class="space-y-4">
-                    <div class="aspect-video bg-emerald-500/5 border border-emerald-500/20 rounded-3xl flex items-center justify-center relative">
-                        <div class="absolute top-1/3 left-0 right-0 h-0.5 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
-                        <div class="absolute top-1/3 left-1/4 right-1/4 h-3 bg-orange-500/40 rounded-full animate-pulse border border-orange-500/20"></div>
-                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0;">Price Intervention</span>
+                    <div class="aspect-video bg-zinc-900 border border-white rounded-3xl flex items-center justify-center relative">
+                        <div class="absolute top-1/3 left-0 right-0 h-0.5 bg-white shadow-[0_0_10px_rgba(255,255,255,0.2)]"></div>
+                        <span class="absolute bottom-6 left-6 english-label" style="margin-bottom: 0; color: white !important;">Price Intervention</span>
                     </div>
-                    <p class="description-text" style="font-size: 14px;">Government set prices like ceilings or floors that prevent the market from reaching equilibrium.</p>
+                    <p class="description-text text-white" style="font-size: 14px;">Government set prices like ceilings or floors that prevent the market from reaching equilibrium.</p>
                 </div>
             </div>
         </div>
@@ -203,16 +200,16 @@
             name: "Phase 1: Foundations",
             summary: "Market Equilibrium and the Laws of Demand and Supply.",
             description: "Market Equilibrium and the Laws of Demand and Supply.",
-            color: 0x00B4FF,
+            color: 0x444444,
             textColor: 'white',
             content: `
-                <div class="space-y-4 description-text">
+                <div class="space-y-4 description-text text-white">
                     <p><strong>Definition of Demand:</strong> The quantity of a good that consumers are willing and able to purchase at various prices during a given period.</p>
                     <p><strong>Law of Demand:</strong> Ceteris paribus (all other things being equal), as the price of a good increases, the quantity demanded decreases. This results in a downward-sloping Demand Curve (Blue).</p>
                     <p><strong>Definition of Supply:</strong> The quantity of a good that producers are willing and able to offer for sale at various prices.</p>
                     <p><strong>Law of Supply:</strong> Ceteris paribus, as the price of a good increases, the quantity supplied increases. This results in an upward-sloping Supply Curve (Red).</p>
                     <p><strong>Market Equilibrium:</strong> The point where the Demand and Supply curves intersect. At this point, Quantity Demanded (QD) equals Quantity Supplied (QS), resulting in the Equilibrium Price (P*) and Equilibrium Quantity (Q*).</p>
-                    <button onclick="window.goToTourStep(1)" class="w-full py-4 mt-4 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-indigo-500/30" style="margin-bottom: 0;">
+                    <button onclick="window.goToTourStep(1)" class="w-full py-4 mt-4 bg-white text-black rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-white" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Market Shifts</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
@@ -226,20 +223,20 @@
             name: "Phase 2: Shifts",
             summary: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
             description: "T.R.I.B.E. and R.O.T.T.E.N. shifters that move curves.",
-            color: 0x00B4FF,
+            color: 0x444444,
             textColor: 'white',
             content: `
-                <div class="space-y-4 description-text">
+                <div class="space-y-4 description-text text-white">
                     <p><strong>Demand Shifters (T.R.I.B.E):</strong></p>
-                    <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
+                    <ul class="list-disc pl-5 space-y-1 text-white">
                         <li><strong>T</strong>astes and Preferences, <strong>R</strong>elated Goods, <strong>I</strong>ncome, <strong>B</strong>uyers, <strong>E</strong>xpectations.</li>
                     </ul>
                     <p><strong>Supply Shifters (R.O.T.T.E.N):</strong></p>
-                    <ul class="list-disc pl-5 space-y-1 text-[#e4e4e7]">
+                    <ul class="list-disc pl-5 space-y-1 text-white">
                         <li><strong>R</strong>esource Prices, <strong>O</strong>ther Goods, <strong>T</strong>axes/Subsidies, <strong>T</strong>echnology, <strong>E</strong>xpectations, <strong>N</strong>umber of Sellers.</li>
                     </ul>
                     <p>A rightward shift represents an increase, while a leftward shift represents a decrease. Use the sliders to see how equilibrium moves.</p>
-                    <button onclick="window.goToTourStep(2)" class="w-full py-4 mt-4 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-indigo-500/30" style="margin-bottom: 0;">
+                    <button onclick="window.goToTourStep(2)" class="w-full py-4 mt-4 bg-white text-black rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-white" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Next — Interventions</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
@@ -253,16 +250,16 @@
             name: "Phase 3: Interventions",
             summary: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
             description: "Price Ceilings, Price Floors, Shortages, and Surpluses.",
-            color: 0x00E676,
+            color: 0x444444,
             textColor: 'white',
             content: `
-                <div class="space-y-4 description-text">
+                <div class="space-y-4 description-text text-white">
                     <p><strong>Shortage:</strong> QD > QS (Price below Equilibrium).</p>
                     <p><strong>Surplus:</strong> QS > QD (Price above Equilibrium).</p>
                     <p><strong>Price Ceiling:</strong> A legal maximum price (results in Shortage).</p>
                     <p><strong>Price Floor:</strong> A legal minimum price (results in Surplus).</p>
-                    <p><strong>Efficiency Loss:</strong> Interventions cause deadweight loss by preventing the market from clearing at the optimal price.</p>
-                    <button onclick="window.resetMarket()" class="w-full py-4 mt-4 bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-indigo-500/30" style="margin-bottom: 0;">
+                    <p><strong>Efficiency Loss:</strong> Interventions cause deadweight loss by preventing the market from reaching equilibrium.</p>
+                    <button onclick="window.resetMarket()" class="w-full py-4 mt-4 bg-white text-black rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border border-white" style="margin-bottom: 0;">
                         <span class="english-label" style="margin-bottom: 0; color: inherit; font-size: 14px; letter-spacing: 0.5px;">Reset Market</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>
                     </button>
@@ -291,7 +288,7 @@
 
     // Lights
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-    const pointLight = new THREE.PointLight(0x22d3ee, 1, 100);
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100);
     pointLight.position.set(10, 20, 10);
     scene.add(pointLight);
 
@@ -314,11 +311,11 @@
         ctx.beginPath();
         ctx.roundRect(112, 60, 800, 130, 65);
         ctx.fill();
-        ctx.strokeStyle = 'rgba(34, 211, 238, 0.4)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
         ctx.lineWidth = 6;
         ctx.stroke();
 
-        ctx.fillStyle = color;
+        ctx.fillStyle = '#ffffff';
         ctx.font = '600 72px "Segoe UI", Roboto, Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.lineWidth = 12;
@@ -334,10 +331,10 @@
         return mesh;
     }
 
-    const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-2.5, 20, 0), '#22d3ee');
+    const priceLabel = createAxisLabel('PRICE', new THREE.Vector3(-2.5, 20, 0), '#ffffff');
     scene.add(priceLabel);
 
-    const quantityLabel = createAxisLabel('QUANTITY OF PRODUCTS', new THREE.Vector3(20, -2, 0), '#22d3ee');
+    const quantityLabel = createAxisLabel('QUANTITY OF PRODUCTS', new THREE.Vector3(20, -2, 0), '#ffffff');
     scene.add(quantityLabel);
 
     // --- Market Elements ---
@@ -354,11 +351,11 @@
         ctx.beginPath();
         ctx.roundRect(56, 24, 400, 80, 40);
         ctx.fill();
-        ctx.strokeStyle = 'rgba(34, 211, 238, 0.5)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
         ctx.lineWidth = 4;
         ctx.stroke();
 
-        ctx.fillStyle = color;
+        ctx.fillStyle = '#ffffff';
         ctx.font = '700 48px "Segoe UI", Roboto, Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.lineWidth = 8;
@@ -373,10 +370,10 @@
         return mesh;
     }
 
-    const demandLabel = createCurveLabel('DEMAND', '#22d3ee');
+    const demandLabel = createCurveLabel('DEMAND', '#ffffff');
     scene.add(demandLabel);
 
-    const supplyLabel = createCurveLabel('SUPPLY', '#22d3ee');
+    const supplyLabel = createCurveLabel('SUPPLY', '#ffffff');
     scene.add(supplyLabel);
     let supplyShift = 0;
     let showCeiling = false;
@@ -385,11 +382,11 @@
     // Visual indicators for shortage/surplus
     const gapGeo = new THREE.BoxGeometry(0.5, 1, 0.5);
     const gapMat = new THREE.MeshStandardMaterial({
-        color: 0xf97316,
-        emissive: 0xf97316,
+        color: 0xffffff,
+        emissive: 0xffffff,
         emissiveIntensity: 1,
         transparent: true,
-        opacity: 0.8
+        opacity: 1
     });
     const gapIndicator = new THREE.Mesh(gapGeo, gapMat);
     gapIndicator.visible = false;
@@ -400,7 +397,7 @@
     const demandMaterial = new THREE.MeshPhongMaterial({
         color: 0x4f46e5,
         transparent: true,
-        opacity: 0.6,
+        opacity: 1,
         side: THREE.DoubleSide,
         shininess: 100
     });
@@ -414,7 +411,7 @@
     const supplyMaterial = new THREE.MeshPhongMaterial({
         color: 0xe11d48,
         transparent: true,
-        opacity: 0.6,
+        opacity: 1,
         side: THREE.DoubleSide,
         shininess: 100
     });
@@ -427,7 +424,7 @@
     const eqGeo = new THREE.SphereGeometry(0.4, 32, 32);
     const eqMat = new THREE.MeshStandardMaterial({
         color: 0xffffff,
-        emissive: 0x4f46e5,
+        emissive: 0xffffff,
         emissiveIntensity: 2
     });
     const equilibriumDot = new THREE.Mesh(eqGeo, eqMat);
@@ -438,7 +435,7 @@
     const interventionMat = new THREE.MeshPhongMaterial({
         color: 0x10b981,
         transparent: true,
-        opacity: 0.3,
+        opacity: 1,
         side: THREE.DoubleSide,
         visible: false
     });
@@ -470,12 +467,12 @@
         const ctx = canvas.getContext('2d');
 
         const color = '#' + d.color.toString(16).padStart(6, '0');
-        const textColor = '#e4e4e7';
+        const textColor = '#ffffff';
 
         if (!isTextOnly) {
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
             ctx.lineWidth = 10;
             ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
             ctx.globalAlpha = 0.15;
@@ -493,12 +490,12 @@
         } else {
             ctx.fillStyle = 'rgba(24, 24, 27, 0.95)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(34, 211, 238, 0.4)';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
             ctx.lineWidth = 12;
             ctx.strokeRect(6, 6, canvas.width-12, canvas.height-12);
 
             ctx.textAlign = 'center';
-            ctx.fillStyle = textColor;
+            ctx.fillStyle = '#ffffff';
             ctx.shadowBlur = 12;
             ctx.shadowColor = 'rgba(0,0,0,1)';
             ctx.shadowOffsetX = 6;
@@ -515,7 +512,7 @@
             ctx.lineWidth = 14;
             ctx.strokeStyle = 'rgba(0,0,0,0.9)';
             ctx.strokeText(headerText, canvas.width / 2, 75);
-            ctx.fillStyle = '#22d3ee'; // Use Cyan for 3D header text
+            ctx.fillStyle = '#ffffff';
             ctx.fillText(headerText, canvas.width / 2, 75);
 
             // Description
@@ -594,28 +591,6 @@
         nodes.push(mesh);
     });
 
-    // --- UTILS ---
-    function hexToRgb(hex) {
-        return {
-            r: (hex >> 16) & 255,
-            g: (hex >> 8) & 255,
-            b: hex & 255
-        };
-    }
-
-    function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-    }
-
-    function darken(hex, amount) {
-        const rgb = hexToRgb(hex);
-        return rgbToHex(
-            Math.max(0, Math.floor(rgb.r * (1 - amount))),
-            Math.max(0, Math.floor(rgb.g * (1 - amount))),
-            Math.max(0, Math.floor(rgb.b * (1 - amount)))
-        );
-    }
-
     // --- Logic & Animation ---
     let tourActive = false;
     let currentTourStep = 0;
@@ -628,14 +603,10 @@
 
     window.goToTourStep = (stepIndex) => {
         const phase = PHASES[stepIndex];
-        // Find the corresponding node mesh
         const node = nodes.find(n => n.userData.id === phase.id);
         showInfo(phase, node);
 
-        // Move camera to focus on node
         const targetPos = new THREE.Vector3(...phase.position).add(new THREE.Vector3(5, 5, 10));
-
-        // Simple linear interpolation for camera
         controls.target.set(...phase.position);
         camera.position.set(targetPos.x, targetPos.y, targetPos.z);
         if (window.feather) feather.replace();
@@ -648,7 +619,6 @@
 
     document.getElementById('eco-drill-down').onclick = (e) => {
         e.stopPropagation();
-        // Visual pulse effect for "Drill Down"
         const originalScale = equilibriumDot.scale.x;
         let counter = 0;
         const interval = setInterval(() => {
@@ -661,7 +631,6 @@
             }
         }, 30);
 
-        // Also move camera closer
         const zoomPos = equilibriumDot.position.clone().add(new THREE.Vector3(5, 5, 8));
         camera.position.lerp(zoomPos, 0.1);
         controls.target.lerp(equilibriumDot.position, 0.1);
@@ -673,29 +642,19 @@
     };
 
     function updateMarket() {
-        // Update Curve Labels positions
         demandLabel.position.set(-8 + demandShift/5, 8 + demandShift/10, 0.5);
         supplyLabel.position.set(8 + supplyShift/5, 8 - supplyShift/10, 0.5);
-
-        // Linear model where positive shift = rightward/upward increase
-        // Demand: P = (100 + dS) - Q
-        // Supply: P = Q - sS
-        // Equilibrium: Q = (100 + dS + sS) / 2, P = Q - sS
 
         const Q = (100 + demandShift + supplyShift) / 2;
         const P = Q - supplyShift;
 
-        // Visual Mapping: Q [0, 100] -> X [-10, 10], P [0, 100] -> Y [0, 20]
         const targetX = (Q - 50) / 5;
         const targetY = P / 5;
 
         equilibriumDot.position.lerp(new THREE.Vector3(targetX, targetY, 0), 0.1);
-
-        // Move planes (Shift visual representation)
         demandPlane.position.x = (demandShift) / 5;
         supplyPlane.position.x = (supplyShift) / 5;
 
-        // Intervention Logic
         ceilingPlane.visible = showCeiling;
         floorPlane.visible = showFloor;
         gapIndicator.visible = false;
@@ -703,42 +662,31 @@
         if (showCeiling) {
             const ceilingPrice = targetY - 3;
             ceilingPlane.position.y = ceilingPrice;
-
-            // At ceiling price, QD > QS
-            // P_c = 100 + dS - QD => QD = 100 + dS - P_c*5
-            // P_c = QS/5 - sS => QS = (P_c + sS)*5
             const Pc = ceilingPrice * 5;
             const QD = 100 + demandShift - Pc;
             const QS = Pc + supplyShift;
-
             const qdX = (QD - 50) / 5;
             const qsX = (QS - 50) / 5;
-
             gapIndicator.visible = true;
             gapIndicator.position.set((qdX + qsX) / 2, ceilingPrice, 0);
             gapIndicator.scale.x = Math.max(0.1, qdX - qsX);
-            gapIndicator.material.color.setHex(0xf97316); // Orange for Shortage
+            gapIndicator.material.color.setHex(0xffffff);
         }
 
         if (showFloor) {
             const floorPrice = targetY + 3;
             floorPlane.position.y = floorPrice;
-
-            // At floor price, QS > QD
             const Pf = floorPrice * 5;
             const QD = 100 + demandShift - Pf;
             const QS = Pf + supplyShift;
-
             const qdX = (QD - 50) / 5;
             const qsX = (QS - 50) / 5;
-
             gapIndicator.visible = true;
             gapIndicator.position.set((qdX + qsX) / 2, floorPrice, 0);
             gapIndicator.scale.x = Math.max(0.1, qsX - qdX);
-            gapIndicator.material.color.setHex(0x3b82f6); // Blue-ish for Surplus
+            gapIndicator.material.color.setHex(0xffffff);
         }
 
-        // Update UI
         document.getElementById('p-star-val').textContent = `$${P.toFixed(2)}`;
         document.getElementById('q-star-val').textContent = `${(Q * 10).toFixed(0)} units`;
     }
@@ -746,7 +694,6 @@
     function animate(t) {
         requestAnimationFrame(animate);
         updateMarket();
-
         nodes.forEach((node, i) => {
             const offset = Math.sin(t * 0.002 + node.userData.position[1]) * 0.1;
             node.parent.position.y = node.userData.position[1] + offset;
@@ -757,27 +704,22 @@
             const worldPos = new THREE.Vector3();
             target.getWorldPosition(worldPos);
             selectedGlow.position.copy(worldPos);
-
             if (target === demandPlane || target === supplyPlane) {
                 selectedGlow.rotation.copy(target.rotation);
             } else {
                 selectedGlow.rotation.set(0, 0, 0);
             }
         }
-
         controls.update();
         renderer.render(scene, camera);
     }
     animate(0);
 
-    // --- UI EVENTS ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
-
     const ecoInfoPanel = document.getElementById('eco-info-panel');
     const ecoPanelTitle = document.getElementById('eco-panel-title');
     const ecoPanelContent = document.getElementById('eco-panel-content');
-    const ecoPanelHeader = document.getElementById('eco-panel-header');
     const statusDot = document.getElementById('status-dot');
     const ecoDrillDown = document.getElementById('eco-drill-down');
 
@@ -785,44 +727,20 @@
         const rect = container.getBoundingClientRect();
         mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
         raycaster.setFromCamera(mouse, camera);
-
-        // Add curves and equilibrium dot to interactable objects
         const interactables = [...nodes, demandPlane, supplyPlane, equilibriumDot];
         const intersects = raycaster.intersectObjects(interactables);
 
         if (intersects.length > 0) {
             const obj = intersects[0].object;
             let data = obj.userData;
-
-            // Default data for non-node objects
             if (obj === demandPlane) {
-                data = {
-                    title: "Demand Curve",
-                    name: "Demand Curve",
-                    description: "Represents the inverse relationship between price and quantity demanded. As prices fall, consumers buy more.",
-                    content: "The Demand Curve shows how much of a good or service consumers are willing and able to buy at different prices. It typically slopes downward from left to right.",
-                    color: 0x4f46e5
-                };
+                data = { title: "Demand Curve", name: "Demand Curve", description: "Represents the inverse relationship between price and quantity demanded. As prices fall, consumers buy more.", content: "The Demand Curve shows how much of a good or service consumers are willing and able to buy at different prices. It typically slopes downward from left to right.", color: 0x444444 };
             } else if (obj === supplyPlane) {
-                data = {
-                    title: "Supply Curve",
-                    name: "Supply Curve",
-                    description: "Represents the direct relationship between price and quantity supplied. As prices rise, producers offer more.",
-                    content: "The Supply Curve shows how much of a good or service producers are willing and able to offer for sale at different prices. It typically slopes upward from left to right.",
-                    color: 0xe11d48
-                };
+                data = { title: "Supply Curve", name: "Supply Curve", description: "Represents the direct relationship between price and quantity supplied. As prices rise, producers offer more.", content: "The Supply Curve shows how much of a good or service producers are willing and able to offer for sale at different prices. It typically slopes upward from left to right.", color: 0x444444 };
             } else if (obj === equilibriumDot) {
-                data = {
-                    title: "Equilibrium (E)",
-                    name: "Equilibrium (E)",
-                    description: "The 'market clearing' price where Quantity Demanded (QD) equals Quantity Supplied (QS).",
-                    content: "At equilibrium, there is no surplus or shortage. The market is stable, and resources are allocated efficiently.",
-                    color: 0xffffff
-                };
+                data = { title: "Equilibrium (E)", name: "Equilibrium (E)", description: "The 'market clearing' price where Quantity Demanded (QD) equals Quantity Supplied (QS).", content: "At equilibrium, there is no surplus or shortage. The market is stable, and resources are allocated efficiently.", color: 0xffffff };
             }
-
             showInfo(data, obj);
         } else {
             ecoInfoPanel.classList.add('hidden');
@@ -835,28 +753,17 @@
     function showInfo(data, obj) {
         ecoPanelTitle.textContent = data.title;
         ecoPanelContent.innerHTML = data.content || data.description;
-
-        const subtitle = document.getElementById('eco-panel-subtitle');
-        subtitle.textContent = "Economics Component";
-
-        // Dynamic Colors - Cyan
-        const baseColor = '#22d3ee';
-        const hexColor = '#22d3ee';
-        const numericColor = 0x22d3ee;
-
+        document.getElementById('eco-panel-subtitle').textContent = "Economics Component";
+        const hexColor = '#ffffff';
+        const numericColor = 0xffffff;
         statusDot.style.backgroundColor = hexColor;
         statusDot.style.boxShadow = `0 0 20px ${hexColor}`;
-
-        ecoDrillDown.style.borderColor = `${hexColor}44`;
+        ecoDrillDown.style.borderColor = `rgba(255, 255, 255, 1)`;
         ecoDrillDown.style.color = hexColor;
-
         ecoInfoPanel.classList.remove('hidden');
-
-        // Highlight and Glow
         if (nodes.includes(obj)) {
             nodes.forEach(n => n.material.forEach(m => { if (m.emissiveIntensity !== undefined) m.emissiveIntensity = 0.1; }));
             obj.material.forEach(m => { if (m.emissiveIntensity !== undefined) m.emissiveIntensity = 1.0; });
-
             selectedGlow.userData.targetBlock = obj;
             selectedGlow.material.color.setHex(numericColor);
             selectedGlow.material.emissive.setHex(numericColor);
@@ -868,12 +775,7 @@
             selectedGlow.material.color.setHex(numericColor);
             selectedGlow.material.emissive.setHex(numericColor);
             selectedGlow.material.opacity = 0.4;
-
-            if (obj === equilibriumDot) {
-                selectedGlow.scale.set(0.2, 0.2, 0.2);
-            } else {
-                selectedGlow.scale.set(4, 4, 1);
-            }
+            if (obj === equilibriumDot) { selectedGlow.scale.set(0.2, 0.2, 0.2); } else { selectedGlow.scale.set(4, 4, 1); }
         }
     }
 
@@ -881,200 +783,78 @@
         e.stopPropagation();
         document.getElementById('eco-info-panel').classList.add('hidden');
     };
-
     document.getElementById('demand-slider').oninput = (e) => {
         demandShift = parseFloat(e.target.value);
         document.getElementById('demand-shift-val').textContent = demandShift;
     };
-
     document.getElementById('supply-slider').oninput = (e) => {
         supplyShift = parseFloat(e.target.value);
         document.getElementById('supply-shift-val').textContent = supplyShift;
     };
-
     document.getElementById('toggle-ceiling').onclick = () => {
-        showCeiling = !showCeiling;
-        showFloor = false;
-        document.getElementById('toggle-ceiling').classList.toggle('bg-emerald-500/20', showCeiling);
-        document.getElementById('toggle-floor').classList.remove('bg-emerald-500/20');
+        showCeiling = !showCeiling; showFloor = false;
+        document.getElementById('toggle-ceiling').classList.toggle('bg-zinc-700', showCeiling);
+        document.getElementById('toggle-floor').classList.remove('bg-zinc-700');
     };
-
     document.getElementById('toggle-floor').onclick = () => {
-        showFloor = !showFloor;
-        showCeiling = false;
-        document.getElementById('toggle-floor').classList.toggle('bg-emerald-500/20', showFloor);
-        document.getElementById('toggle-ceiling').classList.remove('bg-emerald-500/20');
+        showFloor = !showFloor; showCeiling = false;
+        document.getElementById('toggle-floor').classList.toggle('bg-zinc-700', showFloor);
+        document.getElementById('toggle-ceiling').classList.remove('bg-zinc-700');
     };
-
     document.getElementById('reset-sim').onclick = () => {
-        demandShift = 0;
-        supplyShift = 0;
-        showCeiling = false;
-        showFloor = false;
+        demandShift = 0; supplyShift = 0; showCeiling = false; showFloor = false;
         document.getElementById('demand-slider').value = 0;
         document.getElementById('supply-slider').value = 0;
         document.getElementById('demand-shift-val').textContent = "0";
         document.getElementById('supply-shift-val').textContent = "0";
-        document.getElementById('toggle-ceiling').classList.remove('bg-emerald-500/20');
-        document.getElementById('toggle-floor').classList.remove('bg-emerald-500/20');
+        document.getElementById('toggle-ceiling').classList.remove('bg-zinc-700');
+        document.getElementById('toggle-floor').classList.remove('bg-zinc-700');
     };
 
-    // --- AI CHAT LOGIC ---
     const chatForm = document.getElementById('eco-chat-form');
     const chatInput = document.getElementById('eco-chat-input');
     const chatBody = document.getElementById('eco-chat-body');
-
     chatForm.onsubmit = async (e) => {
         e.preventDefault();
         const msg = chatInput.value.trim();
         if (!msg) return;
-
-        // Add user message
         const userDiv = document.createElement('div');
-        userDiv.className = 'bg-white/10 border border-white/20 p-4 rounded-2xl ml-8';
+        userDiv.className = 'bg-zinc-900 border border-white p-4 rounded-2xl ml-8';
         const userLabel = document.createElement('span');
-        userLabel.className = 'english-label';
-        userLabel.style.fontSize = '10px';
-        userLabel.style.marginBottom = '4px';
-        userLabel.textContent = 'User';
+        userLabel.className = 'english-label'; userLabel.style.fontSize = '10px'; userLabel.style.marginBottom = '4px'; userLabel.style.opacity = '1'; userLabel.textContent = 'User';
         const userText = document.createElement('p');
-        userText.className = 'description-text';
-        userText.style.fontSize = '14px';
-        userText.style.color = '#e4e4e7';
-        userText.textContent = msg;
-        userDiv.appendChild(userLabel);
-        userDiv.appendChild(userText);
-        chatBody.appendChild(userDiv);
-        chatInput.value = '';
-        chatBody.scrollTop = chatBody.scrollHeight;
-
-        // Call API
+        userText.className = 'description-text'; userText.style.fontSize = '14px'; userText.style.color = '#ffffff'; userText.textContent = msg;
+        userDiv.appendChild(userLabel); userDiv.appendChild(userText);
+        chatBody.appendChild(userDiv); chatInput.value = ''; chatBody.scrollTop = chatBody.scrollHeight;
         try {
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: msg, model: 'qwen' })
-            });
+            const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: msg, model: 'qwen' }) });
             const data = await res.json();
-
             const aiDiv = document.createElement('div');
-            aiDiv.className = 'bg-indigo-600/20 border border-indigo-500/30 p-4 rounded-2xl mr-8';
+            aiDiv.className = 'bg-zinc-900 border border-white p-4 rounded-2xl mr-8';
             const aiLabel = document.createElement('span');
-            aiLabel.className = 'english-label';
-            aiLabel.style.fontSize = '10px';
-            aiLabel.style.marginBottom = '4px';
-            aiLabel.textContent = 'Assistant';
+            aiLabel.className = 'english-label'; aiLabel.style.fontSize = '10px'; aiLabel.style.marginBottom = '4px'; aiLabel.style.opacity = '1'; aiLabel.textContent = 'Assistant';
             const aiText = document.createElement('p');
-            aiText.className = 'description-text';
-            aiText.style.fontSize = '14px';
-            aiText.style.color = '#e4e4e7';
-            aiText.textContent = data.response;
-            aiDiv.appendChild(aiLabel);
-            aiDiv.appendChild(aiText);
-            chatBody.appendChild(aiDiv);
-            chatBody.scrollTop = chatBody.scrollHeight;
-        } catch (err) {
-            console.error(err);
-        }
+            aiText.className = 'description-text'; aiText.style.fontSize = '14px'; aiText.style.color = '#ffffff'; aiText.textContent = data.response;
+            aiDiv.appendChild(aiLabel); aiDiv.appendChild(aiText);
+            chatBody.appendChild(aiDiv); chatBody.scrollTop = chatBody.scrollHeight;
+        } catch (err) { console.error(err); }
     };
-
-    window.addEventListener('resize', () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    });
-
+    window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
     if (window.feather) feather.replace();
 </script>
 
 <style>
-    @media (max-width: 768px) {
-        #eco-sidebar {
-            position: fixed;
-            right: 0;
-            transform: translateX(100%);
-        }
-        #eco-sidebar.active {
-            transform: translateX(0);
-        }
-    }
-</style>
-
-<style>
+    @media (max-width: 768px) { #eco-sidebar { position: fixed; right: 0; transform: translateX(100%); } #eco-sidebar.active { transform: translateX(0); } }
     #navbar { background: rgba(2, 6, 23, 0.5) !important; backdrop-filter: blur(8px); }
     body { overflow: hidden !important; background-color: #050a18 !important; }
     #economics-tour-container { background-color: #050a18 !important; }
-
-    .glass-card {
-        background: rgba(15, 23, 42, 0.6);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-    }
-
-    input[type=range]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        height: 16px;
-        width: 16px;
-        border-radius: 50%;
-        background: #6366f1;
-        cursor: pointer;
-        box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-    }
-
-    /* Description Panel – matches exactly the style of the quoted text */
-    .description-panel {
-      position: absolute;
-      right: 32px;
-      top: 20px;
-      bottom: 32px;
-      z-index: 40; /* Ensure it's above the sidebar but below navbar */
-      width: 380px;
-      max-width: 95vw;
-      overflow-y: auto;
-      background: rgba(24, 24, 27, 0.95); /* zinc-900/95 */
-      backdrop-filter: blur(24px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6);
-      padding: 32px;
-      color: #e4e4e7;
-      animation: panelPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .english-label {
-      color: #22d3ee !important; /* cyan-400 */
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .description-text {
-      font-size: 15.5px;
-      line-height: 1.65;
-      font-weight: 500;
-      color: #e4e4e7 !important;
-    }
-
-    /* Optional: close button styling */
-    .close-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      color: #a1a1aa;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .close-btn:hover {
-        color: #ffffff;
-    }
-
-    @keyframes panelPop {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
-    }
+    .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: #ffffff; cursor: pointer; box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+    .description-panel { position: absolute; right: 32px; top: 20px; bottom: 32px; z-index: 40; width: 380px; max-width: 95vw; overflow-y: auto; background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,1); border-radius: 24px; box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.6); padding: 32px; color: #ffffff; animation: panelPop 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .english-label { color: #ffffff !important; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; display: block; opacity: 1; }
+    .description-text { font-size: 15.5px; line-height: 1.65; font-weight: 500; color: #ffffff !important; }
+    .close-btn { position: absolute; top: 16px; right: 16px; color: #ffffff; opacity: 1; cursor: pointer; transition: opacity 0.2s; }
+    .close-btn:hover { opacity: 1; }
+    @keyframes panelPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 </style>
 {% endblock %}

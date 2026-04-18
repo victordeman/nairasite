@@ -11,31 +11,33 @@
         background: rgba(2, 6, 23, 0.5) !important;
         backdrop-filter: blur(8px);
     }
+    .text-white { color: #ffffff !important; opacity: 1 !important; }
+    p, span, h1, h2, h3, a, div { color: #ffffff; }
 </style>
 
 <section class="py-32 relative">
     <div class="container mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-20">
-            <span class="text-indigo-400 font-medium tracking-wider uppercase text-sm">Testing Environment</span>
-            <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Experimental <br/><span class="text-indigo-400">3D Tours</span></h2>
-            <p class="text-zinc-400 text-lg">Testing new interactive features and 3D environment optimizations.</p>
+            <span class="text-white font-medium tracking-wider uppercase text-sm" style="color: white !important; opacity: 1 !important;">Testing Environment</span>
+            <h2 class="font-display text-4xl md:text-5xl font-bold mt-4 mb-6 text-white" style="color: white !important; opacity: 1 !important;">Experimental <br/><span class="text-white" style="color: white !important; opacity: 1 !important;">3D Tours</span></h2>
+            <p class="text-white text-lg" style="color: white !important; opacity: 1 !important;">Testing new interactive features and 3D environment optimizations.</p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             <!-- D-Supply Test -->
-            <div class="glass-card rounded-3xl overflow-hidden group border border-white/10 bg-zinc-900/40">
-                <div class="h-48 bg-indigo-600/10 flex items-center justify-center relative overflow-hidden">
-                    <i data-feather="trending-up" class="w-16 h-16 text-indigo-400 opacity-50"></i>
-                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-xs font-medium text-zinc-300">
+            <div class="glass-card rounded-3xl overflow-hidden group border border-white bg-zinc-900">
+                <div class="h-48 bg-white/10 flex items-center justify-center relative overflow-hidden">
+                    <i data-feather="trending-up" class="w-16 h-16 text-white" style="color: white !important; opacity: 1 !important;"></i>
+                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white text-xs font-medium text-white" style="color: white !important; opacity: 1 !important;">
                         Test Route
                     </div>
                 </div>
                 <div class="p-8">
-                    <h3 class="text-2xl font-display font-bold text-white mb-3">D-Supply Test</h3>
-                    <p class="text-zinc-300 mb-6 leading-relaxed text-justify">Experimental duplicate of the Demand & Supply market model for testing and validation purposes.</p>
+                    <h3 class="text-2xl font-display font-bold text-white mb-3" style="color: white !important; opacity: 1 !important;">D-Supply Test</h3>
+                    <p class="text-white mb-6 leading-relaxed text-justify" style="color: white !important; opacity: 1 !important;">Experimental duplicate of the Demand & Supply market model for testing and validation purposes.</p>
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold tracking-widest uppercase text-indigo-400">Economics Test</span>
-                        <a href="/economics-tour-test" class="flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-indigo-400">
+                        <span class="text-xs font-bold tracking-widest uppercase text-white" style="color: white !important; opacity: 1 !important;">Economics Test</span>
+                        <a href="/economics-tour-test" class="flex items-center gap-2 text-sm font-medium text-white hover:text-white/80 transition-colors" style="color: white !important; opacity: 1 !important;">
                             Launch Test
                             <i data-feather="play" class="w-4 h-4"></i>
                         </a>
@@ -44,19 +46,19 @@
             </div>
 
             <!-- Terracotta 3D Tour (Test) -->
-            <div class="glass-card rounded-3xl overflow-hidden group border border-white/10 bg-zinc-900/40">
-                <div class="h-48 bg-orange-600/10 flex items-center justify-center relative overflow-hidden">
-                    <i data-feather="database" class="w-16 h-16 text-orange-400 opacity-50"></i>
-                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-xs font-medium text-zinc-300">
+            <div class="glass-card rounded-3xl overflow-hidden group border border-white bg-zinc-900">
+                <div class="h-48 bg-white/10 flex items-center justify-center relative overflow-hidden">
+                    <i data-feather="database" class="w-16 h-16 text-white" style="color: white !important; opacity: 1 !important;"></i>
+                    <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white text-xs font-medium text-white" style="color: white !important; opacity: 1 !important;">
                         Test Route
                     </div>
                 </div>
                 <div class="p-8">
-                    <h3 class="text-2xl font-display font-bold text-white mb-3">Terracotta 3D Tour</h3>
-                    <p class="text-zinc-300 mb-6 leading-relaxed text-justify">Experimental duplicate of the Terracotta 3D journey for testing and validation purposes.</p>
+                    <h3 class="text-2xl font-display font-bold text-white mb-3" style="color: white !important; opacity: 1 !important;">Terracotta 3D Tour</h3>
+                    <p class="text-white mb-6 leading-relaxed text-justify" style="color: white !important; opacity: 1 !important;">Experimental duplicate of the Terracotta 3D journey for testing and validation purposes.</p>
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold tracking-widest uppercase text-orange-400">Heritage Test</span>
-                        <a href="/terracotta-tour-test" class="flex items-center gap-2 text-sm font-medium text-zinc-300 hover:text-orange-400">
+                        <span class="text-xs font-bold tracking-widest uppercase text-white" style="color: white !important; opacity: 1 !important;">Heritage Test</span>
+                        <a href="/terracotta-tour-test" class="flex items-center gap-2 text-sm font-medium text-white hover:text-white/80 transition-colors" style="color: white !important; opacity: 1 !important;">
                             Launch Test
                             <i data-feather="play" class="w-4 h-4"></i>
                         </a>
@@ -66,7 +68,7 @@
         </div>
 
         <div class="mt-16 text-center">
-            <a href="/immersive-learning" class="text-indigo-400 hover:text-indigo-300 flex items-center justify-center gap-2">
+            <a href="/immersive-learning" class="text-white hover:text-white/80 transition-colors flex items-center justify-center gap-2" style="color: white !important; opacity: 1 !important;">
                 <i data-feather="arrow-left" class="w-4 h-4"></i>
                 Back to Immersive Learning Hub
             </a>
