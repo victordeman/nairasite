@@ -171,3 +171,11 @@ async def economics_tour_test(request: Request):
 @router.get("/terracotta-tour-test")
 async def terracotta_tour_test(request: Request):
     return templates.TemplateResponse("terracotta_tour_test.html", {"request": request})
+
+@router.get("/privacy")
+async def privacy(request: Request):
+    return templates.TemplateResponse("privacy.html", {"request": request})
+
+@router.get("/terms")
+async def terms(request: Request):
+    return templates.TemplateResponse("terms.html", {"request": request})
