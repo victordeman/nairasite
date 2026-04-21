@@ -48,7 +48,7 @@
         }
     </script>
 </head>
-<body class="font-sans antialiased selection:bg-primary selection:text-white overflow-x-hidden min-h-screen flex flex-col">
+<body class="font-sans antialiased selection:bg-primary selection:text-white overflow-x-hidden min-h-screen flex flex-col transition-colors duration-300 {% if request.url.path.rstrip('/') in ['', '/transformer-tour', '/economics-tour', '/terracotta-tour', '/immersive-learning'] %}page-home{% else %}page-sub{% endif %}">
     <!-- Top Bar -->
     <div class="bg-primary text-white py-2 text-xs hidden md:block z-[60] relative">
         <div class="container mx-auto px-6 flex justify-between items-center">
