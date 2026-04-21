@@ -113,7 +113,7 @@
                     </div>
                     <h3 class="text-2xl font-bold text-slate-900 mb-4">{{ pillar.title }}</h3>
                     <p class="text-slate-600 text-sm mb-8 leading-relaxed font-medium flex-grow">
-                        {{ pillar.short_description }}
+                        {{ pillar.summary }}
                     </p>
                     <a href="/pillars/{{ pillar.number }}" class="text-primary font-bold text-sm flex items-center gap-2 group/link">
                         Learn More <i data-feather="arrow-right" class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i>
@@ -364,6 +364,10 @@
                 </div>
             </div>
             <form id="newsletter-form-home" class="w-full md:w-auto flex flex-col sm:flex-row gap-4">
+                <div class="hidden">
+                    <label>Leave this field blank</label>
+                    <input type="text" name="website_url" autocomplete="off">
+                </div>
                 <input type="email" name="email" required class="px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:bg-white/20 transition-all min-w-[300px]" placeholder="Enter your email">
                 <button type="submit" class="bg-white text-primary px-10 py-4 rounded-full font-extrabold shadow-xl shadow-black/10 transition-all active:scale-95 whitespace-nowrap">
                     Subscribe Now
