@@ -1,119 +1,376 @@
 {% extends "base.html" %}
 {% block title %}NAIRA - African AI & XR Excellence Hub{% endblock %}
 {% block content %}
-<!-- Hero Section -->
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-[#0f172a]">
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-5xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span id="hero-badge" data-key="hero-badge" class="text-sm font-medium text-slate-300">Pioneering Africa's AI Renaissance</span>
-            </div>
-            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-                <span id="hero-title" data-key="hero-title" class="text-indigo-600">NAIRA</span>
-            </h1>
-            <p id="hero-subtitle" data-key="hero-subtitle" class="text-xl md:text-2xl text-slate-400 mb-4 font-display">
-                NBU ARTIFICIAL INTELLIGENCE RESEARCH & ADVANCEMENT INSTITUTE
-            </p>
-            <p id="hero-description" data-key="hero-description" class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-                Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African languages, culture, and indigenous knowledge into global technology solutions.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="/vision" class="group px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-medium flex items-center gap-2">
-                    Explore Our Vision
-                    <i data-feather="arrow-right" class="w-4 h-4"></i>
-                </a>
-                <a href="/agent" id="try-ai-btn" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-full font-medium flex items-center gap-2">
-                    <i data-feather="cpu" class="w-4 h-4"></i>
-                    Try the AI Agent
-                </a>
-                <a href="/login" class="auth-link px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white rounded-full font-medium flex items-center gap-2" data-key="hero-auth">
-                    <i data-feather="user" class="w-4 h-4"></i>
-                    <span class="auth-text">Login</span>
-                </a>
-            </div>
-        </div>
-        <!-- Stats Bar -->
-        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            <div class="glass-card p-6 rounded-2xl text-center">
-                <div class="text-3xl font-display font-bold text-indigo-400 mb-1">{{ stats.pillars_count }}</div>
-                <div class="text-sm text-slate-400">Strategic Pillars</div>
-            </div>
-            <div class="glass-card p-6 rounded-2xl text-center">
-                <div class="text-3xl font-display font-bold text-amber-400 mb-1">{{ stats.architecture_layers_count }}</div>
-                <div class="text-sm text-slate-400">Architecture Layers</div>
-            </div>
-            <div class="glass-card p-6 rounded-2xl text-center">
-                <div class="text-3xl font-display font-bold text-emerald-400 mb-1">{{ stats.xr_label }}</div>
-                <div class="text-sm text-slate-400">Immersive Tech</div>
-            </div>
-            <div class="glass-card p-6 rounded-2xl text-center">
-                <div class="text-3xl font-display font-bold text-purple-400 mb-1">{{ stats.ai_label }}</div>
-                <div class="text-sm text-slate-400">Agentic Systems</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Newsletter Section -->
-<section class="py-24 bg-[#0f172a]">
-    <div class="container mx-auto px-6">
-        <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 md:p-12 border border-indigo-500/20 text-center">
-            <h3 class="font-display text-3xl font-bold text-white mb-4">Stay Informed</h3>
-            <p class="text-slate-400 mb-8 max-w-xl mx-auto">Join our community and get the latest updates on African AI and XR innovation delivered straight to your inbox.</p>
-            <form id="newsletter-form-home" class="flex flex-col gap-4 max-w-lg mx-auto">
-                <!-- Honeypot field -->
-                <div class="hidden">
-                    <label>Leave this field blank</label>
-                    <input type="text" name="website_url" autocomplete="off">
+<div class="flex flex-col gap-0">
+    <!-- Hero Section -->
+    <section class="relative min-h-[650px] flex items-center bg-[#f0f9ff] overflow-hidden">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center z-10 relative py-20">
+            <div class="space-y-8 animate-in fade-in slide-in-from-left-8 duration-1000">
+                <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border border-primary/20">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    <span id="hero-badge" data-key="hero-badge">Pioneering Africa's AI Renaissance</span>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <input type="email" name="email" required class="flex-1 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" placeholder="Enter your email">
-                    <button type="submit" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-lg shadow-indigo-500/20">
-                        Subscribe
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+                    <span id="hero-title" data-key="hero-title" class="text-slate-900">NAIRA</span> <br />
+                    <span class="text-primary">Institute Hub</span>
+                </h1>
+                <p id="hero-description" data-key="hero-description" class="text-lg md:text-xl text-slate-600 max-w-xl leading-relaxed font-medium">
+                    Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African knowledge into global technology.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="/vision" class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-full text-lg font-bold shadow-xl shadow-primary/30 transition-all active:scale-95 flex items-center gap-2">
+                        Explore Vision <i data-feather="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <button id="try-ai-btn" class="bg-white hover:bg-slate-50 text-primary border-2 border-primary/20 px-10 py-4 rounded-full text-lg font-bold transition-all active:scale-95 flex items-center gap-2">
+                        <i data-feather="cpu" class="w-5 h-5"></i> Try AI Agent
                     </button>
                 </div>
-            </form>
-            <div id="newsletter-status-home" class="hidden mt-4 text-sm"></div>
-        </div>
-    </div>
-</section>
+            </div>
 
-<!-- Overview Sections -->
-<section class="py-24 bg-[#0f172a]">
-    <div class="container mx-auto px-6">
-        <div class="grid lg:grid-cols-3 gap-8">
-            <div class="glass-card p-8 rounded-3xl border border-white/5 group">
-                <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 flex items-center justify-center mb-6">
-                    <i data-feather="target" class="w-6 h-6 text-indigo-400"></i>
+            <div class="hidden md:block relative h-[550px]">
+                <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10"></div>
+                <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+                    <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
+                        <!-- Replicating the "Clinical" look with a Tech/XR vibe -->
+                        <div class="relative w-full h-full border-4 border-slate-50 rounded-2xl overflow-hidden bg-slate-900 flex items-center justify-center">
+                             <div class="absolute inset-0 opacity-20">
+                                <div class="absolute inset-0" style="background-image: radial-gradient(#2563EB 1px, transparent 1px); background-size: 20px 20px;"></div>
+                             </div>
+                             <i data-feather="box" class="w-48 h-48 text-primary/40 animate-bounce"></i>
+                             <div class="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+                                        <i data-feather="zap" class="w-6 h-6 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-sm">Active XR Tour</p>
+                                        <p class="text-white/60 text-xs uppercase tracking-widest">Experience Now</p>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-display font-bold text-indigo-600 mb-4">Visionary Future</h3>
-                <p class="text-slate-400 mb-6">Aiming to become Africa's foremost center for AI innovation and excellence.</p>
-                <a href="/vision" class="text-indigo-400 font-medium flex items-center gap-2">
-                    Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
-                </a>
-            </div>
-            <div class="glass-card p-8 rounded-3xl border border-white/5 group">
-                <div class="w-12 h-12 rounded-2xl bg-amber-600/20 flex items-center justify-center mb-6">
-                    <i data-feather="layers" class="w-6 h-6 text-amber-400"></i>
+
+                <!-- Floating Pulse Badge -->
+                <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-2xl flex items-center gap-4 z-20 border border-slate-100">
+                    <div class="bg-primary/10 p-3 rounded-full">
+                        <i data-feather="activity" class="w-6 h-6 text-primary"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-slate-900">24/7 AI Research Hub</p>
+                        <p class="text-xs text-slate-500 font-medium">Always processing</p>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-display font-bold text-indigo-600 mb-4">Strategic Pillars</h3>
-                <p class="text-slate-400 mb-6">Six core focus areas driving our mission from research to monetization.</p>
-                <a href="/pillars" class="text-amber-400 font-medium flex items-center gap-2">
-                    Explore Pillars <i data-feather="arrow-right" class="w-4 h-4"></i>
-                </a>
-            </div>
-            <div class="glass-card p-8 rounded-3xl border border-white/5 group">
-                <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 flex items-center justify-center mb-6">
-                    <i data-feather="cpu" class="w-6 h-6 text-emerald-400"></i>
-                </div>
-                <h3 class="text-2xl font-display font-bold text-indigo-600 mb-4">Robust Architecture</h3>
-                <p class="text-slate-400 mb-6">A three-layer system designed for experience, intelligence, and data.</p>
-                <a href="/architecture" class="text-emerald-400 font-medium flex items-center gap-2">
-                    View System <i data-feather="arrow-right" class="w-4 h-4"></i>
-                </a>
             </div>
         </div>
-    </div>
-</section>
+
+        <!-- Abstract Background Shapes -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent -z-20"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-20"></div>
+    </section>
+
+    <!-- Quick Access Stats -->
+    <section class="bg-primary py-12 text-white relative z-20 -mt-10 mx-4 md:mx-auto container rounded-[2.5rem] shadow-2xl">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="space-y-1">
+                    <p class="text-4xl md:text-5xl font-extrabold tracking-tighter">{{ stats.pillars_count }}</p>
+                    <p class="text-[10px] md:text-xs font-bold opacity-80 uppercase tracking-[0.2em]">Strategic Pillars</p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-4xl md:text-5xl font-extrabold tracking-tighter">{{ stats.architecture_layers_count }}</p>
+                    <p class="text-[10px] md:text-xs font-bold opacity-80 uppercase tracking-[0.2em]">System Layers</p>
+                </div>
+                <div class="space-y-1 border-white/10 md:border-l">
+                    <p class="text-4xl md:text-5xl font-extrabold tracking-tighter">Africa</p>
+                    <p class="text-[10px] md:text-xs font-bold opacity-80 uppercase tracking-[0.2em]">Primary Focus</p>
+                </div>
+                <div class="space-y-1 border-white/10 md:border-l">
+                    <p class="text-4xl md:text-5xl font-extrabold tracking-tighter">100%</p>
+                    <p class="text-[10px] md:text-xs font-bold opacity-80 uppercase tracking-[0.2em]">Indigenous Driven</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pillars Highlights (Clinical Excellence Style) -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Our Strategic Excellence</h2>
+                <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg font-medium">
+                    Specialized AI and XR research pillars designed to transform the African technological landscape.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                {% for pillar in pillars %}
+                <div class="group bg-slate-50 hover:bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 rounded-[2rem] p-10 border border-slate-100 flex flex-col h-full">
+                    <div class="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary transition-colors duration-500">
+                        <i data-feather="{{ pillar.icon }}" class="text-primary w-8 h-8 group-hover:text-white transition-colors duration-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">{{ pillar.title }}</h3>
+                    <p class="text-slate-600 text-sm mb-8 leading-relaxed font-medium flex-grow">
+                        {{ pillar.short_description }}
+                    </p>
+                    <a href="/pillars/{{ pillar.number }}" class="text-primary font-bold text-sm flex items-center gap-2 group/link">
+                        Learn More <i data-feather="arrow-right" class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Layers (clinical precision style) -->
+    <section class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Architecture Layers</h2>
+                <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg font-medium">
+                    Our robust three-layer system designed for experience, intelligence, and data sovereignty.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                {% for layer in architecture_layers %}
+                <div class="bg-white shadow-lg hover:shadow-2xl transition-all duration-500 rounded-[2rem] p-10 flex flex-col h-full border border-slate-100">
+                    <div class="bg-slate-900 w-16 h-16 rounded-2xl flex items-center justify-center mb-8">
+                        <i data-feather="{{ layer.icon }}" class="text-white w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">{{ layer.title }}</h3>
+                    <p class="text-slate-600 text-sm mb-8 leading-relaxed font-medium flex-grow">
+                        {{ layer.description }}
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        {% for tag in layer.tags %}
+                        <span class="px-3 py-1 bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-wider rounded-lg border border-primary/10">
+                            {{ tag }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Spotlight (Dr. Monago Style) -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative h-[600px]">
+                    <div class="absolute inset-0 bg-slate-200 rounded-[3.5rem] rotate-3 scale-95 opacity-50"></div>
+                    <div class="absolute inset-0 bg-slate-900 rounded-[3.5rem] overflow-hidden shadow-2xl border-[12px] border-white group">
+                        <div class="w-full h-full bg-gradient-to-br from-primary/20 to-slate-900 flex items-center justify-center">
+                            <i data-feather="user" class="w-48 h-48 text-white/10 group-hover:scale-110 transition-transform duration-700"></i>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-white/20 font-black text-9xl uppercase tracking-tighter opacity-10">VISION</span>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-12 left-12 right-12 bg-white/10 backdrop-blur-lg p-6 rounded-2xl border border-white/20">
+                             <p class="text-white text-xs font-bold uppercase tracking-[0.3em] mb-1">Directorate</p>
+                             <h4 class="text-white text-2xl font-bold">Institute Leadership</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-10">
+                    <div class="space-y-4">
+                        <p class="text-primary font-bold uppercase tracking-[0.2em] text-sm flex items-center gap-2">
+                            <span class="w-8 h-px bg-primary"></span> Our Visionary Director
+                        </p>
+                        <h2 class="text-5xl md:text-6xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">NAIRA AI Visionary Team</h2>
+                        <p class="text-xl text-slate-500 font-bold italic">Pioneers in African-Centered Intelligence</p>
+                    </div>
+
+                    <div class="space-y-6 text-slate-600 text-lg leading-relaxed font-medium">
+                        <p>
+                            With a collective focus on indigenous knowledge and frontier technology, our leadership ensures that NAIRA sets the global standard for African AI excellence.
+                        </p>
+                        <p>
+                            We lead the continent's digital transformation by merging ancient wisdom with agentic architectures, creating solutions that are authentically African and globally impactful.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        {% for qual in ["PhD AI", "XR Expert", "Africanist", "Ethics Lead", "Innovation"] %}
+                        <span class="bg-slate-50 px-5 py-2.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-700 hover:border-primary/30 transition-colors">
+                            {{ qual }}
+                        </span>
+                        {% endfor %}
+                    </div>
+
+                    <a href="/vision" class="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-primary/20 transition-all active:scale-95">
+                        Read Our Full Vision <i data-feather="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose NAIRA (Values Style) -->
+    <section class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 space-y-4">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Why Choose NAIRA?</h2>
+                <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-16">
+                <div class="text-center space-y-6 group">
+                    <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-xl shadow-primary/5">
+                        <i data-feather="target" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900">Our Mission</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Transforming education through immersive XR and agentic AI, centered on African excellence.</p>
+                </div>
+                <div class="text-center space-y-6 group">
+                    <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-xl shadow-primary/5">
+                        <i data-feather="eye" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900">Our Vision</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">To be Africa's foremost center for AI innovation, setting global standards for indigenous tech.</p>
+                </div>
+                <div class="text-center space-y-6 group">
+                    <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-xl shadow-primary/5">
+                        <i data-feather="shield" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900">Our Values</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed font-medium">Sovereignty, integrity, and cultural fidelity in every line of code and immersive experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute inset-0" style="background-image: radial-gradient(#2563EB 1px, transparent 1px); background-size: 30px 30px;"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20 space-y-4">
+                <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight">What Our Partners Say</h2>
+                <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] hover:bg-white/10 transition-colors duration-500 group">
+                    <i data-feather="quote" class="w-10 h-10 text-primary mb-6 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-slate-300 italic mb-8 text-lg leading-relaxed font-medium">
+                        "The integration of Yoruba folklore into AI models at NAIRA is revolutionary. It's the first time I've seen technology that truly understands our context."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center font-bold text-lg">
+                            D
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm">Dr. Adebayo O.</p>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest">Research Fellow</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] hover:bg-white/10 transition-colors duration-500 group">
+                    <i data-feather="quote" class="w-10 h-10 text-primary mb-6 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-slate-300 italic mb-8 text-lg leading-relaxed font-medium">
+                        "The XR classrooms have transformed how we teach history. Students are no longer just reading; they are experiencing ancient African empires firsthand."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center font-bold text-lg">
+                            M
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm">Mariam S.</p>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest">EdTech Coordinator</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] hover:bg-white/10 transition-colors duration-500 group">
+                    <i data-feather="quote" class="w-10 h-10 text-primary mb-6 group-hover:scale-110 transition-transform"></i>
+                    <p class="text-slate-300 italic mb-8 text-lg leading-relaxed font-medium">
+                        "NAIRA's focus on data sovereignty is exactly what Africa needs. They are proving that we can innovate while protecting our digital heritage."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-lg">
+                            K
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm">Kofi A.</p>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest">Tech Entrepreneur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map + Contact Strip (Experience NAIRA) -->
+    <section class="grid md:grid-cols-2">
+        <div class="h-[500px] bg-slate-100 relative grayscale hover:grayscale-0 transition-all duration-1000">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d3.3795045147690848!3d6.524379295280757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b2ae68280c1%3A0xdc9e87a397c78271!2sLagos!5e0!3m2!1sen!2sng!4v1625584567890!5m2!1sen!2sng"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+            ></iframe>
+            <div class="absolute top-8 left-8 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-slate-100">
+                <p class="text-slate-900 font-bold text-sm">Visit NAIRA Hub</p>
+            </div>
+        </div>
+        <div class="bg-primary text-white p-12 md:p-24 flex flex-col justify-center space-y-10 relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+            <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Experience NAIRA</h2>
+            <p class="text-primary-foreground/80 text-lg font-medium leading-relaxed">
+                Connect with our team to explore immersive demos, partnership opportunities, or join our research community.
+            </p>
+            <div class="space-y-8">
+                <div class="flex gap-6 group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-primary transition-all duration-500">
+                        <i data-feather="mail" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-widest text-primary-foreground/60 mb-1">Direct Inquiries</p>
+                        <p class="text-2xl font-bold">naira@nbu.edu.ng</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-primary transition-all duration-500">
+                        <i data-feather="map-pin" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-widest text-primary-foreground/60 mb-1">Our Location</p>
+                        <p class="text-xl font-bold leading-tight">Nigerian British University, Awka-Enugu Expressway, Anambra State.</p>
+                    </div>
+                </div>
+            </div>
+            <a href="/contact" class="w-fit bg-white text-primary px-10 py-4 rounded-full font-bold shadow-xl shadow-black/10 hover:bg-slate-50 transition-all active:scale-95">
+                Get Full Contact Details
+            </a>
+        </div>
+    </section>
+
+    <!-- Newsletter / Subscribe Banner (Emergency Style) -->
+    <section class="py-16 bg-primary/95 text-white border-t border-white/10">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div class="flex items-center gap-6">
+                <div class="bg-white/20 p-5 rounded-full animate-pulse border border-white/30">
+                    <i data-feather="send" class="w-8 h-8 text-white"></i>
+                </div>
+                <div class="space-y-1">
+                    <h2 class="text-3xl font-extrabold tracking-tight">Stay Ahead with NAIRA</h2>
+                    <p class="text-primary-foreground/80 font-medium">Join our community for the latest African AI and XR innovation updates.</p>
+                </div>
+            </div>
+            <form id="newsletter-form-home" class="w-full md:w-auto flex flex-col sm:flex-row gap-4">
+                <input type="email" name="email" required class="px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:bg-white/20 transition-all min-w-[300px]" placeholder="Enter your email">
+                <button type="submit" class="bg-white text-primary px-10 py-4 rounded-full font-extrabold shadow-xl shadow-black/10 transition-all active:scale-95 whitespace-nowrap">
+                    Subscribe Now
+                </button>
+            </form>
+            <div id="newsletter-status-home" class="hidden absolute bottom-4 left-1/2 -translate-x-1/2"></div>
+        </div>
+    </section>
+</div>
 {% endblock %}
