@@ -817,14 +817,10 @@
     document.getElementById('start-tour-btn').onclick = () => {
         // Hide Intro UI
         const introUI = document.getElementById('intro-ui');
-        introUI.style.opacity = '0';
-        introUI.style.pointerEvents = 'none';
-        introUI.style.transform = 'translateX(-50px)';
+        introUI.style.display = 'none';
 
         const sidebar = document.getElementById('ai-sidebar');
-        sidebar.style.transform = 'translateX(100%)';
-        sidebar.style.opacity = '0';
-        sidebar.style.pointerEvents = 'none';
+        sidebar.style.display = 'none';
 
         // Hide Build Panel too for full immersion
         const buildPanel = document.querySelector('.absolute.bottom-8.right-8.z-40.w-80');
