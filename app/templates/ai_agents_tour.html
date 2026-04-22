@@ -692,6 +692,31 @@
         // Update Dynamic Connections
         connections.forEach(c => c.update());
 
+        // Update Beams
+        for(let i = collaborationBeams.length - 1; i >= 0; i--) {
+            const b = collaborationBeams[i];
+            b.life -= 0.01;
+            b.line.material.opacity = b.life * 0.5;
+            if(b.life <= 0) {
+                scene.remove(b.line);
+                collaborationBeams.splice(i, 1);
+            }
+        }
+
+        // Randomly trigger beams between nodes to show knowledge flow
+        if (Math.random() < 0.02) {
+            const nodes = [...pioneerPlanes, ...phaseNodes];
+            const n1 = nodes[Math.floor(Math.random() * nodes.length)];
+            const n2 = nodes[Math.floor(Math.random() * nodes.length)];
+            if (n1 && n2 && n1 !== n2) {
+                const p1 = new THREE.Vector3();
+                const p2 = new THREE.Vector3();
+                n1.getWorldPosition(p1);
+                n2.getWorldPosition(p2);
+                createBeam(p1, p2);
+            }
+        }
+
         // Update Sparks
         for(let i=sparks.length-1; i>=0; i--) {
             const s = sparks[i];
@@ -787,8 +812,10 @@
             controls.target.copy(worldPos);
         } else {
             const mesh = phaseNodes.find(p => p.userData.data.id === step.data.id);
-            targetPos = mesh.position.clone().add(new THREE.Vector3(0, 30, 80));
-            controls.target.copy(mesh.position);
+            const worldPos = new THREE.Vector3();
+            mesh.getWorldPosition(worldPos);
+            targetPos = worldPos.clone().add(new THREE.Vector3(0, 30, 80));
+            controls.target.copy(worldPos);
         }
 
         // Camera move
