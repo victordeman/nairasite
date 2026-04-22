@@ -713,6 +713,8 @@
             b.line.material.opacity = b.life * 0.5;
             if(b.life <= 0) {
                 scene.remove(b.line);
+                b.line.geometry.dispose();
+                b.line.material.dispose();
                 collaborationBeams.splice(i, 1);
             }
         }
@@ -739,6 +741,8 @@
             s.material.opacity = s.userData.life;
             if(s.userData.life <= 0) {
                 scene.remove(s);
+                s.geometry.dispose();
+                s.material.dispose();
                 sparks.splice(i, 1);
             }
         }
