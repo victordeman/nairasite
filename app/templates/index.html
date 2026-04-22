@@ -32,24 +32,24 @@
                 </div>
             </div>
 
-            <div class="hidden md:block relative h-[550px]">
-                <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10"></div>
-                <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] duration-500">
+            <div id="active-xr-experience" class="hidden md:block relative h-[550px] cursor-pointer group/xr" onclick="launchAITour()">
+                <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
+                <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
                     <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
                         <!-- Replicating the "Clinical" look with a Tech/XR vibe -->
                         <div class="relative w-full h-full border-4 border-slate-50 rounded-2xl overflow-hidden bg-slate-900 flex items-center justify-center">
                              <div class="absolute inset-0 opacity-20">
                                 <div class="absolute inset-0" style="background-image: radial-gradient(#2563EB 1px, transparent 1px); background-size: 20px 20px;"></div>
                              </div>
-                             <i data-feather="box" class="w-48 h-48 text-primary/40 animate-bounce"></i>
-                             <div class="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20">
+                             <i data-feather="box" class="w-48 h-48 text-primary/40 animate-pulse"></i>
+                             <div class="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 group-hover/xr:bg-primary/20 transition-colors">
                                 <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center group-hover/xr:scale-110 transition-transform">
                                         <i data-feather="zap" class="w-6 h-6 text-white"></i>
                                     </div>
                                     <div>
-                                        <p class="text-white font-bold text-sm">Active XR Tour</p>
-                                        <p class="text-white/60 text-xs uppercase tracking-widest">Experience Now</p>
+                                        <p class="text-white font-bold text-sm uppercase tracking-wider">Active XR Experience</p>
+                                        <p class="text-white/60 text-[10px] uppercase tracking-widest">AI Agents: Autonomous Intelligence</p>
                                     </div>
                                 </div>
                              </div>
@@ -384,7 +384,7 @@
     </section>
 </div>
 <script>
-    document.getElementById('launch-ai-tour').addEventListener('click', function() {
+    function launchAITour() {
         // Instant Vanish Logic
         document.body.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
         document.body.style.opacity = '0';
@@ -393,6 +393,7 @@
         setTimeout(() => {
             window.location.href = '/ai-agents-tour';
         }, 500);
-    });
+    }
+    document.getElementById('launch-ai-tour').addEventListener('click', launchAITour);
 </script>
 {% endblock %}

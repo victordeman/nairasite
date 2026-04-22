@@ -4,11 +4,19 @@
 <div id="ai-tour-container" class="w-full h-screen bg-black relative flex overflow-hidden">
     <!-- Main 3D Scene -->
     <div id="ai-canvas-container" class="flex-1 h-full relative z-0">
+        <!-- Persistent Exit Link -->
+        <div class="absolute top-8 left-8 z-50">
+             <a href="/" class="flex items-center gap-2 text-white/40 hover:text-white transition-all description-text" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700;">
+                <i data-feather="arrow-left" class="w-4 h-4"></i>
+                Back to NAIRA Home
+            </a>
+        </div>
+
         <!-- Instructional Overlays -->
-        <div class="absolute top-8 left-8 z-40 space-y-4">
+        <div id="intro-ui" class="absolute top-24 left-8 z-40 space-y-4 transition-all duration-1000">
             <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <h1 class="english-label" style="margin-bottom: 8px;">AI Agents 3D Tour</h1>
-                <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #ffffff !important;">Autonomous Intelligence</h2>
+                <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #ffffff !important;">“Autonomous Intelligence: The Rise of AI Agents”</h2>
                 <p class="description-text max-w-lg">An immersive journey from early reactive systems to collaborative multi-agent ecosystems that perceive, reason, plan, act, and learn in the real world.</p>
             </div>
             <button id="start-tour-btn" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all active:scale-95 description-text" style="font-size: 14px; text-transform: uppercase;">
@@ -17,7 +25,7 @@
             </button>
         </div>
 
-        <div class="absolute bottom-8 left-8 z-40 flex flex-col gap-4">
+        <div class="absolute bottom-8 left-24 z-40 flex flex-col gap-4 transition-all duration-1000">
             <div id="agent-status-panel" class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <div class="flex flex-col">
                     <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Agent Core State</span>
@@ -36,7 +44,7 @@
         </div>
 
         <!-- Floating Controls Panel -->
-        <div class="absolute bottom-8 right-8 z-40 w-80 space-y-4">
+        <div class="absolute bottom-8 right-8 z-40 w-80 space-y-4 transition-all duration-1000">
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-6">
                 <div class="space-y-2">
                     <h3 class="english-label" style="font-size: 12px;">Build Your Own Agent</h3>
@@ -143,6 +151,7 @@
             id: 'turing',
             name: 'Alan Turing',
             year: 1950,
+            image: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg',
             contribution: 'Proposed the Turing Test — the foundational benchmark for machine intelligence.',
             content: `
                 <div class="space-y-4">
@@ -155,6 +164,7 @@
             id: 'mccarthy',
             name: 'John McCarthy',
             year: '1955-1956',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/John_McCarthy_Stanford.jpg',
             contribution: 'Coined the term "Artificial Intelligence" and launched the Dartmouth Conference.',
             content: `
                 <p>John McCarthy was the primary organizer of the Dartmouth Summer Research Project on Artificial Intelligence in 1956, where the field was formally founded. He envisioned AI as the science and engineering of making intelligent machines, especially intelligent computer programs.</p>
@@ -164,6 +174,7 @@
             id: 'brooks',
             name: 'Rodney Brooks',
             year: '1980s',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Rodney_Brooks_2011.jpg',
             contribution: 'Developed the Subsumption Architecture — first practical reactive agents.',
             content: `
                 <p>Brooks challenged the "top-down" symbolic AI approach by proposing that "intelligence is without representation." His subsumption architecture allowed robots to react to their environment in real-time without complex internal models, leading to the first generation of successful autonomous mobile robots.</p>
@@ -173,6 +184,7 @@
             id: 'godfathers',
             name: 'Bengio, Hinton & LeCun',
             year: '2010s',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Bengio_Hinton_LeCun_2019.jpg',
             contribution: '2018 Turing Award winners whose deep learning work enabled modern LLM agents.',
             content: `
                 <p>Often called the "Godfathers of AI," their decades of persistence in neural network research paved the way for the Deep Learning revolution. Their work on backpropagation, CNNs, and large-scale training is the technical bedrock upon which modern Large Language Model (LLM) agents are built.</p>
@@ -182,6 +194,7 @@
             id: 'yao',
             name: 'Shunyu Yao et al.',
             year: 2022,
+            image: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/ReAct_Schema.png',
             contribution: 'Introduced the ReAct (Reason + Act) framework.',
             content: `
                 <p>The ReAct framework revolutionized how we use LLMs as agents. By prompting models to generate verbal reasoning traces (thoughts) and actions (tool calls) in an interleaved manner, ReAct significantly improves the accuracy and reliability of autonomous tasks.</p>
@@ -191,6 +204,7 @@
             id: 'russell',
             name: 'Russell & Norvig',
             year: 'Present',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Stuart_Russell_2019.jpg',
             contribution: 'Authors of the definitive AI textbook that formalized the intelligent agent paradigm.',
             content: `
                 <p>Stuart Russell and Peter Norvig's "Artificial Intelligence: A Modern Approach" is the global standard for AI education. They popularized the view of AI as the study of <strong>intelligent agents</strong>—entities that receive percepts from the environment and perform actions.</p>
@@ -774,7 +788,7 @@
         }
     });
 
-    function showInfo(userData) {
+    window.showInfo = function(userData) {
         const { type, data } = userData;
         const title = document.getElementById('ai-panel-title');
         const subtitle = document.getElementById('ai-panel-subtitle');
@@ -782,7 +796,13 @@
 
         title.textContent = data.name || data.title;
         subtitle.textContent = type === 'pioneer' ? `English: Pioneer (${data.year})` : `English: ${data.subtitle}`;
-        content.innerHTML = data.content;
+
+        let html = '';
+        if (type === 'pioneer' && data.image) {
+            html += `<img src="${data.image}" alt="${data.name}" class="w-full h-48 object-cover rounded-2xl mb-6 border border-white/10 shadow-lg">`;
+        }
+        html += data.content;
+        content.innerHTML = html;
 
         infoPanel.classList.remove('hidden');
     }
@@ -794,6 +814,32 @@
     const tourPoints = [...PIONEERS.map(p => ({ type: 'pioneer', data: p })), ...PHASES.map(p => ({ type: 'phase', data: p }))];
 
     document.getElementById('start-tour-btn').onclick = () => {
+        // Hide Intro UI
+        const introUI = document.getElementById('intro-ui');
+        introUI.style.opacity = '0';
+        introUI.style.pointerEvents = 'none';
+        introUI.style.transform = 'translateX(-50px)';
+
+        const sidebar = document.getElementById('ai-sidebar');
+        sidebar.style.transform = 'translateX(100%)';
+        sidebar.style.opacity = '0';
+        sidebar.style.pointerEvents = 'none';
+
+        // Hide Build Panel too for full immersion
+        const buildPanel = document.querySelector('.absolute.bottom-8.right-8.z-40.w-80');
+        if (buildPanel) {
+            buildPanel.style.opacity = '0';
+            buildPanel.style.pointerEvents = 'none';
+            buildPanel.style.transform = 'translateY(50px)';
+        }
+
+        const statusPanel = document.getElementById('agent-status-panel');
+        if (statusPanel) {
+            statusPanel.parentElement.style.opacity = '0';
+            statusPanel.parentElement.style.pointerEvents = 'none';
+            statusPanel.parentElement.style.transform = 'translateY(50px)';
+        }
+
         tourIndex = 0;
         runTourStep();
     };
@@ -882,7 +928,13 @@
         setTimeout(() => particlesMat.opacity = 0.6, 500);
     }
 
-    document.getElementById('reset-experience').onclick = () => location.reload();
+    document.getElementById('reset-experience').onclick = () => {
+        // Restore UI
+        document.querySelector('.absolute.top-8.left-8').style.opacity = '1';
+        document.querySelector('.absolute.top-8.left-8').style.pointerEvents = 'all';
+        document.getElementById('ai-sidebar').style.transform = 'translateX(0)';
+        location.reload();
+    };
 
     // AI Chat
     const chatForm = document.getElementById('ai-chat-form');
