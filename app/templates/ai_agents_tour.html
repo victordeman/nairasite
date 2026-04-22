@@ -1,0 +1,1018 @@
+{% extends "base.html" %}
+{% block title %}AI Agents 3D Tour - NAIRA{% endblock %}
+{% block content %}
+<div id="ai-tour-container" class="w-full h-screen bg-black relative flex overflow-hidden">
+    <!-- Main 3D Scene -->
+    <div id="ai-canvas-container" class="flex-1 h-full relative z-0">
+        <!-- Instructional Overlays -->
+        <div class="absolute top-8 left-8 z-40 space-y-4">
+            <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
+                <h1 class="english-label" style="margin-bottom: 8px;">AI Agents 3D Tour</h1>
+                <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #ffffff !important;">Autonomous Intelligence</h2>
+                <p class="description-text max-w-lg">An immersive journey from early reactive systems to collaborative multi-agent ecosystems that perceive, reason, plan, act, and learn in the real world.</p>
+            </div>
+            <button id="start-tour-btn" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all active:scale-95 description-text" style="font-size: 14px; text-transform: uppercase;">
+                <i data-feather="play" class="w-4 h-4"></i>
+                Start Guided Tour
+            </button>
+        </div>
+
+        <div class="absolute bottom-8 left-8 z-40 flex flex-col gap-4">
+            <div id="agent-status-panel" class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="flex flex-col">
+                    <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Agent Core State</span>
+                    <span id="core-state-val" class="description-text" style="color: #22d3ee; font-size: 22px; font-weight: 700;">Simple Reflex</span>
+                </div>
+                <div class="w-px h-10 bg-white/10"></div>
+                <div class="flex flex-col">
+                    <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Active Modules</span>
+                    <span id="active-modules-val" class="description-text" style="color: #22d3ee; font-size: 22px; font-weight: 700;">Perception</span>
+                </div>
+            </div>
+
+            <div class="english-label" style="font-size: 11px; letter-spacing: 0.2em; padding: 10px 24px; border-radius: 999px; background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1); display: inline-block; width: fit-content; font-weight: 600;">
+                Drag to rotate · Scroll to zoom · Click nodes to explore Pioneers & Phases
+            </div>
+        </div>
+
+        <!-- Floating Controls Panel -->
+        <div class="absolute bottom-8 right-8 z-40 w-80 space-y-4">
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-6">
+                <div class="space-y-2">
+                    <h3 class="english-label" style="font-size: 12px;">Build Your Own Agent</h3>
+                    <p class="description-text" style="font-size: 12px; opacity: 0.8;">Drag modules to evolve the Agent Core</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="module-btn p-3 rounded-xl border border-white/10 text-xs font-bold text-white hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all" data-module="memory">MEMORY</button>
+                    <button class="module-btn p-3 rounded-xl border border-white/10 text-xs font-bold text-white hover:bg-magenta-500/20 hover:border-magenta-500/50 transition-all" data-module="tools">TOOLS</button>
+                    <button class="module-btn p-3 rounded-xl border border-white/10 text-xs font-bold text-white hover:bg-blue-500/20 hover:border-blue-500/50 transition-all" data-module="planning">PLANNING</button>
+                    <button class="module-btn p-3 rounded-xl border border-white/10 text-xs font-bold text-white hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all" data-module="learning">LEARNING</button>
+                </div>
+
+                <div class="pt-4 border-t border-white/5 space-y-4">
+                    <button id="reset-experience" class="w-full py-4 px-6 bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-white/10 transition-all description-text shadow-lg" style="font-size: 13px; text-transform: uppercase; text-align: center; font-weight: 600;">
+                        Reset Experience
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div id="ai-info-panel" class="description-panel hidden">
+            <button id="close-ai-info" class="close-btn">
+                <i data-feather="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="space-y-6">
+                <div id="ai-panel-header" class="transition-all duration-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div id="status-dot" class="w-2 h-2 rounded-full transition-all duration-700" style="background-color: rgb(34, 211, 238); box-shadow: rgb(34, 211, 238) 0px 0px 20px;"></div>
+                        <span id="ai-panel-subtitle" class="english-label" style="margin-bottom: 0;">AI Agent Component</span>
+                    </div>
+                    <h2 id="ai-panel-title" class="text-[#ffffff] font-medium text-2xl tracking-tight leading-none"></h2>
+                </div>
+
+                <div id="ai-panel-content" class="description-text overflow-y-auto max-h-[50vh] pr-2"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-8 space-y-3">
+                <button id="ai-drill-down" class="w-full transition-all text-white py-5 rounded-[24px] flex items-center justify-center gap-3 shadow-2xl active:scale-[0.97] border tracking-wide description-text" style="font-size: 14px; text-transform: uppercase; border-color: rgba(34, 211, 238, 0.5); color: rgb(34, 211, 238); background: rgba(34, 211, 238, 0.1);">
+                    <i data-feather="zoom-in" class="w-5 h-5"></i>
+                    Analyze Framework
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Sidebar -->
+    <aside id="ai-sidebar" class="w-96 bg-[#0a0f1a] border-l border-slate-800/40 flex flex-col z-40 transform transition-transform duration-500 translate-x-0 lg:relative fixed right-0 top-0 h-full">
+        <div class="p-6 border-b border-white/5 flex items-center justify-between bg-slate-900/40">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-cyan-600/20 flex items-center justify-center">
+                    <i data-feather="cpu" class="w-5 h-5 text-cyan-400"></i>
+                </div>
+                <div>
+                    <p class="english-label" style="font-size: 10px; margin-bottom: 2px;">AI Assistant</p>
+                    <h3 class="description-text" style="font-size: 14px; color: #ffffff;">NAIRA Agentic Specialist</h3>
+                </div>
+            </div>
+            <button id="close-sidebar" class="p-2 text-white hover:text-cyan-400 transition-colors lg:hidden">
+                <i data-feather="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Chat Body -->
+        <div id="ai-chat-body" class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-950/20">
+            <div class="p-4 rounded-2xl" style="background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
+                <span class="english-label" style="font-size: 10px; margin-bottom: 8px;">Introduction</span>
+                <p class="description-text" style="font-size: 14px; color: #ffffff;">Welcome to the autonomous frontier. I am here to guide you through the evolution of AI agents, from simple reflex loops to complex multi-agent reasoning. What aspect of agentic AI should we explore first?</p>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="p-6 border-t border-white/5 bg-slate-900/40">
+            <form id="ai-chat-form" class="relative">
+                <input type="text" id="ai-chat-input" placeholder="Ask about AI agents..." class="w-full bg-slate-950 border border-white/10 rounded-xl py-4 pl-4 pr-12 description-text focus:outline-none focus:border-cyan-500 transition-all" style="font-size: 14px;">
+                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-cyan-600 rounded-lg text-white hover:bg-cyan-700 transition-all">
+                    <i data-feather="arrow-up" class="w-4 h-4"></i>
+                </button>
+            </form>
+        </div>
+    </aside>
+</div>
+
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+</script>
+
+<script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { DragControls } from 'three/addons/controls/DragControls.js';
+
+    // --- DATA ---
+    const PIONEERS = [
+        {
+            id: 'turing',
+            name: 'Alan Turing',
+            year: 1950,
+            contribution: 'Proposed the Turing Test — the foundational benchmark for machine intelligence.',
+            content: `
+                <div class="space-y-4">
+                    <p>Alan Turing's seminal 1950 paper, "Computing Machinery and Intelligence," introduced what we now call the Turing Test. It shifted the question from "Can machines think?" to "Can machines imitate human intelligence?"</p>
+                    <p>This benchmark established the first operational goal for artificial intelligence: an agent that can interact via language so effectively that it is indistinguishable from a human.</p>
+                </div>
+            `
+        },
+        {
+            id: 'mccarthy',
+            name: 'John McCarthy',
+            year: '1955-1956',
+            contribution: 'Coined the term "Artificial Intelligence" and launched the Dartmouth Conference.',
+            content: `
+                <p>John McCarthy was the primary organizer of the Dartmouth Summer Research Project on Artificial Intelligence in 1956, where the field was formally founded. He envisioned AI as the science and engineering of making intelligent machines, especially intelligent computer programs.</p>
+            `
+        },
+        {
+            id: 'brooks',
+            name: 'Rodney Brooks',
+            year: '1980s',
+            contribution: 'Developed the Subsumption Architecture — first practical reactive agents.',
+            content: `
+                <p>Brooks challenged the "top-down" symbolic AI approach by proposing that "intelligence is without representation." His subsumption architecture allowed robots to react to their environment in real-time without complex internal models, leading to the first generation of successful autonomous mobile robots.</p>
+            `
+        },
+        {
+            id: 'godfathers',
+            name: 'Bengio, Hinton & LeCun',
+            year: '2010s',
+            contribution: '2018 Turing Award winners whose deep learning work enabled modern LLM agents.',
+            content: `
+                <p>Often called the "Godfathers of AI," their decades of persistence in neural network research paved the way for the Deep Learning revolution. Their work on backpropagation, CNNs, and large-scale training is the technical bedrock upon which modern Large Language Model (LLM) agents are built.</p>
+            `
+        },
+        {
+            id: 'yao',
+            name: 'Shunyu Yao et al.',
+            year: 2022,
+            contribution: 'Introduced the ReAct (Reason + Act) framework.',
+            content: `
+                <p>The ReAct framework revolutionized how we use LLMs as agents. By prompting models to generate verbal reasoning traces (thoughts) and actions (tool calls) in an interleaved manner, ReAct significantly improves the accuracy and reliability of autonomous tasks.</p>
+            `
+        },
+        {
+            id: 'russell',
+            name: 'Russell & Norvig',
+            year: 'Present',
+            contribution: 'Authors of the definitive AI textbook that formalized the intelligent agent paradigm.',
+            content: `
+                <p>Stuart Russell and Peter Norvig's "Artificial Intelligence: A Modern Approach" is the global standard for AI education. They popularized the view of AI as the study of <strong>intelligent agents</strong>—entities that receive percepts from the environment and perform actions.</p>
+            `
+        }
+    ];
+
+    const PHASES = [
+        {
+            id: 1,
+            title: "Phase 1: Foundations of AI Agents",
+            subtitle: "Foundations of AI Agents",
+            content: `
+                <div class="space-y-6">
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">What is an AI Agent?</h4>
+                        <ul class="list-disc pl-5 space-y-2 opacity-90">
+                            <li><strong>Definition:</strong> An autonomous entity that perceives its environment through sensors, reasons about it, and acts to achieve goals using actuators or tools.</li>
+                            <li><strong>Core Loop:</strong> Perception → Reasoning → Planning → Action → Learning/Feedback.</li>
+                            <li><strong>Key Properties:</strong> Autonomy, reactivity, proactivity, social ability (especially in multi-agent systems).</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Types of AI Agents</h4>
+                        <ul class="list-disc pl-5 space-y-2 opacity-90">
+                            <li><strong>Simple Reflex Agents</strong> (rule-based, no memory)</li>
+                            <li><strong>Model-based Reflex Agents</strong> (maintain internal state)</li>
+                            <li><strong>Goal-based Agents</strong> (search for goal states)</li>
+                            <li><strong>Utility-based Agents</strong> (optimize expected utility)</li>
+                            <li><strong>Learning Agents</strong> (improve over time via reinforcement or supervised learning).</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">ReAct Framework (Reason + Act)</h4>
+                        <ul class="list-disc pl-5 space-y-2 opacity-90">
+                            <li><strong>Core Idea:</strong> Agents alternate between reasoning (generating thoughts) and acting (calling tools or APIs).</li>
+                            <li><strong>ReAct Loop:</strong> Thought → Action → Observation → Thought… until goal is achieved.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+        },
+        {
+            id: 2,
+            title: "Phase 2: Frameworks & Architectures",
+            subtitle: "Frameworks & Architectures",
+            content: `
+                <div class="space-y-6">
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Single-Agent Frameworks</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>ReAct (2022)</li>
+                            <li>LangChain & LlamaIndex Agents</li>
+                            <li>LangGraph – Stateful workflows</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Multi-Agent Frameworks</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li><strong>AutoGen (Microsoft)</strong> – Conversational multi-agent teams</li>
+                            <li><strong>CrewAI</strong> – Role-based collaborative crews</li>
+                            <li><strong>MetaGPT</strong> – Multi-agent software development simulation</li>
+                            <li><strong>LangGraph Multi-Agent coordination</strong></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Technical Architecture</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li><strong>LLM Backbone + Tools + Memory + Planner</strong></li>
+                            <li><strong>Agentic Design Patterns</strong> (Reflection, Tool Use, Planning, Multi-Agent Debate)</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+        },
+        {
+            id: 3,
+            title: "Phase 3: Evolution, Applications & Future",
+            subtitle: "Evolution, Applications & Future",
+            content: `
+                <div class="space-y-6">
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Applications of AI Agents</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>Personal assistants & automation</li>
+                            <li>Scientific discovery</li>
+                            <li>Software engineering (Dev agents)</li>
+                            <li>Enterprise workflows</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Challenges & Ethical Considerations</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>Hallucinations & safety, Agent alignment, Multi-agent coordination risks</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">The Future of AI Agents</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>Agentic AI as the next paradigm after LLMs</li>
+                            <li>Fully autonomous organizations of agents</li>
+                            <li>Human-AI hybrid teams</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+        }
+    ];
+
+    // --- THREE.JS ENGINE ---
+    const container = document.getElementById('ai-canvas-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
+
+    const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 2000);
+    camera.position.set(0, 500, 1000); // Start far for fly-in
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    // --- DRAG CONTROLS SETUP ---
+    window.draggableObjects = [];
+    let draggableObjects = window.draggableObjects;
+    const dragControls = new DragControls(draggableObjects, camera, renderer.domElement);
+
+    dragControls.addEventListener('dragstart', function (event) {
+        controls.enabled = false;
+        if (event.object.material.emissive) {
+            event.object.material.emissiveIntensity = 2;
+        }
+    });
+
+    dragControls.addEventListener('dragend', function (event) {
+        controls.enabled = true;
+        if (event.object.material.emissive) {
+            event.object.material.emissiveIntensity = 0.5;
+        }
+    });
+
+    // --- Lights ---
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    const mainLight = new THREE.PointLight(0x22d3ee, 2, 500);
+    mainLight.position.set(50, 50, 50);
+    scene.add(mainLight);
+
+    // --- Cosmic Environment ---
+    function createStarfield() {
+        const geo = new THREE.BufferGeometry();
+        const vertices = [];
+        const colors = [];
+        for (let i = 0; i < 15000; i++) {
+            vertices.push(
+                THREE.MathUtils.randFloatSpread(2500),
+                THREE.MathUtils.randFloatSpread(2500),
+                THREE.MathUtils.randFloatSpread(2500)
+            );
+            const color = new THREE.Color();
+            color.setHSL(Math.random(), 0.7, 0.9);
+            colors.push(color.r, color.g, color.b);
+        }
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        const mat = new THREE.PointsMaterial({ size: 1.2, vertexColors: true, transparent: true, opacity: 0.8 });
+        return new THREE.Points(geo, mat);
+    }
+    scene.add(createStarfield());
+
+    // Nebula Effect (Glowing Planes)
+    function createNebula(color, pos) {
+        const geo = new THREE.PlaneGeometry(1000, 1000);
+        const canvas = document.createElement('canvas');
+        canvas.width = 512; canvas.height = 512;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
+        grad.addColorStop(0, color);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0,0,512,512);
+        const tex = new THREE.CanvasTexture(canvas);
+        const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.15, depthWrite: false, side: THREE.DoubleSide });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.copy(pos);
+        return mesh;
+    }
+    scene.add(createNebula('rgba(34, 211, 238, 1)', new THREE.Vector3(-500, -200, -500)));
+    scene.add(createNebula('rgba(236, 72, 153, 1)', new THREE.Vector3(500, 200, -800)));
+
+    // Thought Particles
+    const particleCount = 200;
+    const particlesGeo = new THREE.BufferGeometry();
+    const particlePos = new Float32Array(particleCount * 3);
+    for(let i=0; i<particleCount*3; i++) particlePos[i] = THREE.MathUtils.randFloatSpread(100);
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+    const particlesMat = new THREE.PointsMaterial({ color: 0x22d3ee, size: 2, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+    const thoughtParticles = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(thoughtParticles);
+
+    // Advanced Particle Systems
+    const sparks = [];
+    function createSpark(pos, color) {
+        const geo = new THREE.SphereGeometry(0.5, 8, 8);
+        const mat = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 1 });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.copy(pos);
+        mesh.userData = {
+            velocity: new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).multiplyScalar(2),
+            life: 1.0
+        };
+        scene.add(mesh);
+        sparks.push(mesh);
+    }
+
+    function triggerToolBurst() {
+        for(let i=0; i<30; i++) {
+            createSpark(new THREE.Vector3(0,0,0), 0xec4899);
+        }
+    }
+
+    const collaborationBeams = [];
+    function createBeam(start, end) {
+        const material = new THREE.LineBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.5 });
+        const points = [start, end];
+        const geo = new THREE.BufferGeometry().setFromPoints(points);
+        const line = new THREE.Line(geo, material);
+        scene.add(line);
+        collaborationBeams.push({ line, life: 1.0 });
+    }
+
+    // --- Agent Core ---
+    const coreGroup = new THREE.Group();
+    scene.add(coreGroup);
+
+    const coreGeo = new THREE.SphereGeometry(15, 64, 64);
+    const coreMat = new THREE.MeshStandardMaterial({
+        color: 0x22d3ee,
+        emissive: 0x22d3ee,
+        emissiveIntensity: 0.5,
+        metalness: 0.8,
+        roughness: 0.2,
+        wireframe: true
+    });
+    const agentCore = new THREE.Mesh(coreGeo, coreMat);
+    coreGroup.add(agentCore);
+
+    const innerCore = new THREE.Mesh(
+        new THREE.SphereGeometry(10, 32, 32),
+        new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x22d3ee, emissiveIntensity: 2 })
+    );
+    coreGroup.add(innerCore);
+
+    // --- Pioneer Timeline (Helix) ---
+    const timelineGroup = new THREE.Group();
+    scene.add(timelineGroup);
+
+    const pioneerPlanes = [];
+    PIONEERS.forEach((p, i) => {
+        const angle = (i / PIONEERS.length) * Math.PI * 2;
+        const radius = 100;
+        const x = Math.cos(angle) * radius;
+        const z = Math.sin(angle) * radius;
+        const y = (i - PIONEERS.length/2) * 25; // Helix shape
+
+        const group = new THREE.Group();
+        group.position.set(x, y, z);
+        group.lookAt(0, 0, 0);
+        group.rotation.y += Math.PI / 6; // Tilt
+
+        // Plane for "Portrait"
+        const geo = new THREE.PlaneGeometry(15, 20);
+        const canvas = document.createElement('canvas');
+        canvas.width = 512; canvas.height = 768;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'rgba(24, 24, 27, 0.9)';
+        ctx.fillRect(0, 0, 512, 768);
+        ctx.strokeStyle = '#22d3ee';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(5, 5, 502, 758);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 60px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText(p.name, 256, 100);
+        ctx.font = '40px Inter';
+        ctx.fillStyle = '#22d3ee';
+        ctx.fillText(p.year, 256, 160);
+
+        ctx.font = '32px Inter';
+        ctx.fillStyle = '#ffffff';
+        const words = p.contribution.split(' ');
+        let line = '';
+        let currentY = 250;
+        words.forEach(w => {
+            if (ctx.measureText(line + w).width > 400) {
+                ctx.fillText(line, 256, currentY);
+                line = w + ' ';
+                currentY += 45;
+            } else {
+                line += w + ' ';
+            }
+        });
+        ctx.fillText(line, 256, currentY);
+
+        const tex = new THREE.CanvasTexture(canvas);
+        const mat = new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.userData = { type: 'pioneer', data: p };
+        group.add(mesh);
+        draggableObjects.push(mesh);
+
+        // Neon Glow Edge
+        const edgeGeo = new THREE.EdgesGeometry(geo);
+        const edgeMat = new THREE.LineBasicMaterial({ color: 0x22d3ee, linewidth: 2 });
+        const edges = new THREE.LineSegments(edgeGeo, edgeMat);
+        group.add(edges);
+
+        timelineGroup.add(group);
+        pioneerPlanes.push(mesh);
+    });
+
+    // --- Module Nodes (For Build Your Own Agent) ---
+    window.moduleNodes = [];
+    const moduleNodes = window.moduleNodes;
+    const MODULE_TYPES = [
+        { id: 'memory', name: 'MEMORY', color: 0x22d3ee },
+        { id: 'tools', name: 'TOOLS', color: 0xec4899 },
+        { id: 'planning', name: 'PLANNING', color: 0x3b82f6 },
+        { id: 'learning', name: 'LEARNING', color: 0x10b981 }
+    ];
+
+    MODULE_TYPES.forEach((m, i) => {
+        const geo = new THREE.BoxGeometry(8, 8, 8);
+        const mat = new THREE.MeshStandardMaterial({
+            color: m.color,
+            emissive: m.color,
+            emissiveIntensity: 0.5,
+            transparent: true,
+            opacity: 0.8
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(100, -50 + i * 20, 0);
+        mesh.userData = { type: 'module', id: m.id };
+        scene.add(mesh);
+        moduleNodes.push(mesh);
+        draggableObjects.push(mesh);
+
+        // Label
+        const label = createTextLabel(m.name);
+        label.position.copy(mesh.position).add(new THREE.Vector3(0, 8, 0));
+        scene.add(label);
+        mesh.userData.label = label;
+    });
+
+    dragControls.addEventListener('drag', function (event) {
+        if (event.object.userData.type === 'module') {
+            event.object.userData.label.position.copy(event.object.position).add(new THREE.Vector3(0, 8, 0));
+
+            // Check proximity to Core
+            const dist = event.object.position.distanceTo(new THREE.Vector3(0,0,0));
+            if (dist < 30) {
+                if (!activeModules.includes(event.object.userData.id)) {
+                    activeModules.push(event.object.userData.id);
+                    updateCore();
+                    // Visual feedback
+                    event.object.material.emissiveIntensity = 5;
+                }
+            }
+        }
+    });
+
+    // --- Phase Nodes (Orbiting Shells style) ---
+    const phaseNodes = [];
+    const connections = [];
+
+    PHASES.forEach((p, i) => {
+        const group = new THREE.Group();
+        const angle = (i / PHASES.length) * Math.PI * 2 + Math.PI / 4;
+        group.position.set(Math.cos(angle) * 180, 0, Math.sin(angle) * 180);
+
+        // Inner core of phase
+        const geo = new THREE.IcosahedronGeometry(10, 1);
+        const mat = new THREE.MeshStandardMaterial({
+            color: 0x22d3ee,
+            emissive: 0x22d3ee,
+            emissiveIntensity: 0.8,
+            wireframe: true
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.userData = { type: 'phase', data: p };
+        group.add(mesh);
+
+        // Outer shell
+        const shellGeo = new THREE.SphereGeometry(14, 32, 32);
+        const shellMat = new THREE.MeshPhongMaterial({
+            color: 0x22d3ee,
+            transparent: true,
+            opacity: 0.1,
+            side: THREE.BackSide
+        });
+        group.add(new THREE.Mesh(shellGeo, shellMat));
+
+        scene.add(group);
+        phaseNodes.push(mesh);
+        draggableObjects.push(mesh);
+
+        // Label
+        const label = createTextLabel(p.title);
+        label.position.copy(group.position).add(new THREE.Vector3(0, 20, 0));
+        scene.add(label);
+    });
+
+    // --- Connections (Dynamic Glowing Tubes) ---
+    function createConnection(startObj, endPos) {
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x22d3ee,
+            emissive: 0x22d3ee,
+            emissiveIntensity: 2,
+            transparent: true,
+            opacity: 0.3
+        });
+        const group = new THREE.Group();
+        scene.add(group);
+
+        return {
+            startObj,
+            endPos,
+            mesh: null,
+            update: function() {
+                if (this.mesh) {
+                    group.remove(this.mesh);
+                    this.mesh.geometry.dispose();
+                }
+                const startPos = new THREE.Vector3();
+                this.startObj.getWorldPosition(startPos);
+
+                const curve = new THREE.QuadraticBezierCurve3(
+                    startPos,
+                    new THREE.Vector3((startPos.x + this.endPos.x) / 2, (startPos.y + this.endPos.y) / 2 + 30, (startPos.z + this.endPos.z) / 2),
+                    this.endPos
+                );
+                const geometry = new THREE.TubeGeometry(curve, 20, 0.2, 8, false);
+                this.mesh = new THREE.Mesh(geometry, material);
+                group.add(this.mesh);
+            }
+        };
+    }
+
+    // Connect Pioneers to Phases and Core
+    PIONEERS.forEach((p, i) => {
+        const mesh = pioneerPlanes[i];
+        const connection = createConnection(mesh, new THREE.Vector3(0,0,0));
+        connections.push(connection);
+    });
+    phaseNodes.forEach(node => {
+        const connection = createConnection(node, new THREE.Vector3(0,0,0));
+        connections.push(connection);
+    });
+
+    function createTextLabel(text) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512; canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'rgba(0,0,0,0)';
+        ctx.fillRect(0,0,512,128);
+        ctx.font = 'bold 48px Inter';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.fillText(text.toUpperCase(), 256, 80);
+        const tex = new THREE.CanvasTexture(canvas);
+        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 5), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
+        return mesh;
+    }
+
+    // --- Animation Loop ---
+    function animate(t) {
+        requestAnimationFrame(animate);
+
+        agentCore.rotation.y += 0.01;
+        agentCore.rotation.x += 0.005;
+        innerCore.scale.setScalar(1 + Math.sin(t * 0.002) * 0.1);
+
+        timelineGroup.rotation.y += 0.002;
+        pioneerPlanes.forEach((p, i) => {
+            p.parent.position.y += Math.sin(t * 0.001 + i) * 0.05;
+        });
+
+        thoughtParticles.rotation.y += 0.001;
+        const positions = thoughtParticles.geometry.attributes.position.array;
+        for(let i=0; i<particleCount; i++) {
+            positions[i*3+1] += Math.sin(t * 0.001 + i) * 0.02;
+        }
+        thoughtParticles.geometry.attributes.position.needsUpdate = true;
+
+        // Update Dynamic Connections
+        connections.forEach(c => c.update());
+
+        // Update Beams
+        for(let i = collaborationBeams.length - 1; i >= 0; i--) {
+            const b = collaborationBeams[i];
+            b.life -= 0.01;
+            b.line.material.opacity = b.life * 0.5;
+            if(b.life <= 0) {
+                scene.remove(b.line);
+                collaborationBeams.splice(i, 1);
+            }
+        }
+
+        // Randomly trigger beams between nodes to show knowledge flow
+        if (Math.random() < 0.02) {
+            const nodes = [...pioneerPlanes, ...phaseNodes];
+            const n1 = nodes[Math.floor(Math.random() * nodes.length)];
+            const n2 = nodes[Math.floor(Math.random() * nodes.length)];
+            if (n1 && n2 && n1 !== n2) {
+                const p1 = new THREE.Vector3();
+                const p2 = new THREE.Vector3();
+                n1.getWorldPosition(p1);
+                n2.getWorldPosition(p2);
+                createBeam(p1, p2);
+            }
+        }
+
+        // Update Sparks
+        for(let i=sparks.length-1; i>=0; i--) {
+            const s = sparks[i];
+            s.position.add(s.userData.velocity);
+            s.userData.life -= 0.02;
+            s.material.opacity = s.userData.life;
+            if(s.userData.life <= 0) {
+                scene.remove(s);
+                sparks.splice(i, 1);
+            }
+        }
+
+        // Randomly trigger reasoning sparks from core
+        if (Math.random() < 0.1) {
+            createSpark(new THREE.Vector3(0,0,0), 0x22d3ee);
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    // Dramatic Fly-in
+    setTimeout(() => {
+        const startPos = camera.position.clone();
+        const endPos = new THREE.Vector3(0, 50, 150);
+        let progress = 0;
+        const duration = 120;
+        const flyIn = () => {
+            progress++;
+            camera.position.lerpVectors(startPos, endPos, progress/duration);
+            if (progress < duration) requestAnimationFrame(flyIn);
+        };
+        flyIn();
+    }, 500);
+
+    animate(0);
+
+    // --- Interactions ---
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const infoPanel = document.getElementById('ai-info-panel');
+
+    container.addEventListener('click', (e) => {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects([...pioneerPlanes, ...phaseNodes]);
+
+        if (intersects.length > 0) {
+            const obj = intersects[0].object;
+            showInfo(obj.userData);
+        } else {
+            infoPanel.classList.add('hidden');
+        }
+    });
+
+    function showInfo(userData) {
+        const { type, data } = userData;
+        const title = document.getElementById('ai-panel-title');
+        const subtitle = document.getElementById('ai-panel-subtitle');
+        const content = document.getElementById('ai-panel-content');
+
+        title.textContent = data.name || data.title;
+        subtitle.textContent = type === 'pioneer' ? `English: Pioneer (${data.year})` : `English: ${data.subtitle}`;
+        content.innerHTML = data.content;
+
+        infoPanel.classList.remove('hidden');
+    }
+
+    document.getElementById('close-ai-info').onclick = () => infoPanel.classList.add('hidden');
+
+    // --- Tour Logic ---
+    let tourIndex = 0;
+    const tourPoints = [...PIONEERS.map(p => ({ type: 'pioneer', data: p })), ...PHASES.map(p => ({ type: 'phase', data: p }))];
+
+    document.getElementById('start-tour-btn').onclick = () => {
+        tourIndex = 0;
+        runTourStep();
+    };
+
+    function runTourStep() {
+        if (tourIndex >= tourPoints.length) return;
+        const step = tourPoints[tourIndex];
+        showInfo(step);
+
+        let targetPos;
+        if (step.type === 'pioneer') {
+            const mesh = pioneerPlanes.find(p => p.userData.data.id === step.data.id);
+            const worldPos = new THREE.Vector3();
+            mesh.getWorldPosition(worldPos);
+            targetPos = worldPos.clone().add(worldPos.clone().normalize().multiplyScalar(40));
+            controls.target.copy(worldPos);
+        } else {
+            const mesh = phaseNodes.find(p => p.userData.data.id === step.data.id);
+            const worldPos = new THREE.Vector3();
+            mesh.getWorldPosition(worldPos);
+            targetPos = worldPos.clone().add(new THREE.Vector3(0, 30, 80));
+            controls.target.copy(worldPos);
+        }
+
+        // Camera move
+        const startPos = camera.position.clone();
+        let progress = 0;
+        const duration = 60;
+        const move = () => {
+            progress++;
+            camera.position.lerpVectors(startPos, targetPos, progress/duration);
+            if (progress < duration) requestAnimationFrame(move);
+        };
+        move();
+
+        tourIndex++;
+        setTimeout(runTourStep, 8000);
+    }
+
+    // --- Module Logic ---
+    let activeModules = ['Perception'];
+    document.querySelectorAll('.module-btn').forEach(btn => {
+        btn.onclick = () => {
+            const mod = btn.getAttribute('data-module');
+            if (!activeModules.includes(mod)) {
+                activeModules.push(mod);
+                btn.classList.add('bg-cyan-500/40', 'border-cyan-400');
+                updateCore();
+            }
+        };
+    });
+
+    function updateCore() {
+        triggerToolBurst();
+        document.getElementById('active-modules-val').textContent = activeModules.join(', ');
+        const count = activeModules.length;
+
+        // Visual Evolve Logic
+        if (count >= 5) {
+            document.getElementById('core-state-val').textContent = 'Multi-Agent Swarm';
+            agentCore.geometry.dispose();
+            agentCore.geometry = new THREE.IcosahedronGeometry(18, 1);
+            agentCore.material.color.setHex(0xff00ff);
+            agentCore.material.emissive.setHex(0xff00ff);
+            agentCore.material.wireframe = true;
+
+            // Add tiny satellites for swarm
+            for(let i=0; i<8; i++) {
+                const sat = new THREE.Mesh(new THREE.SphereGeometry(2, 8, 8), new THREE.MeshStandardMaterial({ color: 0xff00ff, emissive: 0xff00ff }));
+                const satAngle = (i/8) * Math.PI * 2;
+                sat.position.set(Math.cos(satAngle) * 30, Math.sin(satAngle * 2) * 10, Math.sin(satAngle) * 30);
+                coreGroup.add(sat);
+            }
+        } else if (count >= 3) {
+            document.getElementById('core-state-val').textContent = 'ReAct Agent';
+            agentCore.geometry.dispose();
+            agentCore.geometry = new THREE.TorusKnotGeometry(12, 3, 100, 16);
+            agentCore.material.color.setHex(0x22d3ee);
+            agentCore.material.wireframe = false;
+        } else {
+            document.getElementById('core-state-val').textContent = 'Simple Reflex';
+        }
+
+        // Particle Burst on evolve
+        particlesMat.opacity = 1.0;
+        setTimeout(() => particlesMat.opacity = 0.6, 500);
+    }
+
+    document.getElementById('reset-experience').onclick = () => location.reload();
+
+    // AI Chat
+    const chatForm = document.getElementById('ai-chat-form');
+    chatForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const input = document.getElementById('ai-chat-input');
+        const msg = input.value.trim();
+        if (!msg) return;
+
+        const body = document.getElementById('ai-chat-body');
+        const userDiv = document.createElement('div');
+        userDiv.className = 'bg-white/10 border border-white/20 p-4 rounded-2xl ml-8';
+        const userLabel = document.createElement('span');
+        userLabel.className = 'english-label';
+        userLabel.style.fontSize = '10px';
+        userLabel.style.marginBottom = '4px';
+        userLabel.textContent = 'User';
+        const userText = document.createElement('p');
+        userText.className = 'description-text';
+        userText.style.fontSize = '14px';
+        userText.style.color = '#ffffff';
+        userText.textContent = msg;
+        userDiv.appendChild(userLabel);
+        userDiv.appendChild(userText);
+        body.appendChild(userDiv);
+        input.value = '';
+        body.scrollTop = body.scrollHeight;
+
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: msg, model: 'qwen' })
+            });
+            const data = await res.json();
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'bg-cyan-600/20 border border-cyan-500/30 p-4 rounded-2xl mr-8';
+            const aiLabel = document.createElement('span');
+            aiLabel.className = 'english-label';
+            aiLabel.style.fontSize = '10px';
+            aiLabel.style.marginBottom = '4px';
+            aiLabel.textContent = 'Assistant';
+            const aiText = document.createElement('p');
+            aiText.className = 'description-text';
+            aiText.style.fontSize = '14px';
+            aiText.style.color = '#ffffff';
+            aiText.textContent = data.response;
+            aiDiv.appendChild(aiLabel);
+            aiDiv.appendChild(aiText);
+            body.appendChild(aiDiv);
+            body.scrollTop = body.scrollHeight;
+        } catch (err) { console.error(err); }
+    };
+
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    if (window.feather) feather.replace();
+</script>
+
+<style>
+    /* Fullscreen Immersion */
+    #navbar, footer, header, .bg-primary.text-white.py-2 { display: none !important; }
+    body { overflow: hidden !important; background-color: black !important; margin-top: 0 !important; }
+    #ai-tour-container { top: 0; left: 0; z-index: 100; }
+
+    .glass-card {
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .description-panel {
+      position: absolute;
+      right: 32px;
+      top: 32px;
+      bottom: 32px;
+      z-index: 40;
+      width: 420px;
+      max-width: 90vw;
+      overflow-y: auto;
+      background: rgba(24, 24, 27, 0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.8);
+      padding: 40px;
+      color: #ffffff;
+      animation: panelPop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .english-label {
+      color: #22d3ee !important;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .description-text {
+      font-size: 15.5px;
+      line-height: 1.7;
+      font-weight: 400;
+      color: #ffffff !important;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .close-btn:hover { color: #ffffff; transform: rotate(90deg); }
+
+    @keyframes panelPop {
+        from { opacity: 0; transform: translateX(30px) scale(0.98); }
+        to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
+    /* Scrollbar Styling */
+    .description-panel::-webkit-scrollbar { width: 4px; }
+    .description-panel::-webkit-scrollbar-track { background: transparent; }
+    .description-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+</style>
+{% endblock %}

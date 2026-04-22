@@ -18,12 +18,17 @@
                     Transforming education and innovation through immersive XR experiences and agentic AI architectures, embedding African knowledge into global technology.
                 </p>
                 <div class="flex flex-wrap gap-4 pt-4">
+                    <button id="launch-ai-tour" class="bg-slate-900 hover:bg-black text-white px-10 py-4 rounded-full text-lg font-bold shadow-xl shadow-slate-500/30 transition-all active:scale-95 flex items-center gap-2 group relative">
+                        <span class="relative flex h-3 w-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                        </span>
+                        Enter AI Agents Tour <i data-feather="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        <span class="absolute -top-3 -right-3 bg-magenta-500 text-white text-[10px] font-black px-2 py-1 rounded-md shadow-lg shadow-magenta-500/50 animate-bounce" style="background-color: #ec4899;">NEW</span>
+                    </button>
                     <a href="/vision" class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-full text-lg font-bold shadow-xl shadow-primary/30 transition-all active:scale-95 flex items-center gap-2">
                         Explore Vision <i data-feather="arrow-right" class="w-5 h-5"></i>
                     </a>
-                    <button id="try-ai-btn" class="bg-white hover:bg-slate-50 text-primary border-2 border-primary/20 px-10 py-4 rounded-full text-lg font-bold transition-all active:scale-95 flex items-center gap-2">
-                        <i data-feather="cpu" class="w-5 h-5"></i> Try AI Agent
-                    </button>
                 </div>
             </div>
 
@@ -378,4 +383,16 @@
         </div>
     </section>
 </div>
+<script>
+    document.getElementById('launch-ai-tour').addEventListener('click', function() {
+        // Instant Vanish Logic
+        document.body.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        document.body.style.opacity = '0';
+        document.body.style.transform = 'scale(1.05)';
+
+        setTimeout(() => {
+            window.location.href = '/ai-agents-tour';
+        }, 500);
+    });
+</script>
 {% endblock %}
