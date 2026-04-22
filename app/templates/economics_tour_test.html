@@ -932,7 +932,18 @@
         // Add user message
         const userDiv = document.createElement('div');
         userDiv.className = 'bg-white/10 border border-white/20 p-4 rounded-2xl ml-8';
-        userDiv.innerHTML = `<span class="english-label" style="font-size: 10px; margin-bottom: 4px;">User</span><p class="description-text" style="font-size: 14px; color: #e4e4e7;">${msg}</p>`;
+        const userLabel = document.createElement('span');
+        userLabel.className = 'english-label';
+        userLabel.style.fontSize = '10px';
+        userLabel.style.marginBottom = '4px';
+        userLabel.textContent = 'User';
+        const userText = document.createElement('p');
+        userText.className = 'description-text';
+        userText.style.fontSize = '14px';
+        userText.style.color = '#e4e4e7';
+        userText.textContent = msg;
+        userDiv.appendChild(userLabel);
+        userDiv.appendChild(userText);
         chatBody.appendChild(userDiv);
         chatInput.value = '';
         chatBody.scrollTop = chatBody.scrollHeight;
@@ -948,7 +959,18 @@
 
             const aiDiv = document.createElement('div');
             aiDiv.className = 'bg-indigo-600/20 border border-indigo-500/30 p-4 rounded-2xl mr-8';
-            aiDiv.innerHTML = `<span class="english-label" style="font-size: 10px; margin-bottom: 4px;">Assistant</span><p class="description-text" style="font-size: 14px; color: #e4e4e7;">${data.response}</p>`;
+            const aiLabel = document.createElement('span');
+            aiLabel.className = 'english-label';
+            aiLabel.style.fontSize = '10px';
+            aiLabel.style.marginBottom = '4px';
+            aiLabel.textContent = 'Assistant';
+            const aiText = document.createElement('p');
+            aiText.className = 'description-text';
+            aiText.style.fontSize = '14px';
+            aiText.style.color = '#e4e4e7';
+            aiText.textContent = data.response;
+            aiDiv.appendChild(aiLabel);
+            aiDiv.appendChild(aiText);
             chatBody.appendChild(aiDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
         } catch (err) {
