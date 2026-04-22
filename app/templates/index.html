@@ -33,7 +33,7 @@
             </div>
 
             <div id="xr-experience-wrapper" class="hidden md:block relative h-[550px]">
-                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="launchAITour()">
+                <div id="active-xr-experience" class="hidden w-full h-full cursor-pointer group/xr" onclick="launchAITour()">
                     <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
                     <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
                         <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
@@ -71,7 +71,7 @@
                 </div>
 
                 <!-- Embedded Tour Container -->
-                <div id="embedded-tour-container" class="hidden absolute inset-0 rounded-[3rem] overflow-hidden shadow-2xl bg-black border border-white/10">
+                <div id="embedded-tour-container" class="absolute inset-0 rounded-[3rem] overflow-hidden shadow-2xl bg-black border border-white/10">
                      <!-- Back Button -->
                      <button onclick="exitTour()" class="absolute top-6 left-6 z-50 flex items-center gap-2 text-white/60 hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest bg-zinc-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10">
                         <i data-feather="arrow-left" class="w-3 h-3"></i>
@@ -463,6 +463,10 @@
         if (window.feather) feather.replace();
     };
 
+    window.goToFullTour = () => {
+        window.location.href = '/ai-agents-tour';
+    };
+
     window.exitTour = () => {
         const square = document.getElementById('active-xr-experience');
         const container = document.getElementById('embedded-tour-container');
@@ -540,10 +544,13 @@
             if (intersects.length > 0) {
                 const obj = intersects[0].object;
                 showEmbeddedInfo(obj.userData.data);
+            } else {
+                // If clicking background, redirect to full tour
+                window.goToFullTour();
             }
         });
 
-        document.getElementById('embedded-start-btn').onclick = startEmbeddedTour;
+        document.getElementById('embedded-start-btn').onclick = window.goToFullTour;
     }
 
     function showEmbeddedInfo(data) {
@@ -606,11 +613,14 @@
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
     });
+
+    // Auto-launch on load
+    window.launchAITour();
 </script>
 <script>
     // Traditional script for button click
     document.getElementById('launch-ai-tour').addEventListener('click', () => {
-        if (window.launchAITour) window.launchAITour();
+        window.location.href = '/ai-agents-tour';
     });
 </script>
 {% endblock %}
