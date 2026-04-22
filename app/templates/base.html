@@ -273,6 +273,15 @@
     <script>
         feather.replace();
     </script>
+    <!-- Floating AI Button -->
+    <button id="try-ai-btn" class="fixed bottom-8 right-8 z-[90] w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group">
+        <i data-feather="message-square" class="w-6 h-6 group-hover:hidden"></i>
+        <i data-feather="cpu" class="w-6 h-6 hidden group-hover:block animate-pulse"></i>
+        <span class="absolute right-full mr-4 px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Chat with NAIRA AI
+        </span>
+    </button>
+
     <!-- Navbar Backdrop -->
     <div id="navbar-backdrop" class="fixed inset-0 bg-white/80 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 </body>

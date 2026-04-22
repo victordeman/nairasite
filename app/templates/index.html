@@ -32,40 +32,83 @@
                 </div>
             </div>
 
-            <div id="active-xr-experience" class="hidden md:block relative h-[550px] cursor-pointer group/xr" onclick="launchAITour()">
-                <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
-                <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
-                    <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
-                        <!-- Replicating the "Clinical" look with a Tech/XR vibe -->
-                        <div class="relative w-full h-full border-4 border-slate-50 rounded-2xl overflow-hidden bg-slate-900 flex items-center justify-center">
-                             <div class="absolute inset-0 opacity-20">
-                                <div class="absolute inset-0" style="background-image: radial-gradient(#2563EB 1px, transparent 1px); background-size: 20px 20px;"></div>
-                             </div>
-                             <i data-feather="box" class="w-48 h-48 text-primary/40 animate-pulse"></i>
-                             <div class="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 group-hover/xr:bg-primary/20 transition-colors">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center group-hover/xr:scale-110 transition-transform">
-                                        <i data-feather="zap" class="w-6 h-6 text-white"></i>
+            <div id="xr-experience-wrapper" class="hidden md:block relative h-[550px]">
+                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="launchAITour()">
+                    <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
+                    <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
+                        <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
+                            <!-- Replicating the "Clinical" look with a Tech/XR vibe -->
+                            <div class="relative w-full h-full border-4 border-slate-50 rounded-2xl overflow-hidden bg-slate-900 flex items-center justify-center">
+                                 <div class="absolute inset-0 opacity-20">
+                                    <div class="absolute inset-0" style="background-image: radial-gradient(#2563EB 1px, transparent 1px); background-size: 20px 20px;"></div>
+                                 </div>
+                                 <i data-feather="box" class="w-48 h-48 text-primary/40 animate-pulse"></i>
+                                 <div class="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 group-hover/xr:bg-primary/20 transition-colors">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center group-hover/xr:scale-110 transition-transform">
+                                            <i data-feather="zap" class="w-6 h-6 text-white"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-white font-bold text-sm uppercase tracking-wider">Active XR Experience</p>
+                                            <p class="text-white/60 text-[10px] uppercase tracking-widest">AI Agents: Autonomous Intelligence</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="text-white font-bold text-sm uppercase tracking-wider">Active XR Experience</p>
-                                        <p class="text-white/60 text-[10px] uppercase tracking-widest">AI Agents: Autonomous Intelligence</p>
-                                    </div>
-                                </div>
-                             </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Pulse Badge -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-2xl flex items-center gap-4 z-20 border border-slate-100">
+                        <div class="bg-primary/10 p-3 rounded-full">
+                            <i data-feather="activity" class="w-6 h-6 text-primary"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-900">24/7 AI Research Hub</p>
+                            <p class="text-xs text-slate-500 font-medium">Always processing</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Floating Pulse Badge -->
-                <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-2xl flex items-center gap-4 z-20 border border-slate-100">
-                    <div class="bg-primary/10 p-3 rounded-full">
-                        <i data-feather="activity" class="w-6 h-6 text-primary"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm font-bold text-slate-900">24/7 AI Research Hub</p>
-                        <p class="text-xs text-slate-500 font-medium">Always processing</p>
-                    </div>
+                <!-- Embedded Tour Container -->
+                <div id="embedded-tour-container" class="hidden absolute inset-0 rounded-[3rem] overflow-hidden shadow-2xl bg-black border border-white/10">
+                     <!-- Back Button -->
+                     <button onclick="exitTour()" class="absolute top-6 left-6 z-50 flex items-center gap-2 text-white/60 hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest bg-zinc-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10">
+                        <i data-feather="arrow-left" class="w-3 h-3"></i>
+                        Exit Tour
+                     </button>
+
+                     <div id="embedded-ai-canvas" class="w-full h-full"></div>
+
+                     <!-- Embedded Intro UI -->
+                     <div id="embedded-intro-ui" class="absolute inset-x-6 bottom-10 z-40 space-y-4 transition-all duration-1000">
+                        <div class="p-6 rounded-3xl bg-zinc-900/90 backdrop-blur-2xl border border-white/10 shadow-2xl">
+                             <p class="text-cyan-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-2">Immersive Experience</p>
+                             <h3 id="embedded-phase-title" class="text-white font-bold text-xl leading-tight">AI Agents: The Rise of Autonomous Intelligence</h3>
+                             <p class="text-white/50 text-[11px] mt-2 leading-relaxed">Explore the evolution from simple reflex loops to complex multi-agent reasoning.</p>
+                             <div class="pt-4">
+                                <button id="embedded-start-btn" class="w-full py-4 bg-cyan-600 hover:bg-cyan-700 text-white rounded-2xl text-[11px] font-bold uppercase tracking-widest flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl shadow-cyan-900/20">
+                                    <i data-feather="play" class="w-4 h-4 fill-current"></i> Start Guided Tour
+                                </button>
+                             </div>
+                        </div>
+                     </div>
+
+                     <!-- Info Panel (Small) -->
+                     <div id="embedded-info-panel" class="absolute inset-x-6 top-20 z-40 hidden animate-in fade-in slide-in-from-top-4 duration-500">
+                        <div class="p-6 rounded-3xl bg-zinc-900/95 backdrop-blur-2xl border border-white/10 shadow-2xl">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p id="embedded-panel-subtitle" class="text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-1"></p>
+                                    <h4 id="embedded-panel-title" class="text-white font-bold text-lg"></h4>
+                                </div>
+                                <button onclick="closeEmbeddedInfo()" class="text-white/40 hover:text-white transition-colors">
+                                    <i data-feather="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <div id="embedded-panel-content" class="text-white/70 text-xs leading-relaxed max-h-40 overflow-y-auto pr-2"></div>
+                        </div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -383,17 +426,191 @@
         </div>
     </section>
 </div>
-<script>
-    function launchAITour() {
-        // Instant Vanish Logic
-        document.body.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        document.body.style.opacity = '0';
-        document.body.style.transform = 'scale(1.05)';
-
-        setTimeout(() => {
-            window.location.href = '/ai-agents-tour';
-        }, 500);
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
     }
-    document.getElementById('launch-ai-tour').addEventListener('click', launchAITour);
+</script>
+<script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // Data same as in full tour
+    const PIONEERS = [
+        { id: 'turing', name: 'Alan Turing', year: 1950, contribution: 'Proposed the Turing Test.', content: 'Alan Turing\'s seminal 1950 paper introduced what we now call the Turing Test.' },
+        { id: 'mccarthy', name: 'John McCarthy', year: 1956, contribution: 'Coined "Artificial Intelligence".', content: 'McCarthy founded the field at the Dartmouth Conference.' },
+        { id: 'brooks', name: 'Rodney Brooks', year: '1980s', contribution: 'Developed Reactive Agents.', content: 'Brooks proposed that "intelligence is without representation".' }
+    ];
+
+    let scene, camera, renderer, controls, tourGroup;
+    let isInitialized = false;
+    let tourIndex = 0;
+
+    window.launchAITour = () => {
+        const square = document.getElementById('active-xr-experience');
+        const container = document.getElementById('embedded-tour-container');
+
+        square.classList.add('hidden');
+        container.classList.remove('hidden');
+
+        if (!isInitialized) {
+            initTour();
+            isInitialized = true;
+        }
+        if (window.feather) feather.replace();
+    };
+
+    window.exitTour = () => {
+        const square = document.getElementById('active-xr-experience');
+        const container = document.getElementById('embedded-tour-container');
+
+        container.classList.add('hidden');
+        square.classList.remove('hidden');
+    };
+
+    window.closeEmbeddedInfo = () => {
+        document.getElementById('embedded-info-panel').classList.add('hidden');
+    };
+
+    function initTour() {
+        const container = document.getElementById('embedded-ai-canvas');
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050505);
+
+        camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 20, 60);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+
+        // Lights
+        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+        const pointLight = new THREE.PointLight(0x22d3ee, 2, 100);
+        pointLight.position.set(20, 20, 20);
+        scene.add(pointLight);
+
+        // Core
+        const coreGeo = new THREE.IcosahedronGeometry(10, 1);
+        const coreMat = new THREE.MeshStandardMaterial({ color: 0x22d3ee, wireframe: true });
+        const core = new THREE.Mesh(coreGeo, coreMat);
+        scene.add(core);
+
+        // Pioneer Nodes
+        tourGroup = new THREE.Group();
+        scene.add(tourGroup);
+
+        PIONEERS.forEach((p, i) => {
+            const angle = (i / PIONEERS.length) * Math.PI * 2;
+            const radius = 30;
+            const x = Math.cos(angle) * radius;
+            const z = Math.sin(angle) * radius;
+
+            const nodeGeo = new THREE.SphereGeometry(2, 16, 16);
+            const nodeMat = new THREE.MeshStandardMaterial({ color: 0xec4899, emissive: 0xec4899, emissiveIntensity: 0.5 });
+            const node = new THREE.Mesh(nodeGeo, nodeMat);
+            node.position.set(x, 0, z);
+            node.userData = { type: 'pioneer', data: p };
+            tourGroup.add(node);
+        });
+
+        animate();
+
+        // Raycasting
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        container.addEventListener('click', (e) => {
+            const rect = container.getBoundingClientRect();
+            mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(tourGroup.children);
+
+            if (intersects.length > 0) {
+                const obj = intersects[0].object;
+                showEmbeddedInfo(obj.userData.data);
+            }
+        });
+
+        document.getElementById('embedded-start-btn').onclick = startEmbeddedTour;
+    }
+
+    function showEmbeddedInfo(data) {
+        document.getElementById('embedded-panel-title').textContent = data.name || data.title;
+        document.getElementById('embedded-panel-subtitle').textContent = data.year ? `Pioneer (${data.year})` : 'Phase';
+        document.getElementById('embedded-panel-content').innerHTML = data.content;
+        document.getElementById('embedded-info-panel').classList.remove('hidden');
+    }
+
+    function startEmbeddedTour() {
+        document.getElementById('embedded-intro-ui').style.display = 'none';
+        // Hide global AI button during tour? User said it should NOT replace it, but maybe hide it for immersion?
+        // Actually user said: "the tour must not replace the Ai agent chat button"
+        // and "guided tour schould alsom disapear when the tour starts. also the ai agent chat assistance interface."
+        // This refers to the AI sidebar inside the tour page, not the global button.
+
+        tourIndex = 0;
+        controls.autoRotate = false;
+        runStep();
+    }
+
+    function runStep() {
+        if (tourIndex >= PIONEERS.length) {
+            document.getElementById('embedded-intro-ui').style.display = 'block';
+            controls.autoRotate = true;
+            return;
+        }
+
+        const data = PIONEERS[tourIndex];
+        showEmbeddedInfo(data);
+
+        const node = tourGroup.children[tourIndex];
+        const targetPos = node.position.clone().normalize().multiplyScalar(45);
+
+        // Simple lerp for camera
+        const startPos = camera.position.clone();
+        let progress = 0;
+        const move = () => {
+            progress += 0.02;
+            camera.position.lerpVectors(startPos, targetPos, progress);
+            controls.target.lerp(node.position, progress);
+            if (progress < 1) requestAnimationFrame(move);
+        };
+        move();
+
+        tourIndex++;
+        setTimeout(runStep, 6000);
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+        if (!isInitialized) return;
+        const container = document.getElementById('embedded-ai-canvas');
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+</script>
+<script>
+    // Traditional script for button click
+    document.getElementById('launch-ai-tour').addEventListener('click', () => {
+        if (window.launchAITour) window.launchAITour();
+    });
 </script>
 {% endblock %}
