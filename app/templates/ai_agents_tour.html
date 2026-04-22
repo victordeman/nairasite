@@ -143,6 +143,7 @@
             id: 'turing',
             name: 'Alan Turing',
             year: 1950,
+            image: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg',
             contribution: 'Proposed the Turing Test — the foundational benchmark for machine intelligence.',
             content: `
                 <div class="space-y-4">
@@ -155,6 +156,7 @@
             id: 'mccarthy',
             name: 'John McCarthy',
             year: '1955-1956',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/John_McCarthy_Stanford.jpg',
             contribution: 'Coined the term "Artificial Intelligence" and launched the Dartmouth Conference.',
             content: `
                 <p>John McCarthy was the primary organizer of the Dartmouth Summer Research Project on Artificial Intelligence in 1956, where the field was formally founded. He envisioned AI as the science and engineering of making intelligent machines, especially intelligent computer programs.</p>
@@ -164,6 +166,7 @@
             id: 'brooks',
             name: 'Rodney Brooks',
             year: '1980s',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Rodney_Brooks_2011.jpg',
             contribution: 'Developed the Subsumption Architecture — first practical reactive agents.',
             content: `
                 <p>Brooks challenged the "top-down" symbolic AI approach by proposing that "intelligence is without representation." His subsumption architecture allowed robots to react to their environment in real-time without complex internal models, leading to the first generation of successful autonomous mobile robots.</p>
@@ -173,6 +176,7 @@
             id: 'godfathers',
             name: 'Bengio, Hinton & LeCun',
             year: '2010s',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Bengio_Hinton_LeCun_2019.jpg',
             contribution: '2018 Turing Award winners whose deep learning work enabled modern LLM agents.',
             content: `
                 <p>Often called the "Godfathers of AI," their decades of persistence in neural network research paved the way for the Deep Learning revolution. Their work on backpropagation, CNNs, and large-scale training is the technical bedrock upon which modern Large Language Model (LLM) agents are built.</p>
@@ -182,6 +186,7 @@
             id: 'yao',
             name: 'Shunyu Yao et al.',
             year: 2022,
+            image: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/ReAct_Schema.png',
             contribution: 'Introduced the ReAct (Reason + Act) framework.',
             content: `
                 <p>The ReAct framework revolutionized how we use LLMs as agents. By prompting models to generate verbal reasoning traces (thoughts) and actions (tool calls) in an interleaved manner, ReAct significantly improves the accuracy and reliability of autonomous tasks.</p>
@@ -191,6 +196,7 @@
             id: 'russell',
             name: 'Russell & Norvig',
             year: 'Present',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Stuart_Russell_2019.jpg',
             contribution: 'Authors of the definitive AI textbook that formalized the intelligent agent paradigm.',
             content: `
                 <p>Stuart Russell and Peter Norvig's "Artificial Intelligence: A Modern Approach" is the global standard for AI education. They popularized the view of AI as the study of <strong>intelligent agents</strong>—entities that receive percepts from the environment and perform actions.</p>
@@ -774,7 +780,7 @@
         }
     });
 
-    function showInfo(userData) {
+    window.showInfo = function(userData) {
         const { type, data } = userData;
         const title = document.getElementById('ai-panel-title');
         const subtitle = document.getElementById('ai-panel-subtitle');
@@ -782,7 +788,13 @@
 
         title.textContent = data.name || data.title;
         subtitle.textContent = type === 'pioneer' ? `English: Pioneer (${data.year})` : `English: ${data.subtitle}`;
-        content.innerHTML = data.content;
+
+        let html = '';
+        if (type === 'pioneer' && data.image) {
+            html += `<img src="${data.image}" alt="${data.name}" class="w-full h-48 object-cover rounded-2xl mb-6 border border-white/10 shadow-lg">`;
+        }
+        html += data.content;
+        content.innerHTML = html;
 
         infoPanel.classList.remove('hidden');
     }
@@ -794,6 +806,11 @@
     const tourPoints = [...PIONEERS.map(p => ({ type: 'pioneer', data: p })), ...PHASES.map(p => ({ type: 'phase', data: p }))];
 
     document.getElementById('start-tour-btn').onclick = () => {
+        // Hide Intro UI
+        document.querySelector('.absolute.top-8.left-8').style.opacity = '0';
+        document.querySelector('.absolute.top-8.left-8').style.pointerEvents = 'none';
+        document.getElementById('ai-sidebar').style.transform = 'translateX(100%)';
+
         tourIndex = 0;
         runTourStep();
     };
@@ -882,7 +899,13 @@
         setTimeout(() => particlesMat.opacity = 0.6, 500);
     }
 
-    document.getElementById('reset-experience').onclick = () => location.reload();
+    document.getElementById('reset-experience').onclick = () => {
+        // Restore UI
+        document.querySelector('.absolute.top-8.left-8').style.opacity = '1';
+        document.querySelector('.absolute.top-8.left-8').style.pointerEvents = 'all';
+        document.getElementById('ai-sidebar').style.transform = 'translateX(0)';
+        location.reload();
+    };
 
     // AI Chat
     const chatForm = document.getElementById('ai-chat-form');
