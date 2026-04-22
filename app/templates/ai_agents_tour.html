@@ -4,11 +4,19 @@
 <div id="ai-tour-container" class="w-full h-screen bg-black relative flex overflow-hidden">
     <!-- Main 3D Scene -->
     <div id="ai-canvas-container" class="flex-1 h-full relative z-0">
+        <!-- Persistent Exit Link -->
+        <div class="absolute top-8 left-8 z-50">
+             <a href="/" class="flex items-center gap-2 text-white/40 hover:text-white transition-all description-text" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700;">
+                <i data-feather="arrow-left" class="w-4 h-4"></i>
+                Back to NAIRA Home
+            </a>
+        </div>
+
         <!-- Instructional Overlays -->
-        <div class="absolute top-8 left-8 z-40 space-y-4">
+        <div id="intro-ui" class="absolute top-24 left-8 z-40 space-y-4 transition-all duration-1000">
             <div class="pointer-events-none space-y-2 p-8 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <h1 class="english-label" style="margin-bottom: 8px;">AI Agents 3D Tour</h1>
-                <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #ffffff !important;">Autonomous Intelligence</h2>
+                <h2 id="current-phase-title" class="text-3xl font-display font-medium mb-2" style="color: #ffffff !important;">“Autonomous Intelligence: The Rise of AI Agents”</h2>
                 <p class="description-text max-w-lg">An immersive journey from early reactive systems to collaborative multi-agent ecosystems that perceive, reason, plan, act, and learn in the real world.</p>
             </div>
             <button id="start-tour-btn" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all active:scale-95 description-text" style="font-size: 14px; text-transform: uppercase;">
@@ -17,7 +25,7 @@
             </button>
         </div>
 
-        <div class="absolute bottom-8 left-8 z-40 flex flex-col gap-4">
+        <div class="absolute bottom-8 left-24 z-40 flex flex-col gap-4 transition-all duration-1000">
             <div id="agent-status-panel" class="flex items-center gap-8 px-8 py-4 rounded-3xl shadow-2xl" style="background: rgba(24, 24, 27, 0.9); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);">
                 <div class="flex flex-col">
                     <span class="english-label" style="margin-bottom: 4px; font-size: 11px;">Agent Core State</span>
@@ -36,7 +44,7 @@
         </div>
 
         <!-- Floating Controls Panel -->
-        <div class="absolute bottom-8 right-8 z-40 w-80 space-y-4">
+        <div class="absolute bottom-8 right-8 z-40 w-80 space-y-4 transition-all duration-1000">
             <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-6">
                 <div class="space-y-2">
                     <h3 class="english-label" style="font-size: 12px;">Build Your Own Agent</h3>
@@ -807,9 +815,30 @@
 
     document.getElementById('start-tour-btn').onclick = () => {
         // Hide Intro UI
-        document.querySelector('.absolute.top-8.left-8').style.opacity = '0';
-        document.querySelector('.absolute.top-8.left-8').style.pointerEvents = 'none';
-        document.getElementById('ai-sidebar').style.transform = 'translateX(100%)';
+        const introUI = document.getElementById('intro-ui');
+        introUI.style.opacity = '0';
+        introUI.style.pointerEvents = 'none';
+        introUI.style.transform = 'translateX(-50px)';
+
+        const sidebar = document.getElementById('ai-sidebar');
+        sidebar.style.transform = 'translateX(100%)';
+        sidebar.style.opacity = '0';
+        sidebar.style.pointerEvents = 'none';
+
+        // Hide Build Panel too for full immersion
+        const buildPanel = document.querySelector('.absolute.bottom-8.right-8.z-40.w-80');
+        if (buildPanel) {
+            buildPanel.style.opacity = '0';
+            buildPanel.style.pointerEvents = 'none';
+            buildPanel.style.transform = 'translateY(50px)';
+        }
+
+        const statusPanel = document.getElementById('agent-status-panel');
+        if (statusPanel) {
+            statusPanel.parentElement.style.opacity = '0';
+            statusPanel.parentElement.style.pointerEvents = 'none';
+            statusPanel.parentElement.style.transform = 'translateY(50px)';
+        }
 
         tourIndex = 0;
         runTourStep();
