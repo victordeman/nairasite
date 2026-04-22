@@ -475,6 +475,7 @@
 
         const group = new THREE.Group();
         group.position.set(x, y, z);
+        group.userData.originalY = y;
         group.lookAt(0, 0, 0);
         group.rotation.y += Math.PI / 6; // Tilt
 
@@ -693,7 +694,7 @@
 
         timelineGroup.rotation.y += 0.002;
         pioneerPlanes.forEach((p, i) => {
-            p.parent.position.y += Math.sin(t * 0.001 + i) * 0.05;
+            p.parent.position.y = p.parent.userData.originalY + Math.sin(t * 0.001 + i) * 2;
         });
 
         thoughtParticles.rotation.y += 0.001;
