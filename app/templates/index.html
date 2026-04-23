@@ -28,7 +28,7 @@
             </div>
 
             <div id="xr-experience-wrapper" class="hidden md:block relative h-[550px]">
-                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="window.location.href='/vision'">
+                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="window.launchAITour()">
                     <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
                     <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
                         <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
@@ -554,6 +554,7 @@
     let scene, camera, renderer, controls, tourGroup;
     let isInitialized = false;
     let tourIndex = 0;
+    let tourTimerId = null;
 
     window.launchAITour = () => {
         const square = document.getElementById('active-xr-experience');
@@ -561,6 +562,11 @@
 
         square.classList.add('hidden');
         container.classList.remove('hidden');
+
+        // Ensure intro UI is visible when launching if tour not running
+        if (!tourTimerId) {
+            document.getElementById('embedded-intro-ui').style.display = 'block';
+        }
 
         if (!isInitialized) {
             initTour();
@@ -579,6 +585,11 @@
 
         container.classList.add('hidden');
         square.classList.remove('hidden');
+
+        if (tourTimerId) {
+            clearTimeout(tourTimerId);
+            tourTimerId = null;
+        }
     };
 
     window.closeEmbeddedInfo = () => {
@@ -672,7 +683,7 @@
     function showEmbeddedInfo(userData) {
         const { type, data } = userData;
         document.getElementById('embedded-panel-title').textContent = data.name || data.title;
-        document.getElementById('embedded-panel-subtitle').textContent = type === 'pioneer' ? `English: Pioneer (${data.year})` : `English: Phase`;
+        document.getElementById('embedded-panel-subtitle').textContent = type === 'pioneer' ? `Pioneer (${data.year})` : `Phase`;
 
         let html = '';
         if (type === 'pioneer' && data.image) {
@@ -685,10 +696,11 @@
 
     function startEmbeddedTour() {
         document.getElementById('embedded-intro-ui').style.display = 'none';
-        // Hide global AI button during tour? User said it should NOT replace it, but maybe hide it for immersion?
-        // Actually user said: "the tour must not replace the Ai agent chat button"
-        // and "guided tour schould alsom disapear when the tour starts. also the ai agent chat assistance interface."
-        // This refers to the AI sidebar inside the tour page, not the global button.
+
+        if (tourTimerId) {
+            clearTimeout(tourTimerId);
+            tourTimerId = null;
+        }
 
         tourIndex = 0;
         controls.autoRotate = false;
@@ -704,6 +716,7 @@
         if (tourIndex >= tourPoints.length) {
             document.getElementById('embedded-intro-ui').style.display = 'block';
             controls.autoRotate = true;
+            tourTimerId = null;
             return;
         }
 
@@ -725,7 +738,7 @@
         move();
 
         tourIndex++;
-        setTimeout(runStep, 8000);
+        tourTimerId = setTimeout(runStep, 8000);
     }
 
     function animate() {
