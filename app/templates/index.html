@@ -558,7 +558,7 @@
 
     // --- VISUAL EFFECTS OBJECTS ---
     const pCount = 100;
-    let thoughtParticles;
+    let thoughtParticles, thoughtOriginalY;
     const collaborationBeams = [];
     const sparks = [];
     let timelineGroup;
@@ -665,7 +665,13 @@
         // --- Thought Particles ---
         const pGeo = new THREE.BufferGeometry();
         const pPos = new Float32Array(pCount * 3);
-        for(let i=0; i<pCount*3; i++) pPos[i] = THREE.MathUtils.randFloatSpread(80);
+        thoughtOriginalY = new Float32Array(pCount);
+        for(let i=0; i<pCount; i++) {
+            pPos[i*3] = THREE.MathUtils.randFloatSpread(80);
+            pPos[i*3+1] = THREE.MathUtils.randFloatSpread(80);
+            pPos[i*3+2] = THREE.MathUtils.randFloatSpread(80);
+            thoughtOriginalY[i] = pPos[i*3+1];
+        }
         pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
         thoughtParticles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x22d3ee, size: 1.5, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending }));
         scene.add(thoughtParticles);
@@ -842,10 +848,10 @@
             });
         }
 
-        if (thoughtParticles) {
+        if (thoughtParticles && thoughtOriginalY) {
             thoughtParticles.rotation.y += 0.001;
             const pos = thoughtParticles.geometry.attributes.position.array;
-            for(let i=0; i<pCount; i++) pos[i*3+1] += Math.sin(t * 0.001 + i) * 0.02;
+            for(let i=0; i<pCount; i++) pos[i*3+1] = thoughtOriginalY[i] + Math.sin(t * 0.001 + i) * 2;
             thoughtParticles.geometry.attributes.position.needsUpdate = true;
         }
 
@@ -862,12 +868,22 @@
         for(let i=collaborationBeams.length-1; i>=0; i--) {
             collaborationBeams[i].life -= 0.02;
             collaborationBeams[i].line.material.opacity = collaborationBeams[i].life * 0.5;
-            if(collaborationBeams[i].life <= 0) { scene.remove(collaborationBeams[i].line); collaborationBeams.splice(i, 1); }
+            if(collaborationBeams[i].life <= 0) {
+                collaborationBeams[i].line.geometry.dispose();
+                collaborationBeams[i].line.material.dispose();
+                scene.remove(collaborationBeams[i].line);
+                collaborationBeams.splice(i, 1);
+            }
         }
         for(let i=sparks.length-1; i>=0; i--) {
             sparks[i].position.add(sparks[i].userData.velocity); sparks[i].userData.life -= 0.02;
             sparks[i].material.opacity = sparks[i].userData.life;
-            if(sparks[i].userData.life <= 0) { scene.remove(sparks[i]); sparks.splice(i, 1); }
+            if(sparks[i].userData.life <= 0) {
+                sparks[i].geometry.dispose();
+                sparks[i].material.dispose();
+                scene.remove(sparks[i]);
+                sparks.splice(i, 1);
+            }
         }
         if (Math.random() < 0.1) createSpark(new THREE.Vector3(0,0,0), 0x22d3ee);
 
