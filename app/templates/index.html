@@ -28,7 +28,7 @@
             </div>
 
             <div id="xr-experience-wrapper" class="hidden md:block relative h-[550px]">
-                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="window.location.href='/vision'">
+                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="if(window.launchAITour) window.launchAITour()">
                     <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
                     <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
                         <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
@@ -433,23 +433,153 @@
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-    // Data same as in full tour
+    // --- DATA ---
     const PIONEERS = [
-        { id: 'turing', name: 'Alan Turing', year: 1950, contribution: 'Proposed the Turing Test.', content: 'Alan Turing\'s seminal 1950 paper introduced what we now call the Turing Test.' },
-        { id: 'mccarthy', name: 'John McCarthy', year: 1956, contribution: 'Coined "Artificial Intelligence".', content: 'McCarthy founded the field at the Dartmouth Conference.' },
-        { id: 'brooks', name: 'Rodney Brooks', year: '1980s', contribution: 'Developed Reactive Agents.', content: 'Brooks proposed that "intelligence is without representation".' }
+        {
+            id: 'turing',
+            name: 'Alan Turing',
+            year: 1950,
+            image: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg',
+            contribution: 'Proposed the Turing Test — the foundational benchmark for machine intelligence.',
+            content: `
+                <div class="space-y-4">
+                    <p>Alan Turing's seminal 1950 paper, "Computing Machinery and Intelligence," introduced what we now call the Turing Test. It shifted the question from "Can machines think?" to "Can machines imitate human intelligence?"</p>
+                    <p>This benchmark established the first operational goal for artificial intelligence: an agent that can interact via language so effectively that it is indistinguishable from a human.</p>
+                </div>
+            `
+        },
+        {
+            id: 'mccarthy',
+            name: 'John McCarthy',
+            year: '1955-1956',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/4/49/John_McCarthy_Stanford.jpg',
+            contribution: 'Coined the term "Artificial Intelligence" and launched the Dartmouth Conference.',
+            content: `
+                <p>John McCarthy was the primary organizer of the Dartmouth Summer Research Project on Artificial Intelligence in 1956, where the field was formally founded. He envisioned AI as the science and engineering of making intelligent machines, especially intelligent computer programs.</p>
+            `
+        },
+        {
+            id: 'brooks',
+            name: 'Rodney Brooks',
+            year: '1980s',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Rodney_Brooks_2011.jpg',
+            contribution: 'Developed the Subsumption Architecture — first practical reactive agents.',
+            content: `
+                <p>Brooks challenged the "top-down" symbolic AI approach by proposing that "intelligence is without representation." His subsumption architecture allowed robots to react to their environment in real-time without complex internal models, leading to the first generation of successful autonomous mobile robots.</p>
+            `
+        },
+        {
+            id: 'godfathers',
+            name: 'Bengio, Hinton & LeCun',
+            year: '2010s',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Bengio_Hinton_LeCun_2019.jpg',
+            contribution: '2018 Turing Award winners whose deep learning work enabled modern LLM agents.',
+            content: `
+                <p>Often called the "Godfathers of AI," their decades of persistence in neural network research paved the way for the Deep Learning revolution. Their work on backpropagation, CNNs, and large-scale training is the technical bedrock upon which modern Large Language Model (LLM) agents are built.</p>
+            `
+        },
+        {
+            id: 'yao',
+            name: 'Shunyu Yao et al.',
+            year: 2022,
+            image: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/ReAct_Schema.png',
+            contribution: 'Introduced the ReAct (Reason + Act) framework.',
+            content: `
+                <p>The ReAct framework revolutionized how we use LLMs as agents. By prompting models to generate verbal reasoning traces (thoughts) and actions (tool calls) in an interleaved manner, ReAct significantly improves the accuracy and reliability of autonomous tasks.</p>
+            `
+        },
+        {
+            id: 'russell',
+            name: 'Russell & Norvig',
+            year: 'Present',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Stuart_Russell_2019.jpg',
+            contribution: 'Authors of the definitive AI textbook that formalized the intelligent agent paradigm.',
+            content: `
+                <p>Stuart Russell and Peter Norvig's "Artificial Intelligence: A Modern Approach" is the global standard for AI education. They popularized the view of AI as the study of <strong>intelligent agents</strong>—entities that receive percepts from the environment and perform actions.</p>
+            `
+        }
+    ];
+
+    const PHASES = [
+        {
+            id: 1,
+            title: "Phase 1: Foundations of AI Agents",
+            subtitle: "Foundations of AI Agents",
+            content: `
+                <div class="space-y-6">
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">What is an AI Agent?</h4>
+                        <ul class="list-disc pl-5 space-y-2 opacity-90">
+                            <li><strong>Definition:</strong> An autonomous entity that perceives its environment through sensors, reasons about it, and acts to achieve goals using actuators or tools.</li>
+                            <li><strong>Core Loop:</strong> Perception → Reasoning → Planning → Action → Learning/Feedback.</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+        },
+        {
+            id: 2,
+            title: "Phase 2: Frameworks & Architectures",
+            subtitle: "Frameworks & Architectures",
+            content: `
+                <div class="space-y-6">
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Single-Agent Frameworks</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>ReAct (2022)</li>
+                            <li>LangChain & LlamaIndex Agents</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+        },
+        {
+            id: 3,
+            title: "Phase 3: Evolution, Applications & Future",
+            subtitle: "Evolution, Applications & Future",
+            content: `
+                <div class="space-y-6">
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Applications of AI Agents</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>Personal assistants & automation</li>
+                            <li>Scientific discovery</li>
+                        </ul>
+                    </section>
+                </div>
+            `
+        }
     ];
 
     let scene, camera, renderer, controls, tourGroup;
     let isInitialized = false;
     let tourIndex = 0;
+    let tourTimerId = null;
+
+    // --- VISUAL EFFECTS OBJECTS ---
+    const pCount = 100;
+    let thoughtParticles, thoughtOriginalY;
+    const collaborationBeams = [];
+    const sparks = [];
+    let timelineGroup;
+    let agentCore, innerCore;
+    const pioneerPlanes = [];
+    const phaseNodes = [];
 
     window.launchAITour = () => {
+        if (window.innerWidth < 768) return;
         const square = document.getElementById('active-xr-experience');
         const container = document.getElementById('embedded-tour-container');
 
+        if (!square || !container) return;
+
         square.classList.add('hidden');
         container.classList.remove('hidden');
+
+        // Ensure intro UI is visible when launching if tour not running
+        if (!tourTimerId) {
+            document.getElementById('embedded-intro-ui').style.display = 'block';
+        }
 
         if (!isInitialized) {
             initTour();
@@ -468,6 +598,11 @@
 
         container.classList.add('hidden');
         square.classList.remove('hidden');
+
+        if (tourTimerId) {
+            clearTimeout(tourTimerId);
+            tourTimerId = null;
+        }
     };
 
     window.closeEmbeddedInfo = () => {
@@ -477,10 +612,10 @@
     function initTour() {
         const container = document.getElementById('embedded-ai-canvas');
         scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050505);
+        scene.background = new THREE.Color(0x000000);
 
-        camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 20, 60);
+        camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 2000);
+        camera.position.set(0, 500, 1000); // Initial far pos for fly-in
 
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -489,42 +624,124 @@
 
         controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.5;
+        controls.dampingFactor = 0.05;
 
-        // Lights
-        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-        const pointLight = new THREE.PointLight(0x22d3ee, 2, 100);
-        pointLight.position.set(20, 20, 20);
+        // --- Lights ---
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+        const pointLight = new THREE.PointLight(0x22d3ee, 2, 500);
+        pointLight.position.set(50, 50, 50);
         scene.add(pointLight);
 
-        // Core
-        const coreGeo = new THREE.IcosahedronGeometry(10, 1);
-        const coreMat = new THREE.MeshStandardMaterial({ color: 0x22d3ee, wireframe: true });
-        const core = new THREE.Mesh(coreGeo, coreMat);
-        scene.add(core);
+        // --- Starfield ---
+        const starGeo = new THREE.BufferGeometry();
+        const starVertices = [];
+        const starColors = [];
+        for (let i = 0; i < 5000; i++) {
+            starVertices.push(THREE.MathUtils.randFloatSpread(1500), THREE.MathUtils.randFloatSpread(1500), THREE.MathUtils.randFloatSpread(1500));
+            const c = new THREE.Color().setHSL(Math.random(), 0.7, 0.9);
+            starColors.push(c.r, c.g, c.b);
+        }
+        starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        starGeo.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+        const starMat = new THREE.PointsMaterial({ size: 1, vertexColors: true, transparent: true, opacity: 0.8 });
+        scene.add(new THREE.Points(starGeo, starMat));
 
-        // Pioneer Nodes
-        tourGroup = new THREE.Group();
-        scene.add(tourGroup);
+        // --- Nebula ---
+        function createNebula(color, pos) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256; canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+            grad.addColorStop(0, color); grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
+            const tex = new THREE.CanvasTexture(canvas);
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide }));
+            mesh.position.copy(pos);
+            return mesh;
+        }
+        scene.add(createNebula('rgba(34, 211, 238, 1)', new THREE.Vector3(-300, -100, -400)));
+        scene.add(createNebula('rgba(236, 72, 153, 1)', new THREE.Vector3(300, 100, -500)));
+
+        // --- Thought Particles ---
+        const pGeo = new THREE.BufferGeometry();
+        const pPos = new Float32Array(pCount * 3);
+        thoughtOriginalY = new Float32Array(pCount);
+        for(let i=0; i<pCount; i++) {
+            pPos[i*3] = THREE.MathUtils.randFloatSpread(80);
+            pPos[i*3+1] = THREE.MathUtils.randFloatSpread(80);
+            pPos[i*3+2] = THREE.MathUtils.randFloatSpread(80);
+            thoughtOriginalY[i] = pPos[i*3+1];
+        }
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        thoughtParticles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x22d3ee, size: 1.5, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending }));
+        scene.add(thoughtParticles);
+
+        // --- Agent Core ---
+        const coreGroup = new THREE.Group();
+        scene.add(coreGroup);
+        agentCore = new THREE.Mesh(new THREE.IcosahedronGeometry(15, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.5, wireframe: true }));
+        coreGroup.add(agentCore);
+        innerCore = new THREE.Mesh(new THREE.SphereGeometry(8, 32, 32), new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x22d3ee, emissiveIntensity: 1.5 }));
+        coreGroup.add(innerCore);
+
+        // --- Pioneer Timeline (Helix) ---
+        timelineGroup = new THREE.Group();
+        scene.add(timelineGroup);
 
         PIONEERS.forEach((p, i) => {
             const angle = (i / PIONEERS.length) * Math.PI * 2;
-            const radius = 30;
-            const x = Math.cos(angle) * radius;
-            const z = Math.sin(angle) * radius;
+            const x = Math.cos(angle) * 100;
+            const z = Math.sin(angle) * 100;
+            const y = (i - PIONEERS.length/2) * 25;
 
-            const nodeGeo = new THREE.SphereGeometry(2, 16, 16);
-            const nodeMat = new THREE.MeshStandardMaterial({ color: 0xec4899, emissive: 0xec4899, emissiveIntensity: 0.5 });
-            const node = new THREE.Mesh(nodeGeo, nodeMat);
-            node.position.set(x, 0, z);
-            node.userData = { type: 'pioneer', data: p };
-            tourGroup.add(node);
+            const group = new THREE.Group();
+            group.position.set(x, y, z);
+            group.userData.originalY = y;
+            group.lookAt(0, 0, 0);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 256; canvas.height = 384;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.95)'; ctx.fillRect(0,0,256,384);
+            ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 4; ctx.strokeRect(2, 2, 252, 380);
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 24px Inter'; ctx.textAlign = 'center'; ctx.fillText(p.name, 128, 50);
+            ctx.fillStyle = '#22d3ee'; ctx.font = '16px Inter'; ctx.fillText(p.year, 128, 80);
+
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(15, 22), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+            mesh.userData = { type: 'pioneer', data: p };
+            group.add(mesh);
+            timelineGroup.add(group);
+            pioneerPlanes.push(mesh);
         });
 
-        animate();
+        // --- Phase Nodes ---
+        PHASES.forEach((p, i) => {
+            const angle = (i / PHASES.length) * Math.PI * 2 + Math.PI/4;
+            const x = Math.cos(angle) * 180;
+            const z = Math.sin(angle) * 180;
+            const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(10, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.8, wireframe: true }));
+            mesh.position.set(x, 0, z);
+            mesh.userData = { type: 'phase', data: p };
+            scene.add(mesh);
+            phaseNodes.push(mesh);
+        });
 
-        // Raycasting
+        animate(0);
+
+        // --- Fly-in Animation ---
+        setTimeout(() => {
+            const startPos = camera.position.clone();
+            const endPos = new THREE.Vector3(0, 50, 150);
+            let progress = 0;
+            const move = () => {
+                progress += 0.01;
+                camera.position.lerpVectors(startPos, endPos, progress);
+                if (progress < 1) requestAnimationFrame(move);
+            };
+            move();
+        }, 500);
+
+        // --- Raycasting ---
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
 
@@ -534,69 +751,142 @@
             mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(tourGroup.children);
+            const intersects = raycaster.intersectObjects([...pioneerPlanes, ...phaseNodes]);
 
             if (intersects.length > 0) {
-                const obj = intersects[0].object;
-                showEmbeddedInfo(obj.userData.data);
+                showEmbeddedInfo(intersects[0].object.userData);
             } else {
-                // If clicking background, redirect to full tour
-                window.goToFullTour();
+                if (document.getElementById('embedded-intro-ui').style.display !== 'none') {
+                    startEmbeddedTour();
+                } else {
+                    window.goToFullTour();
+                }
             }
         });
 
-        document.getElementById('embedded-start-btn').onclick = window.goToFullTour;
+        document.getElementById('embedded-start-btn').onclick = startEmbeddedTour;
     }
 
-    function showEmbeddedInfo(data) {
+    function createSpark(pos, color) {
+        const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 8, 8), new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 1 }));
+        mesh.position.copy(pos);
+        mesh.userData = { velocity: new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).multiplyScalar(2), life: 1.0 };
+        scene.add(mesh);
+        sparks.push(mesh);
+    }
+
+    function createBeam(start, end) {
+        const geo = new THREE.BufferGeometry().setFromPoints([start, end]);
+        const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.5 }));
+        scene.add(line);
+        collaborationBeams.push({ line, life: 1.0 });
+    }
+
+    function showEmbeddedInfo(userData) {
+        const { type, data } = userData;
         document.getElementById('embedded-panel-title').textContent = data.name || data.title;
-        document.getElementById('embedded-panel-subtitle').textContent = data.year ? `Pioneer (${data.year})` : 'Phase';
-        document.getElementById('embedded-panel-content').innerHTML = data.content;
+        document.getElementById('embedded-panel-subtitle').textContent = type === 'pioneer' ? `Pioneer (${data.year})` : `Phase`;
+
+        let html = '';
+        if (type === 'pioneer' && data.image) {
+            html += `<img src="${data.image}" alt="${data.name}" class="w-full h-24 object-cover rounded-xl mb-3 border border-white/10 shadow-lg">`;
+        }
+        html += data.content;
+        document.getElementById('embedded-panel-content').innerHTML = html;
         document.getElementById('embedded-info-panel').classList.remove('hidden');
     }
 
     function startEmbeddedTour() {
         document.getElementById('embedded-intro-ui').style.display = 'none';
-        // Hide global AI button during tour? User said it should NOT replace it, but maybe hide it for immersion?
-        // Actually user said: "the tour must not replace the Ai agent chat button"
-        // and "guided tour schould alsom disapear when the tour starts. also the ai agent chat assistance interface."
-        // This refers to the AI sidebar inside the tour page, not the global button.
-
+        if (tourTimerId) { clearTimeout(tourTimerId); tourTimerId = null; }
         tourIndex = 0;
         controls.autoRotate = false;
         runStep();
     }
 
     function runStep() {
-        if (tourIndex >= PIONEERS.length) {
+        const points = [...PIONEERS.map(p => ({ type: 'pioneer', data: p })), ...PHASES.map(p => ({ type: 'phase', data: p }))];
+        if (tourIndex >= points.length) {
             document.getElementById('embedded-intro-ui').style.display = 'block';
-            controls.autoRotate = true;
-            return;
+            controls.autoRotate = true; tourTimerId = null; return;
         }
 
-        const data = PIONEERS[tourIndex];
-        showEmbeddedInfo(data);
+        const step = points[tourIndex];
+        showEmbeddedInfo(step);
 
-        const node = tourGroup.children[tourIndex];
-        const targetPos = node.position.clone().normalize().multiplyScalar(45);
+        const node = [...pioneerPlanes, ...phaseNodes][tourIndex];
+        const worldPos = new THREE.Vector3();
+        node.getWorldPosition(worldPos);
+        const targetPos = worldPos.clone().add(worldPos.clone().normalize().multiplyScalar(40));
 
-        // Simple lerp for camera
         const startPos = camera.position.clone();
         let progress = 0;
         const move = () => {
             progress += 0.02;
             camera.position.lerpVectors(startPos, targetPos, progress);
-            controls.target.lerp(node.position, progress);
+            controls.target.lerp(worldPos, progress);
             if (progress < 1) requestAnimationFrame(move);
         };
         move();
 
         tourIndex++;
-        setTimeout(runStep, 6000);
+        tourTimerId = setTimeout(runStep, 8000);
     }
 
-    function animate() {
+    function animate(t) {
         requestAnimationFrame(animate);
+
+        if (agentCore) {
+            agentCore.rotation.y += 0.01;
+            innerCore.scale.setScalar(1 + Math.sin(t * 0.002) * 0.1);
+        }
+
+        if (timelineGroup) {
+            timelineGroup.rotation.y += 0.002;
+            pioneerPlanes.forEach((p, i) => {
+                p.parent.position.y = p.parent.userData.originalY + Math.sin(t * 0.001 + i) * 2;
+            });
+        }
+
+        if (thoughtParticles && thoughtOriginalY) {
+            thoughtParticles.rotation.y += 0.001;
+            const pos = thoughtParticles.geometry.attributes.position.array;
+            for(let i=0; i<pCount; i++) pos[i*3+1] = thoughtOriginalY[i] + Math.sin(t * 0.001 + i) * 2;
+            thoughtParticles.geometry.attributes.position.needsUpdate = true;
+        }
+
+        // Random Beams
+        if (Math.random() < 0.02 && pioneerPlanes.length > 0) {
+            const n1 = pioneerPlanes[Math.floor(Math.random() * pioneerPlanes.length)];
+            const n2 = phaseNodes[Math.floor(Math.random() * phaseNodes.length)];
+            const p1 = new THREE.Vector3(), p2 = new THREE.Vector3();
+            n1.getWorldPosition(p1); n2.getWorldPosition(p2);
+            createBeam(p1, p2);
+        }
+
+        // Update Beams & Sparks
+        for(let i=collaborationBeams.length-1; i>=0; i--) {
+            collaborationBeams[i].life -= 0.02;
+            collaborationBeams[i].line.material.opacity = collaborationBeams[i].life * 0.5;
+            if(collaborationBeams[i].life <= 0) {
+                collaborationBeams[i].line.geometry.dispose();
+                collaborationBeams[i].line.material.dispose();
+                scene.remove(collaborationBeams[i].line);
+                collaborationBeams.splice(i, 1);
+            }
+        }
+        for(let i=sparks.length-1; i>=0; i--) {
+            sparks[i].position.add(sparks[i].userData.velocity); sparks[i].userData.life -= 0.02;
+            sparks[i].material.opacity = sparks[i].userData.life;
+            if(sparks[i].userData.life <= 0) {
+                sparks[i].geometry.dispose();
+                sparks[i].material.dispose();
+                scene.remove(sparks[i]);
+                sparks.splice(i, 1);
+            }
+        }
+        if (Math.random() < 0.1) createSpark(new THREE.Vector3(0,0,0), 0x22d3ee);
+
         controls.update();
         renderer.render(scene, camera);
     }
@@ -609,5 +899,8 @@
         renderer.setSize(container.clientWidth, container.clientHeight);
     });
 
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(window.launchAITour, 500);
+    });
 </script>
 {% endblock %}
