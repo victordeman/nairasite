@@ -28,7 +28,7 @@
             </div>
 
             <div id="xr-experience-wrapper" class="hidden md:block relative h-[550px]">
-                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="window.launchAITour()">
+                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="if(window.launchAITour) window.launchAITour()">
                     <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
                     <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
                         <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
@@ -557,7 +557,7 @@
     let tourTimerId = null;
 
     window.launchAITour = () => {
-        // Performance: Don't init on mobile where container is hidden
+        // Performance guard: Skip WebGL initialization on mobile
         if (window.innerWidth < 768) return;
 
         const square = document.getElementById('active-xr-experience');
