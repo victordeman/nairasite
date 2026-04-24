@@ -557,8 +557,13 @@
     let tourTimerId = null;
 
     window.launchAITour = () => {
+        // Performance: Don't init on mobile where container is hidden
+        if (window.innerWidth < 768) return;
+
         const square = document.getElementById('active-xr-experience');
         const container = document.getElementById('embedded-tour-container');
+
+        if (!square || !container) return;
 
         square.classList.add('hidden');
         container.classList.remove('hidden');
