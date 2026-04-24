@@ -557,6 +557,7 @@
     let tourTimerId = null;
 
     // --- VISUAL EFFECTS OBJECTS ---
+    const pCount = 100;
     let thoughtParticles;
     const collaborationBeams = [];
     const sparks = [];
@@ -662,7 +663,6 @@
         scene.add(createNebula('rgba(236, 72, 153, 1)', new THREE.Vector3(300, 100, -500)));
 
         // --- Thought Particles ---
-        const pCount = 100;
         const pGeo = new THREE.BufferGeometry();
         const pPos = new Float32Array(pCount * 3);
         for(let i=0; i<pCount*3; i++) pPos[i] = THREE.MathUtils.randFloatSpread(80);
