@@ -433,7 +433,7 @@
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-    // Data same as in full tour
+    // --- DATA ---
     const PIONEERS = [
         {
             id: 'turing',
@@ -556,10 +556,17 @@
     let tourIndex = 0;
     let tourTimerId = null;
 
-    window.launchAITour = () => {
-        // Performance guard: Skip WebGL initialization on mobile
-        if (window.innerWidth < 768) return;
+    // --- VISUAL EFFECTS OBJECTS ---
+    let thoughtParticles;
+    const collaborationBeams = [];
+    const sparks = [];
+    let timelineGroup;
+    let agentCore, innerCore;
+    const pioneerPlanes = [];
+    const phaseNodes = [];
 
+    window.launchAITour = () => {
+        if (window.innerWidth < 768) return;
         const square = document.getElementById('active-xr-experience');
         const container = document.getElementById('embedded-tour-container');
 
@@ -604,10 +611,10 @@
     function initTour() {
         const container = document.getElementById('embedded-ai-canvas');
         scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050505);
+        scene.background = new THREE.Color(0x000000);
 
-        camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 20, 60);
+        camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 2000);
+        camera.position.set(0, 500, 1000); // Initial far pos for fly-in
 
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -616,48 +623,119 @@
 
         controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.5;
+        controls.dampingFactor = 0.05;
 
-        // Lights
-        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-        const pointLight = new THREE.PointLight(0x22d3ee, 2, 100);
-        pointLight.position.set(20, 20, 20);
+        // --- Lights ---
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+        const pointLight = new THREE.PointLight(0x22d3ee, 2, 500);
+        pointLight.position.set(50, 50, 50);
         scene.add(pointLight);
 
-        // Core
-        const coreGeo = new THREE.IcosahedronGeometry(10, 1);
-        const coreMat = new THREE.MeshStandardMaterial({ color: 0x22d3ee, wireframe: true });
-        const core = new THREE.Mesh(coreGeo, coreMat);
-        scene.add(core);
+        // --- Starfield ---
+        const starGeo = new THREE.BufferGeometry();
+        const starVertices = [];
+        const starColors = [];
+        for (let i = 0; i < 5000; i++) {
+            starVertices.push(THREE.MathUtils.randFloatSpread(1500), THREE.MathUtils.randFloatSpread(1500), THREE.MathUtils.randFloatSpread(1500));
+            const c = new THREE.Color().setHSL(Math.random(), 0.7, 0.9);
+            starColors.push(c.r, c.g, c.b);
+        }
+        starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        starGeo.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+        const starMat = new THREE.PointsMaterial({ size: 1, vertexColors: true, transparent: true, opacity: 0.8 });
+        scene.add(new THREE.Points(starGeo, starMat));
 
-        // Pioneer Nodes
-        tourGroup = new THREE.Group();
-        scene.add(tourGroup);
+        // --- Nebula ---
+        function createNebula(color, pos) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256; canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+            grad.addColorStop(0, color); grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
+            const tex = new THREE.CanvasTexture(canvas);
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide }));
+            mesh.position.copy(pos);
+            return mesh;
+        }
+        scene.add(createNebula('rgba(34, 211, 238, 1)', new THREE.Vector3(-300, -100, -400)));
+        scene.add(createNebula('rgba(236, 72, 153, 1)', new THREE.Vector3(300, 100, -500)));
 
-        const allNodes = [
-            ...PIONEERS.map(p => ({ type: 'pioneer', data: p })),
-            ...PHASES.map(p => ({ type: 'phase', data: p }))
-        ];
+        // --- Thought Particles ---
+        const pCount = 100;
+        const pGeo = new THREE.BufferGeometry();
+        const pPos = new Float32Array(pCount * 3);
+        for(let i=0; i<pCount*3; i++) pPos[i] = THREE.MathUtils.randFloatSpread(80);
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        thoughtParticles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x22d3ee, size: 1.5, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending }));
+        scene.add(thoughtParticles);
 
-        allNodes.forEach((nodeData, i) => {
-            const angle = (i / allNodes.length) * Math.PI * 2;
-            const radius = 30;
-            const x = Math.cos(angle) * radius;
-            const z = Math.sin(angle) * radius;
+        // --- Agent Core ---
+        const coreGroup = new THREE.Group();
+        scene.add(coreGroup);
+        agentCore = new THREE.Mesh(new THREE.IcosahedronGeometry(15, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.5, wireframe: true }));
+        coreGroup.add(agentCore);
+        innerCore = new THREE.Mesh(new THREE.SphereGeometry(8, 32, 32), new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x22d3ee, emissiveIntensity: 1.5 }));
+        coreGroup.add(innerCore);
 
-            const nodeGeo = new THREE.SphereGeometry(2, 16, 16);
-            const color = nodeData.type === 'pioneer' ? 0xec4899 : 0x22d3ee;
-            const nodeMat = new THREE.MeshStandardMaterial({ color: color, emissive: color, emissiveIntensity: 0.5 });
-            const node = new THREE.Mesh(nodeGeo, nodeMat);
-            node.position.set(x, 0, z);
-            node.userData = nodeData;
-            tourGroup.add(node);
+        // --- Pioneer Timeline (Helix) ---
+        timelineGroup = new THREE.Group();
+        scene.add(timelineGroup);
+
+        PIONEERS.forEach((p, i) => {
+            const angle = (i / PIONEERS.length) * Math.PI * 2;
+            const x = Math.cos(angle) * 100;
+            const z = Math.sin(angle) * 100;
+            const y = (i - PIONEERS.length/2) * 25;
+
+            const group = new THREE.Group();
+            group.position.set(x, y, z);
+            group.userData.originalY = y;
+            group.lookAt(0, 0, 0);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 256; canvas.height = 384;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.95)'; ctx.fillRect(0,0,256,384);
+            ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 4; ctx.strokeRect(2, 2, 252, 380);
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 24px Inter'; ctx.textAlign = 'center'; ctx.fillText(p.name, 128, 50);
+            ctx.fillStyle = '#22d3ee'; ctx.font = '16px Inter'; ctx.fillText(p.year, 128, 80);
+
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(15, 22), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+            mesh.userData = { type: 'pioneer', data: p };
+            group.add(mesh);
+            timelineGroup.add(group);
+            pioneerPlanes.push(mesh);
         });
 
-        animate();
+        // --- Phase Nodes ---
+        PHASES.forEach((p, i) => {
+            const angle = (i / PHASES.length) * Math.PI * 2 + Math.PI/4;
+            const x = Math.cos(angle) * 180;
+            const z = Math.sin(angle) * 180;
+            const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(10, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.8, wireframe: true }));
+            mesh.position.set(x, 0, z);
+            mesh.userData = { type: 'phase', data: p };
+            scene.add(mesh);
+            phaseNodes.push(mesh);
+        });
 
-        // Raycasting
+        animate(0);
+
+        // --- Fly-in Animation ---
+        setTimeout(() => {
+            const startPos = camera.position.clone();
+            const endPos = new THREE.Vector3(0, 50, 150);
+            let progress = 0;
+            const move = () => {
+                progress += 0.01;
+                camera.position.lerpVectors(startPos, endPos, progress);
+                if (progress < 1) requestAnimationFrame(move);
+            };
+            move();
+        }, 500);
+
+        // --- Raycasting ---
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
 
@@ -667,13 +745,11 @@
             mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(tourGroup.children);
+            const intersects = raycaster.intersectObjects([...pioneerPlanes, ...phaseNodes]);
 
             if (intersects.length > 0) {
-                const obj = intersects[0].object;
-                showEmbeddedInfo(obj.userData);
+                showEmbeddedInfo(intersects[0].object.userData);
             } else {
-                // If clicking background and tour not started, start it
                 if (document.getElementById('embedded-intro-ui').style.display !== 'none') {
                     startEmbeddedTour();
                 } else {
@@ -683,6 +759,21 @@
         });
 
         document.getElementById('embedded-start-btn').onclick = startEmbeddedTour;
+    }
+
+    function createSpark(pos, color) {
+        const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 8, 8), new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 1 }));
+        mesh.position.copy(pos);
+        mesh.userData = { velocity: new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).multiplyScalar(2), life: 1.0 };
+        scene.add(mesh);
+        sparks.push(mesh);
+    }
+
+    function createBeam(start, end) {
+        const geo = new THREE.BufferGeometry().setFromPoints([start, end]);
+        const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.5 }));
+        scene.add(line);
+        collaborationBeams.push({ line, life: 1.0 });
     }
 
     function showEmbeddedInfo(userData) {
@@ -701,43 +792,33 @@
 
     function startEmbeddedTour() {
         document.getElementById('embedded-intro-ui').style.display = 'none';
-
-        if (tourTimerId) {
-            clearTimeout(tourTimerId);
-            tourTimerId = null;
-        }
-
+        if (tourTimerId) { clearTimeout(tourTimerId); tourTimerId = null; }
         tourIndex = 0;
         controls.autoRotate = false;
         runStep();
     }
 
     function runStep() {
-        const tourPoints = [
-            ...PIONEERS.map(p => ({ type: 'pioneer', data: p })),
-            ...PHASES.map(p => ({ type: 'phase', data: p }))
-        ];
-
-        if (tourIndex >= tourPoints.length) {
+        const points = [...PIONEERS.map(p => ({ type: 'pioneer', data: p })), ...PHASES.map(p => ({ type: 'phase', data: p }))];
+        if (tourIndex >= points.length) {
             document.getElementById('embedded-intro-ui').style.display = 'block';
-            controls.autoRotate = true;
-            tourTimerId = null;
-            return;
+            controls.autoRotate = true; tourTimerId = null; return;
         }
 
-        const step = tourPoints[tourIndex];
+        const step = points[tourIndex];
         showEmbeddedInfo(step);
 
-        const node = tourGroup.children[tourIndex % tourGroup.children.length];
-        const targetPos = node.position.clone().normalize().multiplyScalar(45);
+        const node = [...pioneerPlanes, ...phaseNodes][tourIndex];
+        const worldPos = new THREE.Vector3();
+        node.getWorldPosition(worldPos);
+        const targetPos = worldPos.clone().add(worldPos.clone().normalize().multiplyScalar(40));
 
-        // Simple lerp for camera
         const startPos = camera.position.clone();
         let progress = 0;
         const move = () => {
             progress += 0.02;
             camera.position.lerpVectors(startPos, targetPos, progress);
-            controls.target.lerp(node.position, progress);
+            controls.target.lerp(worldPos, progress);
             if (progress < 1) requestAnimationFrame(move);
         };
         move();
@@ -746,8 +827,50 @@
         tourTimerId = setTimeout(runStep, 8000);
     }
 
-    function animate() {
+    function animate(t) {
         requestAnimationFrame(animate);
+
+        if (agentCore) {
+            agentCore.rotation.y += 0.01;
+            innerCore.scale.setScalar(1 + Math.sin(t * 0.002) * 0.1);
+        }
+
+        if (timelineGroup) {
+            timelineGroup.rotation.y += 0.002;
+            pioneerPlanes.forEach((p, i) => {
+                p.parent.position.y = p.parent.userData.originalY + Math.sin(t * 0.001 + i) * 2;
+            });
+        }
+
+        if (thoughtParticles) {
+            thoughtParticles.rotation.y += 0.001;
+            const pos = thoughtParticles.geometry.attributes.position.array;
+            for(let i=0; i<pCount; i++) pos[i*3+1] += Math.sin(t * 0.001 + i) * 0.02;
+            thoughtParticles.geometry.attributes.position.needsUpdate = true;
+        }
+
+        // Random Beams
+        if (Math.random() < 0.02 && pioneerPlanes.length > 0) {
+            const n1 = pioneerPlanes[Math.floor(Math.random() * pioneerPlanes.length)];
+            const n2 = phaseNodes[Math.floor(Math.random() * phaseNodes.length)];
+            const p1 = new THREE.Vector3(), p2 = new THREE.Vector3();
+            n1.getWorldPosition(p1); n2.getWorldPosition(p2);
+            createBeam(p1, p2);
+        }
+
+        // Update Beams & Sparks
+        for(let i=collaborationBeams.length-1; i>=0; i--) {
+            collaborationBeams[i].life -= 0.02;
+            collaborationBeams[i].line.material.opacity = collaborationBeams[i].life * 0.5;
+            if(collaborationBeams[i].life <= 0) { scene.remove(collaborationBeams[i].line); collaborationBeams.splice(i, 1); }
+        }
+        for(let i=sparks.length-1; i>=0; i--) {
+            sparks[i].position.add(sparks[i].userData.velocity); sparks[i].userData.life -= 0.02;
+            sparks[i].material.opacity = sparks[i].userData.life;
+            if(sparks[i].userData.life <= 0) { scene.remove(sparks[i]); sparks.splice(i, 1); }
+        }
+        if (Math.random() < 0.1) createSpark(new THREE.Vector3(0,0,0), 0x22d3ee);
+
         controls.update();
         renderer.render(scene, camera);
     }
@@ -760,10 +883,8 @@
         renderer.setSize(container.clientWidth, container.clientHeight);
     });
 
-    // Auto-launch on page load
     window.addEventListener('DOMContentLoaded', () => {
         setTimeout(window.launchAITour, 500);
     });
-
 </script>
 {% endblock %}
