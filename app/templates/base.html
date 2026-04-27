@@ -50,7 +50,7 @@
 </head>
 <body class="font-sans antialiased selection:bg-primary selection:text-white overflow-x-hidden min-h-screen flex flex-col transition-colors duration-300 {% if request.url.path.rstrip('/') in ['', '/transformer-tour', '/economics-tour', '/terracotta-tour', '/immersive-learning', '/ai-agents-tour'] %}page-home{% else %}page-sub{% endif %}">
     <!-- Top Bar -->
-    <div class="bg-primary text-white py-2 text-xs hidden md:block z-[60] relative">
+    <div id="top-bar" class="bg-primary text-white py-2 text-xs hidden md:block z-[60] relative">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-6">
                 <span class="flex items-center gap-2"><i data-feather="zap" class="w-3 h-3"></i> 24/7 AI Research Hub</span>
