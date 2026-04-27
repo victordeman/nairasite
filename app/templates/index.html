@@ -28,47 +28,10 @@
             </div>
 
             <div id="xr-experience-wrapper" class="hidden md:block relative h-[550px]">
-                <div id="active-xr-experience" class="w-full h-full cursor-pointer group/xr" onclick="if(window.launchAITour) window.launchAITour()">
-                    <div class="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-3 -z-10 border-2 border-primary/10 transition-transform group-hover/xr:rotate-6"></div>
-                    <div class="absolute inset-0 bg-white rounded-[3rem] overflow-hidden shadow-2xl transition-transform group-hover/xr:scale-[1.02] duration-500">
-                        <div class="w-full h-full bg-gradient-to-br from-slate-100 to-white flex items-center justify-center p-12">
-                            <!-- Replicating the "Clinical" look with a Tech/XR vibe -->
-                            <div class="relative w-full h-full border-4 border-slate-50 rounded-2xl overflow-hidden bg-slate-900 flex items-center justify-center">
-                                 <div class="absolute inset-0 opacity-20">
-                                    <div class="absolute inset-0" style="background-image: radial-gradient(#2563EB 1px, transparent 1px); background-size: 20px 20px;"></div>
-                                 </div>
-                                 <i data-feather="box" class="w-48 h-48 text-primary/40 animate-pulse"></i>
-                                 <div class="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 group-hover/xr:bg-primary/20 transition-colors">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center group-hover/xr:scale-110 transition-transform">
-                                            <i data-feather="zap" class="w-6 h-6 text-white"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-bold text-sm">Active XR Tour</p>
-                                            <p class="text-white/60 text-xs uppercase tracking-widest">Experience Now</p>
-                                        </div>
-                                    </div>
-                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Floating Pulse Badge -->
-                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-2xl flex items-center gap-4 z-20 border border-slate-100">
-                        <div class="bg-primary/10 p-3 rounded-full">
-                            <i data-feather="activity" class="w-6 h-6 text-primary"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-slate-900">24/7 AI Research Hub</p>
-                            <p class="text-xs text-slate-500 font-medium">Always processing</p>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Embedded Tour Container -->
-                <div id="embedded-tour-container" class="hidden absolute inset-0 rounded-[3rem] overflow-hidden shadow-2xl bg-black border border-white/10">
-                     <!-- Back Button -->
-                     <button onclick="exitTour()" class="absolute top-6 left-6 z-50 flex items-center gap-2 text-white/60 hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest bg-zinc-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10">
+                <div id="embedded-tour-container" class="absolute inset-0 rounded-[3rem] overflow-hidden shadow-2xl bg-black border border-white/10">
+                     <!-- Back / Exit Button -->
+                     <button id="embedded-exit-btn" onclick="resetEmbeddedExperience()" class="absolute top-6 left-6 z-50 hidden flex items-center gap-2 text-white/60 hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest bg-zinc-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/10">
                         <i data-feather="arrow-left" class="w-3 h-3"></i>
                         Exit Tour
                      </button>
@@ -512,6 +475,24 @@
                         <ul class="list-disc pl-5 space-y-2 opacity-90">
                             <li><strong>Definition:</strong> An autonomous entity that perceives its environment through sensors, reasons about it, and acts to achieve goals using actuators or tools.</li>
                             <li><strong>Core Loop:</strong> Perception → Reasoning → Planning → Action → Learning/Feedback.</li>
+                            <li><strong>Key Properties:</strong> Autonomy, reactivity, proactivity, social ability (especially in multi-agent systems).</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Types of AI Agents</h4>
+                        <ul class="list-disc pl-5 space-y-2 opacity-90">
+                            <li><strong>Simple Reflex Agents</strong> (rule-based, no memory)</li>
+                            <li><strong>Model-based Reflex Agents</strong> (maintain internal state)</li>
+                            <li><strong>Goal-based Agents</strong> (search for goal states)</li>
+                            <li><strong>Utility-based Agents</strong> (optimize expected utility)</li>
+                            <li><strong>Learning Agents</strong> (improve over time via reinforcement or supervised learning).</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">ReAct Framework (Reason + Act)</h4>
+                        <ul class="list-disc pl-5 space-y-2 opacity-90">
+                            <li><strong>Core Idea:</strong> Agents alternate between reasoning (generating thoughts) and acting (calling tools or APIs).</li>
+                            <li><strong>ReAct Loop:</strong> Thought → Action → Observation → Thought… until goal is achieved.</li>
                         </ul>
                     </section>
                 </div>
@@ -528,6 +509,23 @@
                         <ul class="list-disc pl-5 space-y-1 opacity-90">
                             <li>ReAct (2022)</li>
                             <li>LangChain & LlamaIndex Agents</li>
+                            <li>LangGraph – Stateful workflows</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Multi-Agent Frameworks</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li><strong>AutoGen (Microsoft)</strong> – Conversational multi-agent teams</li>
+                            <li><strong>CrewAI</strong> – Role-based collaborative crews</li>
+                            <li><strong>MetaGPT</strong> – Multi-agent software development simulation</li>
+                            <li><strong>LangGraph Multi-Agent coordination</strong></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Technical Architecture</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li><strong>LLM Backbone + Tools + Memory + Planner</strong></li>
+                            <li><strong>Agentic Design Patterns</strong> (Reflection, Tool Use, Planning, Multi-Agent Debate)</li>
                         </ul>
                     </section>
                 </div>
@@ -544,6 +542,22 @@
                         <ul class="list-disc pl-5 space-y-1 opacity-90">
                             <li>Personal assistants & automation</li>
                             <li>Scientific discovery</li>
+                            <li>Software engineering (Dev agents)</li>
+                            <li>Enterprise workflows</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">Challenges & Ethical Considerations</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>Hallucinations & safety, Agent alignment, Multi-agent coordination risks</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4 class="text-cyan-400 font-bold mb-2">The Future of AI Agents</h4>
+                        <ul class="list-disc pl-5 space-y-1 opacity-90">
+                            <li>Agentic AI as the next paradigm after LLMs</li>
+                            <li>Fully autonomous organizations of agents</li>
+                            <li>Human-AI hybrid teams</li>
                         </ul>
                     </section>
                 </div>
@@ -551,13 +565,13 @@
         }
     ];
 
-    let scene, camera, renderer, controls, tourGroup;
+    let scene, camera, renderer, controls;
     let isInitialized = false;
     let tourIndex = 0;
     let tourTimerId = null;
 
     // --- VISUAL EFFECTS OBJECTS ---
-    const pCount = 100;
+    const pCount = 150;
     let thoughtParticles, thoughtOriginalY;
     const collaborationBeams = [];
     const sparks = [];
@@ -568,45 +582,92 @@
 
     window.launchAITour = () => {
         if (window.innerWidth < 768) return;
-        const square = document.getElementById('active-xr-experience');
         const container = document.getElementById('embedded-tour-container');
+        if (!container) return;
 
-        if (!square || !container) return;
-
-        square.classList.add('hidden');
         container.classList.remove('hidden');
-
-        // Ensure intro UI is visible when launching if tour not running
-        if (!tourTimerId) {
-            document.getElementById('embedded-intro-ui').style.display = 'block';
-        }
 
         if (!isInitialized) {
             initTour();
             isInitialized = true;
         }
+        document.getElementById('embedded-intro-ui').style.display = 'block';
         if (window.feather) feather.replace();
     };
 
-    window.goToFullTour = () => {
-        window.location.href = '/ai-agents-tour';
-    };
+    window.resetEmbeddedExperience = () => {
+        if (tourTimerId) { clearTimeout(tourTimerId); tourTimerId = null; }
+        document.getElementById('embedded-info-panel').classList.add('hidden');
+        document.getElementById('embedded-intro-ui').style.display = 'block';
 
-    window.exitTour = () => {
-        const square = document.getElementById('active-xr-experience');
-        const container = document.getElementById('embedded-tour-container');
+        toggleFullscreen(false);
 
-        container.classList.add('hidden');
-        square.classList.remove('hidden');
+        if (timelineGroup) timelineGroup.visible = false;
+        phaseNodes.forEach((n, i) => {
+            if (i >= 2) n.visible = false;
+            else n.visible = true;
+        });
 
-        if (tourTimerId) {
-            clearTimeout(tourTimerId);
-            tourTimerId = null;
-        }
+        const startPos = camera.position.clone();
+        const endPos = new THREE.Vector3(0, 50, 250);
+        const startTarget = controls.target.clone();
+        const endTarget = new THREE.Vector3(0, 0, 0);
+        let progress = 0;
+        const move = () => {
+            progress += 0.05;
+            camera.position.lerpVectors(startPos, endPos, progress);
+            controls.target.lerpVectors(startTarget, endTarget, progress);
+            if (progress < 1) requestAnimationFrame(move);
+        };
+        move();
+        controls.autoRotate = true;
     };
 
     window.closeEmbeddedInfo = () => {
         document.getElementById('embedded-info-panel').classList.add('hidden');
+    };
+
+    window.toggleFullscreen = (enable) => {
+        const container = document.getElementById('embedded-tour-container');
+        const exitBtn = document.getElementById('embedded-exit-btn');
+        const aiBtn = document.getElementById('try-ai-btn');
+        const topBar = document.getElementById('top-bar');
+        const navbar = document.getElementById('navbar');
+        const footer = document.querySelector('footer');
+        const allSections = document.querySelectorAll('section');
+
+        if (enable) {
+            container.classList.add('fullscreen-mode');
+            if (exitBtn) exitBtn.classList.remove('hidden');
+            if (aiBtn) aiBtn.style.display = 'none';
+            if (topBar) topBar.style.display = 'none';
+            if (navbar) navbar.style.display = 'none';
+            if (footer) footer.style.display = 'none';
+
+            allSections.forEach(sec => {
+                if (!sec.contains(container)) {
+                    sec.style.display = 'none';
+                }
+            });
+
+            document.body.style.overflow = 'hidden';
+        } else {
+            container.classList.remove('fullscreen-mode');
+            if (exitBtn) exitBtn.classList.add('hidden');
+            if (aiBtn) aiBtn.style.display = 'flex';
+            if (topBar) topBar.style.display = '';
+            if (navbar) navbar.style.display = '';
+            if (footer) footer.style.display = '';
+
+            allSections.forEach(sec => {
+                sec.style.display = '';
+            });
+
+            document.body.style.overflow = 'auto';
+        }
+
+        // Trigger resize to update camera
+        window.dispatchEvent(new Event('resize'));
     };
 
     function initTour() {
@@ -615,7 +676,7 @@
         scene.background = new THREE.Color(0x000000);
 
         camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 2000);
-        camera.position.set(0, 500, 1000); // Initial far pos for fly-in
+        camera.position.set(0, 50, 250);
 
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -636,63 +697,64 @@
         const starGeo = new THREE.BufferGeometry();
         const starVertices = [];
         const starColors = [];
-        for (let i = 0; i < 5000; i++) {
-            starVertices.push(THREE.MathUtils.randFloatSpread(1500), THREE.MathUtils.randFloatSpread(1500), THREE.MathUtils.randFloatSpread(1500));
+        for (let i = 0; i < 10000; i++) {
+            starVertices.push(THREE.MathUtils.randFloatSpread(2500), THREE.MathUtils.randFloatSpread(2500), THREE.MathUtils.randFloatSpread(2500));
             const c = new THREE.Color().setHSL(Math.random(), 0.7, 0.9);
             starColors.push(c.r, c.g, c.b);
         }
         starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
         starGeo.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
-        const starMat = new THREE.PointsMaterial({ size: 1, vertexColors: true, transparent: true, opacity: 0.8 });
+        const starMat = new THREE.PointsMaterial({ size: 1.2, vertexColors: true, transparent: true, opacity: 0.8 });
         scene.add(new THREE.Points(starGeo, starMat));
 
         // --- Nebula ---
         function createNebula(color, pos) {
             const canvas = document.createElement('canvas');
-            canvas.width = 256; canvas.height = 256;
+            canvas.width = 512; canvas.height = 512;
             const ctx = canvas.getContext('2d');
-            const grad = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+            const grad = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
             grad.addColorStop(0, color); grad.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
+            ctx.fillStyle = grad; ctx.fillRect(0,0,512,512);
             const tex = new THREE.CanvasTexture(canvas);
-            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide }));
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.15, depthWrite: false, side: THREE.DoubleSide }));
             mesh.position.copy(pos);
             return mesh;
         }
-        scene.add(createNebula('rgba(34, 211, 238, 1)', new THREE.Vector3(-300, -100, -400)));
-        scene.add(createNebula('rgba(236, 72, 153, 1)', new THREE.Vector3(300, 100, -500)));
+        scene.add(createNebula('rgba(34, 211, 238, 1)', new THREE.Vector3(-500, -200, -500)));
+        scene.add(createNebula('rgba(236, 72, 153, 1)', new THREE.Vector3(500, 200, -800)));
 
         // --- Thought Particles ---
         const pGeo = new THREE.BufferGeometry();
         const pPos = new Float32Array(pCount * 3);
         thoughtOriginalY = new Float32Array(pCount);
         for(let i=0; i<pCount; i++) {
-            pPos[i*3] = THREE.MathUtils.randFloatSpread(80);
-            pPos[i*3+1] = THREE.MathUtils.randFloatSpread(80);
-            pPos[i*3+2] = THREE.MathUtils.randFloatSpread(80);
+            pPos[i*3] = THREE.MathUtils.randFloatSpread(100);
+            pPos[i*3+1] = THREE.MathUtils.randFloatSpread(100);
+            pPos[i*3+2] = THREE.MathUtils.randFloatSpread(100);
             thoughtOriginalY[i] = pPos[i*3+1];
         }
         pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-        thoughtParticles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x22d3ee, size: 1.5, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending }));
+        thoughtParticles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x22d3ee, size: 2, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending }));
         scene.add(thoughtParticles);
 
         // --- Agent Core ---
         const coreGroup = new THREE.Group();
         scene.add(coreGroup);
-        agentCore = new THREE.Mesh(new THREE.IcosahedronGeometry(15, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.5, wireframe: true }));
+        agentCore = new THREE.Mesh(new THREE.IcosahedronGeometry(25, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.5, wireframe: true }));
         coreGroup.add(agentCore);
-        innerCore = new THREE.Mesh(new THREE.SphereGeometry(8, 32, 32), new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x22d3ee, emissiveIntensity: 1.5 }));
+        innerCore = new THREE.Mesh(new THREE.SphereGeometry(15, 32, 32), new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0x22d3ee, emissiveIntensity: 2 }));
         coreGroup.add(innerCore);
 
-        // --- Pioneer Timeline (Helix) ---
+        // --- Pioneer Timeline (Helix) --- initially hidden
         timelineGroup = new THREE.Group();
+        timelineGroup.visible = false;
         scene.add(timelineGroup);
 
         PIONEERS.forEach((p, i) => {
             const angle = (i / PIONEERS.length) * Math.PI * 2;
-            const x = Math.cos(angle) * 100;
-            const z = Math.sin(angle) * 100;
-            const y = (i - PIONEERS.length/2) * 25;
+            const x = Math.cos(angle) * 120;
+            const z = Math.sin(angle) * 120;
+            const y = (i - PIONEERS.length/2) * 30;
 
             const group = new THREE.Group();
             group.position.set(x, y, z);
@@ -700,28 +762,40 @@
             group.lookAt(0, 0, 0);
 
             const canvas = document.createElement('canvas');
-            canvas.width = 256; canvas.height = 384;
+            canvas.width = 512; canvas.height = 768;
             const ctx = canvas.getContext('2d');
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.95)'; ctx.fillRect(0,0,256,384);
-            ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 4; ctx.strokeRect(2, 2, 252, 380);
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 24px Inter'; ctx.textAlign = 'center'; ctx.fillText(p.name, 128, 50);
-            ctx.fillStyle = '#22d3ee'; ctx.font = '16px Inter'; ctx.fillText(p.year, 128, 80);
+            ctx.fillStyle = 'rgba(24, 24, 27, 0.95)'; ctx.fillRect(0,0,512,768);
+            ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 10; ctx.strokeRect(5, 5, 502, 758);
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 60px Inter'; ctx.textAlign = 'center'; ctx.fillText(p.name, 256, 100);
+            ctx.fillStyle = '#22d3ee'; ctx.font = '40px Inter'; ctx.fillText(p.year, 256, 160);
 
-            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(15, 22), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 30), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
             mesh.userData = { type: 'pioneer', data: p };
             group.add(mesh);
             timelineGroup.add(group);
             pioneerPlanes.push(mesh);
         });
 
-        // --- Phase Nodes ---
+        // --- Preview Nodes (Magenta Spheres from screenshot) ---
+        const leftNode = new THREE.Mesh(new THREE.SphereGeometry(8, 32, 32), new THREE.MeshStandardMaterial({ color: 0xec4899, emissive: 0xec4899, emissiveIntensity: 1.5 }));
+        leftNode.position.set(-100, 0, 0);
+        scene.add(leftNode);
+        phaseNodes.push(leftNode);
+
+        const rightNode = new THREE.Mesh(new THREE.SphereGeometry(8, 32, 32), new THREE.MeshStandardMaterial({ color: 0xec4899, emissive: 0xec4899, emissiveIntensity: 1.5 }));
+        rightNode.position.set(100, 0, 0);
+        scene.add(rightNode);
+        phaseNodes.push(rightNode);
+
+        // --- Actual Phase Nodes (Hidden initially) ---
         PHASES.forEach((p, i) => {
             const angle = (i / PHASES.length) * Math.PI * 2 + Math.PI/4;
-            const x = Math.cos(angle) * 180;
-            const z = Math.sin(angle) * 180;
-            const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(10, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.8, wireframe: true }));
+            const x = Math.cos(angle) * 200;
+            const z = Math.sin(angle) * 200;
+            const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(15, 1), new THREE.MeshStandardMaterial({ color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.8, wireframe: true }));
             mesh.position.set(x, 0, z);
             mesh.userData = { type: 'phase', data: p };
+            mesh.visible = false;
             scene.add(mesh);
             phaseNodes.push(mesh);
         });
@@ -751,15 +825,17 @@
             mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects([...pioneerPlanes, ...phaseNodes]);
+            const visibleObjects = [
+                ...(timelineGroup.visible ? pioneerPlanes : []),
+                ...phaseNodes.filter(obj => obj.visible)
+            ];
+            const intersects = raycaster.intersectObjects(visibleObjects);
 
             if (intersects.length > 0) {
                 showEmbeddedInfo(intersects[0].object.userData);
             } else {
                 if (document.getElementById('embedded-intro-ui').style.display !== 'none') {
                     startEmbeddedTour();
-                } else {
-                    window.goToFullTour();
                 }
             }
         });
@@ -801,33 +877,65 @@
         if (tourTimerId) { clearTimeout(tourTimerId); tourTimerId = null; }
         tourIndex = 0;
         controls.autoRotate = false;
+
+        // Fullscreen immersion
+        toggleFullscreen(true);
+
+        // Reveal hidden nodes
+        timelineGroup.visible = true;
+        phaseNodes.forEach(n => n.visible = true);
+
         runStep();
     }
 
     function runStep() {
-        const points = [...PIONEERS.map(p => ({ type: 'pioneer', data: p })), ...PHASES.map(p => ({ type: 'phase', data: p }))];
-        if (tourIndex >= points.length) {
+        const tourData = [
+            ...PIONEERS.map(p => ({ type: 'pioneer', data: p })),
+            ...PHASES.map(p => ({ type: 'phase', data: p }))
+        ];
+
+        if (tourIndex >= tourData.length) {
             document.getElementById('embedded-intro-ui').style.display = 'block';
-            controls.autoRotate = true; tourTimerId = null; return;
+            controls.autoRotate = true;
+            tourTimerId = null;
+            return;
         }
 
-        const step = points[tourIndex];
+        const step = tourData[tourIndex];
         showEmbeddedInfo(step);
 
-        const node = [...pioneerPlanes, ...phaseNodes][tourIndex];
-        const worldPos = new THREE.Vector3();
-        node.getWorldPosition(worldPos);
-        const targetPos = worldPos.clone().add(worldPos.clone().normalize().multiplyScalar(40));
+        // Find the corresponding object in the scene
+        let targetObj;
+        if (step.type === 'pioneer') {
+            targetObj = pioneerPlanes[tourIndex];
+        } else {
+            // Adjust index to match phaseNodes (index 0 and 1 are preview)
+            targetObj = phaseNodes[tourIndex - PIONEERS.length + 2];
+        }
 
-        const startPos = camera.position.clone();
-        let progress = 0;
-        const move = () => {
-            progress += 0.02;
-            camera.position.lerpVectors(startPos, targetPos, progress);
-            controls.target.lerp(worldPos, progress);
-            if (progress < 1) requestAnimationFrame(move);
-        };
-        move();
+        if (targetObj) {
+            const worldPos = new THREE.Vector3();
+            targetObj.getWorldPosition(worldPos);
+
+            let targetPos;
+            if (step.type === 'pioneer') {
+                targetPos = worldPos.clone().add(worldPos.clone().normalize().multiplyScalar(40));
+            } else {
+                targetPos = worldPos.clone().add(new THREE.Vector3(0, 30, 80));
+            }
+
+            const startPos = camera.position.clone();
+            const startTarget = controls.target.clone();
+            let progress = 0;
+            const duration = 60;
+            const move = () => {
+                progress++;
+                camera.position.lerpVectors(startPos, targetPos, progress/duration);
+                controls.target.lerpVectors(startTarget, worldPos, progress/duration);
+                if (progress < duration) requestAnimationFrame(move);
+            };
+            move();
+        }
 
         tourIndex++;
         tourTimerId = setTimeout(runStep, 8000);
@@ -900,7 +1008,21 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(window.launchAITour, 500);
+        // Immediate launch for embedded experience
+        window.launchAITour();
     });
 </script>
+
+<style>
+    #embedded-tour-container.fullscreen-mode {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+    }
+</style>
 {% endblock %}
