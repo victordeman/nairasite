@@ -437,7 +437,7 @@
             id: 'brooks',
             name: 'Rodney Brooks',
             year: '1980s',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Rodney_Brooks_2011.jpg',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Rodney_Brooks_ML40.jpg',
             contribution: 'Developed the Subsumption Architecture — first practical reactive agents.',
             content: `
                 <p>Brooks challenged the "top-down" symbolic AI approach by proposing that "intelligence is without representation." His subsumption architecture allowed robots to react to their environment in real-time without complex internal models, leading to the first generation of successful autonomous mobile robots.</p>
@@ -447,7 +447,7 @@
             id: 'godfathers',
             name: 'Bengio, Hinton & LeCun',
             year: '2010s',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Bengio_Hinton_LeCun_2019.jpg',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/7/79/Bengio_Hinton_LeCun_2019.jpg',
             contribution: '2018 Turing Award winners whose deep learning work enabled modern LLM agents.',
             content: `
                 <p>Often called the "Godfathers of AI," their decades of persistence in neural network research paved the way for the Deep Learning revolution. Their work on backpropagation, CNNs, and large-scale training is the technical bedrock upon which modern Large Language Model (LLM) agents are built.</p>
@@ -457,7 +457,7 @@
             id: 'yao',
             name: 'Shunyu Yao et al.',
             year: 2022,
-            image: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/ReAct_Schema.png',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/ReAct_Schema.png',
             contribution: 'Introduced the ReAct (Reason + Act) framework.',
             content: `
                 <p>The ReAct framework revolutionized how we use LLMs as agents. By prompting models to generate verbal reasoning traces (thoughts) and actions (tool calls) in an interleaved manner, ReAct significantly improves the accuracy and reliability of autonomous tasks.</p>
@@ -467,7 +467,7 @@
             id: 'russell',
             name: 'Russell & Norvig',
             year: 'Present',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Stuart_Russell_2019.jpg',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/6/66/Stuart_Russell.jpg',
             contribution: 'Authors of the definitive AI textbook that formalized the intelligent agent paradigm.',
             content: `
                 <p>Stuart Russell and Peter Norvig's "Artificial Intelligence: A Modern Approach" is the global standard for AI education. They popularized the view of AI as the study of <strong>intelligent agents</strong>—entities that receive percepts from the environment and perform actions.</p>
@@ -776,12 +776,55 @@
             const canvas = document.createElement('canvas');
             canvas.width = 512; canvas.height = 768;
             const ctx = canvas.getContext('2d');
-            ctx.fillStyle = 'rgba(24, 24, 27, 0.95)'; ctx.fillRect(0,0,512,768);
-            ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 10; ctx.strokeRect(5, 5, 502, 758);
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 60px Inter'; ctx.textAlign = 'center'; ctx.fillText(p.name, 256, 100);
-            ctx.fillStyle = '#22d3ee'; ctx.font = '40px Inter'; ctx.fillText(p.year, 256, 160);
 
-            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 30), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), side: THREE.DoubleSide, transparent: true, opacity: 0.9 }));
+            // Draw background & border
+            ctx.fillStyle = 'rgba(24, 24, 27, 0.98)'; ctx.fillRect(0,0,512,768);
+            ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 12; ctx.strokeRect(6, 6, 500, 756);
+
+            // Draw text
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 54px Inter'; ctx.textAlign = 'center'; ctx.fillText(p.name, 256, 100);
+            ctx.fillStyle = '#22d3ee'; ctx.font = 'bold 36px Inter'; ctx.fillText(p.year, 256, 160);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(20, 30), new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true, opacity: 0.95 }));
+
+            // Load and draw image
+            if (p.image) {
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.src = p.image;
+                img.onload = () => {
+                    // Draw image centered in the middle section
+                    const aspect = img.width / img.height;
+                    const targetWidth = 440;
+                    const targetHeight = targetWidth / aspect;
+                    const startY = 220;
+
+                    // Simple clipping/fitting
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.roundRect(36, startY, 440, 480, 20);
+                    ctx.clip();
+
+                    // Draw centered
+                    if (aspect > 440/480) {
+                        const drawWidth = 480 * aspect;
+                        ctx.drawImage(img, 256 - drawWidth/2, startY, drawWidth, 480);
+                    } else {
+                        const drawHeight = 440 / aspect;
+                        ctx.drawImage(img, 36, startY + 240 - drawHeight/2, 440, drawHeight);
+                    }
+                    ctx.restore();
+
+                    // Add subtle inner border for image
+                    ctx.strokeStyle = 'rgba(34, 211, 238, 0.3)';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(36, startY, 440, 480);
+
+                    texture.needsUpdate = true;
+                };
+            }
+
             mesh.userData = { type: 'pioneer', data: p };
             group.add(mesh);
             timelineGroup.add(group);
@@ -873,7 +916,7 @@
     function showEmbeddedInfo(userData) {
         const { type, data } = userData;
         document.getElementById('embedded-panel-title').textContent = data.name || data.title;
-        document.getElementById('embedded-panel-subtitle').textContent = type === 'pioneer' ? `English: Pioneer (${data.year})` : `English: Phase`;
+        document.getElementById('embedded-panel-subtitle').textContent = type === 'pioneer' ? `Pioneer (${data.year})` : data.subtitle || 'Phase';
 
         let html = '';
         if (type === 'pioneer' && data.image) {

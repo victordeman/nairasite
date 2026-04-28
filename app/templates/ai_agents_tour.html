@@ -174,7 +174,7 @@
             id: 'brooks',
             name: 'Rodney Brooks',
             year: '1980s',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Rodney_Brooks_2011.jpg',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Rodney_Brooks_ML40.jpg',
             contribution: 'Developed the Subsumption Architecture — first practical reactive agents.',
             content: `
                 <p>Brooks challenged the "top-down" symbolic AI approach by proposing that "intelligence is without representation." His subsumption architecture allowed robots to react to their environment in real-time without complex internal models, leading to the first generation of successful autonomous mobile robots.</p>
@@ -184,7 +184,7 @@
             id: 'godfathers',
             name: 'Bengio, Hinton & LeCun',
             year: '2010s',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/1/11/Bengio_Hinton_LeCun_2019.jpg',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/7/79/Bengio_Hinton_LeCun_2019.jpg',
             contribution: '2018 Turing Award winners whose deep learning work enabled modern LLM agents.',
             content: `
                 <p>Often called the "Godfathers of AI," their decades of persistence in neural network research paved the way for the Deep Learning revolution. Their work on backpropagation, CNNs, and large-scale training is the technical bedrock upon which modern Large Language Model (LLM) agents are built.</p>
@@ -194,7 +194,7 @@
             id: 'yao',
             name: 'Shunyu Yao et al.',
             year: 2022,
-            image: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/ReAct_Schema.png',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/ReAct_Schema.png',
             contribution: 'Introduced the ReAct (Reason + Act) framework.',
             content: `
                 <p>The ReAct framework revolutionized how we use LLMs as agents. By prompting models to generate verbal reasoning traces (thoughts) and actions (tool calls) in an interleaved manner, ReAct significantly improves the accuracy and reliability of autonomous tasks.</p>
@@ -204,7 +204,7 @@
             id: 'russell',
             name: 'Russell & Norvig',
             year: 'Present',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Stuart_Russell_2019.jpg',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/6/66/Stuart_Russell.jpg',
             contribution: 'Authors of the definitive AI textbook that formalized the intelligent agent paradigm.',
             content: `
                 <p>Stuart Russell and Peter Norvig's "Artificial Intelligence: A Modern Approach" is the global standard for AI education. They popularized the view of AI as the study of <strong>intelligent agents</strong>—entities that receive percepts from the environment and perform actions.</p>
@@ -491,30 +491,69 @@
         ctx.strokeRect(5, 5, 502, 758);
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 60px Inter';
+        ctx.font = 'bold 54px Inter';
         ctx.textAlign = 'center';
         ctx.fillText(p.name, 256, 100);
-        ctx.font = '40px Inter';
+        ctx.font = 'bold 36px Inter';
         ctx.fillStyle = '#22d3ee';
         ctx.fillText(p.year, 256, 160);
 
-        ctx.font = '32px Inter';
-        ctx.fillStyle = '#ffffff';
-        const words = p.contribution.split(' ');
-        let line = '';
-        let currentY = 250;
-        words.forEach(w => {
-            if (ctx.measureText(line + w).width > 400) {
-                ctx.fillText(line, 256, currentY);
-                line = w + ' ';
-                currentY += 45;
-            } else {
-                line += w + ' ';
-            }
-        });
-        ctx.fillText(line, 256, currentY);
-
         const tex = new THREE.CanvasTexture(canvas);
+
+        // Helper for text wrapping
+        const wrapText = (text, x, y, maxWidth, lineHeight) => {
+            const words = text.split(' ');
+            let line = '';
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, y);
+        };
+
+        // Draw contribution summary
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.font = '24px Inter';
+        wrapText(p.contribution, 256, 640, 420, 32);
+
+        // Load and draw image
+        if (p.image) {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = p.image;
+            img.onload = () => {
+                const aspect = img.width / img.height;
+                const startY = 220;
+                const targetHeight = 380; // Reduced to fit text
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.roundRect(36, startY, 440, targetHeight, 20);
+                ctx.clip();
+
+                if (aspect > 440/targetHeight) {
+                    const drawWidth = targetHeight * aspect;
+                    ctx.drawImage(img, 256 - drawWidth/2, startY, drawWidth, targetHeight);
+                } else {
+                    const drawHeight = 440 / aspect;
+                    ctx.drawImage(img, 36, startY + targetHeight/2 - drawHeight/2, 440, drawHeight);
+                }
+                ctx.restore();
+
+                ctx.strokeStyle = 'rgba(34, 211, 238, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(36, startY, 440, targetHeight);
+
+                tex.needsUpdate = true;
+            };
+        }
         const mat = new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide, transparent: true, opacity: 0.9 });
         const mesh = new THREE.Mesh(geo, mat);
         mesh.userData = { type: 'pioneer', data: p };
@@ -796,7 +835,7 @@
         const content = document.getElementById('ai-panel-content');
 
         title.textContent = data.name || data.title;
-        subtitle.textContent = type === 'pioneer' ? `English: Pioneer (${data.year})` : `English: ${data.subtitle}`;
+        subtitle.textContent = type === 'pioneer' ? `Pioneer (${data.year})` : data.subtitle || 'Phase';
 
         let html = '';
         if (type === 'pioneer' && data.image) {
